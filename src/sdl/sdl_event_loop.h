@@ -18,7 +18,8 @@ class SDLTimer : public Timer {
    static unsigned int value_;
 };
 
-class SDLEventLoop : public EventLoop {
+class SDLEventLoop : public EventLoop,
+                     public Timer::Delegate {
   public:
    virtual void RunGame(Game* game, GraphicsAdapter* graphics);
    virtual void Quit();
@@ -27,7 +28,10 @@ class SDLEventLoop : public EventLoop {
                               const std::string& event_name,
                               double seconds);
    void ExpireTimer(int id);
+   virtual void OnExpiration(const std::string& event_name);
+
   private:
+   Game* game_;
    std::vector<SDLTimer> timers_;
 
 };
