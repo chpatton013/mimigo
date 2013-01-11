@@ -38,7 +38,7 @@ void SDLGraphicsAdapter::TearDownDraw() {
 }
 
 void SDLGraphicsAdapter::Initialize() {
-   display_ = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_GL_DOUBLEBUFFER | SDL_OPENGL);
+   display_ = SDL_SetVideoMode(screen_width(), screen_height(), 32, SDL_HWSURFACE | SDL_GL_DOUBLEBUFFER | SDL_OPENGL);
    if (!display_) {
       fprintf(stderr, "failed to load sdl display");
       exit(1);

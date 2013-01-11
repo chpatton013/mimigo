@@ -6,5 +6,6 @@ void Universe::Update() {
 }
 
 void Universe::Draw() {
+   std::cout << "draw" << std::endl;
    RootNode::Instance()->Draw();
 }

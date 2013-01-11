@@ -29,19 +29,28 @@ void SDLEventLoop::Quit() {
    exit(0);
 }
 
+inline unsigned int elapsed_time() {
+}
+
 void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
    game_ = game;
 
-   const double seconds_per_frame = 1.0;
-   StartNewTimer(this, "", seconds_per_frame);
+   const double frames_per_second = 60.0;
+   const double updates_per_second = 25.0;
 
-   SDL_Event event;
+   StartNewTimer(this, "draw", 1.0/frames_per_second);
+   unsigned int last_time = SDL_GetTicks();
    while (true) {
-      while(SDL_PollEvent(&event)) {
-         switch (event.type) {
-            case SDL_QUIT:
-               Quit();
+      if (SDL_GetTicks() - last_time >= milli(1.0/updates_per_second)) {
+         game_->Update();
+         SDL_Event event;
+         while(SDL_PollEvent(&event)) {
+            switch (event.type) {
+               case SDL_QUIT:
+                  Quit();
+            }
          }
+         last_time = SDL_GetTicks();
       }
    }
 }
@@ -64,5 +73,5 @@ void SDLEventLoop::ExpireTimer(int id) {
 }
 
 void SDLEventLoop::OnExpiration(const std::string& event_name) {
-   game_->Update();
+   game_->Draw();
 }
