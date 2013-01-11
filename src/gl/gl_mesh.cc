@@ -1,9 +1,8 @@
-#include "core/gl_mesh.h"
-#include "global/handles.h"
-#include "glm/GLSL_helper.h"
-#include "glm/gtc/type_ptr.hpp"
-#include "global/glm_util.h"
-#include "global/stl_util.h"
+#include "gl_mesh.h"
+#include "GLSL_helper.h"
+#include "../../third_party/glm/glm/gtc/type_ptr.hpp"
+#include "../util/glm_util.h"
+#include "../util/stl_util.h"
 
 #define MAKE_GL_BUFFER(handle, buffer) \
    glGenBuffers(1, &(handle)); \
@@ -32,16 +31,16 @@ void GLMesh::SetupDraw() {
    GL_BIND_ARRAY(texture_buffer_object_, "aTexture", 2);
 }
 
-void GLMesh::Draw(RenderingHelper* transform) {
+void GLMesh::Draw(MatrixStack* transform) {
    SetupDraw();
-   transform->pushMatrix();
-   transform->multMatrix(trans_);
+   transform->push();
+   transform->multiply(trans_);
    safe_glUniformMatrix4fv(
       g_handles["uModelMatrix"],
-      glm::value_ptr(transform->modelViewMatrix));
+      glm::value_ptr(transform->top()));
    safe_glUniformMatrix4fv(
       g_handles["uNormalMatrix"],
-      glm::value_ptr(glm::transpose(glm::inverse(transform->modelViewMatrix))));
+      glm::value_ptr(glm::transpose(glm::inverse(transform->top()))));
 
    const int ibo_length = faces_.size() * 3;
    // Draw Outline Courtesy of NeHe's Cel Shading Tutorial
@@ -71,7 +70,7 @@ void GLMesh::Draw(RenderingHelper* transform) {
    if (!g_handles["wireframe"])
       glDrawElements(GL_TRIANGLES, ibo_length, GL_UNSIGNED_SHORT, 0);
 
-   transform->popMatrix();
+   transform->pop();
 }
 
 void GLMesh::CalculateNormals() {

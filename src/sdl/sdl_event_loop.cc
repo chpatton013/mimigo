@@ -26,6 +26,7 @@ void SDLTimer::Start(double seconds) {
 }
 
 void SDLEventLoop::Quit() {
+   exit(0);
 }
 
 void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
@@ -33,7 +34,16 @@ void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
 
    const double seconds_per_frame = 1.0;
    StartNewTimer(this, "", seconds_per_frame);
-   while(true) { }
+
+   SDL_Event event;
+   while (true) {
+      while(SDL_PollEvent(&event)) {
+         switch (event.type) {
+            case SDL_QUIT:
+               Quit();
+         }
+      }
+   }
 }
 
 void SDLEventLoop::StartNewTimer(Timer::Delegate* delegate,

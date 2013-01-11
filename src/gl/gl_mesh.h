@@ -6,10 +6,10 @@
 #include <GL/gl.h>
 #include <map>
 #include <string>
-#include "core/MStackHelp.h"
-#include "glm/glm.hpp"
-#include "global/handles.h"
-#include "core/vertex.h"
+#include "../../third_party/glm/glm/glm.hpp"
+#include "../global/handles.h"
+#include "../core/vertex.h"
+#include "../util/matrix_stack.h"
 
 /**
  * A GLMesh contains a single mesh, a texture, a material and optionally has a
@@ -59,7 +59,7 @@ class GLMesh {
    {Initialize();}
 
    void SetupDraw();
-   void Draw(RenderingHelper* transform);
+   void Draw(MatrixStack* transform);
    void transform(const glm::mat4& trans) { trans_ = trans; }
    void move(const glm::vec3& move) { trans_ = glm::translate(trans_, move); }
 

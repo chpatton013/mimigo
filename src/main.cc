@@ -1,8 +1,12 @@
+#include <unistd.h>
 #include "SDL/SDL.h"
 #include "gl/gl_shader.h"
+#include "gl/gl_mesh.h"
 #include "sdl/sdl_graphics_adapter.h"
 #include "sdl/sdl_event_loop.h"
-#include "universe.h"
+#include "game/universe.h"
+#include "scene_hierarchy/root_node.h"
+#include "scene_hierarchy/mesh_node.h"
 
 void InitializeSDL() {
    // Load SDL
@@ -20,6 +24,9 @@ void Initialize(Universe*) {
 }
 
 void LoadResources(Universe*) {
+   GLMesh* sphere = new GLMesh();
+   RootNode::Instance()->AddChild(new MeshNode("sphere", sphere));
+   RootNode::Instance()->Draw();
 }
 
 void StartMainLoop(Universe* universe) {

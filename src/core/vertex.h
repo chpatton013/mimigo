@@ -1,8 +1,8 @@
 #ifndef VERTEX_H
 #define VERTEX_H
 
-#include "glm/glm.hpp"
-#include "core/material.h"
+#include "../../third_party/glm/glm/glm.hpp"
+#include "../core/material.h"
 
 /* all the *attributes* needed by a vertex in the vertex shader. */
 
