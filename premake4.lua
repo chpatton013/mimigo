@@ -14,4 +14,4 @@ solution ('mimigo')
       flags ({'Optimize'})
 
    project ('game')
-      kind ('WindowApp')
+      kind ('WindowedApp')
