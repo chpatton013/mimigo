@@ -16,16 +16,25 @@ void SDLGraphicsAdapter::SetProjectionMatrix() {
 
 void SDLGraphicsAdapter::Begin() {
    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   //Start our shader
    glUseProgram(g_shaders["main"]);
 
    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
    glEnable(GL_LINE_SMOOTH);
-   /* only set the projection and view matrix once */
    SetProjectionMatrix();
 }
 
 void SDLGraphicsAdapter::End() {
+   glUseProgram(0);
+   SDL_GL_SwapBuffers();
+}
+
+void SDLGraphicsAdapter::TearDownDraw() {
+   safe_glDisableVertexAttribArray(g_handles["aPosition"]);
+   safe_glDisableVertexAttribArray(g_handles["aNormal"]);
+   safe_glDisableVertexAttribArray(g_handles["aTexture"]);
+   safe_glDisableVertexAttribArray(g_handles["aAmbient"]);
+   safe_glDisableVertexAttribArray(g_handles["aDiffuse"]);
+   //safe_glDisableVertexAttribArray(g_handles["aSpecular"]);
 }
 
 void SDLGraphicsAdapter::Initialize() {

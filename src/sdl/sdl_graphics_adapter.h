@@ -19,6 +19,7 @@ class SDLGraphicsAdapter : public GraphicsAdapter {
 
   private:
    void SetProjectionMatrix();
+   void TearDownDraw();
 
    SDL_Surface* display_;
 };

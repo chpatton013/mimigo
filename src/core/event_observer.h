@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-#include "global/stl_util.h"
-#include "glm/glm.hpp"
+#include "../global/stl_util.h"
+#include "../../third_party/glm/glm/glm.hpp"
 
 typedef glm::vec2 Point;
 

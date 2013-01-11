@@ -3,9 +3,9 @@
 
 #include <stdio.h>
 
-#include "core/game.h"
-#include "core/timer.h"
-#include "core/event_observer.h"
+#include "game.h"
+#include "timer.h"
+#include "event_observer.h"
 
 class GraphicsAdapter;
 
@@ -18,10 +18,6 @@ class EventLoop : public EventSubject {
    enum StateType {
       MAIN_MENU_STATE,
       GAME_PLAY_STATE,
-      LEVEL_EDITOR_STATE,
-      LEVEL_EDITOR_MENU_STATE,
-      SAVE_STATE,
-      LOAD_STATE,
       QUIT_STATE
    };
 
@@ -42,7 +38,7 @@ class EventLoop : public EventSubject {
    virtual ~EventLoop() {}
 
    void Update(Game* game) { game->Update(); }
-   void Draw(GraphicsAdapter& graphics) {assert(0);}
+   void Draw(GraphicsAdapter& ) {assert(0);}
 
   private:
    StateType state_;

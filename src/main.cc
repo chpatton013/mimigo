@@ -1,6 +1,7 @@
 #include "SDL/SDL.h"
 #include "gl/gl_shader.h"
 #include "sdl/sdl_graphics_adapter.h"
+#include "sdl/sdl_event_loop.h"
 
 void InitializeSDL() {
    // Load SDL
@@ -23,6 +24,7 @@ void LoadResources() {
 void StartMainLoop() {
    GraphicsAdapter* graphics = new SDLGraphicsAdapter(1024, 768);
    graphics->Initialize();
+   SDLEventLoop::Instance()->RunGame(NULL, graphics);
 }
 
 int main(int , char** ) {
