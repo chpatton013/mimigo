@@ -1,6 +1,6 @@
-#include "core/event_loop.h"
-#include "core/event_loop_registrar.h"
-#include "global/stl_util.h"
+#include "../core/event_loop.h"
+#include "../core/event_loop_registrar.h"
+#include "../global/stl_util.h"
 
 void EventLoopRegistrar::Register(EventObserver* observer) {
    EventLoop::Instance()->Attach(observer);

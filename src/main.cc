@@ -2,6 +2,7 @@
 #include "gl/gl_shader.h"
 #include "sdl/sdl_graphics_adapter.h"
 #include "sdl/sdl_event_loop.h"
+#include "universe.h"
 
 void InitializeSDL() {
    // Load SDL
@@ -11,27 +12,29 @@ void InitializeSDL() {
    }
 }
 
-void Initialize() {
+void Initialize(Universe*) {
    InitializeSDL();
    chdir("shaders");
    new GLShader("main", "vert_shader.glsl", "frag_shader.glsl");
    chdir("..");
 }
 
-void LoadResources() {
+void LoadResources(Universe*) {
 }
 
-void StartMainLoop() {
+void StartMainLoop(Universe* universe) {
    GraphicsAdapter* graphics = new SDLGraphicsAdapter(1024, 768);
    graphics->Initialize();
-   SDLEventLoop::Instance()->RunGame(NULL, graphics);
+   SDLEventLoop::Instance()->RunGame(universe, graphics);
 }
 
 int main(int , char** ) {
 
-   Initialize();
-   LoadResources();
-   StartMainLoop();
+   Universe* universe = new Universe();
+
+   Initialize(universe);
+   LoadResources(universe);
+   StartMainLoop(universe);
 
    return 0;
 }

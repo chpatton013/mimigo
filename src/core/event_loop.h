@@ -31,6 +31,7 @@ class EventLoop : public EventSubject {
    virtual void StartNewTimer(Timer::Delegate* delegate,
                               const std::string& event_name,
                               double seconds) = 0;
+   virtual void ExpireTimer(int id) = 0;
 
   protected:
    EventLoop() : state_(MAIN_MENU_STATE) {}
