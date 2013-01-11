@@ -1,10 +1,23 @@
 #include "sdl_graphics_adapter.h"
-#include <GL/gl.h>
+#include "../global/handles.h"
+#include "../../third_party/glm/glm/gtc/matrix_transform.hpp"
+#include "../../third_party/glm/glm/gtc/type_ptr.hpp"
+#include "../../third_party/sdl/include/SDL_opengl.h"
+#include "../gl/GLSL_helper.h"
+
+void SDLGraphicsAdapter::SetProjectionMatrix() {
+   const float field_of_view_y = 80.0f;
+   const float z_near = 0.1f;
+   const float z_far = 100.0f;
+   glm::mat4 projection = glm::perspective(field_of_view_y, aspect_ratio(), z_near, z_far);
+   safe_glUniformMatrix4fv(g_handles["uProjMatrix"], glm::value_ptr(projection));
+}
+
 
 void SDLGraphicsAdapter::Begin() {
    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    //Start our shader
-   glUseProgram(g_shader_program);
+   glUseProgram(g_shaders["main"]);
 
    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
    glEnable(GL_LINE_SMOOTH);

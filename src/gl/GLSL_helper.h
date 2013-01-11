@@ -10,13 +10,7 @@
 #ifndef _GLSL_HELPER_H_
 #define _GLSL_HELPER_H_
 
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#include <OPENGL/gl.h>
-#endif
-#ifdef __unix__
 #include <GL/glut.h>
-#endif
 
 #include <stdlib.h>
 #include <stdio.h>

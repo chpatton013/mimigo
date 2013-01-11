@@ -3,7 +3,7 @@
 
 #include <string>
 #include <SDL/SDL.h>
-#include "core/graphics_adapter.h"
+#include "../core/graphics_adapter.h"
 
 class SDLGraphicsAdapter : public GraphicsAdapter {
   public:
@@ -18,6 +18,8 @@ class SDLGraphicsAdapter : public GraphicsAdapter {
    virtual void Draw();
 
   private:
+   void SetProjectionMatrix();
+
    SDL_Surface* display_;
 };
 

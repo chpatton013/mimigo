@@ -1,5 +1,6 @@
 #include "SDL/SDL.h"
-#include "sdl_graphics_adapter.h"
+#include "gl/gl_shader.h"
+#include "sdl/sdl_graphics_adapter.h"
 
 void InitializeSDL() {
    // Load SDL
@@ -11,6 +12,9 @@ void InitializeSDL() {
 
 void Initialize() {
    InitializeSDL();
+   chdir("shaders");
+   new GLShader("main", "vert_shader.glsl", "frag_shader.glsl");
+   chdir("..");
 }
 
 void LoadResources() {

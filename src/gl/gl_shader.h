@@ -5,12 +5,13 @@
 
 class GLShader {
   public:
-   GLShader(const std::string& vert_shader_name,
+   GLShader(const std::string& shader_name,
+            const std::string& vert_shader_name,
             const std::string& frag_shader_name);
   private:
-   bool Install(const std::string& vert_shader_name,
+   bool Install(const std::string& shader_name,
+                const std::string& vert_shader_name,
                 const std::string& frag_shader_name);
-   int program_handle_;
 };
 
 #endif
