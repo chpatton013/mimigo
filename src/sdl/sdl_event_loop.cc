@@ -3,7 +3,8 @@
 #include <assert.h>
 
 static Uint32 c_timer(Uint32 interval, void *id) {
-   EventLoop::Instance()->ExpireTimer(*(int*)id);
+   SDLEventLoop::Instance()->ExpireTimer(*(int*)id);
+   return interval;
 }
 
 unsigned int SDLTimer::value_ = 0;
@@ -16,9 +17,12 @@ EventLoop* EventLoop::Instance() {
    return event_loop_;
 }
 
+inline unsigned int milli(double seconds) {
+   return seconds * 1000.0;
+}
+
 void SDLTimer::Start(double seconds) {
-   const unsigned int millis = seconds * 1000.0;
-   assert(SDL_AddTimer(millis, c_timer, &id_));
+   timer_id_ = SDL_AddTimer(milli(seconds), c_timer, &id_);
 }
 
 void SDLEventLoop::Quit() {
@@ -27,23 +31,9 @@ void SDLEventLoop::Quit() {
 void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
    game_ = game;
 
-   OnExpiration("");
-   SDL_Event event;
-   while(true) {
-      usleep(10000);
-   }
-}
-
-static inline SDL_Event* makeUpdateEvent() {
-   SDL_Event* event = new SDL_Event();
-   SDL_UserEvent user_event;
-   user_event.type = SDL_USEREVENT;
-   user_event.code = 0;
-   user_event.data1 = NULL;
-   user_event.data2 = NULL;
-   event->type = SDL_USEREVENT;
-   event->user = user_event;
-   return event;
+   const double seconds_per_frame = 1.0;
+   StartNewTimer(this, "", seconds_per_frame);
+   while(true) { }
 }
 
 void SDLEventLoop::StartNewTimer(Timer::Delegate* delegate,
@@ -54,11 +44,10 @@ void SDLEventLoop::StartNewTimer(Timer::Delegate* delegate,
 }
 
 void SDLEventLoop::ExpireTimer(int id) {
-   std::vector<SDLTimer>::iterator it;
-   for (it = timers_.begin(); it != timers_.end(); ++it) {
+   for (std::vector<SDLTimer>::iterator it = timers_.begin();
+         it != timers_.end(); ++it) {
       if (it->id_ == id) {
          it->OnExpiration();
-         timers_.erase(it);
          return;
       }
    }
@@ -66,5 +55,4 @@ void SDLEventLoop::ExpireTimer(int id) {
 
 void SDLEventLoop::OnExpiration(const std::string& event_name) {
    game_->Update();
-   StartNewTimer(this, "", 1.0/60.0);
 }

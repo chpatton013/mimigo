@@ -4,6 +4,7 @@
 #include <vector>
 #include "../core/event_loop.h"
 #include "../core/timer.h"
+#include <SDL/SDL_timer.h>
 
 class SDLTimer : public Timer {
   public:
@@ -13,8 +14,11 @@ class SDLTimer : public Timer {
    {}
 
    void Start(double seconds);
+
    unsigned int id_;
   private:
+   SDL_TimerID timer_id_;
+
    static unsigned int value_;
 };
 
