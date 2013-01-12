@@ -43,22 +43,6 @@ void GLMesh::Draw(MatrixStack* transform) {
       glm::value_ptr(glm::transpose(glm::inverse(transform->top()))));
 
    const int ibo_length = faces_.size() * 3;
-   // Draw Outline Courtesy of NeHe's Cel Shading Tutorial
-   glEnable(GL_BLEND);
-   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-   glPolygonMode(GL_BACK, GL_LINE);
-   if (!g_handles["wireframe"]) {
-      glLineWidth(5.0);
-      glDepthFunc(GL_LEQUAL);
-   } else {
-      glLineWidth(1.0);
-   }
-   glCullFace(GL_FRONT);
-   glColor3f(0.0f, 0.0f, 0.1f);
-   safe_glUniform1i(g_handles["uCelShaderUnit"], 1);
-   // Draw Outline Courtesy of NeHe's Cel Shading Tutorial
-
-   glDrawElements(GL_TRIANGLES, ibo_length, GL_UNSIGNED_SHORT, 0);
 
    glDepthFunc (GL_LESS);
    glCullFace (GL_BACK);

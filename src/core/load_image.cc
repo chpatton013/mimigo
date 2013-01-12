@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-#include <GL/gl.h>
 
 struct Bitmap {
    unsigned long sizeX;

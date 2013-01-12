@@ -3,7 +3,6 @@
 
 #include "core/color.h"
 
-#include <GL/glut.h>
 #include "glm/glm.hpp"
 #include <vector>
 

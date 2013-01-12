@@ -1,9 +1,9 @@
 #ifndef GLM_UTIL_H
 #define GLM_UTIL_H
 
-#include "glm/glm.hpp"
-#include "glm/gtc/type_ptr.hpp"
-#include "glm/gtc/matrix_transform.hpp" //perspective, trans etc
+#include "../../third_party/glm/glm/glm.hpp"
+#include "../../third_party/glm/glm/gtc/type_ptr.hpp"
+#include "../../third_party/glm/glm/gtc/matrix_transform.hpp" //perspective, trans etc
 #include <iostream>
 
 namespace glm_util {

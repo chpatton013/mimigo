@@ -1,11 +1,9 @@
-#include "core/mesh_load.h"
+#include "mesh_load.h"
 
-#include "core/gl_mesh.h"
-#include "core/entity.h"
-#include "global/handles.h"
-#include "global/stl_util.h"
-#include "global/glm_util.h"
-#include "core/entity_composite.h"
+#include "../gl/gl_mesh.h"
+#include "../global/handles.h"
+#include "../global/stl_util.h"
+#include "../global/glm_util.h"
 
 #include <iostream>
 #include <stdlib.h>
@@ -129,6 +127,7 @@ void ParseMaterials(const std::string& fname) {
 
 // Parse functions //
 
+/*
 EntityComponent* LoadEntityFromOBJFile(const std::string& filename) {
    std::vector<GLMesh*> meshes;
    const std::string kCommentHeader("#");
@@ -195,7 +194,7 @@ EntityComponent* LoadEntityFromOBJFile(const std::string& filename) {
    g_entities[filename] = new Entity(meshes, glm::vec3(0.0), Rotation(), glm::vec3(1.0), filename);
    g_scene->Add(g_entities[filename]);
    return g_entities[filename];
-}
+}*/
 
 GLMesh* LoadMeshFromFile(const std::string& filename) {
    const std::string kCommentHeader("#");
@@ -263,6 +262,7 @@ GLMesh* MakeSquare() {
    return square;
 }
 
+/*
 EntityComponent* MakeCube(const std::string& name, const std::string& texture) {
    if (stl_util::ContainsKey(g_entities, name))
       return g_entities[name];
@@ -309,4 +309,4 @@ EntityComponent* MakeCube(const std::string& name, const std::string& texture) {
    assert(stl_util::ContainsKey(g_entities, name));
    g_scene->Add(g_entities[name]);
    return g_entities[name];
-}
+}*/

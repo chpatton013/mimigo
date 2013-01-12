@@ -10,7 +10,7 @@
 #ifndef _GLSL_HELPER_H_
 #define _GLSL_HELPER_H_
 
-#include <GL/glut.h>
+#include <GL/gl.h>
 
 #include <stdlib.h>
 #include <stdio.h>

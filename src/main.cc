@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include "SDL/SDL.h"
+#include "core/mesh_load.h"
 #include "gl/gl_shader.h"
 #include "gl/gl_mesh.h"
 #include "sdl/sdl_graphics_adapter.h"
@@ -24,7 +25,7 @@ void Initialize(Universe*) {
 }
 
 void LoadResources(Universe*) {
-   GLMesh* sphere = new GLMesh();
+   GLMesh* sphere = LoadMeshFromFile("sphere.obj");
    RootNode::Instance()->AddChild(new MeshNode("sphere", sphere));
    RootNode::Instance()->Draw();
 }

@@ -1,6 +1,5 @@
 #ifndef TEXTURE_H_
 #define TEXTURE_H_
-#include <GL/glut.h>
 
 /*data structure for the image used for  texture mapping */
 struct Image {
