@@ -5,7 +5,7 @@ uniform mat4 uNormalMatrix;
 
 attribute vec3 aAmbient;
 attribute vec3 aDiffuse;
-/*attribute vec3 aSpecular;*/
+attribute vec3 aSpecular;
 attribute vec3 aNormal;
 attribute vec3 aPosition;
 attribute vec2 aTexture;
@@ -18,7 +18,7 @@ varying vec4 vNormal;
 varying vec2 vTexture;
 
 void main() {
-  /* First model transforms */
+  // First model transforms
   vPosition = uModelMatrix * vec4(aPosition.x, aPosition.y, aPosition.z, 1);
   vPosition = uViewMatrix * vPosition;
   vPosition = uProjMatrix * vPosition;
@@ -30,5 +30,6 @@ void main() {
   vTexture = aTexture;
   vAmbient = aAmbient;
   vDiffuse = aDiffuse;
-  /*vSpecular = aSpecular;*/
+  vSpecular = aSpecular;
+  gl_FrontColor = vec4(aNormal.x, aNormal.y, aNormal.z, 1.0);
 }

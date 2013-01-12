@@ -5,10 +5,13 @@
 #include <SDL/SDL.h>
 #include "../core/graphics_adapter.h"
 
+class Game;
+
 class SDLGraphicsAdapter : public GraphicsAdapter {
   public:
-   SDLGraphicsAdapter(int screen_width, int screen_height) :
-      GraphicsAdapter(screen_width, screen_height)
+   SDLGraphicsAdapter(int screen_width, int screen_height, Game* game) :
+      GraphicsAdapter(screen_width, screen_height),
+      game_(game)
    {}
 
    virtual void Begin();
@@ -22,6 +25,7 @@ class SDLGraphicsAdapter : public GraphicsAdapter {
    void TearDownDraw();
 
    SDL_Surface* display_;
+   Game* game_;
 };
 
 #endif

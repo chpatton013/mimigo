@@ -1,4 +1,5 @@
 #include "sdl_event_loop.h"
+#include "sdl_graphics_adapter.h"
 #include "SDL/SDL.h"
 #include <assert.h>
 
@@ -38,6 +39,8 @@ void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
    const double frames_per_second = 60.0;
    const double updates_per_second = 25.0;
 
+   graphics_ = (SDLGraphicsAdapter*)graphics;
+
    StartNewTimer(this, "draw", 1.0/frames_per_second);
    unsigned int last_time = SDL_GetTicks();
    while (true) {
@@ -73,5 +76,5 @@ void SDLEventLoop::ExpireTimer(int id) {
 }
 
 void SDLEventLoop::OnExpiration(const std::string& event_name) {
-   game_->Draw();
+   graphics_->Draw();
 }

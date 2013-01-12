@@ -27,7 +27,7 @@ void GLMesh::SetupDraw() {
    GL_BIND_ARRAY(normal_buffer_object_, "aNormal", 3);
    GL_BIND_ARRAY(diffuse_buffer_object_, "aDiffuse", 3);
    GL_BIND_ARRAY(ambient_buffer_object_, "aAmbient", 3);
-   //GL_BIND_ARRAY(specular_buffer_object_, "aSpecular", 3);
+   GL_BIND_ARRAY(specular_buffer_object_, "aSpecular", 3);
    GL_BIND_ARRAY(texture_buffer_object_, "aTexture", 2);
 }
 
@@ -51,8 +51,7 @@ void GLMesh::Draw(MatrixStack* transform) {
    // Draw Outline
 
    safe_glUniform1i(g_handles["uCelShaderUnit"], 0);
-   if (!g_handles["wireframe"])
-      glDrawElements(GL_TRIANGLES, ibo_length, GL_UNSIGNED_SHORT, 0);
+   glDrawElements(GL_TRIANGLES, ibo_length, GL_UNSIGNED_SHORT, 0);
 
    transform->pop();
 }

@@ -4,6 +4,7 @@
 #include "../../third_party/glm/glm/gtc/type_ptr.hpp"
 #include "../../third_party/sdl/include/SDL_opengl.h"
 #include "../gl/GLSL_helper.h"
+#include "../core/game.h"
 
 void SDLGraphicsAdapter::SetProjectionMatrix() {
    const float field_of_view_y = 80.0f;
@@ -34,17 +35,14 @@ void SDLGraphicsAdapter::TearDownDraw() {
    safe_glDisableVertexAttribArray(g_handles["aTexture"]);
    safe_glDisableVertexAttribArray(g_handles["aAmbient"]);
    safe_glDisableVertexAttribArray(g_handles["aDiffuse"]);
-   //safe_glDisableVertexAttribArray(g_handles["aSpecular"]);
+   safe_glDisableVertexAttribArray(g_handles["aSpecular"]);
 }
 
 void SDLGraphicsAdapter::Initialize() {
-   display_ = SDL_SetVideoMode(screen_width(), screen_height(), 32, SDL_HWSURFACE | SDL_GL_DOUBLEBUFFER | SDL_OPENGL);
-   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-   if (!display_) {
-      fprintf(stderr, "failed to load sdl display");
-      exit(1);
-   }
 }
 
 void SDLGraphicsAdapter::Draw() {
+   Begin();
+   game_->Draw();
+   End();
 }

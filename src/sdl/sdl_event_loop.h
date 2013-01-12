@@ -6,6 +6,8 @@
 #include "../core/timer.h"
 #include <SDL/SDL_timer.h>
 
+class SDLGraphicsAdapter;
+
 class SDLTimer : public Timer {
   public:
    SDLTimer(Delegate* delegate, const std::string& event_name) :
@@ -35,9 +37,9 @@ class SDLEventLoop : public EventLoop,
    virtual void OnExpiration(const std::string& event_name);
 
   private:
+   SDLGraphicsAdapter* graphics_;
    Game* game_;
    std::vector<SDLTimer> timers_;
-
 };
 
 #endif
