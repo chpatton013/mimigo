@@ -25,7 +25,7 @@ void Initialize(Universe*) {
 }
 
 void LoadResources(Universe*) {
-   GLMesh* sphere = LoadMeshFromFile("sphere.obj");
+   GLMesh* sphere = LoadMeshFromFile("../meshes/bunny500.m");
    RootNode::Instance()->AddChild(new MeshNode("sphere", sphere));
    RootNode::Instance()->Draw();
 }
