@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <SDL/SDL_opengl.h>
 #include "SDL/SDL.h"
 #include "core/mesh_load.h"
 #include "gl/gl_shader.h"
@@ -20,13 +21,13 @@ void InitializeSDL() {
 void Initialize(Universe*) {
    InitializeSDL();
    chdir("shaders");
-   new GLShader("main", "vert_shader.glsl", "frag_shader.glsl");
+   //new GLShader("main", "vert_shader.glsl", "frag_shader.glsl");
    chdir("..");
 }
 
 void LoadResources(Universe*) {
-   GLMesh* sphere = LoadMeshFromFile("../meshes/bunny500.m");
-   RootNode::Instance()->AddChild(new MeshNode("sphere", sphere));
+   GLMesh* bunny = LoadMeshFromFile("../meshes/bunny500.m");
+   RootNode::Instance()->AddChild(new MeshNode("bunny", bunny));
    RootNode::Instance()->Draw();
 }
 

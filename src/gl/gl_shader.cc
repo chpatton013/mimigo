@@ -16,21 +16,23 @@ bool GLShader::Install(const std::string& shader_name,
    const GLchar* f_frag_shader = textFileRead((char*)frag_shader_name.c_str());
    const GLchar* f_vertex_shader = textFileRead((char*)vert_shader_name.c_str());
 
-   GLuint h_vertex_shader = glCreateShader(GL_VERTEX_SHADER);
+   GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
    GLuint frag_shader = glCreateShader(GL_FRAGMENT_SHADER);
+   assert(vertex_shader);
+   assert(frag_shader);
 
    //load the source
-   glShaderSource(h_vertex_shader, 1, &f_vertex_shader, NULL);
+   glShaderSource(vertex_shader, 1, &f_vertex_shader, NULL);
    glShaderSource(frag_shader, 1, &f_frag_shader, NULL);
 
    //compile shader and print log
-   glCompileShader(h_vertex_shader);
+   glCompileShader(vertex_shader);
    /* check shader status requires helper functions */
    printOpenGLError();
 
    GLint vCompiled;
-   glGetShaderiv(h_vertex_shader, GL_COMPILE_STATUS, &vCompiled);
-   printShaderInfoLog(h_vertex_shader);
+   glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &vCompiled);
+   printShaderInfoLog(vertex_shader);
 
    //compile shader and print log
    glCompileShader(frag_shader);
@@ -48,7 +50,8 @@ bool GLShader::Install(const std::string& shader_name,
 
    //create a program object and attach the compiled shader
    int program_handle = glCreateProgram();
-   glAttachShader(program_handle, h_vertex_shader);
+   assert(program_handle);
+   glAttachShader(program_handle, vertex_shader);
    glAttachShader(program_handle, frag_shader);
 
    glLinkProgram(program_handle);

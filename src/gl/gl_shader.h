@@ -9,7 +9,7 @@ class GLShader {
             const std::string& vert_shader_name,
             const std::string& frag_shader_name);
   private:
-   bool Install(const std::string& shader_name,
+   static bool Install(const std::string& shader_name,
                 const std::string& vert_shader_name,
                 const std::string& frag_shader_name);
 };
