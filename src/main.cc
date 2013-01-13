@@ -67,7 +67,6 @@ void Initialize(Universe*) {
 void LoadResources(Universe*) {
    GLMesh* bunny = LoadMeshFromFile("../meshes/bunny500.m");
    RootNode::Instance()->AddChild(new MeshNode("bunny", bunny));
-   RootNode::Instance()->Draw();
 }
 
 void StartMainLoop(Universe* universe) {

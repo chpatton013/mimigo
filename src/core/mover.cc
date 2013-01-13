@@ -1,10 +1,8 @@
 #include "../core/mover.h"
 
 inline float* set_value(float* r, float v) {
-   if (r)
-      *r = v;
-   else
-      r = new float(v);
+   if (r) *r = v;
+   else r = new float(v);
    return r;
 }
 

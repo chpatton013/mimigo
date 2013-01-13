@@ -30,7 +30,7 @@ void Camera::SetView() {
          glm::vec3(camera_focus_),
          camera_up_);
    safe_glUniformMatrix4fv(g_handles["uViewMatrix"], glm::value_ptr(camera));
-   glUniform4f(g_handles["uCameraPosition"],
-    camera_pos_.x, camera_pos_.y, camera_pos_.z, 1.0f);
+   glUniform4f(g_handles["uCameraPosition"], camera_pos_.x, camera_pos_.y,
+         camera_pos_.z, 1.0f);
 
 }

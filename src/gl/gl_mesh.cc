@@ -43,16 +43,7 @@ void GLMesh::Draw(MatrixStack* transform) {
       glm::value_ptr(glm::transpose(glm::inverse(transform->top()))));
 
    const int ibo_length = faces_.size() * 3;
-
-   glDepthFunc (GL_LESS);
-   glCullFace (GL_BACK);
-   glPolygonMode (GL_BACK, GL_FILL);
-   glDisable (GL_BLEND);
-   // Draw Outline
-
-   safe_glUniform1i(g_handles["uCelShaderUnit"], 0);
    glDrawElements(GL_TRIANGLES, ibo_length, GL_UNSIGNED_SHORT, 0);
-
    transform->pop();
 }
 
