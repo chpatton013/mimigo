@@ -2,8 +2,8 @@
 #define MOVER_H_
 
 #include <cmath>
-#include "global/glm_util.h"
-#include "global/stl_util.h"
+#include "../util/glm_util.h"
+#include "../util/stl_util.h"
 
 namespace {
 void correct_angle(float& angle) {

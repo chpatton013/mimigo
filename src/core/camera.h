@@ -1,16 +1,15 @@
 #ifndef _CAMERA_H_
 #define _CAMERA_H_
 
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp" //perspective, trans etc
-#include "glm/gtc/type_ptr.hpp" //value_ptr
-#include "glm/GLSL_helper.h"
-#include "core/MStackHelp.h"
-#include "game/player.h"
-#include "global/glm_util.h"
-#include "core/mover.h"
+#include "../../third_party/glm/glm/glm.hpp"
+#include "../../third_party/glm/glm/gtc/matrix_transform.hpp" //perspective, trans etc
+#include "../../third_party/glm/glm/gtc/type_ptr.hpp" //value_ptr
+#include "../gl/GLSL_helper.h"
+#include "../util/matrix_stack.h"
+#include "../util/glm_util.h"
+#include "../core/mover.h"
 
-class Camera : public PlayerObserver {
+class Camera {
   public:
    Camera() :
       yaw_(-90.0),

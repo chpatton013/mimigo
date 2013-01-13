@@ -2,7 +2,6 @@
 #include "../global/handles.h"
 #include "../../third_party/glm/glm/gtc/matrix_transform.hpp"
 #include "../../third_party/glm/glm/gtc/type_ptr.hpp"
-#include "../../third_party/sdl/include/SDL_opengl.h"
 #include "../gl/GLSL_helper.h"
 #include "../core/game.h"
 

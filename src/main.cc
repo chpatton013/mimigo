@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 
 #include "core/mesh_load.h"
+#include "core/camera.h"
 #include "gl/gl_shader.h"
 #include "gl/gl_mesh.h"
 #include "sdl/sdl_graphics_adapter.h"
@@ -77,7 +78,8 @@ void StartMainLoop(Universe* universe) {
 
 int main(int , char** ) {
 
-   Universe* universe = new Universe();
+   Camera* camera = new Camera();
+   Universe* universe = new Universe(camera);
 
    Initialize(universe);
    LoadResources(universe);

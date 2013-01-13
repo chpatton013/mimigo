@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "gl_shader.h"
 #include "../global/handles.h"
-#include "../../third_party/sdl/include/SDL_opengl.h"
 #include "../gl/GLSL_helper.h"
 
 GLShader::GLShader(const std::string& shader_name,
@@ -68,7 +67,7 @@ bool GLShader::Install(const std::string& shader_name,
    GET_ATTRIB(program_handle, "aPosition");
    GET_ATTRIB(program_handle, "aAmbient");
    GET_ATTRIB(program_handle, "aDiffuse");
-   //GET_ATTRIB(program_handle, "aSpecular");
+   GET_ATTRIB(program_handle, "aSpecular");
    GET_ATTRIB(program_handle, "aNormal");
    GET_ATTRIB(program_handle, "aTexture");
 
@@ -80,7 +79,7 @@ bool GLShader::Install(const std::string& shader_name,
    GET_UNIFORM(program_handle, "uTextureUnit");
    GET_UNIFORM(program_handle, "uCelShaderUnit");
    GET_UNIFORM(program_handle, "uUseTexture");
-   //GET_UNIFORM(program_handle, "uCameraPosition");
+   GET_UNIFORM(program_handle, "uCameraPosition");
 
    printf("%s and %s loaded and using: %d\n",
       frag_shader_name.c_str(), vert_shader_name.c_str(), program_handle);
