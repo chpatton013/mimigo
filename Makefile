@@ -1,6 +1,6 @@
 SRC_DIR = src
 OBJ_DIR = obj
-LIBS =
+LIBS = -lGL -lGLU -lGLEW -lSDL
 INCS = $(SRC_DIR)
 SRCS = $(shell find $(SRC_DIR) -name "*.cc")
 DEPS = $(shell find $(SRC_DIR) -name "*.h")

@@ -3,9 +3,9 @@
 
 #include <stdlib.h>
 #include <vector>
-#include <GL/gl.h>
 #include <map>
 #include <string>
+#include <GL/glew.h>
 #include "../../third_party/glm/glm/glm.hpp"
 #include "../global/handles.h"
 #include "../core/vertex.h"

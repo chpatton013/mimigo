@@ -26,12 +26,7 @@ void SDLTimer::Start(double seconds) {
    timer_id_ = SDL_AddTimer(milli(seconds), c_timer, &id_);
 }
 
-void SDLEventLoop::Quit() {
-   exit(0);
-}
-
-inline unsigned int elapsed_time() {
-}
+void SDLEventLoop::Quit() { exit(0); }
 
 void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
    game_ = game;
@@ -41,7 +36,7 @@ void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
 
    graphics_ = (SDLGraphicsAdapter*)graphics;
 
-   StartNewTimer(this, "draw", 1.0/frames_per_second);
+   //StartNewTimer(this, "draw", 1.0/frames_per_second);
    unsigned int last_time = SDL_GetTicks();
    while (true) {
       if (SDL_GetTicks() - last_time >= milli(1.0/updates_per_second)) {
@@ -54,6 +49,7 @@ void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
             }
          }
          last_time = SDL_GetTicks();
+         graphics_->Draw();
       }
    }
 }

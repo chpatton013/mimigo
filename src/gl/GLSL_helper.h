@@ -10,13 +10,12 @@
 #ifndef _GLSL_HELPER_H_
 #define _GLSL_HELPER_H_
 
-#include <GL/gl.h>
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
 #include <stdexcept>
+#include <GL/glew.h>
 
 int printOglError (const char *file, int line);
 

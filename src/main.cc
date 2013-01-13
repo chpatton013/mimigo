@@ -39,6 +39,14 @@ void InitializeGL() {
    glLoadIdentity();
    gluPerspective(40, 1, 0.0001, 1000.0);
    glMatrixMode(GL_MODELVIEW);
+
+   // Start Of User Initialization
+   glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
+   // Black Background
+   glClearDepth (1.0f);    // Depth Buffer Setup
+   glDepthFunc (GL_LEQUAL);    // The Type Of Depth Testing
+   glEnable (GL_DEPTH_TEST);// Enable Depth Testing
+   glVertexPointer(3, GL_FLOAT, 0, 0);
 }
 
 void InitializeGlew() {
@@ -60,13 +68,16 @@ void Initialize() {
 void Initialize(Universe*) {
    Initialize();
    chdir("shaders");
-   new GLShader("main", "vert_shader.glsl", "frag_shader.glsl");
+   //new GLShader("main", "vert_shader.glsl", "frag_shader.glsl");
+   new GLShader("main", "wave.vert", "wave.frag");
    chdir("..");
 }
 
 void LoadResources(Universe*) {
-   GLMesh* bunny = LoadMeshFromFile("../meshes/bunny500.m");
-   RootNode::Instance()->AddChild(new MeshNode("bunny", bunny));
+   GLMesh* bunny = MakeSquare();
+   MeshNode* mesh = new MeshNode("bunny", bunny);
+   mesh->apply_transformation(glm::rotate(0.0f, 1.0f, 0.0f, 45.0f));
+   RootNode::Instance()->AddChild(mesh);
 }
 
 void StartMainLoop(Universe* universe) {
