@@ -72,7 +72,7 @@ void Initialize(Universe*) {
 }
 
 void LoadResources(Universe*) {
-   //GLMesh* bunny = LoadMeshFromFile("../meshes/bunny500.m");
+   //GLMesh* bunny = LoadMeshFromFile("meshes/bunny500.m");
    GLMesh* bunny = MakeSquare();
    MeshNode* mesh = new MeshNode("bunny", bunny);
    mesh->apply_transformation(glm::scale(0.5f, 0.5f, 0.5f));
