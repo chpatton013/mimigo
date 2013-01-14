@@ -1,6 +1,6 @@
 SRC_DIR = src
 OBJ_DIR = obj
-LIBS = -lGL -lGLU -lGLEW -lSDL
+LIBS = GL GLU GLEW SDL
 INCS = $(SRC_DIR)
 SRCS = $(shell find $(SRC_DIR) -name "*.cc")
 DEPS = $(shell find $(SRC_DIR) -name "*.h")
@@ -11,12 +11,12 @@ EXEC = $(shell basename `pwd`)
 
 
 CXX = g++
-CFLAGS = -Wall -Wextra -pipe
+CFLAGS = -Wall -Wextra -pipe -DGL_GLEXT_PROTOTYPES $(foreach d,$(INCS),-I$d)
 LD = g++
-LDFLAGS = $(foreach d,$(INCS),-I$d)
+LDFLAGS =
 
 
-.PHONY: all debug test release profile prepare clean
+.PHONY: all debug test release profile prepare clean remove
 
 all test: debug
 debug: CFLAGS += -g3 -DDEBUG
@@ -34,7 +34,10 @@ prepare:
 	mkdir -p $(OBJ_SUB_DIRS)
 
 clean:
-	rm -f $(OBJS) $(EXEC)
+	rm -f $(OBJS)
+
+remove: clean
+	rm -f $(EXEC)
 
 $(EXEC): prepare $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $(OBJS) $(foreach l,$(LIBS),-l$l)
