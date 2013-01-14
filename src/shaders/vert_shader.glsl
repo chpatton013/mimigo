@@ -19,17 +19,10 @@ varying vec2 vTexture;
 
 void main() {
   /* First model transforms */
-  /*vPosition = uModelMatrix * vec4(aPosition.x, aPosition.y, aPosition.z, 1);*/
-  /*vPosition = uViewMatrix * vPosition;*/
-  /*vPosition = uProjMatrix * vPosition;*/
-  gl_Position = uProjMatrix * vec4(aPosition.x, aPosition.y, aPosition.z, 1.0f);
+  vPosition = uModelMatrix * vec4(aPosition.x, aPosition.y, aPosition.z, 1);
+  vPosition = uViewMatrix * vPosition;
+  vPosition = uProjMatrix * vPosition;
+  gl_Position = vec4(vPosition.x, aPosition.y, aPosition.z, 1.0f);
 
-  // Normal.
   /*vNormal = normalize(uNormalMatrix * vec4(aNormal.x, aNormal.y, aNormal.z, 0.0));*/
-
-  /*vTexture = aTexture;*/
-  /*vAmbient = aAmbient;*/
-  /*vDiffuse = aDiffuse;*/
-  /*vSpecular = aSpecular;*/
-
 }

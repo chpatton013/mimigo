@@ -67,16 +67,19 @@ void Initialize() {
 
 void Initialize(Universe*) {
    Initialize();
+   chdir("src");
    chdir("shaders");
    //new GLShader("main", "vert_shader.glsl", "frag_shader.glsl");
    new GLShader("main", "vert_shader.glsl", "wave.frag");
    chdir("..");
+   chdir("..");
 }
 
 void LoadResources(Universe*) {
+   //GLMesh* bunny = LoadMeshFromFile("../meshes/bunny500.m");
    GLMesh* bunny = MakeSquare();
    MeshNode* mesh = new MeshNode("bunny", bunny);
-   mesh->apply_transformation(glm::rotate(0.0f, 1.0f, 0.0f, 45.0f));
+   mesh->apply_transformation(glm::scale(0.5f, 0.5f, 0.5f));
    RootNode::Instance()->AddChild(mesh);
 }
 

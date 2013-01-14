@@ -1,6 +1,8 @@
 #ifndef TEXTURE_H_
 #define TEXTURE_H_
 
+#include <GL/glew.h>
+
 /*data structure for the image used for  texture mapping */
 struct Image {
    unsigned long sizeX;

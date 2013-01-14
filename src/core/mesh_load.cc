@@ -2,8 +2,8 @@
 
 #include "../gl/gl_mesh.h"
 #include "../global/handles.h"
-#include "../global/stl_util.h"
-#include "../global/glm_util.h"
+#include "../util/stl_util.h"
+#include "../util/glm_util.h"
 
 #include <iostream>
 #include <stdlib.h>
