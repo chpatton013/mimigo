@@ -67,6 +67,7 @@ void GLMesh::CalculateNormals() {
 void GLMesh::Initialize() {
    CenterMesh();
    ScaleMesh();
+   CalculateNormals();
    int ndx = 0;
 
    //TODO: clean this up with macros once it is working.
@@ -99,9 +100,12 @@ void GLMesh::Initialize() {
    float normal_buffer[verts_.size()*3];
    ndx = 0;
    for (size_t i = 0; i < verts_.size(); ++i) {
-      normal_buffer[ndx++] = verts_[i].normal.x;
-      normal_buffer[ndx++] = verts_[i].normal.y;
-      normal_buffer[ndx++] = verts_[i].normal.z;
+      //normal_buffer[ndx++] = verts_[i].normal.x;
+      //normal_buffer[ndx++] = verts_[i].normal.y;
+      //normal_buffer[ndx++] = verts_[i].normal.z;
+      normal_buffer[ndx++] = vert_normals_[i].x;
+      normal_buffer[ndx++] = vert_normals_[i].y;
+      normal_buffer[ndx++] = vert_normals_[i].z;
    }
    MAKE_GL_BUFFER(normal_buffer_object_, normal_buffer);
 
