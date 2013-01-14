@@ -11,9 +11,9 @@ EXEC = $(shell basename `pwd`)
 
 
 CXX = g++
-CFLAGS = -Wall -Wextra -pipe -DGL_GLEXT_PROTOTYPES
+CFLAGS = -Wall -Wextra -pipe -DGL_GLEXT_PROTOTYPES $(foreach d,$(INCS),-I$d)
 LD = g++
-LDFLAGS = $(foreach d,$(INCS),-I$d)
+LDFLAGS =
 
 
 .PHONY: all debug test release profile prepare clean remove
