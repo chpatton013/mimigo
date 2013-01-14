@@ -67,12 +67,8 @@ void Initialize() {
 
 void Initialize(Universe*) {
    Initialize();
-   chdir("src");
-   chdir("shaders");
    //new GLShader("main", "vert_shader.glsl", "frag_shader.glsl");
-   new GLShader("main", "vert_shader.glsl", "wave.frag");
-   chdir("..");
-   chdir("..");
+   new GLShader("main", "src/shaders/wave.vert", "src/shaders/wave.frag");
 }
 
 void LoadResources(Universe*) {
