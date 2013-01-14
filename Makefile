@@ -11,7 +11,7 @@ EXEC = $(shell basename `pwd`)
 
 
 CXX = g++
-CFLAGS = -Wall -Wextra -pipe
+CFLAGS = -Wall -Wextra -pipe -DGL_GLEXT_PROTOTYPES
 LD = g++
 LDFLAGS = $(foreach d,$(INCS),-I$d)
 
