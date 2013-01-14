@@ -17,7 +17,10 @@ class MeshNode : public SceneNode {
    virtual void set_children(const std::set<SceneNode*>&)
     { assert(false); }
 
-   virtual void Draw(MatrixStack* matrix_stack) { mesh_->Draw(matrix_stack); }
+   virtual void Draw(MatrixStack* matrix_stack) {
+      matrix_stack->multiply(transform());
+      mesh_->Draw(matrix_stack);
+   }
 
   private:
    GLMesh* mesh_;
