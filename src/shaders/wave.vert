@@ -11,5 +11,5 @@ void main(void)
 {
    vPosition = uModelMatrix * vec4(aPosition.x, aPosition.y, aPosition.z, 1.0f);
    gl_Position = vPosition;
-   vNormal = vec4(aNormal.x, aNormal.y, aNormal.z, 0.0f);
+   vNormal = uNormalMatrix * vec4(aNormal.x, aNormal.y, aNormal.z, 0.0f);
 }

@@ -76,7 +76,7 @@ void LoadResources(Universe*) {
    GLMesh* bunny = MakeSquare();
    MeshNode* mesh = new MeshNode("bunny", bunny);
    mesh->apply_transformation(glm::scale(0.5f, 0.5f, 0.5f));
-   mesh->apply_transformation(glm::rotate(0.0f, 1.0f, 0.0f, 45.0f));
+   mesh->apply_transformation(glm::rotate(45.0f, 0.0f, 1.0f, 0.0f));
    RootNode::Instance()->AddChild(mesh);
 }
 
