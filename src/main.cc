@@ -63,16 +63,11 @@ void Initialize() {
    InitializeSDL();
    InitializeGL();
    InitializeGlew();
-}
-
-void Initialize(Universe*) {
-   Initialize();
    new GLShader("main", "src/shaders/wave.vert", "src/shaders/wave.frag");
 }
 
-void LoadResources(Universe*) {
+void LoadResources() {
    GLMesh* bunny = LoadMeshFromFile("meshes/bunny500.m");
-   //GLMesh* bunny = MakeSquare();
    MeshNode* mesh = new MeshNode("bunny", bunny);
    RootNode::Instance()->AddChild(mesh);
 }
@@ -86,10 +81,11 @@ void StartMainLoop(Universe* universe) {
 int main(int , char** ) {
 
    Camera* camera = new Camera();
-   Universe* universe = new Universe(camera);
 
-   Initialize(universe);
-   LoadResources(universe);
+   Initialize();
+   LoadResources();
+
+   Universe* universe = new Universe(camera);
    StartMainLoop(universe);
 
    return 0;

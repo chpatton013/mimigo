@@ -3,6 +3,7 @@
 
 #include "../core/game.h"
 #include "player.h"
+#include "small_planet.h"
 
 class RootNode;
 class Camera;
@@ -11,7 +12,8 @@ class Universe : public Game {
   public:
    Universe(Camera* camera) :
       camera_(camera),
-      player_(new Player())
+      planet_(new SmallPlanet()),
+      player_(new Player(planet_))
    {}
 
    virtual void Update();
@@ -27,6 +29,7 @@ class Universe : public Game {
 
   private:
    Camera* camera_;
+   SmallPlanet* planet_;
    Player* player_;
 };
 
