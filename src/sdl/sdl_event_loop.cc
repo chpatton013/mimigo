@@ -44,13 +44,66 @@ void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
          SDL_Event event;
          while(SDL_PollEvent(&event)) {
             switch (event.type) {
+               case SDL_KEYDOWN:
+                  KeyDown(event);
+                  break;
+               case SDL_KEYUP:
+                  KeyUp(event);
+                  break;
                case SDL_QUIT:
                   Quit();
+                  break;
             }
          }
          last_time = SDL_GetTicks();
          graphics_->Draw();
       }
+   }
+}
+
+void SDLEventLoop::KeyUp(SDL_Event &event) {
+   switch (event.key.keysym.sym) {
+      case SDLK_LEFT:
+      case SDLK_a:
+         OnLeftButtonUp();
+         break;
+      case SDLK_RIGHT:
+      case SDLK_d:
+         OnRightButtonUp();
+         break;
+      case SDLK_UP:
+      case SDLK_w:
+         OnUpButtonUp();
+         break;
+      case SDLK_DOWN:
+      case SDLK_s:
+         OnDownButtonUp();
+         break;
+      default:
+         break;
+   }
+}
+
+void SDLEventLoop::KeyDown(SDL_Event &event) {
+   switch (event.key.keysym.sym) {
+      case SDLK_LEFT:
+      case SDLK_a:
+         OnLeftButtonDown();
+         break;
+      case SDLK_RIGHT:
+      case SDLK_d:
+         OnRightButtonDown();
+         break;
+      case SDLK_UP:
+      case SDLK_w:
+         OnUpButtonDown();
+         break;
+      case SDLK_DOWN:
+      case SDLK_s:
+         OnDownButtonDown();
+         break;
+      default:
+         break;
    }
 }
 

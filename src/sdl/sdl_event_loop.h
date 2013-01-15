@@ -4,6 +4,7 @@
 #include <vector>
 #include "../core/event_loop.h"
 #include "../core/timer.h"
+#include <SDL/SDL.h>
 #include <SDL/SDL_timer.h>
 
 class SDLGraphicsAdapter;
@@ -37,6 +38,9 @@ class SDLEventLoop : public EventLoop,
    virtual void OnExpiration(const std::string& event_name);
 
   private:
+   void KeyDown(SDL_Event &e);
+   void KeyUp(SDL_Event &e);
+
    SDLGraphicsAdapter* graphics_;
    Game* game_;
    std::vector<SDLTimer> timers_;
