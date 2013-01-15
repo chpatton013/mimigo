@@ -79,6 +79,9 @@ void SDLEventLoop::KeyUp(SDL_Event &event) {
       case SDLK_s:
          OnDownButtonUp();
          break;
+      case SDLK_SPACE:
+         OnJumpButtonUp();
+         break;
       default:
          break;
    }
@@ -101,6 +104,9 @@ void SDLEventLoop::KeyDown(SDL_Event &event) {
       case SDLK_DOWN:
       case SDLK_s:
          OnDownButtonDown();
+         break;
+      case SDLK_SPACE:
+         OnJumpButtonDown();
          break;
       default:
          break;

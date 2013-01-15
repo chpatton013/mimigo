@@ -12,13 +12,18 @@
 class Player {
   public:
    Player(SmallPlanet* planet) :
-      mesh_(static_cast<MeshNode*>(SceneNode::Get("bunny"))),
       rotater_(planet->center(), planet->radius())
-   {}
+   {
+      mesh_ = new SceneNode("player");
+      RootNode::Instance()->AddChild(mesh_);
+      mesh_->AddChild(SceneNode::Get("bunny"));
+   }
 
    void StartMovingLeftAroundAttachedPlanet();
    void StartMovingRightAroundAttachedPlanet();
    void StopMoving();
+
+   void Jump();
 
    void attach_planet(SmallPlanet* planet) {
       attached_planet_ = planet;
@@ -32,7 +37,7 @@ class Player {
    void StartMovingClockwiseAroundAttachedPlanet();
    bool IsTopSideOfPlanet() const;
 
-   MeshNode* mesh_;
+   SceneNode* mesh_;
    SmallPlanet* attached_planet_;
    PlanetRotater rotater_;
 };

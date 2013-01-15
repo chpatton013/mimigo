@@ -36,7 +36,7 @@ void PlanetRotater::StopRotating(float acceleration) {
    acceleration_frames_ = CalculateFramesUntilMoveSpeed(0.0f, acceleration_);
 }
 
-void PlanetRotater::Update(MeshNode* mesh) {
+void PlanetRotater::Update(SceneNode* mesh) {
    if (acceleration_frames_ > 0) {
       move_speed_ += acceleration_;
       --acceleration_frames_;
@@ -45,6 +45,9 @@ void PlanetRotater::Update(MeshNode* mesh) {
    glm::mat4 transform = glm::translate(glm::mat4(1.0f), UpdatedPosition());
    transform = glm::rotate(transform, angle_ - 90.0f, glm::vec3(0.0f, 0.0f, 1.0f));
    mesh->set_transformation(transform);
+}
+
+void PlanetRotater::Jump(float jump_velocity) {
 }
 
 inline float radians(float degrees) {

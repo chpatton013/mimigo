@@ -43,3 +43,10 @@ void Universe::OnDownButtonUp() {
 void Universe::OnDownButtonDown() {
    printf("down --pushed\n");
 }
+
+void Universe::OnJumpButtonUp() {
+}
+
+void Universe::OnJumpButtonDown() {
+   player_->Jump();
+}

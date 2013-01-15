@@ -69,6 +69,7 @@ void Initialize() {
 void LoadResources() {
    GLMesh* bunny = LoadMeshFromFile("meshes/bunny500.m");
    MeshNode* mesh = new MeshNode("bunny", bunny);
+   mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.2f)));
    RootNode::Instance()->AddChild(mesh);
 }
 

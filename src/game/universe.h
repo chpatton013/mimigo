@@ -12,7 +12,7 @@ class Universe : public Game {
   public:
    Universe(Camera* camera) :
       camera_(camera),
-      planet_(new SmallPlanet(glm::vec3(0.0f), 1.0f)),
+      planet_(new SmallPlanet(glm::vec3(-0.5f, -0.5f, 0.0f), 0.4f)),
       player_(new Player(planet_))
    {
       player_->attach_planet(planet_);
@@ -28,6 +28,8 @@ class Universe : public Game {
    virtual void OnDownButtonUp();
    virtual void OnUpButtonDown();
    virtual void OnUpButtonUp();
+   virtual void OnJumpButtonDown();
+   virtual void OnJumpButtonUp();
 
   private:
    Camera* camera_;
