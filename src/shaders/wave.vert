@@ -1,3 +1,5 @@
+#version 120
+
 uniform mat4 uModelMatrix;
 uniform mat4 uNormalMatrix;
 
@@ -9,7 +11,7 @@ varying vec4 vNormal;
 
 void main(void)
 {
-   vPosition = uModelMatrix * vec4(aPosition.x, aPosition.y, aPosition.z, 1.0f);
-   gl_Position = vPosition;
+   vPosition = vec4(aPosition.x, aPosition.y, aPosition.z, 1.0f);
+   gl_Position = uModelMatrix * vPosition;
    vNormal = uNormalMatrix * vec4(aNormal.x, aNormal.y, aNormal.z, 0.0f);
 }

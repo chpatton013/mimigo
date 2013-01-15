@@ -25,10 +25,10 @@ void GLMesh::SetupDraw() {
    GL_BIND_ARRAY(vertex_buffer_object_, "aPosition", 3);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_object_);
    GL_BIND_ARRAY(normal_buffer_object_, "aNormal", 3);
-   GL_BIND_ARRAY(diffuse_buffer_object_, "aDiffuse", 3);
-   GL_BIND_ARRAY(ambient_buffer_object_, "aAmbient", 3);
-   GL_BIND_ARRAY(specular_buffer_object_, "aSpecular", 3);
-   GL_BIND_ARRAY(texture_buffer_object_, "aTexture", 2);
+   //GL_BIND_ARRAY(diffuse_buffer_object_, "aDiffuse", 3);
+   //GL_BIND_ARRAY(ambient_buffer_object_, "aAmbient", 3);
+   //GL_BIND_ARRAY(specular_buffer_object_, "aSpecular", 3);
+   //GL_BIND_ARRAY(texture_buffer_object_, "aTexture", 2);
 }
 
 void GLMesh::Draw(MatrixStack* transform) {
@@ -48,7 +48,6 @@ void GLMesh::Draw(MatrixStack* transform) {
 }
 
 void GLMesh::CalculateNormals() {
-   std::cout << "CALCULATE NORMALS" << std::endl;
    vert_normals_ = std::vector<glm::vec3>(verts_.size(),
          glm::vec3(0, 0, 0));
    for (size_t i = 0; i < faces_.size(); ++i) {
@@ -100,9 +99,6 @@ void GLMesh::Initialize() {
    float normal_buffer[verts_.size()*3];
    ndx = 0;
    for (size_t i = 0; i < verts_.size(); ++i) {
-      //normal_buffer[ndx++] = verts_[i].normal.x;
-      //normal_buffer[ndx++] = verts_[i].normal.y;
-      //normal_buffer[ndx++] = verts_[i].normal.z;
       normal_buffer[ndx++] = vert_normals_[i].x;
       normal_buffer[ndx++] = vert_normals_[i].y;
       normal_buffer[ndx++] = vert_normals_[i].z;

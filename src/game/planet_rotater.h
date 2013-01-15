@@ -28,9 +28,8 @@ class PlanetRotater {
    glm::vec3 UpdatedPosition();
 
    bool is_moving_clockwise() const { return acceleration_ > 0.0f; }
-   int CalculateFramesUntilMoveSpeed(float move_speed, float acceleration) {
-      return std::abs(move_speed - move_speed_ / acceleration);
-   }
+   int CalculateFramesUntilMoveSpeed(float move_speed, float acceleration)
+    { return std::abs(move_speed - move_speed_ / acceleration); }
 
    glm::vec3 center_;
    float radius_;

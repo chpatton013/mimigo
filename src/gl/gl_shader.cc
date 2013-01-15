@@ -71,7 +71,7 @@ bool GLShader::Install(const std::string& shader_name,
    GET_ATTRIB(program_handle, "aNormal");
    //GET_ATTRIB(program_handle, "aTexture");
 
-   GET_UNIFORM(program_handle, "uProjMatrix");
+   //GET_UNIFORM(program_handle, "uProjMatrix");
    //GET_UNIFORM(program_handle, "uViewMatrix");
    GET_UNIFORM(program_handle, "uModelMatrix");
    GET_UNIFORM(program_handle, "uNormalMatrix");
@@ -81,9 +81,7 @@ bool GLShader::Install(const std::string& shader_name,
    //GET_UNIFORM(program_handle, "uUseTexture");
    //GET_UNIFORM(program_handle, "uCameraPosition");
 
-   printf("%s and %s loaded and using: %d\n",
-      frag_shader_name.c_str(), vert_shader_name.c_str(), program_handle);
-
+   assert(program_handle > 0);
    g_shaders[shader_name] = program_handle;
    return true;
 }

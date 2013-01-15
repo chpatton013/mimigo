@@ -85,6 +85,5 @@ void SDLGraphicsAdapter::Initialize() {
 void SDLGraphicsAdapter::Draw() {
    Begin();
    game_->Draw();
-
    End();
 }

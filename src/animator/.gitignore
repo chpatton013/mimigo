@@ -1,0 +1,5 @@
+*.o
+readme.html
+glm
+animator_test
+scene_manager/
