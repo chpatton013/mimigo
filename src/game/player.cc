@@ -1,7 +1,7 @@
 #include "player.h"
 
-const float kMoveSpeed = 10.0f;
-const float kAcceleration = 1.0f;
+const float kMoveSpeed = 8.0f;
+const float kAcceleration = 0.6f;
 
 void Player::StartMovingCounterClockwiseAroundAttachedPlanet() {
    rotater_.StartRotatingCounterClockwise(kMoveSpeed, kAcceleration);
@@ -38,5 +38,5 @@ void Player::StopMoving() {
 }
 
 void Player::Update() {
-   rotater_.Update();
+   mesh_->move(rotater_.Update());
 }

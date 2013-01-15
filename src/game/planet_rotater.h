@@ -12,24 +12,26 @@ class PlanetRotater {
    PlanetRotater(const glm::vec3& center, float radius) :
       center_(center),
       radius_(radius),
+      angle_(0.0f),
       acceleration_(0.0f)
    {}
 
    void StartRotatingClockwise(float move_speed, float acceleration);
    void StartRotatingCounterClockwise(float move_speed, float acceleration);
    void StopRotating(float acceleration);
-   void Update();
+   glm::vec3 Update();
 
   private:
+   glm::vec3 UpdatedPosition();
+
    bool is_moving_clockwise() const { return acceleration_ > 0.0f; }
    int CalculateFramesUntilMoveSpeed(float move_speed, float acceleration) {
-      int frames = std::abs(move_speed - move_speed_ / acceleration);
-      std::cout << "num frames = " << frames << std::endl;
-      return frames;
+      return std::abs(move_speed - move_speed_ / acceleration);
    }
 
    glm::vec3 center_;
    float radius_;
+   float angle_;
 
    float acceleration_;
    float move_speed_;
