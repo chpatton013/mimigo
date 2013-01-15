@@ -2,6 +2,7 @@
 #define _MESH_NODE_H_
 
 #include "scene_node.h"
+#include "gl/gl_mesh.h"
 
 class GLMesh;
 

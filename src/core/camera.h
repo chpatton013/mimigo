@@ -1,9 +1,9 @@
 #ifndef _CAMERA_H_
 #define _CAMERA_H_
 
-#include "../../third_party/glm/glm/glm.hpp"
-#include "../../third_party/glm/glm/gtc/matrix_transform.hpp" //perspective, trans etc
-#include "../../third_party/glm/glm/gtc/type_ptr.hpp" //value_ptr
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp> //perspective, trans etc
+#include <glm/gtc/type_ptr.hpp> //value_ptr
 #include "../gl/GLSL_helper.h"
 #include "../util/matrix_stack.h"
 #include "../util/glm_util.h"

@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "../global/stl_util.h"
-#include "../../third_party/glm/glm/glm.hpp"
+#include <glm/glm.hpp>
 
 typedef glm::vec2 Point;
 

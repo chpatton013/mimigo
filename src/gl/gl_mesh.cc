@@ -1,6 +1,6 @@
 #include "gl_mesh.h"
 #include "GLSL_helper.h"
-#include "../../third_party/glm/glm/gtc/type_ptr.hpp"
+#include <glm/gtc/type_ptr.hpp>
 #include "../util/glm_util.h"
 #include "../util/stl_util.h"
 

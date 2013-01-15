@@ -1,7 +1,5 @@
 #include "sdl_graphics_adapter.h"
 #include "../global/handles.h"
-#include "../../third_party/glm/glm/gtc/matrix_transform.hpp"
-#include "../../third_party/glm/glm/gtc/type_ptr.hpp"
 #include "../gl/GLSL_helper.h"
 #include "../gl/gl_shader.h"
 #include "../core/game.h"

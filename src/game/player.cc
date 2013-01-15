@@ -38,5 +38,5 @@ void Player::StopMoving() {
 }
 
 void Player::Update() {
-   mesh_->set_transformation(glm::translate(rotater_.Update()));
+   rotater_.Update(mesh_);
 }

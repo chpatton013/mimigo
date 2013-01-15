@@ -6,7 +6,7 @@
 #include <map>
 #include <string>
 #include <GL/glew.h>
-#include "../../third_party/glm/glm/glm.hpp"
+#include <glm/glm.hpp>
 #include "../global/handles.h"
 #include "../core/vertex.h"
 #include "../util/matrix_stack.h"

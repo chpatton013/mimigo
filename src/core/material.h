@@ -1,7 +1,7 @@
 #ifndef MATERIAL_H_
 #define MATERIAL_H_
 
-#include "../../third_party/glm/glm/glm.hpp"
+#include <glm/glm.hpp>
 
 struct Material {
    glm::vec3 kDiffuse;

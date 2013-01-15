@@ -5,6 +5,8 @@
 
 #include <iostream>
 
+class MeshNode;
+
 /* Class for rotating a |body| about an arbitrary |center| given a |speed| and
  * an acceleration amount to get to that speed. */
 class PlanetRotater {
@@ -19,7 +21,7 @@ class PlanetRotater {
    void StartRotatingClockwise(float move_speed, float acceleration);
    void StartRotatingCounterClockwise(float move_speed, float acceleration);
    void StopRotating(float acceleration);
-   glm::vec3 Update();
+   void Update(MeshNode* mesh);
 
   private:
    glm::vec3 UpdatedPosition();

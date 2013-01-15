@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "util/glm_util.h"
+#include "scene_hierarchy/mesh_node.h"
 
 inline
 float clockwise_acceleration(float acceleration) {
@@ -35,15 +36,15 @@ void PlanetRotater::StopRotating(float acceleration) {
    acceleration_frames_ = CalculateFramesUntilMoveSpeed(0.0f, acceleration_);
 }
 
-glm::vec3 PlanetRotater::Update() {
+void PlanetRotater::Update(MeshNode* mesh) {
    if (acceleration_frames_ > 0) {
       move_speed_ += acceleration_;
       --acceleration_frames_;
    }
    angle_ += move_speed_;
-   glm::vec3 temp = UpdatedPosition();
-   glm_util::Print(temp);
-   return temp;
+   glm::mat4 transform = glm::translate(glm::mat4(1.0f), UpdatedPosition());
+   transform = glm::rotate(transform, angle_ - 90.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+   mesh->set_transformation(transform);
 }
 
 inline float radians(float degrees) {
@@ -55,6 +56,5 @@ glm::vec3 vec3_from_radius_and_angle(float radius, float angle) {
 }
 
 glm::vec3 PlanetRotater::UpdatedPosition() {
-   std::cout << angle_ << std::endl;
    return center_ + vec3_from_radius_and_angle(radius_, angle_);
 }

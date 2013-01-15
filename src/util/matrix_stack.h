@@ -1,7 +1,7 @@
 #ifndef _MATRIX_STACK_H_
 #define _MATRIX_STACK_H_
 
-#include "../../third_party/glm/glm/gtx/vector_angle.hpp"
+#include <glm/gtx/vector_angle.hpp>
 #include <deque>
 
 class MatrixStack {
