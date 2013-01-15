@@ -3,11 +3,12 @@
 
 class SmallPlanet {
   public:
-   //const glm::vec3 &center() const { return center_; }
-   //float radius() const { return radius_; }
-
-   const glm::vec3 center() const { return glm::vec3(0.0f); }
-   float radius() const { return 1.0f; }
+   SmallPlanet(const glm::vec3& center, float radius) :
+      center_(center),
+      radius_(radius)
+   {}
+   const glm::vec3 &center() const { return center_; }
+   float radius() const { return radius_; }
 
   private:
    glm::vec3 center_;

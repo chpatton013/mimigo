@@ -12,7 +12,7 @@ class Universe : public Game {
   public:
    Universe(Camera* camera) :
       camera_(camera),
-      planet_(new SmallPlanet()),
+      planet_(new SmallPlanet(glm::vec3(0.0f), 1.0f)),
       player_(new Player(planet_))
    {
       player_->attach_planet(planet_);
