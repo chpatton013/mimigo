@@ -41,7 +41,7 @@ void PlanetRotater::Update(SceneNode* mesh) {
       move_speed_ += acceleration_;
       --acceleration_frames_;
    }
-   angle_ += move_speed_;
+   angle_ -= move_speed_;
    glm::mat4 transform = glm::translate(glm::mat4(1.0f), UpdatedPosition());
    transform = glm::rotate(transform, angle_ - 90.0f, glm::vec3(0.0f, 0.0f, 1.0f));
    mesh->set_transformation(transform);

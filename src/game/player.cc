@@ -17,21 +17,17 @@ bool Player::IsTopSideOfPlanet() const {
 }
 
 void Player::StartMovingLeftAroundAttachedPlanet() {
-   if (IsTopSideOfPlanet()) {
+   if (IsTopSideOfPlanet())
       StartMovingCounterClockwiseAroundAttachedPlanet();
-   }
-   else {
+   else
       StartMovingClockwiseAroundAttachedPlanet();
-   }
 }
 
 void Player::StartMovingRightAroundAttachedPlanet() {
-   if (IsTopSideOfPlanet()) {
+   if (IsTopSideOfPlanet())
       StartMovingClockwiseAroundAttachedPlanet();
-   }
-   else {
+   else
       StartMovingCounterClockwiseAroundAttachedPlanet();
-   }
 }
 
 void Player::Jump() {
