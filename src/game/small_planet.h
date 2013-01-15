@@ -6,8 +6,8 @@ class SmallPlanet {
    //const glm::vec3 &center() const { return center_; }
    //float radius() const { return radius_; }
 
-   const glm::vec3 &center() const { return glm::vec3(0.0f); }
-   float radius() const { return 10.0f; }
+   const glm::vec3 center() const { return glm::vec3(0.0f); }
+   float radius() const { return 1.0f; }
 
   private:
    glm::vec3 center_;

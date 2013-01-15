@@ -48,6 +48,8 @@ class SceneNode {
 
    void PrintTree(int level);
 
+   void set_transformation(const glm::mat4& transform)
+    { transform_ = transform; }
    void apply_transformation(const glm::mat4& transform)
     { transform_ *= transform; }
 
