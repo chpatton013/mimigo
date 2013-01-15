@@ -1,6 +1,6 @@
 #include "player.h"
 
-const float kMoveSpeed = 1.0f;
+const float kMoveSpeed = 10.0f;
 const float kAcceleration = 1.0f;
 
 void Player::StartMovingCounterClockwiseAroundAttachedPlanet() {
@@ -12,7 +12,7 @@ void Player::StartMovingClockwiseAroundAttachedPlanet() {
 }
 
 bool Player::IsTopSideOfPlanet() const {
-   return false;
+   return true;
 }
 
 void Player::StartMovingLeftAroundAttachedPlanet() {
@@ -34,5 +34,9 @@ void Player::StartMovingRightAroundAttachedPlanet() {
 }
 
 void Player::StopMoving() {
-   rotater_.StopRotating();
+   rotater_.StopRotating(kAcceleration);
+}
+
+void Player::Update() {
+   rotater_.Update();
 }

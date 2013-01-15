@@ -4,6 +4,7 @@
 
 void Universe::Update() {
    camera_->Update();
+   player_->Update();
 }
 
 void Universe::Draw() {
@@ -12,19 +13,19 @@ void Universe::Draw() {
 }
 
 void Universe::OnLeftButtonDown() {
-   printf("left --pushed\n");
+   player_->StartMovingLeftAroundAttachedPlanet();
 }
 
 void Universe::OnLeftButtonUp() {
-   printf("left --released\n");
+   player_->StopMoving();
 }
 
 void Universe::OnRightButtonDown() {
-   printf("right --pushed\n");
+   player_->StartMovingRightAroundAttachedPlanet();
 }
 
 void Universe::OnRightButtonUp() {
-   printf("right --released\n");
+   player_->StopMoving();
 }
 
 void Universe::OnUpButtonDown() {

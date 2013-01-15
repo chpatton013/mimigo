@@ -14,7 +14,9 @@ class Universe : public Game {
       camera_(camera),
       planet_(new SmallPlanet()),
       player_(new Player(planet_))
-   {}
+   {
+      player_->attach_planet(planet_);
+   }
 
    virtual void Update();
    virtual void Draw();

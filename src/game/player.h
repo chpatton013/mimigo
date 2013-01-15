@@ -13,15 +13,19 @@ class Player {
   public:
    Player(SmallPlanet* planet) :
       mesh_(static_cast<MeshNode*>(SceneNode::Get("bunny"))),
-      rotater_(planet->center())
+      rotater_(planet->center(), planet->radius())
    {}
 
    void StartMovingLeftAroundAttachedPlanet();
    void StartMovingRightAroundAttachedPlanet();
    void StopMoving();
 
-   void attach_planet(SmallPlanet* planet)
-    { attached_planet_ = planet; rotater_ = PlanetRotater(planet->center()); }
+   void attach_planet(SmallPlanet* planet) {
+      attached_planet_ = planet;
+      rotater_ = PlanetRotater(planet->center(), planet->radius());
+   }
+
+   void Update();
 
   private:
    void StartMovingCounterClockwiseAroundAttachedPlanet();
