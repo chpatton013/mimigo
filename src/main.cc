@@ -33,7 +33,7 @@ void InitializeSDL() {
 
 void InitializeGL() {
    glShadeModel(GL_SMOOTH);
-   glViewport(0, 0, 400, 400);
+   glViewport(0, 0, kScreenWidth, kScreenHeight);
 
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
