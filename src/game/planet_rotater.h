@@ -17,7 +17,10 @@ class PlanetRotater {
       radius_(radius),
       destination_radius_(radius),
       planet_radius_(radius),
-      acceleration_(0.0f)
+      acceleration_(0.0f),
+      move_speed_(0.0f),
+      final_move_speed_(0.0f),
+      acceleration_frames_(0)
    {
       SetAngleToNearestPosition(position);
    }
@@ -44,6 +47,7 @@ class PlanetRotater {
 
    float acceleration_;
    float move_speed_;
+   float final_move_speed_;
    int acceleration_frames_;
 };
 

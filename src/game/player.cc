@@ -3,7 +3,7 @@
 const float kMoveSpeed = 8.0f;
 const float kJumpHeight = 0.18f;
 const float kAcceleration = 0.6f;
-const float kRotateTime = 0.02f;
+const float kRotateTime = 0.05f;
 
 // static
 void Player::RotationEndCallback(void* p) {
@@ -49,9 +49,8 @@ bool Player::EntersGravityFieldOf(SmallPlanet* planet) {
    if (planet == attached_planet_)
       return false;
 
-   if (is_jumping() && planet->PositionWithinGravityField(position_)) {
+   if (is_jumping() && planet->PositionWithinGravityField(position_))
       return true;
-   }
 
    return false;
 }

@@ -21,6 +21,7 @@ void PlanetRotater::StartRotatingClockwise(float move_speed,
    acceleration_ = clockwise_acceleration(acceleration);
    acceleration_frames_ = CalculateFramesUntilMoveSpeed(
       move_speed, acceleration_);
+   final_move_speed_ = move_speed;
 }
 
 void PlanetRotater::StartRotatingCounterClockwise(float move_speed,
@@ -28,6 +29,7 @@ void PlanetRotater::StartRotatingCounterClockwise(float move_speed,
    acceleration_ = counter_clockwise_acceleration(acceleration);
    acceleration_frames_ = CalculateFramesUntilMoveSpeed(
       move_speed, acceleration_);
+   final_move_speed_ = -move_speed;
 }
 
 void PlanetRotater::StopRotating(float acceleration) {
@@ -36,6 +38,7 @@ void PlanetRotater::StopRotating(float acceleration) {
    else
       acceleration_ = clockwise_acceleration(acceleration);
    acceleration_frames_ = CalculateFramesUntilMoveSpeed(0.0f, acceleration_);
+   final_move_speed_ = 0.0f;
 }
 
 void PlanetRotater::Update(glm::vec3& position, Rotation& rotation,
@@ -43,6 +46,8 @@ void PlanetRotater::Update(glm::vec3& position, Rotation& rotation,
    if (acceleration_frames_ > 0) {
       move_speed_ += acceleration_;
       --acceleration_frames_;
+   } else {
+      move_speed_ = final_move_speed_;
    }
 
    if (radius_ < destination_radius_) {
