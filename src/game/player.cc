@@ -1,7 +1,7 @@
 #include "player.h"
 
 const float kMoveSpeed = 8.0f;
-const float kJumpSpeed = 0.1f;
+const float kJumpHeight = 0.18f;
 const float kAcceleration = 0.6f;
 
 void Player::StartMovingCounterClockwiseAroundAttachedPlanet() {
@@ -31,7 +31,7 @@ void Player::StartMovingRightAroundAttachedPlanet() {
 }
 
 void Player::Jump() {
-   rotater_.Jump(kJumpSpeed);
+   rotater_.Jump(kJumpHeight);
 }
 
 void Player::StopMoving() {

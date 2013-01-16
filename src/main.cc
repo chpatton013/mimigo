@@ -71,6 +71,7 @@ void LoadResources() {
    MeshNode* mesh = new MeshNode("bunny", bunny);
    mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.2f)));
    RootNode::Instance()->AddChild(mesh);
+   RootNode::Instance()->AddChild(new MeshNode("planet", MakeSquare()));
 }
 
 void StartMainLoop(Universe* universe) {

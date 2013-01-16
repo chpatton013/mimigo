@@ -19,13 +19,13 @@ class MatrixStack {
    }
 
    void translate(const glm::vec3& offset)
-   { stack.push_back(top() * glm::translate(top(), offset)); }
+   { multiply(glm::translate(top(), offset)); }
    void scale(const glm::vec3& s)
-   { stack.push_back(top() * glm::scale(top(), s)); }
+   { multiply(glm::scale(top(), s)); }
    void rotate(float angle, const glm::vec3& axis)
-   { stack.push_back(top() * glm::rotate(top(), angle, axis)); }
+   { multiply(glm::rotate(top(), angle, axis)); }
    void multiply(const glm::mat4& matrix)
-   { stack.push_back(top() * matrix); }
+   { stack.back() *= matrix; }
 
    const glm::mat4& top() { return stack.back(); }
 

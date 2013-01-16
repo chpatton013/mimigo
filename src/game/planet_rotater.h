@@ -15,6 +15,8 @@ class PlanetRotater {
    PlanetRotater(const glm::vec3& center, float radius) :
       center_(center),
       radius_(radius),
+      destination_radius_(radius),
+      planet_radius_(radius),
       angle_(0.0f),
       acceleration_(0.0f)
    {}
@@ -23,7 +25,7 @@ class PlanetRotater {
    void StartRotatingCounterClockwise(float move_speed, float acceleration);
    void StopRotating(float acceleration);
    void Update(SceneNode* mesh);
-   void Jump(float jump_velocity);
+   void Jump(float jump_height);
 
   private:
    glm::vec3 UpdatedPosition();
@@ -34,6 +36,8 @@ class PlanetRotater {
 
    glm::vec3 center_;
    float radius_;
+   float destination_radius_;
+   float planet_radius_;
    float angle_;
 
    float acceleration_;

@@ -4,6 +4,8 @@
 #include "util/glm_util.h"
 #include "scene_hierarchy/mesh_node.h"
 
+const float kJumpSpeed = 0.04f;
+
 inline
 float clockwise_acceleration(float acceleration) {
    return std::abs(acceleration);
@@ -41,14 +43,26 @@ void PlanetRotater::Update(SceneNode* node) {
       move_speed_ += acceleration_;
       --acceleration_frames_;
    }
+
+   if (radius_ < destination_radius_) {
+      radius_ += kJumpSpeed;
+      if (radius_ >= destination_radius_)
+         destination_radius_ = planet_radius_;
+   }
+   else if (radius_ > destination_radius_) {
+      radius_ -= kJumpSpeed;
+      if (radius_ < destination_radius_)
+         radius_ = destination_radius_ = planet_radius_;
+   }
+
    angle_ -= move_speed_;
    glm::mat4 transform = glm::translate(glm::mat4(1.0f), UpdatedPosition());
    transform = glm::rotate(transform, angle_ - 90.0f, glm::vec3(0.0f, 0.0f, 1.0f));
    node->set_transformation(transform);
 }
 
-void PlanetRotater::Jump(float jump_velocity) {
-   std::cout << "starting a jump" << std::endl;
+void PlanetRotater::Jump(float jump_height) {
+   destination_radius_ = planet_radius_ + jump_height;
 }
 
 inline float radians(float degrees) {
