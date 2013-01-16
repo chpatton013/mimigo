@@ -16,7 +16,7 @@ class SmallPlanet {
       mesh->set_transformation(glm::translate(center));
       mesh->apply_transformation(glm::scale(radius, radius, 1.0f));
       RootNode::Instance()->AddChild(mesh);
-      mesh->AddChild(SceneNode::Get("planet"));
+      mesh->AddChild(SceneNode::Get("planet" + id));
    }
 
    bool PositionWithinGravityField(const glm::vec3& position);

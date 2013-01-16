@@ -3,6 +3,7 @@
 
 #include <glm/glm.hpp>
 #include "core/rotation.h"
+#include "gl/gl_mesh.h"
 
 #include <iostream>
 
