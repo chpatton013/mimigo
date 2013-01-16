@@ -5,6 +5,7 @@
 
 #include <iostream>
 
+class Animator;
 class SceneNode;
 
 /* Class for rotating a |body| about an arbitrary |center| given a |speed| and
