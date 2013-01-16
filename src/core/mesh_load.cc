@@ -1,9 +1,10 @@
 #include "mesh_load.h"
 
-#include "../gl/gl_mesh.h"
-#include "../global/handles.h"
-#include "../util/stl_util.h"
-#include "../util/glm_util.h"
+#include "rotation.h"
+#include "gl/gl_mesh.h"
+#include "global/handles.h"
+#include "util/stl_util.h"
+#include "util/glm_util.h"
 
 #include <iostream>
 #include <stdlib.h>
@@ -127,8 +128,7 @@ void ParseMaterials(const std::string& fname) {
 
 // Parse functions //
 
-/*
-EntityComponent* LoadEntityFromOBJFile(const std::string& filename) {
+std::vector<GLMesh*> LoadMeshesFromOBJFile(const std::string& filename) {
    std::vector<GLMesh*> meshes;
    const std::string kCommentHeader("#");
    const std::string kTextureHeader("vt");
@@ -142,7 +142,7 @@ EntityComponent* LoadEntityFromOBJFile(const std::string& filename) {
    file.open(filename.c_str());
    if (!file.is_open()) {
       fprintf(stderr, "failed to open mesh file %s\n", filename.c_str());
-      return NULL;
+      return std::vector<GLMesh*>();
    }
 
    std::vector<Vertex> verts;
@@ -186,15 +186,9 @@ EntityComponent* LoadEntityFromOBJFile(const std::string& filename) {
       } else {
       }
    }
-   meshes.push_back(new GLMesh(verts, faces, normals,
-    texture_coords));
-   std::cout << FString("creating entity: %s\n", filename.c_str());
-
-   file.close();
-   g_entities[filename] = new Entity(meshes, glm::vec3(0.0), Rotation(), glm::vec3(1.0), filename);
-   g_scene->Add(g_entities[filename]);
-   return g_entities[filename];
-}*/
+   meshes.push_back(new GLMesh(verts, faces, normals, texture_coords));
+   return meshes;
+}
 
 GLMesh* LoadMeshFromFile(const std::string& filename) {
    const std::string kCommentHeader("#");

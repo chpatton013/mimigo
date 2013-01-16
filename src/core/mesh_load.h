@@ -2,12 +2,13 @@
 #define MESH_LOAD_H
 
 #include <string>
+#include <vector>
 
 class GLMesh;
 class EntityComponent;
 
 GLMesh* LoadMeshFromFile(const std::string& filename);
-EntityComponent* LoadEntityFromOBJFile(const std::string& filename);
+std::vector<GLMesh*> LoadMeshesFromOBJFile(const std::string& filename);
 GLMesh* MakeSquare();
 EntityComponent* MakeCube(const std::string& name, const std::string& texture);
 
