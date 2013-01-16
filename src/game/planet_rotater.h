@@ -34,8 +34,8 @@ class PlanetRotater {
 
    bool IsOnRightside() {
       ClampAngle();
-      return angle_ > 0.0f && angle_ < 90.0f ||
-             angle_ > 270.0f && angle_ < 360.0f;
+      return (angle_ > 0.0f && angle_ < 90.0f) ||
+             (angle_ > 270.0f && angle_ < 360.0f);
    }
 
    bool IsOnTopside() {

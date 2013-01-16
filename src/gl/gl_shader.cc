@@ -72,7 +72,7 @@ bool GLShader::Install(const std::string& shader_name,
    //GET_ATTRIB(program_handle, "aTexture");
 
    //GET_UNIFORM(program_handle, "uProjMatrix");
-   //GET_UNIFORM(program_handle, "uViewMatrix");
+   GET_UNIFORM(program_handle, "uViewMatrix");
    GET_UNIFORM(program_handle, "uModelMatrix");
    GET_UNIFORM(program_handle, "uNormalMatrix");
    //GET_UNIFORM(program_handle, "uLights");

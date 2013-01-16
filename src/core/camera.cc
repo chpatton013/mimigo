@@ -19,9 +19,6 @@ void Camera::Update() {
 }
 
 void Camera::UpdateCamera() {
-   pos_mover_.Move(camera_pos_, camera_focus_ +
-      glm::vec3(std::cos(radians(angle_)), 0.5f, std::sin(radians(angle_)))*kCameraDistance,
-      0.9f);
 }
 
 void Camera::SetView() {
@@ -30,7 +27,4 @@ void Camera::SetView() {
          glm::vec3(camera_focus_),
          camera_up_);
    safe_glUniformMatrix4fv(g_handles["uViewMatrix"], glm::value_ptr(camera));
-   glUniform4f(g_handles["uCameraPosition"], camera_pos_.x, camera_pos_.y,
-         camera_pos_.z, 1.0f);
-
 }

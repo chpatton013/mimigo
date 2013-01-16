@@ -12,11 +12,10 @@
 class Camera {
   public:
    Camera() :
-      yaw_(-90.0),
-      pitch_(0.0),
-      angle_(90.0f),
+      angle_(0.0f),
+      rotate_(0.0f),
       camera_up_(0.0f, 1.0f, 0.0f),
-      camera_pos_(0.0f, 0.0f, 5.0f)
+      camera_pos_(0.0f, 0.0f, 1.0f)
    {UpdateCamera();}
 
    void SetView();
@@ -34,9 +33,6 @@ class Camera {
 
   private:
    void UpdateCamera();
-
-   float yaw_;
-   float pitch_;
 
    float rotate_;
    float angle_;

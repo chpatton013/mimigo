@@ -3,7 +3,7 @@
 const float kMoveSpeed = 8.0f;
 const float kJumpHeight = 0.18f;
 const float kAcceleration = 0.6f;
-const float kStopAcceleration = 1.0f;
+const float kStopAcceleration = 1.2f;
 const float kRotateTime = 0.05f;
 
 // static

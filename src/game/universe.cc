@@ -14,8 +14,8 @@ void Universe::Update() {
 }
 
 void Universe::Draw() {
-   RootNode::Instance()->Draw();
    camera_->SetView();
+   RootNode::Instance()->Draw();
 }
 
 void Universe::OnLeftButtonDown() {
