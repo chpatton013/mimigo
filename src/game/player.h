@@ -28,6 +28,8 @@ class Player {
    void StartMovingRightAroundAttachedPlanet();
    void StopMoving();
 
+   bool EntersGravityFieldOf(SmallPlanet* planet);
+
    void Jump();
 
    void attach_planet(SmallPlanet* planet) {
@@ -48,6 +50,8 @@ class Player {
    void StartMovingCounterClockwiseAroundAttachedPlanet();
    void StartMovingClockwiseAroundAttachedPlanet();
    bool IsTopSideOfPlanet() const;
+
+   bool is_jumping() const { return true; }
 
    SceneNode* mesh_;
    SmallPlanet* attached_planet_;

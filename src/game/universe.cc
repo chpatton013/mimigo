@@ -5,6 +5,10 @@
 void Universe::Update() {
    camera_->Update();
    player_->Update();
+   if (player_->EntersGravityFieldOf(planet_))
+      player_->TransitionTo(planet_);
+   else if (player_->EntersGravityFieldOf(planet2_))
+      player_->TransitionTo(planet2_);
 }
 
 void Universe::Draw() {

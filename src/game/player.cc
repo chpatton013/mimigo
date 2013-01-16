@@ -44,6 +44,17 @@ void Player::StopMoving() {
    planet_rotater_.StopRotating(kAcceleration);
 }
 
+bool Player::EntersGravityFieldOf(SmallPlanet* planet) {
+   if (planet == attached_planet_)
+      return false;
+   std::cout << "planet" << std::endl;
+   if (is_jumping() && planet->PositionWithinGravityField(position_))
+      return true;
+   std::cout << "not within gravity field" << std::endl;
+
+   return false;
+}
+
 void Player::UpdateMesh() {
    glm::mat4 transform = glm::rotate(planet_rotation_.angle, planet_rotation_.axis);
    transform *= glm::translate(position_);
