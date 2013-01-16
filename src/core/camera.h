@@ -26,7 +26,8 @@ class Camera {
    }
 
    void move(const glm::vec3& p) {
-      pos_mover_.Move(camera_pos_, p, 0.45f);
+      camera_pos_ += p;
+      camera_focus_ += p;
       UpdateCamera();
    }
    void stop_rotate() { rotate_ = 0.0f; }

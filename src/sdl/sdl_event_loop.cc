@@ -85,6 +85,9 @@ void SDLEventLoop::KeyUp(SDL_Event &event) {
       case SDLK_i:
          OnCameraUpDown();
          break;
+      case SDLK_k:
+         OnCameraDownDown();
+         break;
       default:
          break;
    }

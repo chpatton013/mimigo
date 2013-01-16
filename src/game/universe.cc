@@ -20,8 +20,12 @@ void Universe::Draw() {
    RootNode::Instance()->Draw();
 }
 
+void Universe::OnCameraDownDown() {
+   camera_->move(glm::vec3(0.0f, -1.0f, 0.0f));
+}
+
 void Universe::OnCameraUpDown() {
-   camera_->move(glm::vec3(0.0f, 1.0f, 1.0f));
+   camera_->move(glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 void Universe::OnLeftButtonDown() {
