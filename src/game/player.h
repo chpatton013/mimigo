@@ -14,12 +14,14 @@
 class Player {
   public:
    Player(SmallPlanet* planet) :
-      planet_rotater_(planet->center(), planet->radius())
+      planet_rotater_(planet->center(), planet->radius(), position_),
+      transition_planet_(planet)
    {
       mesh_ = new SceneNode("player");
       RootNode::Instance()->AddChild(mesh_);
       mesh_->AddChild(SceneNode::Get("bunny"));
-      attach_planet(planet);
+      rotation_.axis = planet_rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
+      TransitionTo(planet);
    }
 
    void StartMovingLeftAroundAttachedPlanet();
@@ -30,15 +32,15 @@ class Player {
 
    void attach_planet(SmallPlanet* planet) {
       attached_planet_ = planet;
-      planet_rotater_ = PlanetRotater(planet->center(), planet->radius());
-      rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
-      rotation_.angle = 270.0f;
-      planet_rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
+      planet_rotater_ = PlanetRotater(planet->center(), planet->radius(),
+            position_);
    }
 
    void TransitionTo(SmallPlanet* planet);
 
    void Update();
+
+   static void RotationEndCallback(void* player);
 
   private:
    void UpdateMesh();
@@ -49,6 +51,7 @@ class Player {
 
    SceneNode* mesh_;
    SmallPlanet* attached_planet_;
+   SmallPlanet* transition_planet_;
    PlanetRotater planet_rotater_;
 
    Rotater rotater_;

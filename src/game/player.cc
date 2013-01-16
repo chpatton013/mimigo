@@ -4,6 +4,12 @@ const float kMoveSpeed = 8.0f;
 const float kJumpHeight = 0.18f;
 const float kAcceleration = 0.6f;
 
+// static
+void Player::RotationEndCallback(void* p) {
+   Player* player = static_cast<Player*>(p);
+   player->attach_planet(player->transition_planet_);
+}
+
 void Player::StartMovingCounterClockwiseAroundAttachedPlanet() {
    planet_rotater_.StartRotatingCounterClockwise(kMoveSpeed, kAcceleration);
 }
@@ -47,13 +53,22 @@ void Player::UpdateMesh() {
 
 void Player::Update() {
    planet_rotater_.Update(position_, rotation_);
+   rotater_.Update(rotation_.angle);
    UpdateMesh();
 }
 
+inline
+float angle_of(const glm::vec3& vec) {
+   return 180.0f * std::atan2(vec.y, vec.x) / (atan(1) * 4);
+}
+
 void Player::RotateBottomToward(SmallPlanet* planet) {
+   rotater_.Move(rotation_.angle,
+         angle_of(position_ - planet->center()) - 90.0f - rotation_.angle,
+         0.2f, RotationEndCallback, this);
 }
 
 void Player::TransitionTo(SmallPlanet* planet) {
    RotateBottomToward(planet);
-   attach_planet(planet);
+   transition_planet_ = planet;
 }

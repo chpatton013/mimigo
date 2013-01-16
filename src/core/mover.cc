@@ -25,11 +25,15 @@ void Rotater::Update(float& rotation) {
          unset_value(&final_rotation_);
          assert(!final_rotation_);
          rotate_speed_ = 0.0f;
+         callback_(caller_);
       }
    }
 }
 
-void Rotater::Move(float& current_rotate, float rotate_amount, float seconds) {
+void Rotater::Move(float& current_rotate, float rotate_amount, float seconds,
+      void (*callback)(void *), void* caller) {
+   callback_ = callback;
+   caller_ = caller;
    rotate_speed_ = rotate_amount / seconds / 60.0f;
    if (stl_util::Equal(rotate_speed_, 0.0f))
       current_rotate += rotate_amount;

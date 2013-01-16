@@ -60,6 +60,15 @@ void PlanetRotater::Update(glm::vec3& position, Rotation& rotation) {
    position = UpdatedPosition();
 }
 
+inline
+float angle_of(const glm::vec3& vec) {
+   return 180.0f * std::atan2(vec.y, vec.x) / (atan(1) * 4);
+}
+
+void PlanetRotater::SetAngleToNearestPosition(const glm::vec3& position) {
+   angle_ = angle_of(position - center_);
+}
+
 void PlanetRotater::Jump(float jump_height) {
    destination_radius_ = planet_radius_ + jump_height;
 }

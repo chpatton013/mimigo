@@ -16,16 +16,23 @@ void correct_angle(float& angle) {
 
 class Rotater {
   public:
-   Rotater() : rotated_(0.0f), rotate_speed_(0.0f), final_rotation_(NULL) {}
+   Rotater() :
+      rotated_(0.0f),
+      rotate_speed_(0.0f),
+      final_rotation_(NULL)
+   {}
 
    void Update(float& rotation);
-   void Move(float& current_rotate, float rotate_amount, float seconds);
+   void Move(float& current_rotate, float rotate_amount, float seconds,
+             void (*callback)(void *), void *caller);
    void Spin(float& current_rotate, float rotate_speed, float seconds);
 
   private:
    float rotated_;
    float rotate_speed_;
    float* final_rotation_;
+   void (*callback_)(void *);
+   void *caller_;
 };
 
 class Mover {

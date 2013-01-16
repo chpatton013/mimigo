@@ -16,6 +16,7 @@ class SmallPlanet {
       RootNode::Instance()->AddChild(mesh);
       mesh->AddChild(SceneNode::Get("planet"));
    }
+
    const glm::vec3 &center() const { return center_; }
    float radius() const { return radius_; }
 
