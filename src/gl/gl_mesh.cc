@@ -56,7 +56,7 @@ void GLMesh::CalculateNormals() {
       glm::vec4 c = verts_[faces_[i].v3];
       glm::vec3 ab(b.x - a.x, b.y - a.y, b.z - a.z);
       glm::vec3 ac(c.x - a.x, c.y - a.y, c.z - a.z);
-      glm::vec3 normal = glm::cross(ac, ab);
+      glm::vec3 normal = glm::cross(ab, ac);
       vert_normals_[faces_[i].v1] += normal;
       vert_normals_[faces_[i].v2] += normal;
       vert_normals_[faces_[i].v3] += normal;

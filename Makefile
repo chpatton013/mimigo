@@ -9,12 +9,10 @@ SRC_SUB_DIRS = $(shell find $(SRC_DIR) -type d)
 OBJ_SUB_DIRS = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC_SUB_DIRS))
 EXEC = $(shell basename `pwd`)
 
-
 CXX = g++
 CFLAGS = -Wall -Wextra -pipe -DGL_GLEXT_PROTOTYPES $(foreach d,$(INCS),-I$d)
 LD = g++
 LDFLAGS =
-
 
 .PHONY: all debug test release profile prepare clean remove
 
@@ -42,5 +40,5 @@ remove: clean
 $(EXEC): prepare $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $(OBJS) $(foreach l,$(LIBS),-l$l)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc $(DEPS)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc $(SRC_DIR)/%.h
 	$(CXX) $(CFLAGS) -c -o $@ $<
