@@ -14,14 +14,34 @@ void Player::RotationEndCallback(void* p) {
 
 void Player::StartMovingCounterClockwiseAroundAttachedPlanet() {
    planet_rotater_.StartRotatingCounterClockwise(kMoveSpeed, kAcceleration);
+   left_right_rotation_.angle = 0.0f;
 }
 
 void Player::StartMovingClockwiseAroundAttachedPlanet() {
    planet_rotater_.StartRotatingClockwise(kMoveSpeed, kAcceleration);
+   left_right_rotation_.angle = 180.0f;
 }
 
-bool Player::IsTopSideOfPlanet() const {
-   return true;
+bool Player::IsTopSideOfPlanet() {
+   return planet_rotater_.IsOnTopside();
+}
+
+bool Player::IsRightSideOfPlanet() {
+   return planet_rotater_.IsOnRightside();
+}
+
+void Player::StartMovingUpAroundAttachedPlanet() {
+   if (IsRightSideOfPlanet())
+      StartMovingCounterClockwiseAroundAttachedPlanet();
+   else
+      StartMovingClockwiseAroundAttachedPlanet();
+}
+
+void Player::StartMovingDownAroundAttachedPlanet() {
+   if (IsRightSideOfPlanet())
+      StartMovingClockwiseAroundAttachedPlanet();
+   else
+      StartMovingCounterClockwiseAroundAttachedPlanet();
 }
 
 void Player::StartMovingLeftAroundAttachedPlanet() {
@@ -29,7 +49,6 @@ void Player::StartMovingLeftAroundAttachedPlanet() {
       StartMovingCounterClockwiseAroundAttachedPlanet();
    else
       StartMovingClockwiseAroundAttachedPlanet();
-   left_right_rotation_.angle = 0.0f;
 }
 
 void Player::StartMovingRightAroundAttachedPlanet() {
@@ -37,7 +56,6 @@ void Player::StartMovingRightAroundAttachedPlanet() {
       StartMovingClockwiseAroundAttachedPlanet();
    else
       StartMovingCounterClockwiseAroundAttachedPlanet();
-   left_right_rotation_.angle = 180.0f;
 }
 
 void Player::Jump() {
@@ -59,7 +77,7 @@ bool Player::EntersGravityFieldOf(SmallPlanet* planet) {
 }
 
 void Player::UpdateMesh() {
-   glm::mat4 transform = glm::rotate(planet_rotation_.angle, planet_rotation_.axis);
+   glm::mat4 transform;
    transform *= glm::translate(position_);
    transform *= glm::rotate(rotation_.angle, rotation_.axis);
    transform *= glm::rotate(left_right_rotation_.angle,

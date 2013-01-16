@@ -35,17 +35,19 @@ void Universe::OnRightButtonUp() {
 }
 
 void Universe::OnUpButtonDown() {
+   player_->StartMovingUpAroundAttachedPlanet();
 }
 
 void Universe::OnUpButtonUp() {
-   printf("up --released\n");
+   player_->StopMoving();
 }
 
 void Universe::OnDownButtonUp() {
-   printf("down --released\n");
+   player_->StopMoving();
 }
 
 void Universe::OnDownButtonDown() {
+   player_->StartMovingDownAroundAttachedPlanet();
 }
 
 void Universe::OnJumpButtonUp() {

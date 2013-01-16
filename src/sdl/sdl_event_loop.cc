@@ -123,7 +123,7 @@ void SDLEventLoop::StartNewTimer(Timer::Delegate* delegate,
 void SDLEventLoop::ExpireTimer(int id) {
    for (std::vector<SDLTimer>::iterator it = timers_.begin();
          it != timers_.end(); ++it) {
-      if (it->id_ == id) {
+      if (int(it->id_) == id) {
          it->OnExpiration();
          return;
       }

@@ -32,7 +32,24 @@ class PlanetRotater {
    void Update(glm::vec3& position, Rotation& rotation, bool* is_jumping);
    void Jump(float jump_height);
 
+   bool IsOnRightside() {
+      ClampAngle();
+      return angle_ > 0.0f && angle_ < 90.0f ||
+             angle_ > 270.0f && angle_ < 360.0f;
+   }
+
+   bool IsOnTopside() {
+      ClampAngle();
+      return angle_ > 0.0f && angle_ < 180.0f;
+   }
+
   private:
+   void ClampAngle() {
+      while (angle_ < 0.0f)
+         angle_ += 360.0f;
+      while (angle_ > 360.0f)
+         angle_ -= 360.0f;
+   }
    glm::vec3 UpdatedPosition();
    void SetAngleToNearestPosition(const glm::vec3& position);
 

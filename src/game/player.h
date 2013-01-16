@@ -14,18 +14,20 @@
 class Player {
   public:
    Player(SmallPlanet* planet) :
-      planet_rotater_(planet->center(), planet->radius(), position_),
       transition_planet_(planet),
+      planet_rotater_(planet->center(), planet->radius(), position_),
       is_jumping_(false)
    {
       mesh_ = new SceneNode("player");
       RootNode::Instance()->AddChild(mesh_);
       mesh_->AddChild(SceneNode::Get("bunny"));
-      rotation_.axis = planet_rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
+      rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
       left_right_rotation_.axis = glm::vec3(0.0f, 1.0f, 0.0f);
       TransitionTo(planet);
    }
 
+   void StartMovingUpAroundAttachedPlanet();
+   void StartMovingDownAroundAttachedPlanet();
    void StartMovingLeftAroundAttachedPlanet();
    void StartMovingRightAroundAttachedPlanet();
    void StopMoving();
@@ -51,7 +53,8 @@ class Player {
    void RotateBottomToward(SmallPlanet* planet);
    void StartMovingCounterClockwiseAroundAttachedPlanet();
    void StartMovingClockwiseAroundAttachedPlanet();
-   bool IsTopSideOfPlanet() const;
+   bool IsTopSideOfPlanet();
+   bool IsRightSideOfPlanet();
 
    bool is_jumping() const { return is_jumping_; }
 
@@ -63,7 +66,6 @@ class Player {
    Rotater rotater_;
 
    glm::vec3 position_;
-   Rotation planet_rotation_;
    Rotation rotation_;
    Rotation left_right_rotation_;
    bool is_jumping_;
