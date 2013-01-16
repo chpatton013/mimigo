@@ -5,6 +5,7 @@
 void Universe::Update() {
    camera_->Update();
    player_->Update();
+
    for (std::vector<SmallPlanet*>::iterator it = planets_.begin();
          it != planets_.end(); ++it) {
       if (player_->EntersGravityFieldOf(*it)) {
@@ -17,6 +18,10 @@ void Universe::Update() {
 void Universe::Draw() {
    camera_->SetView();
    RootNode::Instance()->Draw();
+}
+
+void Universe::OnCameraUpDown() {
+   camera_->move(glm::vec3(0.0f, 1.0f, 1.0f));
 }
 
 void Universe::OnLeftButtonDown() {

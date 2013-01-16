@@ -33,6 +33,7 @@ class Universe : public Game {
    virtual void OnUpButtonUp();
    virtual void OnJumpButtonDown();
    virtual void OnJumpButtonUp();
+   virtual void OnCameraUpDown();
 
   private:
    Camera* camera_;

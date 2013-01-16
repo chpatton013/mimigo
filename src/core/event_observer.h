@@ -41,8 +41,8 @@ class EventObserver {
    virtual void OnHoldButtonUp() {}
    virtual void OnCameraLeftDown() {}
    virtual void OnCameraLeftUp() {}
-   virtual void OnCameraRightDown() {}
-   virtual void OnCameraRightUp() {}
+   virtual void OnCameraUpDown() {}
+   virtual void OnCameraUpUp() {}
 
    virtual void OnJumpButtonDown() {}
    virtual void OnJumpButtonUp() {}
@@ -87,8 +87,8 @@ class EventSubject {
 
    BUTTON_EVENT0(OnCameraLeftDown);
    BUTTON_EVENT0(OnCameraLeftUp);
-   BUTTON_EVENT0(OnCameraRightDown);
-   BUTTON_EVENT0(OnCameraRightUp);
+   BUTTON_EVENT0(OnCameraUpDown);
+   BUTTON_EVENT0(OnCameraUpUp);
 
    BUTTON_EVENT1(OnLButtonDown, const Point&);
    BUTTON_EVENT1(OnMouseMove, const Point&);
