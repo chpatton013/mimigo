@@ -9,6 +9,8 @@ void Universe::Update() {
       player_->TransitionTo(planet_);
    else if (player_->EntersGravityFieldOf(planet2_))
       player_->TransitionTo(planet2_);
+   else if (player_->EntersGravityFieldOf(planet3_))
+      player_->TransitionTo(planet3_);
 }
 
 void Universe::Draw() {

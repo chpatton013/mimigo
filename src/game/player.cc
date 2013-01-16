@@ -3,6 +3,7 @@
 const float kMoveSpeed = 8.0f;
 const float kJumpHeight = 0.18f;
 const float kAcceleration = 0.6f;
+const float kStopAcceleration = 1.0f;
 const float kRotateTime = 0.05f;
 
 // static
@@ -28,6 +29,7 @@ void Player::StartMovingLeftAroundAttachedPlanet() {
       StartMovingCounterClockwiseAroundAttachedPlanet();
    else
       StartMovingClockwiseAroundAttachedPlanet();
+   left_right_rotation_.angle = 0.0f;
 }
 
 void Player::StartMovingRightAroundAttachedPlanet() {
@@ -35,6 +37,7 @@ void Player::StartMovingRightAroundAttachedPlanet() {
       StartMovingClockwiseAroundAttachedPlanet();
    else
       StartMovingCounterClockwiseAroundAttachedPlanet();
+   left_right_rotation_.angle = 180.0f;
 }
 
 void Player::Jump() {
@@ -42,7 +45,7 @@ void Player::Jump() {
 }
 
 void Player::StopMoving() {
-   planet_rotater_.StopRotating(kAcceleration);
+   planet_rotater_.StopRotating(kStopAcceleration);
 }
 
 bool Player::EntersGravityFieldOf(SmallPlanet* planet) {
@@ -59,6 +62,8 @@ void Player::UpdateMesh() {
    glm::mat4 transform = glm::rotate(planet_rotation_.angle, planet_rotation_.axis);
    transform *= glm::translate(position_);
    transform *= glm::rotate(rotation_.angle, rotation_.axis);
+   transform *= glm::rotate(left_right_rotation_.angle,
+                            left_right_rotation_.axis);
    mesh_->set_transformation(transform);
 }
 

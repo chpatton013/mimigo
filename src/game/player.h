@@ -22,6 +22,7 @@ class Player {
       RootNode::Instance()->AddChild(mesh_);
       mesh_->AddChild(SceneNode::Get("bunny"));
       rotation_.axis = planet_rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
+      left_right_rotation_.axis = glm::vec3(0.0f, 1.0f, 0.0f);
       TransitionTo(planet);
    }
 
@@ -64,6 +65,7 @@ class Player {
    glm::vec3 position_;
    Rotation planet_rotation_;
    Rotation rotation_;
+   Rotation left_right_rotation_;
    bool is_jumping_;
 };
 

@@ -17,6 +17,7 @@ class Universe : public Game {
    {
       player_->attach_planet(planet_);
       planet2_ = new SmallPlanet("2", glm::vec3(.25f, .25f, 0.0f), .3f, 0.6f);
+      planet3_ = new SmallPlanet("3", glm::vec3(-0.5f, 0.5f, 0.0f), 0.4f, 0.7f);
    }
 
    virtual void Update();
@@ -36,6 +37,7 @@ class Universe : public Game {
    Camera* camera_;
    SmallPlanet* planet_;
    SmallPlanet* planet2_;
+   SmallPlanet* planet3_;
    Player* player_;
 };
 
