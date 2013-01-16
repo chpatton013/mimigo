@@ -6,11 +6,11 @@
 
 class SmallPlanet {
   public:
-   SmallPlanet(const glm::vec3& center, float radius) :
+   SmallPlanet(const std::string& id, const glm::vec3& center, float radius) :
       center_(center),
       radius_(radius)
    {
-      SceneNode* mesh = new SceneNode("small_planet");
+      SceneNode* mesh = new SceneNode(id);
       mesh->set_transformation(glm::translate(center));
       mesh->apply_transformation(glm::scale(radius, radius, 1.0f));
       RootNode::Instance()->AddChild(mesh);

@@ -29,7 +29,7 @@ void Universe::OnRightButtonUp() {
 }
 
 void Universe::OnUpButtonDown() {
-   printf("up --pushed\n");
+   player_->TransitionTo(planet_);
 }
 
 void Universe::OnUpButtonUp() {
@@ -41,7 +41,7 @@ void Universe::OnDownButtonUp() {
 }
 
 void Universe::OnDownButtonDown() {
-   printf("down --pushed\n");
+   player_->TransitionTo(planet2_);
 }
 
 void Universe::OnJumpButtonUp() {

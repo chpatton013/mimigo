@@ -2,11 +2,11 @@
 #define _PLANET_ROTATER_H_
 
 #include <glm/glm.hpp>
+#include "core/rotation.h"
 
 #include <iostream>
 
 class Animator;
-class SceneNode;
 
 /* Class for rotating a |body| about an arbitrary |center| given a |speed| and
  * an acceleration amount to get to that speed. */
@@ -24,7 +24,7 @@ class PlanetRotater {
    void StartRotatingClockwise(float move_speed, float acceleration);
    void StartRotatingCounterClockwise(float move_speed, float acceleration);
    void StopRotating(float acceleration);
-   void Update(SceneNode* mesh);
+   void Update(glm::vec3& position, Rotation& rotation);
    void Jump(float jump_height);
 
   private:

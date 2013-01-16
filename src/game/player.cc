@@ -5,11 +5,11 @@ const float kJumpHeight = 0.18f;
 const float kAcceleration = 0.6f;
 
 void Player::StartMovingCounterClockwiseAroundAttachedPlanet() {
-   rotater_.StartRotatingCounterClockwise(kMoveSpeed, kAcceleration);
+   planet_rotater_.StartRotatingCounterClockwise(kMoveSpeed, kAcceleration);
 }
 
 void Player::StartMovingClockwiseAroundAttachedPlanet() {
-   rotater_.StartRotatingClockwise(kMoveSpeed, kAcceleration);
+   planet_rotater_.StartRotatingClockwise(kMoveSpeed, kAcceleration);
 }
 
 bool Player::IsTopSideOfPlanet() const {
@@ -31,13 +31,29 @@ void Player::StartMovingRightAroundAttachedPlanet() {
 }
 
 void Player::Jump() {
-   rotater_.Jump(kJumpHeight);
+   planet_rotater_.Jump(kJumpHeight);
 }
 
 void Player::StopMoving() {
-   rotater_.StopRotating(kAcceleration);
+   planet_rotater_.StopRotating(kAcceleration);
+}
+
+void Player::UpdateMesh() {
+   glm::mat4 transform = glm::rotate(planet_rotation_.angle, planet_rotation_.axis);
+   transform *= glm::translate(position_);
+   transform *= glm::rotate(rotation_.angle, rotation_.axis);
+   mesh_->set_transformation(transform);
 }
 
 void Player::Update() {
-   rotater_.Update(mesh_);
+   planet_rotater_.Update(position_, rotation_);
+   UpdateMesh();
+}
+
+void Player::RotateBottomToward(SmallPlanet* planet) {
+}
+
+void Player::TransitionTo(SmallPlanet* planet) {
+   RotateBottomToward(planet);
+   attach_planet(planet);
 }
