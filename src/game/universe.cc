@@ -5,12 +5,13 @@
 void Universe::Update() {
    camera_->Update();
    player_->Update();
-   if (player_->EntersGravityFieldOf(planet_))
-      player_->TransitionTo(planet_);
-   else if (player_->EntersGravityFieldOf(planet2_))
-      player_->TransitionTo(planet2_);
-   else if (player_->EntersGravityFieldOf(planet3_))
-      player_->TransitionTo(planet3_);
+   for (std::vector<SmallPlanet*>::iterator it = planets_.begin();
+         it != planets_.end(); ++it) {
+      if (player_->EntersGravityFieldOf(*it)) {
+         player_->TransitionTo(*it);
+         break;
+      }
+   }
 }
 
 void Universe::Draw() {

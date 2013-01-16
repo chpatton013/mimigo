@@ -74,6 +74,7 @@ void LoadResources() {
    RootNode::Instance()->AddChild(new MeshNode("planet1", MakeSquare()));
    RootNode::Instance()->AddChild(new MeshNode("planet2", MakeSquare()));
    RootNode::Instance()->AddChild(new MeshNode("planet3", MakeSquare()));
+   RootNode::Instance()->AddChild(new MeshNode("planet4", MakeSquare()));
 }
 
 void StartMainLoop(Universe* universe) {
