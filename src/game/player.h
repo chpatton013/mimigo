@@ -15,7 +15,8 @@ class Player {
   public:
    Player(SmallPlanet* planet) :
       planet_rotater_(planet->center(), planet->radius(), position_),
-      transition_planet_(planet)
+      transition_planet_(planet),
+      is_jumping_(false)
    {
       mesh_ = new SceneNode("player");
       RootNode::Instance()->AddChild(mesh_);
@@ -51,7 +52,7 @@ class Player {
    void StartMovingClockwiseAroundAttachedPlanet();
    bool IsTopSideOfPlanet() const;
 
-   bool is_jumping() const { return true; }
+   bool is_jumping() const { return is_jumping_; }
 
    SceneNode* mesh_;
    SmallPlanet* attached_planet_;
@@ -63,6 +64,7 @@ class Player {
    glm::vec3 position_;
    Rotation planet_rotation_;
    Rotation rotation_;
+   bool is_jumping_;
 };
 
 #endif

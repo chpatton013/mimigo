@@ -25,7 +25,7 @@ class PlanetRotater {
    void StartRotatingClockwise(float move_speed, float acceleration);
    void StartRotatingCounterClockwise(float move_speed, float acceleration);
    void StopRotating(float acceleration);
-   void Update(glm::vec3& position, Rotation& rotation);
+   void Update(glm::vec3& position, Rotation& rotation, bool* is_jumping);
    void Jump(float jump_height);
 
   private:

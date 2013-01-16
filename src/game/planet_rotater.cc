@@ -38,7 +38,8 @@ void PlanetRotater::StopRotating(float acceleration) {
    acceleration_frames_ = CalculateFramesUntilMoveSpeed(0.0f, acceleration_);
 }
 
-void PlanetRotater::Update(glm::vec3& position, Rotation& rotation) {
+void PlanetRotater::Update(glm::vec3& position, Rotation& rotation,
+                           bool* is_jumping) {
    if (acceleration_frames_ > 0) {
       move_speed_ += acceleration_;
       --acceleration_frames_;
@@ -46,13 +47,17 @@ void PlanetRotater::Update(glm::vec3& position, Rotation& rotation) {
 
    if (radius_ < destination_radius_) {
       radius_ += kJumpSpeed;
-      if (radius_ >= destination_radius_)
+      *is_jumping = true;
+      if (radius_ >= destination_radius_) {
          destination_radius_ = planet_radius_;
+         *is_jumping = false;
+      }
    }
    else if (radius_ > destination_radius_) {
       radius_ -= kJumpSpeed;
-      if (radius_ < destination_radius_)
+      if (radius_ < destination_radius_) {
          radius_ = destination_radius_ = planet_radius_;
+      }
    }
 
    angle_ -= move_speed_;

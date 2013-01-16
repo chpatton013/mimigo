@@ -3,6 +3,7 @@
 const float kMoveSpeed = 8.0f;
 const float kJumpHeight = 0.18f;
 const float kAcceleration = 0.6f;
+const float kRotateTime = 0.02f;
 
 // static
 void Player::RotationEndCallback(void* p) {
@@ -47,10 +48,10 @@ void Player::StopMoving() {
 bool Player::EntersGravityFieldOf(SmallPlanet* planet) {
    if (planet == attached_planet_)
       return false;
-   std::cout << "planet" << std::endl;
-   if (is_jumping() && planet->PositionWithinGravityField(position_))
+
+   if (is_jumping() && planet->PositionWithinGravityField(position_)) {
       return true;
-   std::cout << "not within gravity field" << std::endl;
+   }
 
    return false;
 }
@@ -63,7 +64,7 @@ void Player::UpdateMesh() {
 }
 
 void Player::Update() {
-   planet_rotater_.Update(position_, rotation_);
+   planet_rotater_.Update(position_, rotation_, &is_jumping_);
    rotater_.Update(rotation_.angle);
    UpdateMesh();
 }
@@ -76,7 +77,7 @@ float angle_of(const glm::vec3& vec) {
 void Player::RotateBottomToward(SmallPlanet* planet) {
    rotater_.Move(rotation_.angle,
          angle_of(position_ - planet->center()) - 90.0f - rotation_.angle,
-         0.2f, RotationEndCallback, this);
+         kRotateTime, RotationEndCallback, this);
 }
 
 void Player::TransitionTo(SmallPlanet* planet) {
