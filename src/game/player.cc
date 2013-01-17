@@ -1,13 +1,10 @@
 #include "player.h"
 
 const float kMoveSpeed = 8.0f;
-const float kLargePlanetMoveSpeed = 0.40f;
 const float kJumpHeight = 0.18f;
 const float kAcceleration = 0.6f;
 const float kStopAcceleration = 1.2f;
 const float kRotateTime = 0.05f;
-
-static float move_speed = kMoveSpeed;
 
 // static
 void Player::RotationEndCallback(void* p) {
@@ -16,12 +13,12 @@ void Player::RotationEndCallback(void* p) {
 }
 
 void Player::StartMovingCounterClockwiseAroundAttachedPlanet() {
-   planet_rotater_.StartRotatingCounterClockwise(move_speed, kAcceleration);
+   planet_rotater_.StartRotatingCounterClockwise(kMoveSpeed, kAcceleration);
    left_right_rotation_.angle = 0.0f;
 }
 
 void Player::StartMovingClockwiseAroundAttachedPlanet() {
-   planet_rotater_.StartRotatingClockwise(move_speed, kAcceleration);
+   planet_rotater_.StartRotatingClockwise(kMoveSpeed, kAcceleration);
    left_right_rotation_.angle = 180.0f;
 }
 
@@ -33,32 +30,46 @@ bool Player::IsRightSideOfPlanet() {
    return planet_rotater_.IsOnRightside();
 }
 
-void Player::StartMovingUpAroundAttachedPlanet() {
-   if (IsRightSideOfPlanet())
-      StartMovingCounterClockwiseAroundAttachedPlanet();
-   else
-      StartMovingClockwiseAroundAttachedPlanet();
+void Player::StartMovingUpAroundAttachedPlanet(const glm::vec3& camera_pos) {
+   if (attached_planet_->is_small_planet()) {
+      if (IsRightSideOfPlanet())
+         StartMovingCounterClockwiseAroundAttachedPlanet();
+      else
+         StartMovingClockwiseAroundAttachedPlanet();
+   } else {
+      planet_rotater_.StartMoving(glm::normalize(position_ - camera_pos), kMoveSpeed, kAcceleration);
+   }
 }
 
-void Player::StartMovingDownAroundAttachedPlanet() {
-   if (IsRightSideOfPlanet())
-      StartMovingClockwiseAroundAttachedPlanet();
-   else
-      StartMovingCounterClockwiseAroundAttachedPlanet();
+void Player::StartMovingDownAroundAttachedPlanet(const glm::vec3& camera_pos) {
+   if (attached_planet_->is_small_planet()) {
+      if (IsRightSideOfPlanet())
+         StartMovingClockwiseAroundAttachedPlanet();
+      else
+         StartMovingCounterClockwiseAroundAttachedPlanet();
+   } else {
+      planet_rotater_.StartMoving(glm::normalize(camera_pos - position_), kMoveSpeed, kAcceleration);
+   }
 }
 
-void Player::StartMovingLeftAroundAttachedPlanet() {
-   if (IsTopSideOfPlanet())
-      StartMovingCounterClockwiseAroundAttachedPlanet();
-   else
-      StartMovingClockwiseAroundAttachedPlanet();
+void Player::StartMovingLeftAroundAttachedPlanet(const glm::vec3& camera_pos) {
+   if (attached_planet_->is_small_planet()) {
+      if (IsTopSideOfPlanet())
+         StartMovingCounterClockwiseAroundAttachedPlanet();
+      else
+         StartMovingClockwiseAroundAttachedPlanet();
+   } else {
+   }
 }
 
-void Player::StartMovingRightAroundAttachedPlanet() {
-   if (IsTopSideOfPlanet())
-      StartMovingClockwiseAroundAttachedPlanet();
-   else
-      StartMovingCounterClockwiseAroundAttachedPlanet();
+void Player::StartMovingRightAroundAttachedPlanet(const glm::vec3& camera_pos) {
+   if (attached_planet_->is_small_planet()) {
+      if (IsTopSideOfPlanet())
+         StartMovingClockwiseAroundAttachedPlanet();
+      else
+         StartMovingCounterClockwiseAroundAttachedPlanet();
+   } else {
+   }
 }
 
 void Player::Jump() {
@@ -110,7 +121,4 @@ void Player::RotateBottomToward(SmallPlanet* planet) {
 void Player::TransitionTo(SmallPlanet* planet) {
    RotateBottomToward(planet);
    transition_planet_ = planet;
-   if (!planet->is_small_planet()) {
-      move_speed = kLargePlanetMoveSpeed;
-   }
 }

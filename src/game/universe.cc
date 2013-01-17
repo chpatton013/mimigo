@@ -33,7 +33,7 @@ void Universe::OnCameraUpDown() {
 }
 
 void Universe::OnLeftButtonDown() {
-   player_->StartMovingLeftAroundAttachedPlanet();
+   player_->StartMovingLeftAroundAttachedPlanet(camera_->position());
 }
 
 void Universe::OnLeftButtonUp() {
@@ -41,7 +41,7 @@ void Universe::OnLeftButtonUp() {
 }
 
 void Universe::OnRightButtonDown() {
-   player_->StartMovingRightAroundAttachedPlanet();
+   player_->StartMovingRightAroundAttachedPlanet(camera_->position());
 }
 
 void Universe::OnRightButtonUp() {
@@ -49,7 +49,7 @@ void Universe::OnRightButtonUp() {
 }
 
 void Universe::OnUpButtonDown() {
-   player_->StartMovingUpAroundAttachedPlanet();
+   player_->StartMovingUpAroundAttachedPlanet(camera_->position());
 }
 
 void Universe::OnUpButtonUp() {
@@ -61,7 +61,7 @@ void Universe::OnDownButtonUp() {
 }
 
 void Universe::OnDownButtonDown() {
-   player_->StartMovingDownAroundAttachedPlanet();
+   player_->StartMovingDownAroundAttachedPlanet(camera_->position());
 }
 
 void Universe::OnJumpButtonUp() {

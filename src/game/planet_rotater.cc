@@ -32,6 +32,9 @@ void PlanetRotater::StartRotatingCounterClockwise(float move_speed,
    final_move_speed_ = -move_speed;
 }
 
+void PlanetRotater::StartMoving(const glm::vec3& direction, float move_speed, float acceleration) {
+}
+
 void PlanetRotater::StopRotating(float acceleration) {
    if (is_moving_clockwise())
       acceleration_ = counter_clockwise_acceleration(acceleration);

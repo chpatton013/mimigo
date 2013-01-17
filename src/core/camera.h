@@ -35,6 +35,9 @@ class Camera : public PlayerObserver {
       camera_focus_ += p;
       UpdateCamera();
    }
+
+   glm::vec3 position() const { return camera_pos_; }
+
    void stop_rotate() { rotate_ = 0.0f; }
    void rotate_left() { rotate_ = 1.0f; }
    void rotate_right() { rotate_ = -1.0f; }

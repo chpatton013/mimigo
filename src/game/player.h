@@ -32,10 +32,10 @@ class Player {
       TransitionTo(planet);
    }
 
-   void StartMovingUpAroundAttachedPlanet();
-   void StartMovingDownAroundAttachedPlanet();
-   void StartMovingLeftAroundAttachedPlanet();
-   void StartMovingRightAroundAttachedPlanet();
+   void StartMovingUpAroundAttachedPlanet(const glm::vec3& camera_pos);
+   void StartMovingDownAroundAttachedPlanet(const glm::vec3& camera_pos);
+   void StartMovingLeftAroundAttachedPlanet(const glm::vec3& camera_pos);
+   void StartMovingRightAroundAttachedPlanet(const glm::vec3& camera_pos);
    void StopMoving();
 
    bool EntersGravityFieldOf(SmallPlanet* planet);
