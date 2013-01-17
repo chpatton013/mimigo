@@ -59,6 +59,8 @@ void PlanetRotater::Update(glm::vec3& position, Rotation& rotation,
    if (jumper) {
       *is_jumping = true;
       jumper->Update(SDL_GetTicks());
+   } else {
+      *is_jumping = false;
    }
 }
 
