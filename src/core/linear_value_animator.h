@@ -6,10 +6,10 @@
 template <class T>
 class LinearValueAnimator {
   public:
-   LinearValueAnimator(T* value, T delta, float time, Callback& callback, unsigned int current_ticks) :
+   LinearValueAnimator(T* value, T delta, float seconds, Callback& callback, unsigned int current_ticks) :
       value_(value),
       delta_(delta),
-      time_(time),
+      seconds_(seconds),
       callback_(callback),
       last_ticks_(current_ticks),
       start_ticks_(current_ticks)
@@ -26,7 +26,7 @@ class LinearValueAnimator {
    T* value_;
    T delta_;
    T final_value_;
-   float time_;
+   float seconds_;
    Callback callback_;
 
    unsigned int last_ticks_;
@@ -40,13 +40,13 @@ float seconds(int ticks) {
 
 template <class T>
 bool LinearValueAnimator<T>::time_expired(unsigned int current_ticks) const {
-   return seconds(current_ticks - start_ticks_) >= time_;
+   return seconds(current_ticks - start_ticks_) >= seconds_;
 }
 
 template <class T>
 float LinearValueAnimator<T>::interval(unsigned int current_ticks) const {
    float ticks = std::min(current_ticks - last_ticks_, current_ticks - start_ticks_);
-   return seconds(ticks) / time_;
+   return seconds(ticks) / seconds_;
 }
 
 template <class T>
