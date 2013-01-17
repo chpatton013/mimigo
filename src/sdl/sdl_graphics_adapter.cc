@@ -48,38 +48,7 @@ void SDLGraphicsAdapter::TearDownDraw() {
    safe_glDisableVertexAttribArray(g_handles["aSpecular"]);
 }
 
-GLfloat vbo[] = {
-   -10, -10, 0,
-   0, -10, 0,
-   0, 0, 0,
-};
-unsigned short ibo[] = {
-   0, 1, 2,
-};
-GLuint h_vbo, h_ibo;
-GLuint uProjMatrix = 0, aPosition = 0;
 void SDLGraphicsAdapter::Initialize() {
-   glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-   glClearDepth(1.0f);
-   glDepthFunc(GL_LEQUAL);
-   glEnable(GL_DEPTH_TEST);
-
-   glGenBuffers(1, &h_vbo);
-   assert(h_vbo > 0);
-   glBindBuffer(GL_ARRAY_BUFFER, h_vbo);
-   glBufferData(GL_ARRAY_BUFFER, sizeof(vbo), vbo, GL_STATIC_DRAW);
-   assert(glGetError() == GL_NO_ERROR);
-
-   glGenBuffers(1, &h_ibo);
-   assert(h_ibo > 0);
-   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, h_ibo);
-   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ibo), ibo, GL_STATIC_DRAW);
-   assert(glGetError() == GL_NO_ERROR);
-
-   glVertexPointer(3, GL_FLOAT, 0, 0);
-   assert(glGetError() == GL_NO_ERROR);
-   aPosition = glGetAttribLocation(g_shaders["main"], "aPosition");
-   assert(glGetError() == GL_NO_ERROR);
 }
 
 void SDLGraphicsAdapter::Draw() {

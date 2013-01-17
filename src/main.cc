@@ -35,11 +35,6 @@ void InitializeGL() {
    glShadeModel(GL_SMOOTH);
    glViewport(0, 0, kScreenWidth, kScreenHeight);
 
-   glMatrixMode(GL_PROJECTION);
-   glLoadIdentity();
-   gluPerspective(40, 1, 0.0001, 1000.0);
-   glMatrixMode(GL_MODELVIEW);
-
    // Start Of User Initialization
    glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
    // Black Background
