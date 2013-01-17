@@ -70,12 +70,15 @@ void LoadResources() {
    GLMesh* bunny = LoadMeshFromFile("meshes/bunny500.m");
    MeshNode* mesh = new MeshNode("bunny", bunny);
    mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.2f)));
+
    GLMesh* sphere = LoadMeshesFromOBJFile("meshes/sphere.obj")[0];
+
    RootNode::Instance()->AddChild(mesh);
    RootNode::Instance()->AddChild(new MeshNode("planet1", sphere));
    RootNode::Instance()->AddChild(new MeshNode("planet2", sphere));
    RootNode::Instance()->AddChild(new MeshNode("planet3", sphere));
    RootNode::Instance()->AddChild(new MeshNode("planet4", sphere));
+   RootNode::Instance()->AddChild(new MeshNode("planet5", sphere));
 }
 
 void StartMainLoop(Universe* universe) {
@@ -85,7 +88,6 @@ void StartMainLoop(Universe* universe) {
 }
 
 int main(int , char** ) {
-
    Camera* camera = new Camera();
 
    Initialize();
