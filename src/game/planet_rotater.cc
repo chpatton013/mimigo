@@ -1,10 +1,13 @@
 #include "planet_rotater.h"
 
 #include <iostream>
+#include <SDL/SDL.h>
+#include "core/linear_value_animator.h"
 #include "util/glm_util.h"
 #include "scene_hierarchy/mesh_node.h"
 
-const float kJumpSpeed = 0.04f;
+static LinearValueAnimator<float>* rotater = NULL;
+static LinearValueAnimator<float>* jumper = NULL;
 
 inline
 float clockwise_acceleration(float acceleration) {
@@ -16,61 +19,47 @@ float counter_clockwise_acceleration(float acceleration) {
    return -std::abs(acceleration);
 }
 
-void PlanetRotater::StartRotatingClockwise(float move_speed,
-                                           float acceleration) {
-   acceleration_ = clockwise_acceleration(acceleration);
-   acceleration_frames_ = CalculateFramesUntilMoveSpeed(
-      move_speed, acceleration_);
-   final_move_speed_ = move_speed;
+void RotationEnd(void*) {
+   if (rotater) {
+      delete rotater;
+      rotater = NULL;
+   }
+   if (jumper) {
+      delete jumper;
+      jumper = NULL;
+   }
 }
 
-void PlanetRotater::StartRotatingCounterClockwise(float move_speed,
-                                                  float acceleration) {
-   acceleration_ = counter_clockwise_acceleration(acceleration);
-   acceleration_frames_ = CalculateFramesUntilMoveSpeed(
-      move_speed, acceleration_);
-   final_move_speed_ = -move_speed;
+void PlanetRotater::StartRotatingClockwise(float move_speed, float) {
+   Callback callback(RotationEnd, this);
+   rotater = new LinearValueAnimator<float>(&move_speed_, move_speed, 0.5f, callback, SDL_GetTicks());
+}
+
+void PlanetRotater::StartRotatingCounterClockwise(float move_speed, float) {
+   Callback callback(RotationEnd, this);
+   rotater = new LinearValueAnimator<float>(&move_speed_, -move_speed, 0.5f, callback, SDL_GetTicks());
 }
 
 void PlanetRotater::StartMoving(const glm::vec3& direction, float move_speed, float acceleration) {
 }
 
 void PlanetRotater::StopRotating(float acceleration) {
-   if (is_moving_clockwise())
-      acceleration_ = counter_clockwise_acceleration(acceleration);
-   else
-      acceleration_ = clockwise_acceleration(acceleration);
-   acceleration_frames_ = CalculateFramesUntilMoveSpeed(0.0f, acceleration_);
-   final_move_speed_ = 0.0f;
+   Callback callback(RotationEnd, this);
+   rotater = new LinearValueAnimator<float>(&move_speed_, -move_speed_, 0.5f, callback, SDL_GetTicks());
 }
 
 void PlanetRotater::Update(glm::vec3& position, Rotation& rotation,
                            bool* is_jumping) {
-   if (acceleration_frames_ > 0) {
-      move_speed_ += acceleration_;
-      --acceleration_frames_;
-   } else {
-      move_speed_ = final_move_speed_;
-   }
-
-   if (radius_ < destination_radius_) {
-      radius_ += kJumpSpeed;
-      *is_jumping = true;
-      if (radius_ >= destination_radius_) {
-         destination_radius_ = planet_radius_;
-         *is_jumping = false;
-      }
-   }
-   else if (radius_ > destination_radius_) {
-      radius_ -= kJumpSpeed;
-      if (radius_ < destination_radius_) {
-         radius_ = destination_radius_ = planet_radius_;
-      }
-   }
-
    angle_ -= move_speed_;
    rotation.angle -= move_speed_;
    position = UpdatedPosition();
+
+   if (rotater)
+      rotater->Update(SDL_GetTicks());
+   if (jumper) {
+      *is_jumping = true;
+      jumper->Update(SDL_GetTicks());
+   }
 }
 
 inline
@@ -82,8 +71,20 @@ void PlanetRotater::SetAngleToNearestPosition(const glm::vec3& position) {
    angle_ = angle_of(position - center_);
 }
 
+void JumpEnd(void* void_planet_rotater) {
+   std::cout << "jump end" << std::endl;
+   PlanetRotater* planet_rotater = (PlanetRotater*)(void_planet_rotater);
+   planet_rotater->Fall();
+}
+
+void PlanetRotater::Fall() {
+   Callback callback(RotationEnd, this);
+   jumper = new LinearValueAnimator<float>(&radius_, planet_radius_ - radius_, 0.08f, callback, SDL_GetTicks());
+}
+
 void PlanetRotater::Jump(float jump_height) {
-   destination_radius_ = planet_radius_ + jump_height;
+   Callback callback(JumpEnd, this);
+   jumper = new LinearValueAnimator<float>(&radius_, jump_height, 0.05f, callback, SDL_GetTicks());
 }
 
 inline float radians(float degrees) {

@@ -33,6 +33,7 @@ class PlanetRotater {
    void StopRotating(float acceleration);
    void Update(glm::vec3& position, Rotation& rotation, bool* is_jumping);
    void Jump(float jump_height);
+   void Fall();
 
    bool IsOnRightside() {
       ClampAngle();
