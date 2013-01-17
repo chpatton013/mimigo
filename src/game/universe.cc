@@ -10,6 +10,10 @@ void Universe::Update() {
          it != planets_.end(); ++it) {
       if (player_->EntersGravityFieldOf(*it)) {
          player_->TransitionTo(*it);
+         if (!(*it)->is_small_planet()) {
+            camera_->TransitionToLargePlanetMode();
+            player_->register_observer(camera_);
+         }
          break;
       }
    }
@@ -61,6 +65,7 @@ void Universe::OnDownButtonDown() {
 }
 
 void Universe::OnJumpButtonUp() {
+   camera_->DebugPrint();
 }
 
 void Universe::OnJumpButtonDown() {

@@ -10,6 +10,8 @@ class LargePlanet : public SmallPlanet {
       SmallPlanet(id, center, radius, gravity_radius)
    {}
 
+   virtual bool is_small_planet() const { return false; }
+
   private:
 };
 

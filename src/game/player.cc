@@ -1,10 +1,13 @@
 #include "player.h"
 
 const float kMoveSpeed = 8.0f;
+const float kLargePlanetMoveSpeed = 0.40f;
 const float kJumpHeight = 0.18f;
 const float kAcceleration = 0.6f;
 const float kStopAcceleration = 1.2f;
 const float kRotateTime = 0.05f;
+
+static float move_speed = kMoveSpeed;
 
 // static
 void Player::RotationEndCallback(void* p) {
@@ -13,12 +16,12 @@ void Player::RotationEndCallback(void* p) {
 }
 
 void Player::StartMovingCounterClockwiseAroundAttachedPlanet() {
-   planet_rotater_.StartRotatingCounterClockwise(kMoveSpeed, kAcceleration);
+   planet_rotater_.StartRotatingCounterClockwise(move_speed, kAcceleration);
    left_right_rotation_.angle = 0.0f;
 }
 
 void Player::StartMovingClockwiseAroundAttachedPlanet() {
-   planet_rotater_.StartRotatingClockwise(kMoveSpeed, kAcceleration);
+   planet_rotater_.StartRotatingClockwise(move_speed, kAcceleration);
    left_right_rotation_.angle = 180.0f;
 }
 
@@ -89,6 +92,8 @@ void Player::Update() {
    planet_rotater_.Update(position_, rotation_, &is_jumping_);
    rotater_.Update(rotation_.angle);
    UpdateMesh();
+   if (observer_)
+      observer_->OnPlayerMove(position_, glm::normalize(position_ - attached_planet_->center()));
 }
 
 inline
@@ -105,4 +110,7 @@ void Player::RotateBottomToward(SmallPlanet* planet) {
 void Player::TransitionTo(SmallPlanet* planet) {
    RotateBottomToward(planet);
    transition_planet_ = planet;
+   if (!planet->is_small_planet()) {
+      move_speed = kLargePlanetMoveSpeed;
+   }
 }

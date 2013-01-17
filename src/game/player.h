@@ -11,12 +11,18 @@
 #include "scene_hierarchy/root_node.h"
 #include "scene_hierarchy/scene_node.h"
 
+class PlayerObserver {
+  public:
+   virtual void OnPlayerMove(const glm::vec3& where, const glm::vec3& up) = 0;
+};
+
 class Player {
   public:
    Player(SmallPlanet* planet) :
       transition_planet_(planet),
       planet_rotater_(planet->center(), planet->radius(), position_),
-      is_jumping_(false)
+      is_jumping_(false),
+      observer_(NULL)
    {
       mesh_ = new SceneNode("player");
       RootNode::Instance()->AddChild(mesh_);
@@ -48,6 +54,10 @@ class Player {
 
    static void RotationEndCallback(void* player);
 
+   void register_observer(PlayerObserver* observer) {
+      observer_ = observer;
+   }
+
   private:
    void UpdateMesh();
    void RotateBottomToward(SmallPlanet* planet);
@@ -69,6 +79,8 @@ class Player {
    Rotation rotation_;
    Rotation left_right_rotation_;
    bool is_jumping_;
+
+   PlayerObserver* observer_;
 };
 
 #endif

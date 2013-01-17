@@ -19,6 +19,7 @@ class SmallPlanet {
 
    const glm::vec3 &center() const { return center_; }
    float radius() const { return radius_; }
+   virtual bool is_small_planet() const { return true; }
 
   private:
    void Initialize(const std::string& id);
