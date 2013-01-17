@@ -12,11 +12,7 @@ class SmallPlanet {
       radius_(radius),
       gravity_radius_(gravity_radius)
    {
-      SceneNode* mesh = new SceneNode(id);
-      mesh->set_transformation(glm::translate(center));
-      mesh->apply_transformation(glm::scale(radius, radius, 1.0f));
-      RootNode::Instance()->AddChild(mesh);
-      mesh->AddChild(SceneNode::Get("planet" + id));
+      Initialize(id);
    }
 
    bool PositionWithinGravityField(const glm::vec3& position);
@@ -25,6 +21,8 @@ class SmallPlanet {
    float radius() const { return radius_; }
 
   private:
+   void Initialize(const std::string& id);
+
    glm::vec3 center_;
    float radius_;
    float gravity_radius_;

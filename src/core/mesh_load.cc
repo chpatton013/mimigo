@@ -75,13 +75,15 @@ GLMesh::Face ParseOBJFace(const std::string& line,
       const std::string& material) {
    GLMesh::Face f;
    int t1, t2, t3, n1, n2, n3;
-   sscanf(line.c_str(), "f %u/%d/%d %u/%d/%d %u/%d/%d ",
-    &f.v1, &t1, &n1, &f.v2, &t2, &n2, &f.v3, &t3, &n3);
+   //sscanf(line.c_str(), "f %u/%d/%d %u/%d/%d %u/%d/%d ",
+    //&f.v1, &t1, &n1, &f.v2, &t2, &n2, &f.v3, &t3, &n3);
+   sscanf(line.c_str(), "f %u %u %u ", &f.v1, &f.v2, &f.v3);
 
    f.v1--; f.v2--; f.v3--;
    t1--; t2--; t3--;
    n1--; n2--; n3--;
 
+   /*
    verts[f.v1].texture = textures[t1];
    verts[f.v2].texture = textures[t2];
    verts[f.v3].texture = textures[t3];
@@ -93,6 +95,7 @@ GLMesh::Face ParseOBJFace(const std::string& line,
    verts[f.v1].set_material(g_materials[material]);
    verts[f.v2].set_material(g_materials[material]);
    verts[f.v3].set_material(g_materials[material]);
+   */
 
    return f;
 }
