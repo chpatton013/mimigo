@@ -6,7 +6,7 @@ SRCS = $(shell find $(SRC_DIR) -name "*.cc")
 DEPS = $(shell find $(SRC_DIR) -name "*.h")
 OBJS = $(patsubst $(SRC_DIR)/%.o,$(OBJ_DIR)/%.o,$(SRCS:.cc=.o))
 SRC_SUB_DIRS = $(shell find $(SRC_DIR) -type d)
-OBJ_SUB_DIRS = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC_SUB_DIRS))
+OBJ_SUB_DIRS = $(patsubst $(SRC_DIR)%,$(OBJ_DIR)%,$(SRC_SUB_DIRS))
 EXEC = $(shell basename `pwd`)
 
 
