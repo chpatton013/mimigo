@@ -1,14 +1,50 @@
 #include "universe.h"
 #include "scene_hierarchy/root_node.h"
 #include "core/camera.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+void ParsePlanetFile(const std::string& filename, std::vector<SmallPlanet*> *planets) {
+   std::ifstream in;
+   in.open(filename.c_str());
+
+   bool small_planets = true;
+
+   std::string line;
+   while (getline(in, line)) {
+      std::istringstream stream(line);
+      if (line.empty() || line[0] == '#') {
+      }
+      else if (line[0] == 'S') {
+         small_planets = true;
+      }
+      else if (line[0] == 'L') {
+         small_planets = false;
+      }
+      else {
+         std::string id;
+         glm::vec3 position;
+         float radius, gravity_radius;
+         stream >> id;
+         stream >> position.x;
+         stream >> position.y;
+         stream >> position.z;
+         stream >> radius;
+         stream >> gravity_radius;
+         if (small_planets) {
+            planets->push_back(new SmallPlanet(id, position, radius, gravity_radius));
+         }
+         else {
+            planets->push_back(new LargePlanet(id, position, radius, gravity_radius));
+         }
+      }
+   }
+}
 
 void Universe::MakePlanets() {
    //TODO: Meta data candidate
-   planets_.push_back(new SmallPlanet("1", glm::vec3(-0.5f, -0.5f, 0.0f), 0.4f, 0.7f));
-   planets_.push_back(new SmallPlanet("2", glm::vec3(.25f, .20f, 0.0f), .3f, 0.6f));
-   planets_.push_back(new SmallPlanet("3", glm::vec3(-0.5f, 0.5f, 0.0f), 0.4f, 0.7f));
-   planets_.push_back(new SmallPlanet("4", glm::vec3(0.30f, 1.0f, 0.0f), 0.4f, 0.7f));
-   planets_.push_back(new LargePlanet("5", glm::vec3(0.0f, 25.0f, 0.0f), 20.0f, 25.0f));
+   ParsePlanetFile("planets.lvl", &planets_);
 }
 
 Universe::Universe(Camera* camera) :
