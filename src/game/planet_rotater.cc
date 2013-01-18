@@ -66,6 +66,17 @@ void PlanetRotater::Update(glm::vec3& position, Rotation& rotation,
    }
 }
 
+bool PlanetRotater::IsOnRightside() {
+   ClampAngle();
+   return (angle_ > 0.0f && angle_ < 90.0f) ||
+      (angle_ > 270.0f && angle_ < 360.0f);
+}
+
+bool PlanetRotater::IsOnTopside() {
+   ClampAngle();
+   return angle_ > 0.0f && angle_ < 180.0f;
+}
+
 inline
 float angle_of(const glm::vec3& vec) {
    return 180.0f * std::atan2(vec.y, vec.x) / (atan(1) * 4);

@@ -107,18 +107,14 @@ void Universe::OnDownButtonDown() {
    player_->StartMovingDownAroundAttachedPlanet(camera_->position());
 }
 
-void Universe::OnLeftButtonUp() { OnMovementButtonUp(); }
+void Universe::OnLeftButtonUp()  { OnMovementButtonUp(); }
 void Universe::OnRightButtonUp() { OnMovementButtonUp(); }
-void Universe::OnUpButtonUp() { OnMovementButtonUp(); }
-void Universe::OnDownButtonUp() { OnMovementButtonUp(); }
+void Universe::OnUpButtonUp()    { OnMovementButtonUp(); }
+void Universe::OnDownButtonUp()  { OnMovementButtonUp(); }
+
 void Universe::OnMovementButtonUp() {
    player_->StopMoving();
 }
 
-void Universe::OnJumpButtonUp() {
-   camera_->DebugPrint(); // TODO: Remove this
-}
-
-void Universe::OnJumpButtonDown() {
-   player_->Jump();
-}
+void Universe::OnJumpButtonDown() { player_->Jump(); }
+void Universe::OnJumpButtonUp() {}

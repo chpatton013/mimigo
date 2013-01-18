@@ -35,16 +35,8 @@ class PlanetRotater {
    void Jump(float jump_height);
    void Fall();
 
-   bool IsOnRightside() {
-      ClampAngle();
-      return (angle_ > 0.0f && angle_ < 90.0f) ||
-             (angle_ > 270.0f && angle_ < 360.0f);
-   }
-
-   bool IsOnTopside() {
-      ClampAngle();
-      return angle_ > 0.0f && angle_ < 180.0f;
-   }
+   bool IsOnRightside();
+   bool IsOnTopside();
 
   private:
    void Rotate(float move_speed);
