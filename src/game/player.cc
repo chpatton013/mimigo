@@ -1,11 +1,43 @@
 #include "player.h"
+#include <sstream>
+#include <fstream>
 
-//TODO: Meta Data
-const float kMoveSpeed = 8.0f;
-const float kJumpHeight = 0.18f;
-const float kAcceleration = 0.6f;
-const float kStopAcceleration = 1.2f;
-const float kRotateTime = 0.05f;
+static float kMoveSpeed = 0.0f;
+static float kJumpHeight = 0.0f;
+static float kRotateTime = 0.0f;
+
+void LoadMetaDataFromFile(const std::string& filename) {
+   std::ifstream in;
+   in.open(filename.c_str());
+
+   std::string line;
+   while (getline(in, line)) {
+      std::istringstream stream(line);
+      std::string id;
+      stream >> id;
+      if (id == "move_speed")
+         stream >> kMoveSpeed;
+      else if (id == "jump_height")
+         stream >> kJumpHeight;
+      else if (id == "rotate_time")
+         stream >> kRotateTime;
+   }
+}
+
+Player::Player(SmallPlanet* planet) :
+   transition_planet_(planet),
+   planet_rotater_(planet->center(), planet->radius(), position_),
+   is_jumping_(false),
+   observer_(NULL)
+{
+   LoadMetaDataFromFile("player.config");
+   mesh_ = new SceneNode("player");
+   RootNode::Instance()->AddChild(mesh_);
+   mesh_->AddChild(SceneNode::Get("bunny"));
+   rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
+   left_right_rotation_.axis = glm::vec3(0.0f, 1.0f, 0.0f);
+   TransitionTo(planet);
+}
 
 // static
 void Player::RotationEndCallback(void* p) {
@@ -14,12 +46,12 @@ void Player::RotationEndCallback(void* p) {
 }
 
 void Player::StartMovingCounterClockwiseAroundAttachedPlanet() {
-   planet_rotater_.StartRotatingCounterClockwise(kMoveSpeed, kAcceleration);
+   planet_rotater_.StartRotatingCounterClockwise(kMoveSpeed, 0);
    left_right_rotation_.angle = 0.0f;
 }
 
 void Player::StartMovingClockwiseAroundAttachedPlanet() {
-   planet_rotater_.StartRotatingClockwise(kMoveSpeed, kAcceleration);
+   planet_rotater_.StartRotatingClockwise(kMoveSpeed, 0);
    left_right_rotation_.angle = 180.0f;
 }
 
@@ -38,7 +70,7 @@ void Player::StartMovingUpAroundAttachedPlanet(const glm::vec3& camera_pos) {
       else
          StartMovingClockwiseAroundAttachedPlanet();
    } else {
-      planet_rotater_.StartMoving(glm::normalize(position_ - camera_pos), kMoveSpeed, kAcceleration);
+      planet_rotater_.StartMoving(glm::normalize(position_ - camera_pos), kMoveSpeed, 0);
    }
 }
 
@@ -49,7 +81,7 @@ void Player::StartMovingDownAroundAttachedPlanet(const glm::vec3& camera_pos) {
       else
          StartMovingCounterClockwiseAroundAttachedPlanet();
    } else {
-      planet_rotater_.StartMoving(glm::normalize(camera_pos - position_), kMoveSpeed, kAcceleration);
+      planet_rotater_.StartMoving(glm::normalize(camera_pos - position_), kMoveSpeed, 0);
    }
 }
 
@@ -78,7 +110,7 @@ void Player::Jump() {
 }
 
 void Player::StopMoving() {
-   planet_rotater_.StopRotating(kStopAcceleration);
+   planet_rotater_.StopRotating(0);
 }
 
 bool Player::EntersGravityFieldOf(SmallPlanet* planet) {

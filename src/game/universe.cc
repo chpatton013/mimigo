@@ -43,7 +43,6 @@ void ParsePlanetFile(const std::string& filename, std::vector<SmallPlanet*> *pla
 }
 
 void Universe::MakePlanets() {
-   //TODO: Meta data candidate
    ParsePlanetFile("planets.lvl", &planets_);
 }
 

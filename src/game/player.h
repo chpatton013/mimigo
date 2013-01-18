@@ -18,19 +18,7 @@ class PlayerObserver {
 
 class Player {
   public:
-   Player(SmallPlanet* planet) :
-      transition_planet_(planet),
-      planet_rotater_(planet->center(), planet->radius(), position_),
-      is_jumping_(false),
-      observer_(NULL)
-   {
-      mesh_ = new SceneNode("player");
-      RootNode::Instance()->AddChild(mesh_);
-      mesh_->AddChild(SceneNode::Get("bunny"));
-      rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
-      left_right_rotation_.axis = glm::vec3(0.0f, 1.0f, 0.0f);
-      TransitionTo(planet);
-   }
+   Player(SmallPlanet* planet);
 
    void StartMovingUpAroundAttachedPlanet(const glm::vec3& camera_pos);
    void StartMovingDownAroundAttachedPlanet(const glm::vec3& camera_pos);
