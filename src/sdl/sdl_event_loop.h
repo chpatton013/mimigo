@@ -9,41 +9,22 @@
 
 class SDLGraphicsAdapter;
 
-class SDLTimer : public Timer {
-  public:
-   SDLTimer(Delegate* delegate, const std::string& event_name) :
-      Timer(delegate, event_name),
-      id_(value_++)
-   {}
-
-   void Start(double seconds);
-
-   unsigned int id_;
-  private:
-   SDL_TimerID timer_id_;
-
-   static unsigned int value_;
-};
-
-class SDLEventLoop : public EventLoop,
-                     public Timer::Delegate {
+class SDLEventLoop : public EventLoop {
   public:
    virtual void RunGame(Game* game, GraphicsAdapter* graphics);
    virtual void Quit();
 
    virtual void StartNewTimer(Timer::Delegate* delegate,
                               const std::string& event_name,
-                              double seconds);
-   void ExpireTimer(int id);
-   virtual void OnExpiration(const std::string& event_name);
+                              double seconds) {assert(false);}
+   void ExpireTimer(int id) {assert(false);}
 
   private:
-   void KeyDown(SDL_Event &e);
-   void KeyUp(SDL_Event &e);
+   void OnKeyDown(SDL_Event &e);
+   void OnKeyUp(SDL_Event &e);
 
    SDLGraphicsAdapter* graphics_;
    Game* game_;
-   std::vector<SDLTimer> timers_;
 };
 
 #endif

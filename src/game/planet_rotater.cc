@@ -30,22 +30,24 @@ void RotationEnd(void*) {
    }
 }
 
-void PlanetRotater::StartRotatingClockwise(float move_speed, float) {
+void PlanetRotater::Rotate(float move_speed) {
    Callback callback(RotationEnd, this);
-   rotater = new LinearValueAnimator<float>(&move_speed_, move_speed, 0.5f, callback, SDL_GetTicks());
+   rotater = new LinearValueAnimator<float>(&move_speed_, move_speed, 0.5f, callback);
+}
+
+void PlanetRotater::StartRotatingClockwise(float move_speed, float) {
+   Rotate(move_speed);
 }
 
 void PlanetRotater::StartRotatingCounterClockwise(float move_speed, float) {
-   Callback callback(RotationEnd, this);
-   rotater = new LinearValueAnimator<float>(&move_speed_, -move_speed, 0.5f, callback, SDL_GetTicks());
+   Rotate(-move_speed);
+}
+
+void PlanetRotater::StopRotating(float) {
+   Rotate(-move_speed_);
 }
 
 void PlanetRotater::StartMoving(const glm::vec3& direction, float move_speed, float acceleration) {
-}
-
-void PlanetRotater::StopRotating(float acceleration) {
-   Callback callback(RotationEnd, this);
-   rotater = new LinearValueAnimator<float>(&move_speed_, -move_speed_, 0.5f, callback, SDL_GetTicks());
 }
 
 void PlanetRotater::Update(glm::vec3& position, Rotation& rotation,
@@ -55,10 +57,10 @@ void PlanetRotater::Update(glm::vec3& position, Rotation& rotation,
    position = UpdatedPosition();
 
    if (rotater)
-      rotater->Update(SDL_GetTicks());
+      rotater->Update();
    if (jumper) {
       *is_jumping = true;
-      jumper->Update(SDL_GetTicks());
+      jumper->Update();
    } else {
       *is_jumping = false;
    }
@@ -74,19 +76,18 @@ void PlanetRotater::SetAngleToNearestPosition(const glm::vec3& position) {
 }
 
 void JumpEnd(void* void_planet_rotater) {
-   std::cout << "jump end" << std::endl;
    PlanetRotater* planet_rotater = (PlanetRotater*)(void_planet_rotater);
    planet_rotater->Fall();
 }
 
 void PlanetRotater::Fall() {
    Callback callback(RotationEnd, this);
-   jumper = new LinearValueAnimator<float>(&radius_, planet_radius_ - radius_, 0.08f, callback, SDL_GetTicks());
+   jumper = new LinearValueAnimator<float>(&radius_, planet_radius_ - radius_, 0.08f, callback);
 }
 
 void PlanetRotater::Jump(float jump_height) {
    Callback callback(JumpEnd, this);
-   jumper = new LinearValueAnimator<float>(&radius_, jump_height, 0.05f, callback, SDL_GetTicks());
+   jumper = new LinearValueAnimator<float>(&radius_, jump_height, 0.05f, callback);
 }
 
 inline float radians(float degrees) {

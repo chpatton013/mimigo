@@ -1,5 +1,6 @@
 #include "player.h"
 
+//TODO: Meta Data
 const float kMoveSpeed = 8.0f;
 const float kJumpHeight = 0.18f;
 const float kAcceleration = 0.6f;

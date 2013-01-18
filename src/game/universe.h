@@ -11,21 +11,12 @@ class Camera;
 
 class Universe : public Game {
   public:
-   Universe(Camera* camera) :
-      camera_(camera)
-   {
-      planets_.push_back(new SmallPlanet("1", glm::vec3(-0.5f, -0.5f, 0.0f), 0.4f, 0.7f));
-      planets_.push_back(new SmallPlanet("2", glm::vec3(.25f, .20f, 0.0f), .3f, 0.6f));
-      planets_.push_back(new SmallPlanet("3", glm::vec3(-0.5f, 0.5f, 0.0f), 0.4f, 0.7f));
-      planets_.push_back(new SmallPlanet("4", glm::vec3(0.30f, 1.0f, 0.0f), 0.4f, 0.7f));
-      planets_.push_back(new LargePlanet("5", glm::vec3(0.0f, 25.0f, 0.0f), 20.0f, 25.0f));
-      player_ = new Player(planets_[0]);
-      player_->attach_planet(planets_[0]);
-   }
+   Universe(Camera* camera);
 
    virtual void Update();
    virtual void Draw();
 
+   // Input handling //
    virtual void OnLeftButtonDown();
    virtual void OnLeftButtonUp();
 
@@ -43,8 +34,14 @@ class Universe : public Game {
 
    virtual void OnCameraUpDown();
    virtual void OnCameraDownDown();
+   // Input handling //
 
   private:
+   void MakePlanets();
+   void PlayerEntersGravityFieldOf(SmallPlanet* planet);
+   void CheckPlayerChangesGravityFields();
+   void OnMovementButtonUp();
+
    Camera* camera_;
    std::vector<SmallPlanet*> planets_;
    Player* player_;

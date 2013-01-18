@@ -8,7 +8,7 @@ class Callback {
       caller_(caller)
    {}
 
-   void Call() { func_(caller_); }
+   void Call() { if (func_ && caller_) func_(caller_); }
 
   private:
    void (*func_)(void *);

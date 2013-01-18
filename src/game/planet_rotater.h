@@ -47,6 +47,8 @@ class PlanetRotater {
    }
 
   private:
+   void Rotate(float move_speed);
+
    void ClampAngle() {
       while (angle_ < 0.0f)
          angle_ += 360.0f;

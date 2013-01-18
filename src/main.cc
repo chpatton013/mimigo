@@ -17,6 +17,7 @@ void InitializeSDL() {
       fprintf(stderr, "SDL_Init: %s\n", SDL_GetError());
       exit(EXIT_FAILURE);
    }
+
    atexit(SDL_Quit);
 
    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
@@ -46,8 +47,7 @@ void InitializeGL() {
 
 void InitializeGlew() {
    glewInit();
-   if (GLEW_VERSION_2_0) {
-   } else {
+   if (!GLEW_VERSION_2_0) {
       fprintf(stderr, "INFO: OpenGL 2.0 not supported. Exit\n");
       exit(EXIT_FAILURE);
    }
