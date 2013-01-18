@@ -46,12 +46,12 @@ void Player::RotationEndCallback(void* p) {
 }
 
 void Player::StartMovingCounterClockwiseAroundAttachedPlanet() {
-   planet_rotater_.StartRotatingCounterClockwise(kMoveSpeed, 0);
+   planet_rotater_.StartRotatingCounterClockwise(kMoveSpeed);
    left_right_rotation_.angle = 0.0f;
 }
 
 void Player::StartMovingClockwiseAroundAttachedPlanet() {
-   planet_rotater_.StartRotatingClockwise(kMoveSpeed, 0);
+   planet_rotater_.StartRotatingClockwise(kMoveSpeed);
    left_right_rotation_.angle = 180.0f;
 }
 
@@ -70,7 +70,7 @@ void Player::StartMovingUpAroundAttachedPlanet(const glm::vec3& camera_pos) {
       else
          StartMovingClockwiseAroundAttachedPlanet();
    } else {
-      planet_rotater_.StartMoving(glm::normalize(position_ - camera_pos), kMoveSpeed, 0);
+      planet_rotater_.StartMoving(glm::normalize(position_ - camera_pos), kMoveSpeed);
    }
 }
 
@@ -81,7 +81,7 @@ void Player::StartMovingDownAroundAttachedPlanet(const glm::vec3& camera_pos) {
       else
          StartMovingCounterClockwiseAroundAttachedPlanet();
    } else {
-      planet_rotater_.StartMoving(glm::normalize(camera_pos - position_), kMoveSpeed, 0);
+      planet_rotater_.StartMoving(glm::normalize(camera_pos - position_), kMoveSpeed);
    }
 }
 
@@ -110,7 +110,7 @@ void Player::Jump() {
 }
 
 void Player::StopMoving() {
-   planet_rotater_.StopRotating(0);
+   planet_rotater_.StopRotating();
 }
 
 bool Player::EntersGravityFieldOf(SmallPlanet* planet) {

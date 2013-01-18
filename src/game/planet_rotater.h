@@ -26,11 +26,11 @@ class PlanetRotater {
       SetAngleToNearestPosition(position);
    }
 
-   void StartRotatingClockwise(float move_speed, float acceleration);
-   void StartRotatingCounterClockwise(float move_speed, float acceleration);
-   void StartMoving(const glm::vec3& direction, float move_speed, float acceleration);
+   void StartRotatingClockwise(float move_speed);
+   void StartRotatingCounterClockwise(float move_speed);
+   void StartMoving(const glm::vec3& direction, float move_speed);
 
-   void StopRotating(float acceleration);
+   void StopRotating();
    void Update(glm::vec3& position, Rotation& rotation, bool* is_jumping);
    void Jump(float jump_height);
    void Fall();
@@ -47,6 +47,7 @@ class PlanetRotater {
       while (angle_ > 360.0f)
          angle_ -= 360.0f;
    }
+
    glm::vec3 UpdatedPosition();
    void SetAngleToNearestPosition(const glm::vec3& position);
 

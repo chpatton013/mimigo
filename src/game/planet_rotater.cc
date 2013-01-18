@@ -9,16 +9,6 @@
 static LinearValueAnimator<float>* rotater = NULL;
 static LinearValueAnimator<float>* jumper = NULL;
 
-inline
-float clockwise_acceleration(float acceleration) {
-   return std::abs(acceleration);
-}
-
-inline
-float counter_clockwise_acceleration(float acceleration) {
-   return -std::abs(acceleration);
-}
-
 void RotationEnd(void*) {
    if (rotater) {
       delete rotater;
@@ -35,19 +25,19 @@ void PlanetRotater::Rotate(float move_speed) {
    rotater = new LinearValueAnimator<float>(&move_speed_, move_speed, 0.5f, callback);
 }
 
-void PlanetRotater::StartRotatingClockwise(float move_speed, float) {
+void PlanetRotater::StartRotatingClockwise(float move_speed) {
    Rotate(move_speed);
 }
 
-void PlanetRotater::StartRotatingCounterClockwise(float move_speed, float) {
+void PlanetRotater::StartRotatingCounterClockwise(float move_speed) {
    Rotate(-move_speed);
 }
 
-void PlanetRotater::StopRotating(float) {
+void PlanetRotater::StopRotating() {
    Rotate(-move_speed_);
 }
 
-void PlanetRotater::StartMoving(const glm::vec3& direction, float move_speed, float acceleration) {
+void PlanetRotater::StartMoving(const glm::vec3& direction, float move_speed) {
 }
 
 void PlanetRotater::Update(glm::vec3& position, Rotation& rotation,
