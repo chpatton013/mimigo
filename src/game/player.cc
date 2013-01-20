@@ -6,18 +6,15 @@ Player::Player(Planet* planet) :
    new SceneNode("player");
    RootNode::Instance()->AddChild(SceneNode::Get("player"));
    SceneNode::Get("player")->AddChild(SceneNode::Get("bunny"));
-   xz_rotation_.axis = glm::vec3(0.0f, 1.0f, 0.0f);
    TransitionTo(planet);
 }
 
 void Player::StartMovingCounterClockwiseAroundAttachedPlanet() {
    //small_planet_mover_.MoveCounterClockwiseAroundPlanet();
-   xz_rotation_.angle = 0.0f;
 }
 
 void Player::StartMovingClockwiseAroundAttachedPlanet() {
    //small_planet_mover_.MoveClockwiseAroundPlanet();
-   xz_rotation_.angle = 180.0f;
 }
 
 void Player::OnUpButtonDown(const glm::vec3& camera_pos) {

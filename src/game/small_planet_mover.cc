@@ -30,6 +30,7 @@ SmallPlanetMover::SmallPlanetMover(Planet* planet) :
    is_jumping_(false)
 {
    xy_rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
+   xz_rotation_.axis = glm::vec3(0.0f, 1.0f, 0.0f);
    LoadMetaDataFromFile("player.config");
 }
 
@@ -80,10 +81,12 @@ void SmallPlanetMover::UpdateMeshTransform() const {
 
 void SmallPlanetMover::MoveCounterClockwiseAroundPlanet() {
    planet_rotater_->StartRotatingCounterClockwise(kMoveSpeed);
+   xz_rotation_.angle = 0.0f;
 }
 
 void SmallPlanetMover::MoveClockwiseAroundPlanet() {
    planet_rotater_->StartRotatingClockwise(kMoveSpeed);
+   xz_rotation_.angle = 180.0f;
 }
 
 void SmallPlanetMover::set_planet(Planet* planet) {
