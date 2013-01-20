@@ -23,10 +23,10 @@ class Player {
    Player(Planet* planet);
 
    //Small Planet Motions
-   void StartMovingUpAroundAttachedPlanet(const glm::vec3& camera_pos);
-   void StartMovingDownAroundAttachedPlanet(const glm::vec3& camera_pos);
-   void StartMovingLeftAroundAttachedPlanet(const glm::vec3& camera_pos);
-   void StartMovingRightAroundAttachedPlanet(const glm::vec3& camera_pos);
+   void OnUpButtonDown(const glm::vec3& camera_pos);
+   void OnDownButtonDown(const glm::vec3& camera_pos);
+   void OnLeftButtonDown(const glm::vec3& camera_pos);
+   void OnRightButtonDown(const glm::vec3& camera_pos);
    void StopMoving();
    //Small Planet Motions
 
@@ -48,8 +48,6 @@ class Player {
 
    SmallPlanetMover small_planet_mover_;
 
-   glm::vec3 position_;
-   Rotation xy_rotation_;
    Rotation xz_rotation_;
 };
 

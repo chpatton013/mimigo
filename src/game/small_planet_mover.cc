@@ -24,14 +24,12 @@ void LoadMetaDataFromFile(const std::string& filename) {
    }
 }
 
-SmallPlanetMover::SmallPlanetMover(Planet* planet, glm::vec3& position,
-                                   Rotation& rotation) :
+SmallPlanetMover::SmallPlanetMover(Planet* planet) :
    planet_(planet),
-   position_(position),
-   rotation_(rotation),
    planet_rotater_(NULL),
    is_jumping_(false)
 {
+   xy_rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
    LoadMetaDataFromFile("player.config");
 }
 
@@ -40,8 +38,44 @@ float angle_of(const glm::vec3& vec) {
    return 180.0f * std::atan2(vec.y, vec.x) / (atan(1) * 4);
 }
 
+void SmallPlanetMover::MoveUp(const glm::vec3& camera_pos) {
+   if (IsRightSideOfPlanet())
+      MoveCounterClockwiseAroundPlanet();
+   else
+      MoveClockwiseAroundPlanet();
+}
+
+void SmallPlanetMover::MoveDown(const glm::vec3& camera_pos) {
+   if (IsRightSideOfPlanet())
+      MoveClockwiseAroundPlanet();
+   else
+      MoveCounterClockwiseAroundPlanet();
+}
+
+void SmallPlanetMover::MoveLeft(const glm::vec3& camera_pos) {
+   if (IsTopSideOfPlanet())
+      MoveCounterClockwiseAroundPlanet();
+   else
+      MoveClockwiseAroundPlanet();
+}
+
+void SmallPlanetMover::MoveRight(const glm::vec3& camera_pos) {
+   if (IsTopSideOfPlanet())
+      MoveClockwiseAroundPlanet();
+   else
+      MoveCounterClockwiseAroundPlanet();
+}
+
 void SmallPlanetMover::RotateBottomTowardPlanet() {
-   rotation_.angle = angle_of(position_ - planet_->center()) - 90.0f;
+   xy_rotation_.angle = angle_of(position_ - planet_->center()) - 90.0f;
+}
+
+void SmallPlanetMover::UpdateMeshTransform() const {
+   glm::mat4 transform;
+   transform *= glm::translate(position_);
+   transform *= glm::rotate(xy_rotation_.angle, xy_rotation_.axis);
+   transform *= glm::rotate(xz_rotation_.angle, xz_rotation_.axis);
+   SceneNode::Get("player")->set_transformation(transform);
 }
 
 void SmallPlanetMover::MoveCounterClockwiseAroundPlanet() {
@@ -60,7 +94,7 @@ void SmallPlanetMover::set_planet(Planet* planet) {
 }
 
 void SmallPlanetMover::Update() {
-   planet_rotater_->Update(position_, rotation_, &is_jumping_);
+   planet_rotater_->Update(position_, xy_rotation_, &is_jumping_);
 }
 
 void SmallPlanetMover::StopMoving() {

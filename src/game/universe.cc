@@ -99,7 +99,7 @@ void Universe::OnCameraUpDown() { camera_->move(glm::vec3(0.0f, 1.0f, 0.0f)); }
 
 void Universe::OnLeftButtonDown() {
    if (is_small_planet_gameplay())
-      player_->StartMovingLeftAroundAttachedPlanet(camera_->position());
+      player_->OnLeftButtonDown(camera_->position());
    else {
       //player_->TurnLeft();
    }
@@ -107,7 +107,7 @@ void Universe::OnLeftButtonDown() {
 
 void Universe::OnRightButtonDown() {
    if (is_small_planet_gameplay())
-      player_->StartMovingRightAroundAttachedPlanet(camera_->position());
+      player_->OnRightButtonDown(camera_->position());
    else {
       //player_->TurnRight();
    }
@@ -115,7 +115,7 @@ void Universe::OnRightButtonDown() {
 
 void Universe::OnUpButtonDown() {
    if (is_small_planet_gameplay())
-      player_->StartMovingUpAroundAttachedPlanet(camera_->position());
+      player_->OnUpButtonDown(camera_->position());
    else {
       //player_->MoveForward();
    }
@@ -123,7 +123,7 @@ void Universe::OnUpButtonDown() {
 
 void Universe::OnDownButtonDown() {
    if (is_small_planet_gameplay())
-      player_->StartMovingDownAroundAttachedPlanet(camera_->position());
+      player_->OnDownButtonDown(camera_->position());
    else {
       //player_->MoveBackward();
    }
