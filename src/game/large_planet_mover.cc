@@ -19,3 +19,6 @@ void LargePlanetMover::UpdateMeshTransform() const {
    transform *= glm::rotate(xz_rotation_.angle, xz_rotation_.axis);
    SceneNode::Get("player")->set_transformation(transform);
 }
+
+void LargePlanetMover::MoveForward() {
+}

@@ -11,13 +11,13 @@ class LargePlanetMover {
    LargePlanetMover(Planet* planet);
    void set_planet(Planet* planet) {}
 
-   void StopMoving() {}
    void Jump() {}
    void Update();
 
-   void MoveForward() {}
+   void MoveForward();
    void TurnLeft();
    void TurnRight();
+   void StopMoving() {}
 
    bool is_attached_to(Planet* planet) const { return planet_ == planet; }
    bool is_jumping() const { return is_jumping_; }
