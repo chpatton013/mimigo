@@ -24,7 +24,7 @@ void LoadMetaDataFromFile(const std::string& filename) {
    }
 }
 
-Player::Player(SmallPlanet* planet) :
+Player::Player(Planet* planet) :
    transition_planet_(planet),
    planet_rotater_(planet->center(), planet->radius(), position_),
    is_jumping_(false),
@@ -113,7 +113,7 @@ void Player::StopMoving() {
    planet_rotater_.StopRotating();
 }
 
-bool Player::EntersGravityFieldOf(SmallPlanet* planet) {
+bool Player::EntersGravityFieldOf(Planet* planet) {
    if (planet == attached_planet_)
       return false;
 
@@ -132,12 +132,20 @@ void Player::UpdateMesh() {
    mesh_->set_transformation(transform);
 }
 
+glm::vec3 Player::up() const {
+   return glm::normalize(position_ - attached_planet_->center());
+}
+
+glm::vec3 Player::facing() const {
+   return glm::normalize(position_ - attached_planet_->center());
+}
+
 void Player::Update() {
    planet_rotater_.Update(position_, rotation_, &is_jumping_);
    rotater_.Update(rotation_.angle);
    UpdateMesh();
    if (observer_)
-      observer_->OnPlayerMove(position_, glm::normalize(position_ - attached_planet_->center()));
+      observer_->OnPlayerMove(position_, up(), facing());
 }
 
 inline
@@ -145,13 +153,13 @@ float angle_of(const glm::vec3& vec) {
    return 180.0f * std::atan2(vec.y, vec.x) / (atan(1) * 4);
 }
 
-void Player::RotateBottomToward(SmallPlanet* planet) {
+void Player::RotateBottomToward(Planet* planet) {
    rotater_.Move(rotation_.angle,
          angle_of(position_ - planet->center()) - 90.0f - rotation_.angle,
          kRotateTime, RotationEndCallback, this);
 }
 
-void Player::TransitionTo(SmallPlanet* planet) {
+void Player::TransitionTo(Planet* planet) {
    RotateBottomToward(planet);
    transition_planet_ = planet;
 }

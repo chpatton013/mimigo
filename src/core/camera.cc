@@ -5,15 +5,19 @@
 namespace {
 
 const float kCameraDistance = 0.5f;
-
-float radians(float degrees) {
-   return degrees/180.0*acos(-1.0);
-}
+float radians(float degrees) { return degrees/180.0*acos(-1.0); }
 
 }
 
 void Camera::TransitionToLargePlanetMode() {
    large_planet_mode_ = true;
+}
+
+void Camera::OnPlayerMove(const glm::vec3& position, const glm::vec3& up,
+                          const glm::vec3& facing) {
+   camera_focus_ = position;
+   //camera_pos_ = position -
+   camera_up_ = up;
 }
 
 void Camera::DebugPrint() {
@@ -28,19 +32,7 @@ void Camera::DebugPrint() {
 void Camera::Update() {
    angle_ += rotate_*1.8;
    if (large_planet_mode_) {
-      UpdateCamera();
-      pos_mover_.Update(camera_pos_);
-      focus_mover_.Update(camera_focus_);
-      up_mover_.Update(camera_up_);
    }
-}
-
-void Camera::UpdateCamera() {
-   pos_mover_.Move(camera_pos_, camera_focus_ +
-      glm::vec3(std::cos(radians(angle_)),
-                0.2f,
-                std::sin(radians(angle_)))*kCameraDistance,
-      0.9f);
 }
 
 void Camera::SetView() {

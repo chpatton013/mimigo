@@ -1,18 +1,14 @@
 #ifndef LARGE_PLANET_H_
 #define LARGE_PLANET_H_
 
-#include "small_planet.h"
+#include "planet.h"
 
-class LargePlanet : public SmallPlanet {
+class LargePlanet : public Planet {
   public:
    LargePlanet(const std::string& id, const glm::vec3& center, float radius,
                float gravity_radius) :
-      SmallPlanet(id, center, radius, gravity_radius)
+      Planet(PLANET_TYPE_LARGE, id, center, radius, gravity_radius)
    {}
-
-   virtual bool is_small_planet() const { return false; }
-
-  private:
 };
 
 #endif

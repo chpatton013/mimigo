@@ -18,22 +18,18 @@ class Camera : public PlayerObserver {
       rotate_(0.0f),
       camera_up_(0.0f, 1.0f, 0.0f),
       camera_pos_(0.0f, 0.0f, 1.0f)
-   {UpdateCamera();}
+   {
+   }
 
    void SetView();
    void DebugPrint();
 
-   virtual void OnPlayerMove(const glm::vec3& position, const glm::vec3& up) {
-      focus_mover_.Move(camera_focus_, position, 0.45f);
-      pos_mover_.Move(camera_pos_, position, 0.45f);
-      up_mover_.Move(camera_up_, up, 0.45f);
-      UpdateCamera();
-   }
+   virtual void OnPlayerMove(const glm::vec3& position, const glm::vec3& up,
+                             const glm::vec3& facing);
 
    void move(const glm::vec3& p) {
       camera_pos_ += p;
       camera_focus_ += p;
-      UpdateCamera();
    }
 
    glm::vec3 position() const { return camera_pos_; }
@@ -46,7 +42,6 @@ class Camera : public PlayerObserver {
    void Update();
 
   private:
-   void UpdateCamera();
    bool large_planet_mode_;
 
    float rotate_;

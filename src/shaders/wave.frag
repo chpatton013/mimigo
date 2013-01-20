@@ -6,5 +6,6 @@ varying vec4 vNormal;
 void main()
 {
    vec3 normal = normalize(vNormal.xyz);
-   gl_FragColor = vec4(normal.x, normal.y, normal.z, 1.0f);
+   /*gl_FragColor = vec4(normal.x, normal.y, normal.z, 1.0f);*/
+   gl_FragColor = vec4(0, 0, 0, 1.0f);
 }

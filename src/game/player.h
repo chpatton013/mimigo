@@ -4,7 +4,7 @@
 #include "core/mesh_load.h"
 #include "core/rotation.h"
 #include "gl/gl_mesh.h"
-#include "small_planet.h"
+#include "planet.h"
 #include "planet_rotater.h"
 #include "core/mover.h"
 #include "scene_hierarchy/mesh_node.h"
@@ -13,12 +13,13 @@
 
 class PlayerObserver {
   public:
-   virtual void OnPlayerMove(const glm::vec3& where, const glm::vec3& up) = 0;
+   virtual void OnPlayerMove(const glm::vec3& where, const glm::vec3& up,
+                             const glm::vec3& facing) = 0;
 };
 
 class Player {
   public:
-   Player(SmallPlanet* planet);
+   Player(Planet* planet);
 
    void StartMovingUpAroundAttachedPlanet(const glm::vec3& camera_pos);
    void StartMovingDownAroundAttachedPlanet(const glm::vec3& camera_pos);
@@ -26,17 +27,17 @@ class Player {
    void StartMovingRightAroundAttachedPlanet(const glm::vec3& camera_pos);
    void StopMoving();
 
-   bool EntersGravityFieldOf(SmallPlanet* planet);
+   bool EntersGravityFieldOf(Planet* planet);
 
    void Jump();
 
-   void attach_planet(SmallPlanet* planet) {
+   void attach_planet(Planet* planet) {
       attached_planet_ = planet;
       planet_rotater_ = PlanetRotater(planet->center(), planet->radius(),
             position_);
    }
 
-   void TransitionTo(SmallPlanet* planet);
+   void TransitionTo(Planet* planet);
 
    void Update();
 
@@ -46,9 +47,12 @@ class Player {
       observer_ = observer;
    }
 
+   glm::vec3 up() const;
+   glm::vec3 facing() const;
+
   private:
    void UpdateMesh();
-   void RotateBottomToward(SmallPlanet* planet);
+   void RotateBottomToward(Planet* planet);
    void StartMovingCounterClockwiseAroundAttachedPlanet();
    void StartMovingClockwiseAroundAttachedPlanet();
    bool IsTopSideOfPlanet();
@@ -57,8 +61,8 @@ class Player {
    bool is_jumping() const { return is_jumping_; }
 
    SceneNode* mesh_;
-   SmallPlanet* attached_planet_;
-   SmallPlanet* transition_planet_;
+   Planet* attached_planet_;
+   Planet* transition_planet_;
    PlanetRotater planet_rotater_;
 
    Rotater rotater_;

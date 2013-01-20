@@ -3,6 +3,7 @@
 
 #include "../core/game.h"
 #include "player.h"
+#include "planet.h"
 #include "small_planet.h"
 #include "large_planet.h"
 
@@ -37,13 +38,13 @@ class Universe : public Game {
    // Input handling //
 
   private:
-   void MakePlanets();
-   void PlayerEntersGravityFieldOf(SmallPlanet* planet);
+   void LoadInPlanets();
+   void PlayerEntersGravityFieldOf(Planet* planet);
    void CheckPlayerChangesGravityFields();
    void OnMovementButtonUp();
 
    Camera* camera_;
-   std::vector<SmallPlanet*> planets_;
+   std::vector<Planet*> planets_;
    Player* player_;
 };
 

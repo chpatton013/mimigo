@@ -5,7 +5,7 @@
 #include <fstream>
 #include <sstream>
 
-void ParsePlanetFile(const std::string& filename, std::vector<SmallPlanet*> *planets) {
+void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets) {
    std::ifstream in;
    in.open(filename.c_str());
 
@@ -42,18 +42,18 @@ void ParsePlanetFile(const std::string& filename, std::vector<SmallPlanet*> *pla
    }
 }
 
-void Universe::MakePlanets() {
+void Universe::LoadInPlanets() {
    ParsePlanetFile("planets.lvl", &planets_);
 }
 
 Universe::Universe(Camera* camera) :
    camera_(camera)
 {
-   MakePlanets();
+   LoadInPlanets();
    player_ = new Player(planets_[0]);
 }
 
-void Universe::PlayerEntersGravityFieldOf(SmallPlanet* planet) {
+void Universe::PlayerEntersGravityFieldOf(Planet* planet) {
    player_->TransitionTo(planet);
    if (!(planet)->is_small_planet()) {
       camera_->TransitionToLargePlanetMode();
@@ -62,13 +62,15 @@ void Universe::PlayerEntersGravityFieldOf(SmallPlanet* planet) {
 }
 
 void Universe::CheckPlayerChangesGravityFields() {
-   for (std::vector<SmallPlanet*>::iterator it = planets_.begin();
-         it != planets_.end(); ++it) {
-      if (player_->EntersGravityFieldOf(*it)) {
-         PlayerEntersGravityFieldOf(*it);
-         break; // Since we found a change already, we don't check the rest.
+   //if (player_->is_jumping()) {
+      for (std::vector<Planet*>::iterator it = planets_.begin();
+            it != planets_.end(); ++it) {
+         if (player_->EntersGravityFieldOf(*it)) {
+            PlayerEntersGravityFieldOf(*it);
+            break; // Since we found a change already, we don't check the rest.
+         }
       }
-   }
+   //}
 }
 
 void Universe::Update() {
@@ -83,28 +85,45 @@ void Universe::Draw() {
    RootNode::Instance()->Draw();
 }
 
-void Universe::OnCameraDownDown() {
-   camera_->move(glm::vec3(0.0f, -1.0f, 0.0f));
-}
-
-void Universe::OnCameraUpDown() {
-   camera_->move(glm::vec3(0.0f, 1.0f, 0.0f));
-}
+//DEBUG METHODS
+void Universe::OnCameraDownDown() { camera_->move(glm::vec3(0.0f, -1.0f, 0.0f)); }
+void Universe::OnCameraUpDown() { camera_->move(glm::vec3(0.0f, 1.0f, 0.0f)); }
+//DEBUG METHODS
 
 void Universe::OnLeftButtonDown() {
-   player_->StartMovingLeftAroundAttachedPlanet(camera_->position());
+   //if (small_planet_gameplay())
+      player_->StartMovingLeftAroundAttachedPlanet(camera_->position());
+   //else {
+      //player_->TurnLeft();
+      //camera_->MoveLeftAroundPlayer();
+   //}
 }
 
 void Universe::OnRightButtonDown() {
-   player_->StartMovingRightAroundAttachedPlanet(camera_->position());
+   //if (small_planet_gameplay())
+      player_->StartMovingRightAroundAttachedPlanet(camera_->position());
+   //else {
+      //player_->TurnRight();
+      //camera_->MoveRightAroundPlayer();
+   //}
 }
 
 void Universe::OnUpButtonDown() {
-   player_->StartMovingUpAroundAttachedPlanet(camera_->position());
+   //if (small_planet_gameplay())
+      player_->StartMovingUpAroundAttachedPlanet(camera_->position());
+   //else {
+      //player_->MoveForward();
+      //camera_->MoveBehindPlayer();
+   //}
 }
 
 void Universe::OnDownButtonDown() {
-   player_->StartMovingDownAroundAttachedPlanet(camera_->position());
+   //if (small_planet_gameplay())
+      player_->StartMovingDownAroundAttachedPlanet(camera_->position());
+   //else {
+      //player_->MoveBackward();
+      //camera_->MoveBehindPlayer();
+   //}
 }
 
 void Universe::OnLeftButtonUp()  { OnMovementButtonUp(); }
@@ -116,5 +135,8 @@ void Universe::OnMovementButtonUp() {
    player_->StopMoving();
 }
 
-void Universe::OnJumpButtonDown() { player_->Jump(); }
+void Universe::OnJumpButtonDown() {
+   //if (!player_->is_jumping())
+      player_->Jump();
+}
 void Universe::OnJumpButtonUp() {}
