@@ -9,6 +9,24 @@
 static LinearValueAnimator<float>* rotater = NULL;
 static LinearValueAnimator<float>* jumper = NULL;
 
+PlanetRotater::PlanetRotater(const glm::vec3& center,
+                             float radius,
+                             const glm::vec3& position) :
+   center_(center),
+   radius_(radius),
+   destination_radius_(radius),
+   planet_radius_(radius),
+   acceleration_(0.0f),
+   move_speed_(0.0f),
+   final_move_speed_(0.0f),
+   acceleration_frames_(0)
+{
+   SetAngleToNearestPosition(position);
+   if (rotater) delete rotater;
+   if (jumper) delete jumper;
+   rotater = jumper = NULL;
+}
+
 void RotationEnd(void*) {
    if (rotater) {
       delete rotater;

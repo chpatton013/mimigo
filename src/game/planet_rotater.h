@@ -13,18 +13,7 @@ class Animator;
  * an acceleration amount to get to that speed. */
 class PlanetRotater {
   public:
-   PlanetRotater(const glm::vec3& center, float radius, const glm::vec3& position) :
-      center_(center),
-      radius_(radius),
-      destination_radius_(radius),
-      planet_radius_(radius),
-      acceleration_(0.0f),
-      move_speed_(0.0f),
-      final_move_speed_(0.0f),
-      acceleration_frames_(0)
-   {
-      SetAngleToNearestPosition(position);
-   }
+   PlanetRotater(const glm::vec3& center, float radius, const glm::vec3& position);
 
    void StartRotatingClockwise(float move_speed);
    void StartRotatingCounterClockwise(float move_speed);

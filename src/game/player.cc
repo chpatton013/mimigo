@@ -1,8 +1,7 @@
 #include "player.h"
 
 Player::Player(Planet* planet) :
-   small_planet_mover_(planet, position_, xy_rotation_),
-   is_jumping_(false)
+   small_planet_mover_(planet, position_, xy_rotation_)
 {
    new SceneNode("player");
    RootNode::Instance()->AddChild(SceneNode::Get("player"));
@@ -62,10 +61,7 @@ bool Player::EntersGravityFieldOf(Planet* planet) {
    if (is_attached_to(planet))
       return false;
 
-   if (is_jumping() && planet->PositionWithinGravityField(position_))
-      return true;
-
-   return false;
+   return planet->PositionWithinGravityField(position_);
 }
 
 void Player::UpdateMeshTransform() {

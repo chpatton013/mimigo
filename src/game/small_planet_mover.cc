@@ -29,7 +29,8 @@ SmallPlanetMover::SmallPlanetMover(Planet* planet, glm::vec3& position,
    planet_(planet),
    position_(position),
    rotation_(rotation),
-   planet_rotater_(NULL)
+   planet_rotater_(NULL),
+   is_jumping_(false)
 {
    LoadMetaDataFromFile("player.config");
 }
@@ -56,6 +57,10 @@ void SmallPlanetMover::set_planet(Planet* planet) {
    if (planet_rotater_)
       delete planet_rotater_;
    planet_rotater_ = new PlanetRotater(planet->center(), planet->radius(), position_);
+}
+
+void SmallPlanetMover::Update() {
+   planet_rotater_->Update(position_, rotation_, &is_jumping_);
 }
 
 void SmallPlanetMover::StopMoving() {

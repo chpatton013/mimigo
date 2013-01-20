@@ -34,9 +34,9 @@ class Player {
    void TransitionTo(Planet* planet);
 
    void Jump();
-   bool is_jumping() const { return is_jumping_; }
 
    void Update();
+   bool is_jumping() const { return small_planet_mover_.is_jumping(); }
 
   private:
    void UpdateMeshTransform();
@@ -51,7 +51,6 @@ class Player {
    glm::vec3 position_;
    Rotation xy_rotation_;
    Rotation xz_rotation_;
-   bool is_jumping_;
 };
 
 #endif
