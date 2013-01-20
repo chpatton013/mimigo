@@ -71,8 +71,8 @@ void LoadResources() {
    RootNode::Instance()->AddChild(mesh);
    RootNode::Instance()->AddChild(new MeshNode("planet1", sphere));
    RootNode::Instance()->AddChild(new MeshNode("planet2", sphere));
-   //RootNode::Instance()->AddChild(new MeshNode("planet3", sphere));
-   //RootNode::Instance()->AddChild(new MeshNode("planet4", sphere));
+   RootNode::Instance()->AddChild(new MeshNode("planet3", sphere));
+   RootNode::Instance()->AddChild(new MeshNode("planet4", sphere));
    RootNode::Instance()->AddChild(new MeshNode("planet5", sphere));
 }
 

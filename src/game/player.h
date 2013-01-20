@@ -39,16 +39,11 @@ class Player {
    bool is_jumping() const { return small_planet_mover_.is_jumping(); }
 
   private:
-   void UpdateMeshTransform();
-   void StartMovingCounterClockwiseAroundAttachedPlanet();
-   void StartMovingClockwiseAroundAttachedPlanet();
 
    bool is_attached_to(Planet* planet) const
     { return small_planet_mover_.is_attached_to(planet); }
 
    SmallPlanetMover small_planet_mover_;
-
-   Rotation xz_rotation_;
 };
 
 #endif

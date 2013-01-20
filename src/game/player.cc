@@ -9,14 +9,6 @@ Player::Player(Planet* planet) :
    TransitionTo(planet);
 }
 
-void Player::StartMovingCounterClockwiseAroundAttachedPlanet() {
-   //small_planet_mover_.MoveCounterClockwiseAroundPlanet();
-}
-
-void Player::StartMovingClockwiseAroundAttachedPlanet() {
-   //small_planet_mover_.MoveClockwiseAroundPlanet();
-}
-
 void Player::OnUpButtonDown(const glm::vec3& camera_pos) {
    small_planet_mover_.MoveUp(camera_pos);
 }
@@ -48,14 +40,10 @@ bool Player::EntersGravityFieldOf(Planet* planet) {
    return planet->PositionWithinGravityField(small_planet_mover_.position());
 }
 
-void Player::UpdateMeshTransform() {
-   small_planet_mover_.UpdateMeshTransform();
-}
-
 void Player::Update() {
    small_planet_mover_.RotateBottomTowardPlanet();
    small_planet_mover_.Update();
-   UpdateMeshTransform();
+   small_planet_mover_.UpdateMeshTransform();
 }
 
 void Player::TransitionTo(Planet* planet) {
