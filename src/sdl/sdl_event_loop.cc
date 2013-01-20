@@ -52,58 +52,26 @@ void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
 
 void SDLEventLoop::OnKeyUp(SDL_Event &event) {
    switch (event.key.keysym.sym) {
-      case SDLK_LEFT:
-      case SDLK_a:
-         OnLeftButtonUp();
-         break;
-      case SDLK_RIGHT:
-      case SDLK_d:
-         OnRightButtonUp();
-         break;
-      case SDLK_UP:
-      case SDLK_w:
-         OnUpButtonUp();
-         break;
-      case SDLK_DOWN:
-      case SDLK_s:
-         OnDownButtonUp();
-         break;
-      case SDLK_SPACE:
-         OnJumpButtonUp();
-         break;
-      case SDLK_i:
-         OnCameraUpDown();
-         break;
-      case SDLK_k:
-         OnCameraDownDown();
-         break;
-      default:
-         break;
+      case SDLK_LEFT:  case SDLK_a: OnLeftButtonUp();   break;
+      case SDLK_RIGHT: case SDLK_d: OnRightButtonUp();  break;
+      case SDLK_UP:    case SDLK_w: OnUpButtonUp();     break;
+      case SDLK_DOWN:  case SDLK_s: OnDownButtonUp();   break;
+      case SDLK_SPACE:              OnJumpButtonUp();   break;
+      case SDLK_i:                  OnCameraUpUp();     break;
+      case SDLK_k:                  OnCameraDownUp();   break;
+      default:                                          break;
    }
 }
 
 void SDLEventLoop::OnKeyDown(SDL_Event &event) {
    switch (event.key.keysym.sym) {
-      case SDLK_LEFT:
-      case SDLK_a:
-         OnLeftButtonDown();
-         break;
-      case SDLK_RIGHT:
-      case SDLK_d:
-         OnRightButtonDown();
-         break;
-      case SDLK_UP:
-      case SDLK_w:
-         OnUpButtonDown();
-         break;
-      case SDLK_DOWN:
-      case SDLK_s:
-         OnDownButtonDown();
-         break;
-      case SDLK_SPACE:
-         OnJumpButtonDown();
-         break;
-      default:
-         break;
+      case SDLK_LEFT:  case SDLK_a: OnLeftButtonDown();   break;
+      case SDLK_RIGHT: case SDLK_d: OnRightButtonDown();  break;
+      case SDLK_UP:    case SDLK_w: OnUpButtonDown();     break;
+      case SDLK_DOWN:  case SDLK_s: OnDownButtonDown();   break;
+      case SDLK_SPACE:              OnJumpButtonDown();   break;
+      case SDLK_i:                  OnCameraUpDown();     break;
+      case SDLK_k:                  OnCameraDownDown();   break;
+      default:                                            break;
    }
 }

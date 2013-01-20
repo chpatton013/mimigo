@@ -55,7 +55,6 @@ bool Universe::PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet) {
 
 void Universe::UseLargePlanetCamera() {
    camera_->TransitionToLargePlanetMode();
-   player_->register_observer(camera_);
 }
 
 void Universe::SwitchToLargePlanetGamePlay() {
@@ -103,7 +102,6 @@ void Universe::OnLeftButtonDown() {
       player_->StartMovingLeftAroundAttachedPlanet(camera_->position());
    else {
       //player_->TurnLeft();
-      //camera_->MoveLeftAroundPlayer();
    }
 }
 
@@ -112,7 +110,6 @@ void Universe::OnRightButtonDown() {
       player_->StartMovingRightAroundAttachedPlanet(camera_->position());
    else {
       //player_->TurnRight();
-      //camera_->MoveRightAroundPlayer();
    }
 }
 
@@ -121,7 +118,6 @@ void Universe::OnUpButtonDown() {
       player_->StartMovingUpAroundAttachedPlanet(camera_->position());
    else {
       //player_->MoveForward();
-      //camera_->MoveBehindPlayer();
    }
 }
 
@@ -129,8 +125,7 @@ void Universe::OnDownButtonDown() {
    if (is_small_planet_gameplay())
       player_->StartMovingDownAroundAttachedPlanet(camera_->position());
    else {
-      //player_->movebackward();
-      //camera_->MoveBehindPlayer();
+      //player_->MoveBackward();
    }
 }
 

@@ -6,6 +6,7 @@
 #include "gl/gl_mesh.h"
 #include "planet.h"
 #include "planet_rotater.h"
+#include "small_planet_mover.h"
 #include "core/mover.h"
 #include "scene_hierarchy/mesh_node.h"
 #include "scene_hierarchy/root_node.h"
@@ -21,57 +22,36 @@ class Player {
   public:
    Player(Planet* planet);
 
+   //Small Planet Motions
    void StartMovingUpAroundAttachedPlanet(const glm::vec3& camera_pos);
    void StartMovingDownAroundAttachedPlanet(const glm::vec3& camera_pos);
    void StartMovingLeftAroundAttachedPlanet(const glm::vec3& camera_pos);
    void StartMovingRightAroundAttachedPlanet(const glm::vec3& camera_pos);
    void StopMoving();
+   //Small Planet Motions
 
    bool EntersGravityFieldOf(Planet* planet);
+   void TransitionTo(Planet* planet);
 
    void Jump();
-
-   void attach_planet(Planet* planet) {
-      attached_planet_ = planet;
-      planet_rotater_ = PlanetRotater(planet->center(), planet->radius(),
-            position_);
-   }
-
-   void TransitionTo(Planet* planet);
+   bool is_jumping() const { return is_jumping_; }
 
    void Update();
 
-   static void RotationEndCallback(void* player);
-
-   void register_observer(PlayerObserver* observer) {
-      observer_ = observer;
-   }
-
-   glm::vec3 up() const;
-   glm::vec3 facing() const;
-   bool is_jumping() const { return is_jumping_; }
-
   private:
-   void UpdateMesh();
-   void RotateBottomToward(Planet* planet);
+   void UpdateMeshTransform();
    void StartMovingCounterClockwiseAroundAttachedPlanet();
    void StartMovingClockwiseAroundAttachedPlanet();
-   bool IsTopSideOfPlanet();
-   bool IsRightSideOfPlanet();
 
-   SceneNode* mesh_;
-   Planet* attached_planet_;
-   Planet* transition_planet_;
-   PlanetRotater planet_rotater_;
+   bool is_attached_to(Planet* planet) const
+    { return small_planet_mover_.is_attached_to(planet); }
 
-   Rotater rotater_;
+   SmallPlanetMover small_planet_mover_;
 
    glm::vec3 position_;
-   Rotation rotation_;
-   Rotation left_right_rotation_;
+   Rotation xy_rotation_;
+   Rotation xz_rotation_;
    bool is_jumping_;
-
-   PlayerObserver* observer_;
 };
 
 #endif
