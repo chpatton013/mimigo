@@ -4,8 +4,6 @@
 #include "../core/game.h"
 #include "player.h"
 #include "planet.h"
-#include "small_planet.h"
-#include "large_planet.h"
 
 class RootNode;
 class Camera;
@@ -38,12 +36,23 @@ class Universe : public Game {
    // Input handling //
 
   private:
+   enum GamePlayType { GAME_PLAY_SMALL, GAME_PLAY_LARGE };
    void LoadInPlanets();
    void PlayerEntersGravityFieldOf(Planet* planet);
+   bool PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet);
+   void SwitchToLargePlanetGamePlay();
+
+   bool is_small_planet_gameplay() const
+    { return game_play_type_ == GAME_PLAY_SMALL; }
+   bool is_large_planet_gameplay() const
+    { return game_play_type_ == GAME_PLAY_LARGE; }
+
    void CheckPlayerChangesGravityFields();
    void OnMovementButtonUp();
+   void UseLargePlanetCamera();
 
    Camera* camera_;
+   GamePlayType game_play_type_;
    std::vector<Planet*> planets_;
    Player* player_;
 };

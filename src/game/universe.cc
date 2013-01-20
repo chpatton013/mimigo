@@ -9,7 +9,7 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
    std::ifstream in;
    in.open(filename.c_str());
 
-   bool small_planets = true;
+   PlanetType planet_type = PLANET_TYPE_SMALL;
 
    std::string line;
    while (getline(in, line)) {
@@ -17,10 +17,10 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
       if (line.empty() || line[0] == '#') {
       }
       else if (line[0] == 'S') {
-         small_planets = true;
+         planet_type = PLANET_TYPE_SMALL;
       }
       else if (line[0] == 'L') {
-         small_planets = false;
+         planet_type = PLANET_TYPE_LARGE;
       }
       else {
          std::string id;
@@ -32,12 +32,7 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
          stream >> position.z;
          stream >> radius;
          stream >> gravity_radius;
-         if (small_planets) {
-            planets->push_back(new SmallPlanet(id, position, radius, gravity_radius));
-         }
-         else {
-            planets->push_back(new LargePlanet(id, position, radius, gravity_radius));
-         }
+         planets->push_back(new Planet(planet_type, id, position, radius, gravity_radius));
       }
    }
 }
@@ -47,22 +42,35 @@ void Universe::LoadInPlanets() {
 }
 
 Universe::Universe(Camera* camera) :
-   camera_(camera)
+   camera_(camera),
+   game_play_type_(GAME_PLAY_SMALL)
 {
    LoadInPlanets();
    player_ = new Player(planets_[0]);
 }
 
+bool Universe::PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet) {
+   return planet->is_large_planet();
+}
+
+void Universe::UseLargePlanetCamera() {
+   camera_->TransitionToLargePlanetMode();
+   player_->register_observer(camera_);
+}
+
+void Universe::SwitchToLargePlanetGamePlay() {
+   UseLargePlanetCamera();
+}
+
 void Universe::PlayerEntersGravityFieldOf(Planet* planet) {
    player_->TransitionTo(planet);
-   if (!(planet)->is_small_planet()) {
-      camera_->TransitionToLargePlanetMode();
-      player_->register_observer(camera_);
+   if (PlayerTransitionsFromSmallPlanetToLargePlanet(planet)) {
+      SwitchToLargePlanetGamePlay();
    }
 }
 
 void Universe::CheckPlayerChangesGravityFields() {
-   //if (player_->is_jumping()) {
+   if (player_->is_jumping()) {
       for (std::vector<Planet*>::iterator it = planets_.begin();
             it != planets_.end(); ++it) {
          if (player_->EntersGravityFieldOf(*it)) {
@@ -70,7 +78,7 @@ void Universe::CheckPlayerChangesGravityFields() {
             break; // Since we found a change already, we don't check the rest.
          }
       }
-   //}
+   }
 }
 
 void Universe::Update() {
@@ -91,39 +99,39 @@ void Universe::OnCameraUpDown() { camera_->move(glm::vec3(0.0f, 1.0f, 0.0f)); }
 //DEBUG METHODS
 
 void Universe::OnLeftButtonDown() {
-   //if (small_planet_gameplay())
+   if (is_small_planet_gameplay())
       player_->StartMovingLeftAroundAttachedPlanet(camera_->position());
-   //else {
+   else {
       //player_->TurnLeft();
       //camera_->MoveLeftAroundPlayer();
-   //}
+   }
 }
 
 void Universe::OnRightButtonDown() {
-   //if (small_planet_gameplay())
+   if (is_small_planet_gameplay())
       player_->StartMovingRightAroundAttachedPlanet(camera_->position());
-   //else {
+   else {
       //player_->TurnRight();
       //camera_->MoveRightAroundPlayer();
-   //}
+   }
 }
 
 void Universe::OnUpButtonDown() {
-   //if (small_planet_gameplay())
+   if (is_small_planet_gameplay())
       player_->StartMovingUpAroundAttachedPlanet(camera_->position());
-   //else {
+   else {
       //player_->MoveForward();
       //camera_->MoveBehindPlayer();
-   //}
+   }
 }
 
 void Universe::OnDownButtonDown() {
-   //if (small_planet_gameplay())
+   if (is_small_planet_gameplay())
       player_->StartMovingDownAroundAttachedPlanet(camera_->position());
-   //else {
-      //player_->MoveBackward();
+   else {
+      //player_->movebackward();
       //camera_->MoveBehindPlayer();
-   //}
+   }
 }
 
 void Universe::OnLeftButtonUp()  { OnMovementButtonUp(); }
@@ -136,7 +144,7 @@ void Universe::OnMovementButtonUp() {
 }
 
 void Universe::OnJumpButtonDown() {
-   //if (!player_->is_jumping())
+   if (!player_->is_jumping())
       player_->Jump();
 }
 void Universe::OnJumpButtonUp() {}

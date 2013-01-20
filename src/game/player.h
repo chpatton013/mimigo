@@ -49,6 +49,7 @@ class Player {
 
    glm::vec3 up() const;
    glm::vec3 facing() const;
+   bool is_jumping() const { return is_jumping_; }
 
   private:
    void UpdateMesh();
@@ -57,8 +58,6 @@ class Player {
    void StartMovingClockwiseAroundAttachedPlanet();
    bool IsTopSideOfPlanet();
    bool IsRightSideOfPlanet();
-
-   bool is_jumping() const { return is_jumping_; }
 
    SceneNode* mesh_;
    Planet* attached_planet_;

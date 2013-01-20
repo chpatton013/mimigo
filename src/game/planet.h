@@ -4,10 +4,9 @@
 #include "scene_hierarchy/scene_node.h"
 #include "scene_hierarchy/root_node.h"
 
+enum PlanetType { PLANET_TYPE_SMALL, PLANET_TYPE_LARGE };
 class Planet {
   public:
-   enum PlanetType { PLANET_TYPE_SMALL, PLANET_TYPE_LARGE };
-
    Planet(PlanetType planet_type, const std::string& id,
           const glm::vec3& center, float radius, float gravity_radius) :
       planet_type_(planet_type),
@@ -23,8 +22,10 @@ class Planet {
    const glm::vec3 &center() const { return center_; }
    float radius() const { return radius_; }
    virtual PlanetType get_type() const { return planet_type_; }
-   virtual bool is_small_planet() const
+   bool is_small_planet() const
      { return planet_type_ == PLANET_TYPE_SMALL; }
+   bool is_large_planet() const
+     { return planet_type_ == PLANET_TYPE_LARGE; }
 
   private:
    void Initialize(const std::string& id);
