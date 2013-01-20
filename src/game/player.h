@@ -39,12 +39,14 @@ class Player {
 
    void Jump();
 
-   void Update(GamePlayType game_play_type);
+   void Update();
    bool is_jumping() const { return small_planet_mover_.is_jumping(); }
-   const glm::vec3& position() const { return small_planet_mover_.position(); }
+   const glm::vec3& position() const {
+      return game_play_type_ == GAME_PLAY_SMALL ?
+             small_planet_mover_.position() :
+             large_planet_mover_.position(); }
 
   private:
-
    bool is_attached_to(Planet* planet) const {
       return small_planet_mover_.is_attached_to(planet) ||
              large_planet_mover_.is_attached_to(planet);
@@ -52,6 +54,7 @@ class Player {
 
    SmallPlanetMover small_planet_mover_;
    LargePlanetMover large_planet_mover_;
+   GamePlayType game_play_type_;
 };
 
 #endif

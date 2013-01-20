@@ -84,7 +84,7 @@ void Universe::CheckPlayerChangesGravityFields() {
 }
 
 void Universe::Update() {
-   player_->Update(game_play_type_);
+   player_->Update();
    camera_->Update(player_->position());
 
    CheckPlayerChangesGravityFields();
@@ -137,9 +137,7 @@ void Universe::OnRightButtonUp() { OnMovementButtonUp(); }
 void Universe::OnUpButtonUp()    { OnMovementButtonUp(); }
 void Universe::OnDownButtonUp()  { OnMovementButtonUp(); }
 
-void Universe::OnMovementButtonUp() {
-   player_->StopMoving();
-}
+void Universe::OnMovementButtonUp() { player_->StopMoving(); }
 
 void Universe::OnJumpButtonDown() {
    if (!player_->is_jumping())

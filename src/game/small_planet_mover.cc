@@ -60,9 +60,6 @@ void SmallPlanetMover::MoveLeft(const glm::vec3& camera_pos) {
       MoveClockwiseAroundPlanet();
 }
 
-void SmallPlanetMover::TurnLeft() { xz_rotation_.angle += 20; }
-void SmallPlanetMover::TurnRight() { xz_rotation_.angle -= 20; }
-
 void SmallPlanetMover::MoveForward() {
    MoveClockwiseAroundPlanet();
 }

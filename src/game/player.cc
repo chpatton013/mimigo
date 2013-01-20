@@ -38,30 +38,39 @@ void Player::OnRightButtonDown(const glm::vec3& camera_pos) {
 }
 
 void Player::Jump() {
-   small_planet_mover_.Jump();
+   if (game_play_type_ == GAME_PLAY_SMALL)
+      small_planet_mover_.Jump();
+   else
+      large_planet_mover_.Jump();
 }
 
 void Player::StopMoving() {
-   small_planet_mover_.StopMoving();
+   if (game_play_type_ == GAME_PLAY_SMALL)
+      small_planet_mover_.StopMoving();
+   else
+      large_planet_mover_.StopMoving();
 }
 
 bool Player::EntersGravityFieldOf(Planet* planet) {
    if (is_attached_to(planet))
       return false;
 
-   return planet->PositionWithinGravityField(small_planet_mover_.position());
+   return planet->PositionWithinGravityField(position());
 }
 
-void Player::Update(GamePlayType game_play_type) {
-   if (game_play_type == GAME_PLAY_SMALL)
+void Player::Update() {
+   if (game_play_type_ == GAME_PLAY_SMALL)
       small_planet_mover_.Update();
-   else if (game_play_type == GAME_PLAY_LARGE)
+   else if (game_play_type_ == GAME_PLAY_LARGE)
       large_planet_mover_.Update();
 }
 
 void Player::TransitionTo(Planet* planet) {
-   if (planet->is_small_planet())
+   if (planet->is_small_planet()) {
       small_planet_mover_.set_planet(planet);
-   else
+      game_play_type_ = GAME_PLAY_SMALL;
+   } else {
       large_planet_mover_.set_planet(planet);
+      game_play_type_ = GAME_PLAY_LARGE;
+   }
 }

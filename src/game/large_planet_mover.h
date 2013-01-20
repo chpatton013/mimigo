@@ -8,16 +8,16 @@
 
 class LargePlanetMover {
   public:
-   LargePlanetMover(Planet* planet) {}
+   LargePlanetMover(Planet* planet);
    void set_planet(Planet* planet) {}
 
    void StopMoving() {}
    void Jump() {}
-   void Update() {}
+   void Update();
 
    void MoveForward() {}
-   void TurnLeft() {}
-   void TurnRight() {}
+   void TurnLeft();
+   void TurnRight();
 
    bool is_attached_to(Planet* planet) const { return planet_ == planet; }
    bool is_jumping() const { return is_jumping_; }
@@ -25,7 +25,7 @@ class LargePlanetMover {
    const glm::vec3& position() const { return position_; }
 
   private:
-   void UpdateMeshTransform() const {}
+   void UpdateMeshTransform() const;
 
    Planet* planet_;
    glm::vec3 position_;
