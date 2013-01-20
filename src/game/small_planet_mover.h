@@ -10,11 +10,14 @@ class SmallPlanetMover {
   public:
    SmallPlanetMover(Planet* planet);
 
-   void RotateBottomTowardPlanet();
    void StopMoving();
    void Jump();
    void Update();
    void set_planet(Planet* planet);
+
+   void MoveForward();
+   void TurnLeft();
+   void TurnRight();
 
    void MoveUp(const glm::vec3& camera_pos);
    void MoveDown(const glm::vec3& camera_pos);
@@ -25,9 +28,10 @@ class SmallPlanetMover {
    bool is_jumping() const { return is_jumping_; }
 
    const glm::vec3& position() const { return position_; }
-   void UpdateMeshTransform() const;
 
   private:
+   void RotateBottomTowardPlanet();
+   void UpdateMeshTransform() const;
    void MoveCounterClockwiseAroundPlanet();
    void MoveClockwiseAroundPlanet();
    bool IsTopSideOfPlanet() { return planet_rotater_->IsOnTopside(); }

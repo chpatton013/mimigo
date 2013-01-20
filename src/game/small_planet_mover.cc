@@ -60,6 +60,13 @@ void SmallPlanetMover::MoveLeft(const glm::vec3& camera_pos) {
       MoveClockwiseAroundPlanet();
 }
 
+void SmallPlanetMover::TurnLeft() { xz_rotation_.angle += 20; }
+void SmallPlanetMover::TurnRight() { xz_rotation_.angle -= 20; }
+
+void SmallPlanetMover::MoveForward() {
+   MoveClockwiseAroundPlanet();
+}
+
 void SmallPlanetMover::MoveRight(const glm::vec3& camera_pos) {
    if (IsTopSideOfPlanet())
       MoveClockwiseAroundPlanet();
@@ -97,7 +104,9 @@ void SmallPlanetMover::set_planet(Planet* planet) {
 }
 
 void SmallPlanetMover::Update() {
+   RotateBottomTowardPlanet();
    planet_rotater_->Update(position_, xy_rotation_, &is_jumping_);
+   UpdateMeshTransform();
 }
 
 void SmallPlanetMover::StopMoving() {

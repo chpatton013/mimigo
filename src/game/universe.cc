@@ -1,4 +1,5 @@
 #include "universe.h"
+#include "player.h"
 #include "scene_hierarchy/root_node.h"
 #include "core/camera.h"
 #include <iostream>
@@ -47,6 +48,7 @@ Universe::Universe(Camera* camera) :
 {
    LoadInPlanets();
    player_ = new Player(planets_[0]);
+   PlayerEntersGravityFieldOf(planets_[0]);
 }
 
 bool Universe::PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet) {
@@ -59,6 +61,7 @@ void Universe::UseLargePlanetCamera() {
 
 void Universe::SwitchToLargePlanetGamePlay() {
    UseLargePlanetCamera();
+   game_play_type_ = GAME_PLAY_LARGE;
 }
 
 void Universe::PlayerEntersGravityFieldOf(Planet* planet) {
@@ -81,8 +84,8 @@ void Universe::CheckPlayerChangesGravityFields() {
 }
 
 void Universe::Update() {
-   camera_->Update();
-   player_->Update();
+   player_->Update(game_play_type_);
+   camera_->Update(player_->position());
 
    CheckPlayerChangesGravityFields();
 }
@@ -101,7 +104,7 @@ void Universe::OnLeftButtonDown() {
    if (is_small_planet_gameplay())
       player_->OnLeftButtonDown(camera_->position());
    else {
-      //player_->TurnLeft();
+      player_->TurnLeft();
    }
 }
 
@@ -109,7 +112,7 @@ void Universe::OnRightButtonDown() {
    if (is_small_planet_gameplay())
       player_->OnRightButtonDown(camera_->position());
    else {
-      //player_->TurnRight();
+      player_->TurnRight();
    }
 }
 
@@ -117,7 +120,7 @@ void Universe::OnUpButtonDown() {
    if (is_small_planet_gameplay())
       player_->OnUpButtonDown(camera_->position());
    else {
-      //player_->MoveForward();
+      player_->MoveForward();
    }
 }
 

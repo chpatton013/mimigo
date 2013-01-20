@@ -2,12 +2,13 @@
 #define _UNIVERSE_H_
 
 #include "../core/game.h"
-#include "player.h"
 #include "planet.h"
 
 class RootNode;
 class Camera;
+class Player;
 
+enum GamePlayType { GAME_PLAY_SMALL, GAME_PLAY_LARGE };
 class Universe : public Game {
   public:
    Universe(Camera* camera);
@@ -36,7 +37,6 @@ class Universe : public Game {
    // Input handling //
 
   private:
-   enum GamePlayType { GAME_PLAY_SMALL, GAME_PLAY_LARGE };
    void LoadInPlanets();
    void PlayerEntersGravityFieldOf(Planet* planet);
    bool PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet);

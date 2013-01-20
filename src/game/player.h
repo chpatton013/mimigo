@@ -7,7 +7,9 @@
 #include "planet.h"
 #include "planet_rotater.h"
 #include "small_planet_mover.h"
+#include "large_planet_mover.h"
 #include "core/mover.h"
+#include "game/universe.h"
 #include "scene_hierarchy/mesh_node.h"
 #include "scene_hierarchy/root_node.h"
 #include "scene_hierarchy/scene_node.h"
@@ -22,28 +24,34 @@ class Player {
   public:
    Player(Planet* planet);
 
-   //Small Planet Motions
    void OnUpButtonDown(const glm::vec3& camera_pos);
    void OnDownButtonDown(const glm::vec3& camera_pos);
    void OnLeftButtonDown(const glm::vec3& camera_pos);
    void OnRightButtonDown(const glm::vec3& camera_pos);
    void StopMoving();
-   //Small Planet Motions
+
+   void TurnLeft();
+   void TurnRight();
+   void MoveForward();
 
    bool EntersGravityFieldOf(Planet* planet);
    void TransitionTo(Planet* planet);
 
    void Jump();
 
-   void Update();
+   void Update(GamePlayType game_play_type);
    bool is_jumping() const { return small_planet_mover_.is_jumping(); }
+   const glm::vec3& position() const { return small_planet_mover_.position(); }
 
   private:
 
-   bool is_attached_to(Planet* planet) const
-    { return small_planet_mover_.is_attached_to(planet); }
+   bool is_attached_to(Planet* planet) const {
+      return small_planet_mover_.is_attached_to(planet) ||
+             large_planet_mover_.is_attached_to(planet);
+   }
 
    SmallPlanetMover small_planet_mover_;
+   LargePlanetMover large_planet_mover_;
 };
 
 #endif

@@ -16,7 +16,6 @@ void Camera::TransitionToLargePlanetMode() {
 void Camera::OnPlayerMove(const glm::vec3& position, const glm::vec3& up,
                           const glm::vec3& facing) {
    camera_focus_ = position;
-   //camera_pos_ = position -
    camera_up_ = up;
 }
 
@@ -29,9 +28,11 @@ void Camera::DebugPrint() {
    glm_util::Print(camera_up_);
 }
 
-void Camera::Update() {
+void Camera::Update(const glm::vec3& position) {
    angle_ += rotate_*1.8;
    if (large_planet_mode_) {
+      camera_pos_.y = position.y;
+      camera_focus_.y = position.y;
    }
 }
 
