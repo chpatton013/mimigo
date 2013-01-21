@@ -145,6 +145,7 @@ void SmallPlanetMover::set_planet(Planet* planet) {
 
 void SmallPlanetMover::Update() {
    RotateBottomTowardPlanet();
+   //TODO: time-based motion
    if (is_jumping_ || is_falling_) {
       if (jump_held_ && jump_speed_ > 0.0f)
          jump_speed_ -= kJumpSlowdownHeld;
