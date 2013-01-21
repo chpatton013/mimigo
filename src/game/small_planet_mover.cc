@@ -129,10 +129,15 @@ const glm::vec3 SmallPlanetMover::position() const {
 }
 
 void SmallPlanetMover::FallToPlanet() {
+   is_jumping_ = false;
    is_falling_ = true;
 }
 
 void SmallPlanetMover::set_planet(Planet* planet) {
+   if (planet_)
+      theta_ = angle_of(position() - planet->center());
+   else
+      theta_ = 0.0f;
    planet_ = planet;
    RotateBottomTowardPlanet();
    FallToPlanet();
@@ -178,7 +183,7 @@ void SmallPlanetMover::Update() {
    }
 
    if (theta_speed_ < -0.0001 || theta_speed_ > 0.0001) {
-      theta_ += theta_speed_;
+      theta_ += theta_speed_ * 0.4f;
       adjust_angle(theta_);
    }
 
