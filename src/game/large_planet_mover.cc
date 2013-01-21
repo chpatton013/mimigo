@@ -91,12 +91,21 @@ void LargePlanetMover::UpdateMeshTransform() const {
    SceneNode::Get("player")->set_transformation(transform);
 }
 
+const glm::vec3 LargePlanetMover::facing() const {
+   return glm::normalize(glm::vec3(
+            std::sin(radians(xy_rotation_.angle - 90)) *
+            std::cos(radians(xz_rotation_.angle)),
+            std::cos(radians(xy_rotation_.angle - 90)),
+            std::sin(radians(xy_rotation_.angle - 90)) *
+            std::sin(radians(xz_rotation_.angle))
+      ));
+}
+
 void LargePlanetMover::MoveForward() {
-   phi_ += 0.10f;
+   glm_util::Print(facing());
 }
 
 void LargePlanetMover::MoveBackward() {
-   phi_ -= 0.10f;
 }
 
 void LargePlanetMover::set_planet(Planet* planet) {

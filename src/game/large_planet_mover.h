@@ -25,6 +25,7 @@ class LargePlanetMover {
    bool is_jumping() const { return is_jumping_; }
 
    const glm::vec3 position() const;
+   const glm::vec3 facing() const;
 
   private:
    enum RotateType { ROTATE_LEFT, ROTATE_RIGHT, ROTATE_NONE };
