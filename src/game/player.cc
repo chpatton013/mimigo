@@ -13,6 +13,10 @@ void Player::MoveForward() {
    large_planet_mover_.MoveForward();
 }
 
+void Player::MoveBackward() {
+   large_planet_mover_.MoveBackward();
+}
+
 void Player::TurnLeft() {
    large_planet_mover_.TurnLeft();
 }

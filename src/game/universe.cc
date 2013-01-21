@@ -128,7 +128,7 @@ void Universe::OnDownButtonDown() {
    if (is_small_planet_gameplay())
       player_->OnDownButtonDown(camera_->position());
    else {
-      //player_->MoveBackward();
+      player_->MoveBackward();
    }
 }
 

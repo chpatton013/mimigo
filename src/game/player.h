@@ -33,6 +33,7 @@ class Player {
    void TurnLeft();
    void TurnRight();
    void MoveForward();
+   void MoveBackward();
 
    bool EntersGravityFieldOf(Planet* planet);
    void TransitionTo(Planet* planet);

@@ -85,7 +85,6 @@ void LargePlanetMover::RotateBottomTowardPlanet() {
 
 void LargePlanetMover::UpdateMeshTransform() const {
    glm::mat4 transform;
-   glm_util::Print(position());
    transform *= glm::translate(position());
    transform *= glm::rotate(xy_rotation_.angle, xy_rotation_.axis);
    transform *= glm::rotate(xz_rotation_.angle, xz_rotation_.axis);
@@ -93,6 +92,11 @@ void LargePlanetMover::UpdateMeshTransform() const {
 }
 
 void LargePlanetMover::MoveForward() {
+   phi_ += 0.10f;
+}
+
+void LargePlanetMover::MoveBackward() {
+   phi_ -= 0.10f;
 }
 
 void LargePlanetMover::set_planet(Planet* planet) {

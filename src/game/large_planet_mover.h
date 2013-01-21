@@ -15,6 +15,7 @@ class LargePlanetMover {
    void Update();
 
    void MoveForward();
+   void MoveBackward();
    void TurnLeft();
    void TurnRight();
    void StopMoving();
