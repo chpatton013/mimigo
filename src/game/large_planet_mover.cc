@@ -20,10 +20,12 @@ LargePlanetMover::LargePlanetMover(Planet* planet) :
       planet_(planet),
       theta_(90.0f),
       phi_(90.0f),
+      jump_speed_(0.0f),
+      is_jumping_(false),
+      is_falling_(false),
+      jump_held_(false),
       rotate_type_(ROTATE_NONE)
 {
-   xy_rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
-   xz_rotation_.axis = glm::vec3(0.0f, 1.0f, 0.0f);
 }
 
 inline float radians(float degrees) {
@@ -44,9 +46,15 @@ void LargePlanetMover::Update() {
    RotateBottomTowardPlanet();
 
    if (rotate_type_ == ROTATE_LEFT) {
-      xz_rotation_.angle += 10.0f;
+      local_axes_ = glm::rotate(local_axes_, 10.0f, local_y());
    } else if (rotate_type_ == ROTATE_RIGHT) {
-      xz_rotation_.angle -= 10.0f;
+      local_axes_ = glm::rotate(local_axes_, -10.0f, local_y());
+   } else if (rotate_type_ == ROTATE_FORWARD) {
+      local_axes_ = glm::rotate(local_axes_, 1.0f, local_z());
+      phi_ += 1.0f;
+   } else if (rotate_type_ == ROTATE_BACKWARD) {
+      local_axes_ = glm::rotate(local_axes_, -1.0f, local_z());
+      phi_ -= 1.0f;
    }
 
    if (is_jumping_ || is_falling_) {
@@ -80,35 +88,27 @@ void LargePlanetMover::FallToPlanet() {
 }
 
 void LargePlanetMover::RotateBottomTowardPlanet() {
-   xy_rotation_.angle = angle_of(position() - planet_->center()) - 90.0f;
 }
 
 void LargePlanetMover::UpdateMeshTransform() const {
    glm::mat4 transform;
    transform *= glm::translate(position());
-   transform *= glm::rotate(xy_rotation_.angle, xy_rotation_.axis);
-   transform *= glm::rotate(xz_rotation_.angle, xz_rotation_.axis);
+   transform *= local_axes_;
    SceneNode::Get("player")->set_transformation(transform);
 }
 
-const glm::vec3 LargePlanetMover::facing() const {
-   return glm::normalize(glm::vec3(
-            std::sin(radians(xy_rotation_.angle - 90)) *
-            std::cos(radians(xz_rotation_.angle)),
-            std::cos(radians(xy_rotation_.angle - 90)),
-            std::sin(radians(xy_rotation_.angle - 90)) *
-            std::sin(radians(xz_rotation_.angle))
-      ));
-}
-
 void LargePlanetMover::MoveForward() {
-   glm_util::Print(facing());
+   glm::vec3 position_in_front = position() + local_z();
+   rotate_type_ = ROTATE_FORWARD;
 }
 
 void LargePlanetMover::MoveBackward() {
+   glm::vec3 position_behind = position() - local_z();
+   rotate_type_ = ROTATE_BACKWARD;
 }
 
 void LargePlanetMover::set_planet(Planet* planet) {
    planet_ = planet;
+   radius_ = planet_->radius();
    FallToPlanet();
 }

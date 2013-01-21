@@ -25,12 +25,23 @@ class LargePlanetMover {
    bool is_jumping() const { return is_jumping_; }
 
    const glm::vec3 position() const;
-   const glm::vec3 facing() const;
+   glm::mat4 local_axes() const { return local_axes_; }
 
   private:
-   enum RotateType { ROTATE_LEFT, ROTATE_RIGHT, ROTATE_NONE };
+   enum RotateType { ROTATE_LEFT, ROTATE_RIGHT, ROTATE_FORWARD, ROTATE_BACKWARD, ROTATE_NONE };
    void UpdateMeshTransform() const;
    void RotateBottomTowardPlanet();
+   glm::vec3 local_x() {
+      return glm::vec3(local_axes_[0][0], local_axes_[1][0], local_axes_[2][0]);
+   }
+
+   glm::vec3 local_y() {
+      return glm::vec3(local_axes_[0][1], local_axes_[1][1], local_axes_[2][1]);
+   }
+
+   glm::vec3 local_z() {
+      return glm::vec3(local_axes_[0][2], local_axes_[1][2], local_axes_[2][2]);
+   }
 
    RotateType rotate_type_;
 
@@ -39,8 +50,7 @@ class LargePlanetMover {
    float theta_;
    float phi_;
 
-   Rotation xy_rotation_;
-   Rotation xz_rotation_;
+   glm::mat4 local_axes_;
 
    float jump_speed_;
    bool is_jumping_;

@@ -39,7 +39,7 @@ class Camera : public PlayerObserver {
    void rotate_right() { rotate_ = -1.0f; }
    void TransitionToLargePlanetMode();
 
-   void Update(const glm::vec3& position);
+   void Update(const glm::vec3& position, const glm::mat4& local_axes);
 
   private:
    bool large_planet_mode_;

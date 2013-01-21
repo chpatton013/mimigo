@@ -47,6 +47,7 @@ class Player {
       return game_play_type_ == GAME_PLAY_SMALL ?
              small_planet_mover_.position() :
              large_planet_mover_.position(); }
+   glm::mat4 local_axes() const { return large_planet_mover_.local_axes(); }
 
   private:
    bool is_attached_to(Planet* planet) const {
