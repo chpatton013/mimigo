@@ -38,10 +38,11 @@ class Player {
    void TransitionTo(Planet* planet);
 
    void Jump();
+   void ReleaseJump();
 
    void Update();
    bool is_jumping() const { return small_planet_mover_.is_jumping(); }
-   const glm::vec3& position() const {
+   const glm::vec3 position() const {
       return game_play_type_ == GAME_PLAY_SMALL ?
              small_planet_mover_.position() :
              large_planet_mover_.position(); }

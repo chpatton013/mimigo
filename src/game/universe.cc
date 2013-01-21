@@ -143,4 +143,6 @@ void Universe::OnJumpButtonDown() {
    if (!player_->is_jumping())
       player_->Jump();
 }
-void Universe::OnJumpButtonUp() {}
+void Universe::OnJumpButtonUp() {
+   player_->ReleaseJump();
+}

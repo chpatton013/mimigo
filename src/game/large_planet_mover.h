@@ -9,7 +9,7 @@
 class LargePlanetMover {
   public:
    LargePlanetMover(Planet* planet);
-   void set_planet(Planet* planet) {}
+   void set_planet(Planet* planet);
 
    void Jump() {}
    void Update();
@@ -26,6 +26,7 @@ class LargePlanetMover {
 
   private:
    void UpdateMeshTransform() const;
+   void RotateBottomTowardPlanet();
 
    Planet* planet_;
    glm::vec3 position_;

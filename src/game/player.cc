@@ -22,11 +22,11 @@ void Player::TurnRight() {
 }
 
 void Player::OnUpButtonDown(const glm::vec3& camera_pos) {
-   small_planet_mover_.MoveUp(camera_pos);
+   small_planet_mover_.MoveUp();
 }
 
 void Player::OnDownButtonDown(const glm::vec3& camera_pos) {
-   small_planet_mover_.MoveDown(camera_pos);
+   small_planet_mover_.MoveDown();
 }
 
 void Player::OnLeftButtonDown(const glm::vec3& camera_pos) {
@@ -42,6 +42,11 @@ void Player::Jump() {
       small_planet_mover_.Jump();
    else
       large_planet_mover_.Jump();
+}
+
+void Player::ReleaseJump() {
+   if (game_play_type_ == GAME_PLAY_SMALL)
+      small_planet_mover_.ReleaseJump();
 }
 
 void Player::StopMoving() {
