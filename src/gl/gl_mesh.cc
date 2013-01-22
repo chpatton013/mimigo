@@ -43,8 +43,8 @@ void GLMesh::Draw(MatrixStack* transform) {
       glm::value_ptr(glm::transpose(glm::inverse(transform->top()))));
 
    const int ibo_length = faces_.size() * 3;
-   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-   glLineWidth(1.0);
+   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+   //glLineWidth(1.0);
    glDrawElements(GL_TRIANGLES, ibo_length, GL_UNSIGNED_SHORT, 0);
    transform->pop();
 }

@@ -14,10 +14,9 @@ class Camera : public PlayerObserver {
   public:
    Camera() :
       large_planet_mode_(false),
-      angle_(180.0f),
       rotate_(0.0f),
       camera_up_(0.0f, 1.0f, 0.0f),
-      camera_pos_(0.0f, 0.0f, 1.0f)
+      camera_pos_(0.0f, 0.0f, 2.5f)
    {
    }
 
@@ -45,7 +44,6 @@ class Camera : public PlayerObserver {
    bool large_planet_mode_;
 
    float rotate_;
-   float angle_;
 
    glm::vec3 camera_up_;
    glm::vec3 camera_pos_;

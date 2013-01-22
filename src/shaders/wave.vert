@@ -2,6 +2,7 @@
 
 uniform mat4 uModelMatrix;
 uniform mat4 uViewMatrix;
+uniform mat4 uProjMatrix;
 uniform mat4 uNormalMatrix;
 
 attribute vec3 aPosition;
@@ -13,6 +14,6 @@ varying vec4 vNormal;
 void main(void)
 {
    vPosition = vec4(aPosition.x, aPosition.y, aPosition.z, 1.0f);
-   gl_Position = uViewMatrix * uModelMatrix * vPosition;
+   gl_Position = uProjMatrix * uViewMatrix * uModelMatrix * vPosition;
    vNormal = uNormalMatrix * vec4(aNormal.x, aNormal.y, aNormal.z, 0.0f);
 }

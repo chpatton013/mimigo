@@ -84,8 +84,8 @@ void Universe::CheckPlayerChangesGravityFields() {
 }
 
 void Universe::Update() {
+   camera_->Update(player_->position(), player_->local_rotation());
    player_->Update();
-   camera_->Update(player_->position(), player_->local_axes());
 
    CheckPlayerChangesGravityFields();
 }

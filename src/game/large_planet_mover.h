@@ -9,11 +9,11 @@
 class LargePlanetMover {
   public:
    LargePlanetMover(Planet* planet);
-   void set_planet(Planet* planet);
 
    void Jump() {}
    void Update();
 
+   void set_planet(Planet* planet);
    void MoveForward();
    void MoveBackward();
    void TurnLeft();
@@ -25,32 +25,21 @@ class LargePlanetMover {
    bool is_jumping() const { return is_jumping_; }
 
    const glm::vec3 position() const;
-   glm::mat4 local_axes() const { return local_axes_; }
+   const glm::vec3 forward() const;
+   const glm::vec3 right() const;
+   const glm::vec3 up() const;
+
+   glm::mat4 local_rotation() const { return local_rotation_; }
 
   private:
-   enum RotateType { ROTATE_LEFT, ROTATE_RIGHT, ROTATE_FORWARD, ROTATE_BACKWARD, ROTATE_NONE };
    void UpdateMeshTransform() const;
    void RotateBottomTowardPlanet();
-   glm::vec3 local_x() {
-      return glm::vec3(local_axes_[0][0], local_axes_[1][0], local_axes_[2][0]);
-   }
-
-   glm::vec3 local_y() {
-      return glm::vec3(local_axes_[0][1], local_axes_[1][1], local_axes_[2][1]);
-   }
-
-   glm::vec3 local_z() {
-      return glm::vec3(local_axes_[0][2], local_axes_[1][2], local_axes_[2][2]);
-   }
-
-   RotateType rotate_type_;
 
    Planet* planet_;
-   float radius_;
-   float theta_;
-   float phi_;
 
-   glm::mat4 local_axes_;
+   glm::mat4 local_rotation_;
+   glm::vec3 position_;
+   float angle_speed_;
 
    float jump_speed_;
    bool is_jumping_;
