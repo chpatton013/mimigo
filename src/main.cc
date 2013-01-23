@@ -64,8 +64,8 @@ void Initialize() {
 }
 
 void LoadResources() {
-   GLMesh* bunny = LoadMeshFromFile("meshes/bunny500.m");
-   MeshNode* mesh = new MeshNode("bunny", bunny);
+   EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/go_gopher_push.obj");
+   EntityComponentNode* mesh = new EntityComponentNode("bunny", go_gopher);
    mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.2f)));
 
    EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/go_gopher.obj");
