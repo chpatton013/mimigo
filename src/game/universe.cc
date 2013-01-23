@@ -140,8 +140,7 @@ void Universe::OnDownButtonUp()  { OnMovementButtonUp(); }
 void Universe::OnMovementButtonUp() { player_->StopMoving(); }
 
 void Universe::OnJumpButtonDown() {
-   if (!player_->is_jumping())
-      player_->Jump();
+   player_->Jump();
 }
 void Universe::OnJumpButtonUp() {
    player_->ReleaseJump();

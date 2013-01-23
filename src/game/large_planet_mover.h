@@ -10,7 +10,7 @@ class LargePlanetMover {
   public:
    LargePlanetMover(Planet* planet);
 
-   void Jump() {}
+   void Jump();
    void Update();
 
    void set_planet(Planet* planet);
@@ -19,7 +19,6 @@ class LargePlanetMover {
    void TurnLeft();
    void TurnRight();
    void StopMoving();
-   void FallToPlanet();
 
    bool is_attached_to(Planet* planet) const { return planet_ == planet; }
    bool is_jumping() const { return is_jumping_; }
@@ -38,12 +37,13 @@ class LargePlanetMover {
    Planet* planet_;
 
    glm::mat4 local_rotation_;
+   glm::mat4 transform_;
    glm::vec3 position_;
    float angle_speed_;
+   float rotate_speed_;
 
    float jump_speed_;
    bool is_jumping_;
-   bool is_falling_;
    bool jump_held_;
 };
 
