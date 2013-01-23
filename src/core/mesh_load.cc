@@ -1,6 +1,8 @@
 #include "mesh_load.h"
 
 #include "rotation.h"
+#include "core/entity.h"
+#include "core/entity_component.h"
 #include "gl/gl_mesh.h"
 #include "global/handles.h"
 #include "util/stl_util.h"
@@ -75,15 +77,14 @@ GLMesh::Face ParseOBJFace(const std::string& line,
       const std::string& material) {
    GLMesh::Face f;
    int t1, t2, t3, n1, n2, n3;
-   //sscanf(line.c_str(), "f %u/%d/%d %u/%d/%d %u/%d/%d ",
-    //&f.v1, &t1, &n1, &f.v2, &t2, &n2, &f.v3, &t3, &n3);
+   sscanf(line.c_str(), "f %u/%d/%d %u/%d/%d %u/%d/%d ",
+    &f.v1, &t1, &n1, &f.v2, &t2, &n2, &f.v3, &t3, &n3);
    sscanf(line.c_str(), "f %u %u %u ", &f.v1, &f.v2, &f.v3);
 
    f.v1--; f.v2--; f.v3--;
    t1--; t2--; t3--;
    n1--; n2--; n3--;
 
-   /*
    verts[f.v1].texture = textures[t1];
    verts[f.v2].texture = textures[t2];
    verts[f.v3].texture = textures[t3];
@@ -95,7 +96,6 @@ GLMesh::Face ParseOBJFace(const std::string& line,
    verts[f.v1].set_material(g_materials[material]);
    verts[f.v2].set_material(g_materials[material]);
    verts[f.v3].set_material(g_materials[material]);
-   */
 
    return f;
 }
@@ -131,7 +131,7 @@ void ParseMaterials(const std::string& fname) {
 
 // Parse functions //
 
-std::vector<GLMesh*> LoadMeshesFromOBJFile(const std::string& filename) {
+EntityComponent* LoadEntityComponentFromOBJ(const std::string& filename) {
    std::vector<GLMesh*> meshes;
    const std::string kCommentHeader("#");
    const std::string kTextureHeader("vt");
@@ -145,7 +145,7 @@ std::vector<GLMesh*> LoadMeshesFromOBJFile(const std::string& filename) {
    file.open(filename.c_str());
    if (!file.is_open()) {
       fprintf(stderr, "failed to open mesh file %s\n", filename.c_str());
-      return std::vector<GLMesh*>();
+      return NULL;
    }
 
    std::vector<Vertex> verts;
@@ -163,8 +163,7 @@ std::vector<GLMesh*> LoadMeshesFromOBJFile(const std::string& filename) {
       if (header == kCommentHeader) {
       } else if (header == kVertexHeader) {
          if (parsing_faces) {
-            meshes.push_back(new GLMesh(verts, faces, normals,
-             texture_coords));
+            meshes.push_back(new GLMesh(verts, faces, normals, texture_coords));
             verts.clear();
             faces.clear();
             normals.clear();
@@ -190,7 +189,11 @@ std::vector<GLMesh*> LoadMeshesFromOBJFile(const std::string& filename) {
       }
    }
    meshes.push_back(new GLMesh(verts, faces, normals, texture_coords));
-   return meshes;
+   std::cout << FString("creating entity: %s\n", filename.c_str());
+
+   file.close();
+   g_entities[filename] = new Entity(meshes, glm::vec3(0.0), Rotation(), glm::vec3(1.0), filename);
+   return g_entities[filename];
 }
 
 GLMesh* LoadMeshFromFile(const std::string& filename) {
@@ -259,7 +262,6 @@ GLMesh* MakeSquare() {
    return square;
 }
 
-/*
 EntityComponent* MakeCube(const std::string& name, const std::string& texture) {
    if (stl_util::ContainsKey(g_entities, name))
       return g_entities[name];
@@ -302,8 +304,8 @@ EntityComponent* MakeCube(const std::string& name, const std::string& texture) {
    meshes.back()->transform(trans);
 
    g_entities[name] = new Entity(meshes, glm::vec3(0.0), Rotation(), glm::vec3(1.0), name);
-   g_entities[name]->set_texture(texture);
+   //g_entities[name]->set_texture(texture);
    assert(stl_util::ContainsKey(g_entities, name));
-   g_scene->Add(g_entities[name]);
+   //g_scene->Add(g_entities[name]);
    return g_entities[name];
-}*/
+}
