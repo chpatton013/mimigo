@@ -39,9 +39,9 @@ void LoadMetaDataFromFile(const std::string& filename) {
 SmallPlanetMover::SmallPlanetMover(Planet* planet) :
    planet_(planet),
    jump_speed_(kJumpSpeed),
-   rotate_type_(ROTATE_NONE),
    theta_(0.0f),
    theta_speed_(0.0f),
+   move_dir_(0),
    is_jumping_(false)
 {
    xy_rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
@@ -49,50 +49,28 @@ SmallPlanetMover::SmallPlanetMover(Planet* planet) :
    LoadMetaDataFromFile("player.config");
 }
 
+void SmallPlanetMover::MoveUp() { move_dir_ |= UP; }
+void SmallPlanetMover::MoveDown() { move_dir_ |= DOWN; }
+void SmallPlanetMover::MoveLeft() { move_dir_ |= LEFT; }
+void SmallPlanetMover::MoveRight() { move_dir_ |= RIGHT; }
+
+void SmallPlanetMover::StopMoveUp() { move_dir_ &= ~UP; }
+void SmallPlanetMover::StopMoveDown() { move_dir_ &= ~DOWN; }
+void SmallPlanetMover::StopMoveLeft() { move_dir_ &= ~LEFT; }
+void SmallPlanetMover::StopMoveRight() { move_dir_ &= ~RIGHT; }
+
 inline
 float angle_of(const glm::vec3& vec) {
    return 180.0f * std::atan2(vec.y, vec.x) / (atan(1) * 4);
 }
 
 inline
-float adjust_angle(float &val) {
+float wrap_angle(float val) {
    while (val < 0.0f)
       val += 360.0f;
    while (val > 360.0f)
       val -= 360.0f;
-}
-
-void SmallPlanetMover::MoveUp() {
-   if (theta_ > 90.0f && theta_ < 270.0f)
-      MoveClockwiseAroundPlanet();
-   else if (theta_ >= 270.0f && theta_ <= 360.0f ||
-            theta_ < 90.0f && theta_ >= 0.0f) {
-      MoveCounterClockwiseAroundPlanet();
-   }
-}
-
-void SmallPlanetMover::MoveDown() {
-   if (theta_ > 270.0f && theta_ <= 360.0f ||
-       theta_ < 90.0f && theta_ >= 0.0f) {
-      MoveClockwiseAroundPlanet();
-   } else if (theta_ >= 90.0f && theta_ < 270.0f) {
-      MoveCounterClockwiseAroundPlanet();
-   }
-}
-
-void SmallPlanetMover::MoveLeft(const glm::vec3& camera_pos) {
-   if (theta_ > 180.0f)
-      MoveClockwiseAroundPlanet();
-   else if (theta_ != 180.0f)
-      MoveCounterClockwiseAroundPlanet();
-}
-
-void SmallPlanetMover::MoveRight(const glm::vec3& camera_pos) {
-   if (theta_ < 180.0f)
-      MoveClockwiseAroundPlanet();
-   else if (theta_ != 0.0f && theta_ != 360.0f)
-      MoveCounterClockwiseAroundPlanet();
-
+   return val;
 }
 
 void SmallPlanetMover::RotateBottomTowardPlanet() {
@@ -105,16 +83,6 @@ void SmallPlanetMover::UpdateMeshTransform() const {
    transform *= glm::rotate(xy_rotation_.angle, xy_rotation_.axis);
    transform *= glm::rotate(xz_rotation_.angle, xz_rotation_.axis);
    SceneNode::Get("player")->set_transformation(transform);
-}
-
-void SmallPlanetMover::MoveCounterClockwiseAroundPlanet() {
-   rotate_type_ = ROTATE_CCW;
-   xz_rotation_.angle = 0.0f;
-}
-
-void SmallPlanetMover::MoveClockwiseAroundPlanet() {
-   rotate_type_ = ROTATE_CW;
-   xz_rotation_.angle = 180.0f;
 }
 
 inline float radians(float degrees) {
@@ -139,8 +107,57 @@ void SmallPlanetMover::set_planet(Planet* planet) {
    else
       theta_ = 0.0f;
    planet_ = planet;
+   is_jumping_ = false;
+   jump_speed_ = 0.0f;
+   is_falling_ = true;
    RotateBottomTowardPlanet();
    FallToPlanet();
+}
+
+inline bool has_bits(unsigned short byte, unsigned short bits) {
+   return (byte & bits) == bits;
+}
+
+inline float destination_angle(unsigned short move_dir) {
+   if (has_bits(move_dir, UP | RIGHT)) return 45;
+   if (has_bits(move_dir, UP | LEFT)) return 135;
+   if (has_bits(move_dir, DOWN | LEFT)) return 225;
+   if (has_bits(move_dir, DOWN | RIGHT)) return 315;
+
+   if (has_bits(move_dir, RIGHT)) return 0;
+   if (has_bits(move_dir, UP)) return 90;
+   if (has_bits(move_dir, LEFT)) return 180;
+   if (has_bits(move_dir, DOWN)) return 270;
+}
+
+inline
+bool angle_is_between(float a, float between, float b) {
+   assert(b > a);
+   a = wrap_angle(a);
+   b = wrap_angle(b);
+   between = wrap_angle(between);
+
+   return a < b ? a < between && between < b : between > a || between < b;
+}
+
+inline
+float accelerate_clockwise(float max_speed, float theta_speed) {
+   return std::max(-max_speed, theta_speed - kThetaAcceleration);
+}
+
+inline
+float accelerate_counterclockwise(float max_speed, float theta_speed) {
+   return std::min(max_speed, theta_speed + kThetaAcceleration);
+}
+
+inline
+float decelerate(float theta_speed) {
+   if (theta_speed > 0.0f) {
+      return accelerate_clockwise(0.0f, theta_speed);
+   } else if (theta_speed < 0.0f) {
+      return accelerate_counterclockwise(0.0f, theta_speed);
+   }
+   return theta_speed;
 }
 
 void SmallPlanetMover::Update() {
@@ -163,36 +180,26 @@ void SmallPlanetMover::Update() {
       }
    }
 
-   if (rotate_type_ == ROTATE_CW) {
-      theta_speed_ -= kThetaAcceleration;
-      if (theta_speed_ < -kThetaSpeed)
-         theta_speed_ = -kThetaSpeed;
-   } else if (rotate_type_ == ROTATE_CCW) {
-      theta_speed_ += kThetaAcceleration;
-      if (theta_speed_ > kThetaSpeed)
-         theta_speed_ = kThetaSpeed;
-   } else {
-      if (theta_speed_ > 0.00001f) {
-         theta_speed_ -= kThetaAcceleration;
-         if (theta_speed_ < 0.0f)
-            theta_speed_ = 0.0f;
-      } else if (theta_speed_ < -0.00001f) {
-         theta_speed_ += kThetaAcceleration;
-         if (theta_speed_ > 0.0f)
-            theta_speed_ = 0.0f;
-      }
+   float max_theta_speed = is_jumping_ || is_falling_ ? kThetaSpeed / 2 : kThetaSpeed;
+   if (is_moving()) {
+      float dest_angle = destination_angle(move_dir_);
+      if (angle_is_between(dest_angle + 5, theta_, dest_angle + 180))
+         theta_speed_ = accelerate_clockwise(max_theta_speed, theta_speed_);
+      else if (angle_is_between(dest_angle - 180, theta_, dest_angle - 5))
+         theta_speed_ = accelerate_counterclockwise(max_theta_speed, theta_speed_);
+      else
+         theta_speed_ = decelerate(theta_speed_);
    }
-
-   if (theta_speed_ < -0.0001 || theta_speed_ > 0.0001) {
-      theta_ += theta_speed_ * 0.4f;
-      adjust_angle(theta_);
+   else {
+      theta_speed_ = decelerate(theta_speed_);
    }
+   theta_ += theta_speed_;
+   theta_ = wrap_angle(theta_);
 
    UpdateMeshTransform();
 }
 
 void SmallPlanetMover::StopMoving() {
-   rotate_type_ = ROTATE_NONE;
 }
 
 void SmallPlanetMover::Jump() {

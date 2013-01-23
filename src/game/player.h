@@ -24,11 +24,15 @@ class Player {
   public:
    Player(Planet* planet);
 
-   void OnUpButtonDown(const glm::vec3& camera_pos);
-   void OnDownButtonDown(const glm::vec3& camera_pos);
-   void OnLeftButtonDown(const glm::vec3& camera_pos);
-   void OnRightButtonDown(const glm::vec3& camera_pos);
-   void StopMoving();
+   void OnUpButtonDown();
+   void OnDownButtonDown();
+   void OnLeftButtonDown();
+   void OnRightButtonDown();
+
+   void OnUpButtonUp();
+   void OnDownButtonUp();
+   void OnLeftButtonUp();
+   void OnRightButtonUp();
 
    void TurnLeft();
    void TurnRight();
