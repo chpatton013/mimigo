@@ -39,15 +39,25 @@ void LoadMetaDataFromFile(const std::string& filename) {
 SmallPlanetMover::SmallPlanetMover(Planet* planet) :
    planet_(planet),
    jump_speed_(kJumpSpeed),
-   rotate_type_(ROTATE_NONE),
    theta_(0.0f),
    theta_speed_(0.0f),
+   move_dir_(0),
    is_jumping_(false)
 {
    xy_rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
    xz_rotation_.axis = glm::vec3(0.0f, 1.0f, 0.0f);
    LoadMetaDataFromFile("player.config");
 }
+
+void SmallPlanetMover::MoveUp() { move_dir_ |= UP; }
+void SmallPlanetMover::MoveDown() { move_dir_ |= DOWN; }
+void SmallPlanetMover::MoveLeft() { move_dir_ |= LEFT; }
+void SmallPlanetMover::MoveRight() { move_dir_ |= RIGHT; }
+
+void SmallPlanetMover::StopMoveUp() { move_dir_ &= !UP; }
+void SmallPlanetMover::StopMoveDown() { move_dir_ &= !DOWN; }
+void SmallPlanetMover::StopMoveLeft() { move_dir_ &= !LEFT; }
+void SmallPlanetMover::StopMoveRight() { move_dir_ &= !RIGHT; }
 
 inline
 float angle_of(const glm::vec3& vec) {
@@ -62,39 +72,6 @@ float adjust_angle(float &val) {
       val -= 360.0f;
 }
 
-void SmallPlanetMover::MoveUp() {
-   if (theta_ > 90.0f && theta_ < 270.0f)
-      MoveClockwiseAroundPlanet();
-   else if (theta_ >= 270.0f && theta_ <= 360.0f ||
-            theta_ < 90.0f && theta_ >= 0.0f) {
-      MoveCounterClockwiseAroundPlanet();
-   }
-}
-
-void SmallPlanetMover::MoveDown() {
-   if (theta_ > 270.0f && theta_ <= 360.0f ||
-       theta_ < 90.0f && theta_ >= 0.0f) {
-      MoveClockwiseAroundPlanet();
-   } else if (theta_ >= 90.0f && theta_ < 270.0f) {
-      MoveCounterClockwiseAroundPlanet();
-   }
-}
-
-void SmallPlanetMover::MoveLeft(const glm::vec3& camera_pos) {
-   if (theta_ > 180.0f)
-      MoveClockwiseAroundPlanet();
-   else if (theta_ != 180.0f)
-      MoveCounterClockwiseAroundPlanet();
-}
-
-void SmallPlanetMover::MoveRight(const glm::vec3& camera_pos) {
-   if (theta_ < 180.0f)
-      MoveClockwiseAroundPlanet();
-   else if (theta_ != 0.0f && theta_ != 360.0f)
-      MoveCounterClockwiseAroundPlanet();
-
-}
-
 void SmallPlanetMover::RotateBottomTowardPlanet() {
    xy_rotation_.angle = theta_ - 90.0f;
 }
@@ -105,16 +82,6 @@ void SmallPlanetMover::UpdateMeshTransform() const {
    transform *= glm::rotate(xy_rotation_.angle, xy_rotation_.axis);
    transform *= glm::rotate(xz_rotation_.angle, xz_rotation_.axis);
    SceneNode::Get("player")->set_transformation(transform);
-}
-
-void SmallPlanetMover::MoveCounterClockwiseAroundPlanet() {
-   rotate_type_ = ROTATE_CCW;
-   xz_rotation_.angle = 0.0f;
-}
-
-void SmallPlanetMover::MoveClockwiseAroundPlanet() {
-   rotate_type_ = ROTATE_CW;
-   xz_rotation_.angle = 180.0f;
 }
 
 inline float radians(float degrees) {
@@ -163,36 +130,22 @@ void SmallPlanetMover::Update() {
       }
    }
 
-   if (rotate_type_ == ROTATE_CW) {
-      theta_speed_ -= kThetaAcceleration;
-      if (theta_speed_ < -kThetaSpeed)
-         theta_speed_ = -kThetaSpeed;
-   } else if (rotate_type_ == ROTATE_CCW) {
-      theta_speed_ += kThetaAcceleration;
-      if (theta_speed_ > kThetaSpeed)
-         theta_speed_ = kThetaSpeed;
-   } else {
-      if (theta_speed_ > 0.00001f) {
-         theta_speed_ -= kThetaAcceleration;
-         if (theta_speed_ < 0.0f)
-            theta_speed_ = 0.0f;
-      } else if (theta_speed_ < -0.00001f) {
-         theta_speed_ += kThetaAcceleration;
-         if (theta_speed_ > 0.0f)
-            theta_speed_ = 0.0f;
-      }
+   // Clockwise
+   if (move_dir_ & UP && (theta_ > 95.0f && theta_ < 270.0f) ||
+       move_dir_ & LEFT && theta_ > 185.0f ||
+       move_dir_ & DOWN && (theta_ > 275.0f && theta_ < 90.0f) ||
+       move_dir_ & RIGHT && (theta_ > 5.0f && theta_ < 180.0f)) {
+      std::cout << "move";
+      theta_ -= kThetaSpeed;
    }
-
-   if (theta_speed_ < -0.0001 || theta_speed_ > 0.0001) {
-      theta_ += theta_speed_ * 0.4f;
-      adjust_angle(theta_);
-   }
+   // Counter-Clockwise
+   //else if () {
+   //}
 
    UpdateMeshTransform();
 }
 
 void SmallPlanetMover::StopMoving() {
-   rotate_type_ = ROTATE_NONE;
 }
 
 void SmallPlanetMover::Jump() {

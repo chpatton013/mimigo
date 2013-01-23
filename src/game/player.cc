@@ -25,20 +25,36 @@ void Player::TurnRight() {
    large_planet_mover_.TurnRight();
 }
 
-void Player::OnUpButtonDown(const glm::vec3& camera_pos) {
+void Player::OnUpButtonDown() {
    small_planet_mover_.MoveUp();
 }
 
-void Player::OnDownButtonDown(const glm::vec3& camera_pos) {
+void Player::OnDownButtonDown() {
    small_planet_mover_.MoveDown();
 }
 
-void Player::OnLeftButtonDown(const glm::vec3& camera_pos) {
-   small_planet_mover_.MoveLeft(camera_pos);
+void Player::OnLeftButtonDown() {
+   small_planet_mover_.MoveLeft();
 }
 
-void Player::OnRightButtonDown(const glm::vec3& camera_pos) {
-   small_planet_mover_.MoveRight(camera_pos);
+void Player::OnRightButtonDown() {
+   small_planet_mover_.MoveRight();
+}
+
+void Player::OnUpButtonUp() {
+   small_planet_mover_.StopMoveUp();
+}
+
+void Player::OnDownButtonUp() {
+   small_planet_mover_.StopMoveDown();
+}
+
+void Player::OnLeftButtonUp() {
+   small_planet_mover_.StopMoveLeft();
+}
+
+void Player::OnRightButtonUp() {
+   small_planet_mover_.StopMoveRight();
 }
 
 void Player::Jump() {
@@ -51,13 +67,6 @@ void Player::Jump() {
 void Player::ReleaseJump() {
    if (game_play_type_ == GAME_PLAY_SMALL)
       small_planet_mover_.ReleaseJump();
-}
-
-void Player::StopMoving() {
-   if (game_play_type_ == GAME_PLAY_SMALL)
-      small_planet_mover_.StopMoving();
-   else
-      large_planet_mover_.StopMoving();
 }
 
 bool Player::EntersGravityFieldOf(Planet* planet) {
