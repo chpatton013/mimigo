@@ -29,6 +29,25 @@ void LargePlanetMover::Jump() {
 
 void LargePlanetMover::Update() {
    UpdateMeshTransform();
+   if (move_forward_) {
+      angle_speed_ = std::min(kAngleDelta, angle_speed_ + 0.1f);
+   } else if (move_backward_) {
+      angle_speed_ = std::max(-kAngleDelta, angle_speed_ - 0.1f);
+   } else {
+      if (angle_speed_ < 0.0f)
+         angle_speed_ = std::min(0.0f, angle_speed_ + 0.1f);
+      else
+         angle_speed_ = std::max(0.0f, angle_speed_ - 0.1f);
+   }
+
+   if (turn_left_) {
+      rotate_speed_ = kRotateDelta;
+   } else if (turn_right_) {
+      rotate_speed_ = -kRotateDelta;
+   } else {
+      rotate_speed_ = 0.0f;
+   }
+
    if (rotate_speed_ > 0.0001 || rotate_speed_ < -0.0001) {
       local_rotation_ = glm::rotate(local_rotation_, rotate_speed_, up());
       transform_ = glm::rotate(transform_, -rotate_speed_,
@@ -58,24 +77,35 @@ void LargePlanetMover::set_planet(Planet* planet) {
 }
 
 void LargePlanetMover::MoveForward() {
-   angle_speed_ = kAngleDelta;
+   move_forward_ = true;
 }
 
 void LargePlanetMover::MoveBackward() {
-   angle_speed_ = -kAngleDelta;
+   move_backward_ = true;
 }
 
 void LargePlanetMover::TurnLeft() {
-   rotate_speed_ = kRotateDelta;
+   turn_left_ = true;
 }
 
 void LargePlanetMover::TurnRight() {
-   rotate_speed_ = -kRotateDelta;
+   turn_right_ = true;
 }
 
-void LargePlanetMover::StopMoving() {
-   angle_speed_ = 0.0f;
-   rotate_speed_ = 0.0f;
+void LargePlanetMover::StopMoveForward() {
+   move_forward_ = false;
+}
+
+void LargePlanetMover::StopMoveBackward() {
+   move_backward_ = false;
+}
+
+void LargePlanetMover::StopTurnLeft() {
+   turn_left_ = false;
+}
+
+void LargePlanetMover::StopTurnRight() {
+   turn_right_ = false;
 }
 
 const glm::vec3 LargePlanetMover::position() const {

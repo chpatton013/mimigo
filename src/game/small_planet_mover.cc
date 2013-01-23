@@ -54,10 +54,10 @@ void SmallPlanetMover::MoveDown() { move_dir_ |= DOWN; }
 void SmallPlanetMover::MoveLeft() { move_dir_ |= LEFT; }
 void SmallPlanetMover::MoveRight() { move_dir_ |= RIGHT; }
 
-void SmallPlanetMover::StopMoveUp() { move_dir_ &= !UP; }
-void SmallPlanetMover::StopMoveDown() { move_dir_ &= !DOWN; }
-void SmallPlanetMover::StopMoveLeft() { move_dir_ &= !LEFT; }
-void SmallPlanetMover::StopMoveRight() { move_dir_ &= !RIGHT; }
+void SmallPlanetMover::StopMoveUp() { move_dir_ &= ~UP; }
+void SmallPlanetMover::StopMoveDown() { move_dir_ &= ~DOWN; }
+void SmallPlanetMover::StopMoveLeft() { move_dir_ &= ~LEFT; }
+void SmallPlanetMover::StopMoveRight() { move_dir_ &= ~RIGHT; }
 
 inline
 float angle_of(const glm::vec3& vec) {
@@ -106,6 +106,9 @@ void SmallPlanetMover::set_planet(Planet* planet) {
    else
       theta_ = 0.0f;
    planet_ = planet;
+   is_jumping_ = false;
+   jump_speed_ = 0.0f;
+   is_falling_ = true;
    RotateBottomTowardPlanet();
    FallToPlanet();
 }
@@ -130,19 +133,20 @@ void SmallPlanetMover::Update() {
       }
    }
 
+   float max_theta = is_jumping_ || is_falling_ ? kThetaSpeed / 2 : kThetaSpeed;
    // Clockwise
    if ((move_dir_ & UP) == UP && (theta_ > 100.0f && theta_ < 270.0f) ||
        (move_dir_ & LEFT) == LEFT && theta_ > 190.0f ||
        (move_dir_ & DOWN) == DOWN && (theta_ > 280.0f || theta_ < 90.0f) ||
        (move_dir_ & RIGHT) == RIGHT && (theta_ > 10.0f && theta_ < 180.0f)) {
-      theta_speed_ = std::max(-kThetaSpeed, theta_speed_ - kThetaAcceleration);
+      theta_speed_ = std::max(-max_theta, theta_speed_ - kThetaAcceleration);
    }
    // Counter-Clockwise
    else if ((move_dir_ & UP) == UP && (theta_ > 270.0f || theta_ < 80.0f) ||
             (move_dir_ & LEFT) == LEFT && theta_ < 170.0f ||
             (move_dir_ & DOWN) == DOWN && (theta_ < 260.0f && theta_ > 90.0f) ||
             (move_dir_ & RIGHT) == RIGHT && (theta_ > 180.0f && theta_ < 350.0f)) {
-      theta_speed_ = std::min(kThetaSpeed, theta_speed_ + kThetaAcceleration);
+      theta_speed_ = std::min(max_theta, theta_speed_ + kThetaAcceleration);
    } else {
       if (theta_speed_ > 0.0f)
          theta_speed_ = std::max(0.0f, theta_speed_ - kThetaAcceleration);

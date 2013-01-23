@@ -26,35 +26,51 @@ void Player::TurnRight() {
 }
 
 void Player::OnUpButtonDown() {
-   small_planet_mover_.MoveUp();
+   if (game_play_type_ == GAME_PLAY_SMALL)
+      small_planet_mover_.MoveUp();
 }
 
 void Player::OnDownButtonDown() {
-   small_planet_mover_.MoveDown();
+   if (game_play_type_ == GAME_PLAY_SMALL)
+      small_planet_mover_.MoveDown();
 }
 
 void Player::OnLeftButtonDown() {
-   small_planet_mover_.MoveLeft();
+   if (game_play_type_ == GAME_PLAY_SMALL)
+      small_planet_mover_.MoveLeft();
 }
 
 void Player::OnRightButtonDown() {
-   small_planet_mover_.MoveRight();
+   if (game_play_type_ == GAME_PLAY_SMALL)
+      small_planet_mover_.MoveRight();
 }
 
 void Player::OnUpButtonUp() {
-   small_planet_mover_.StopMoveUp();
+   if (game_play_type_ == GAME_PLAY_SMALL)
+      small_planet_mover_.StopMoveUp();
+   else
+      large_planet_mover_.StopMoveForward();
 }
 
 void Player::OnDownButtonUp() {
-   small_planet_mover_.StopMoveDown();
+   if (game_play_type_ == GAME_PLAY_SMALL)
+      small_planet_mover_.StopMoveDown();
+   else
+      large_planet_mover_.StopMoveBackward();
 }
 
 void Player::OnLeftButtonUp() {
-   small_planet_mover_.StopMoveLeft();
+   if (game_play_type_ == GAME_PLAY_SMALL)
+      small_planet_mover_.StopMoveLeft();
+   else
+      large_planet_mover_.StopTurnLeft();
 }
 
 void Player::OnRightButtonUp() {
-   small_planet_mover_.StopMoveRight();
+   if (game_play_type_ == GAME_PLAY_SMALL)
+      small_planet_mover_.StopMoveRight();
+   else
+      large_planet_mover_.StopTurnRight();
 }
 
 void Player::Jump() {

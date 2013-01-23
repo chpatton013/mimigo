@@ -18,7 +18,10 @@ class LargePlanetMover {
    void MoveBackward();
    void TurnLeft();
    void TurnRight();
-   void StopMoving();
+   void StopMoveForward();
+   void StopMoveBackward();
+   void StopTurnLeft();
+   void StopTurnRight();
 
    bool is_attached_to(Planet* planet) const { return planet_ == planet; }
    bool is_jumping() const { return is_jumping_; }
@@ -41,6 +44,11 @@ class LargePlanetMover {
    glm::vec3 position_;
    float angle_speed_;
    float rotate_speed_;
+
+   bool move_forward_;
+   bool move_backward_;
+   bool turn_left_;
+   bool turn_right_;
 
    float jump_speed_;
    bool is_jumping_;
