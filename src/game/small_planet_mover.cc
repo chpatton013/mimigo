@@ -65,11 +65,12 @@ float angle_of(const glm::vec3& vec) {
 }
 
 inline
-float adjust_angle(float &val) {
+float wrap_angle(float val) {
    while (val < 0.0f)
       val += 360.0f;
    while (val > 360.0f)
       val -= 360.0f;
+   return val;
 }
 
 void SmallPlanetMover::RotateBottomTowardPlanet() {
@@ -113,6 +114,52 @@ void SmallPlanetMover::set_planet(Planet* planet) {
    FallToPlanet();
 }
 
+inline bool has_bits(unsigned short byte, unsigned short bits) {
+   return (byte & bits) == bits;
+}
+
+inline float destination_angle(unsigned short move_dir) {
+   if (has_bits(move_dir, UP | RIGHT)) return 45;
+   if (has_bits(move_dir, UP | LEFT)) return 135;
+   if (has_bits(move_dir, DOWN | LEFT)) return 225;
+   if (has_bits(move_dir, DOWN | RIGHT)) return 315;
+
+   if (has_bits(move_dir, RIGHT)) return 0;
+   if (has_bits(move_dir, UP)) return 90;
+   if (has_bits(move_dir, LEFT)) return 180;
+   if (has_bits(move_dir, DOWN)) return 270;
+}
+
+inline
+bool angle_is_between(float a, float between, float b) {
+   assert(b > a);
+   a = wrap_angle(a);
+   b = wrap_angle(b);
+   between = wrap_angle(between);
+
+   return a < b ? a < between && between < b : between > a || between < b;
+}
+
+inline
+float accelerate_clockwise(float max_speed, float theta_speed) {
+   return std::max(-max_speed, theta_speed - kThetaAcceleration);
+}
+
+inline
+float accelerate_counterclockwise(float max_speed, float theta_speed) {
+   return std::min(max_speed, theta_speed + kThetaAcceleration);
+}
+
+inline
+float decelerate(float theta_speed) {
+   if (theta_speed > 0.0f) {
+      return accelerate_clockwise(0.0f, theta_speed);
+   } else if (theta_speed < 0.0f) {
+      return accelerate_counterclockwise(0.0f, theta_speed);
+   }
+   return theta_speed;
+}
+
 void SmallPlanetMover::Update() {
    RotateBottomTowardPlanet();
    //TODO: time-based motion
@@ -133,28 +180,21 @@ void SmallPlanetMover::Update() {
       }
    }
 
-   float max_theta = is_jumping_ || is_falling_ ? kThetaSpeed / 2 : kThetaSpeed;
-   // Clockwise
-   if ((move_dir_ & UP) == UP && (theta_ > 100.0f && theta_ < 270.0f) ||
-       (move_dir_ & LEFT) == LEFT && theta_ > 190.0f ||
-       (move_dir_ & DOWN) == DOWN && (theta_ > 280.0f || theta_ < 90.0f) ||
-       (move_dir_ & RIGHT) == RIGHT && (theta_ > 10.0f && theta_ < 180.0f)) {
-      theta_speed_ = std::max(-max_theta, theta_speed_ - kThetaAcceleration);
-   }
-   // Counter-Clockwise
-   else if ((move_dir_ & UP) == UP && (theta_ > 270.0f || theta_ < 80.0f) ||
-            (move_dir_ & LEFT) == LEFT && theta_ < 170.0f ||
-            (move_dir_ & DOWN) == DOWN && (theta_ < 260.0f && theta_ > 90.0f) ||
-            (move_dir_ & RIGHT) == RIGHT && (theta_ > 180.0f && theta_ < 350.0f)) {
-      theta_speed_ = std::min(max_theta, theta_speed_ + kThetaAcceleration);
-   } else {
-      if (theta_speed_ > 0.0f)
-         theta_speed_ = std::max(0.0f, theta_speed_ - kThetaAcceleration);
+   float max_theta_speed = is_jumping_ || is_falling_ ? kThetaSpeed / 2 : kThetaSpeed;
+   if (is_moving()) {
+      float dest_angle = destination_angle(move_dir_);
+      if (angle_is_between(dest_angle + 5, theta_, dest_angle + 180))
+         theta_speed_ = accelerate_clockwise(max_theta_speed, theta_speed_);
+      else if (angle_is_between(dest_angle - 180, theta_, dest_angle - 5))
+         theta_speed_ = accelerate_counterclockwise(max_theta_speed, theta_speed_);
       else
-         theta_speed_ = std::min(0.0f, theta_speed_ + kThetaAcceleration);
+         theta_speed_ = decelerate(theta_speed_);
+   }
+   else {
+      theta_speed_ = decelerate(theta_speed_);
    }
    theta_ += theta_speed_;
-   adjust_angle(theta_);
+   theta_ = wrap_angle(theta_);
 
    UpdateMeshTransform();
 }

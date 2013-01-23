@@ -7,6 +7,7 @@
 #include "planet_rotater.h"
 #include "core/timer.h"
 
+enum Dir { UP=1, DOWN=1<<1, LEFT=1<<2, RIGHT=1<<3 };
 class SmallPlanetMover : public Timer::Delegate {
   public:
    SmallPlanetMover(Planet* planet);
@@ -31,13 +32,13 @@ class SmallPlanetMover : public Timer::Delegate {
 
    bool is_attached_to(Planet* planet) const { return planet_ == planet; }
    bool is_jumping() const { return is_jumping_; }
+   bool is_moving() const { return move_dir_ != 0; }
 
    const glm::vec3 position() const;
 
    virtual void OnExpiration(const std::string& event);
 
   private:
-   enum Dir { UP=1, DOWN=1<<1, LEFT=1<<2, RIGHT=1<<3 };
    void RotateBottomTowardPlanet();
    void UpdateMeshTransform() const;
 
