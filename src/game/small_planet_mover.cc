@@ -131,16 +131,26 @@ void SmallPlanetMover::Update() {
    }
 
    // Clockwise
-   if (move_dir_ & UP && (theta_ > 95.0f && theta_ < 270.0f) ||
-       move_dir_ & LEFT && theta_ > 185.0f ||
-       move_dir_ & DOWN && (theta_ > 275.0f && theta_ < 90.0f) ||
-       move_dir_ & RIGHT && (theta_ > 5.0f && theta_ < 180.0f)) {
-      std::cout << "move";
-      theta_ -= kThetaSpeed;
+   if ((move_dir_ & UP) == UP && (theta_ > 100.0f && theta_ < 270.0f) ||
+       (move_dir_ & LEFT) == LEFT && theta_ > 190.0f ||
+       (move_dir_ & DOWN) == DOWN && (theta_ > 280.0f || theta_ < 90.0f) ||
+       (move_dir_ & RIGHT) == RIGHT && (theta_ > 10.0f && theta_ < 180.0f)) {
+      theta_speed_ = std::max(-kThetaSpeed, theta_speed_ - kThetaAcceleration);
    }
    // Counter-Clockwise
-   //else if () {
-   //}
+   else if ((move_dir_ & UP) == UP && (theta_ > 270.0f || theta_ < 80.0f) ||
+            (move_dir_ & LEFT) == LEFT && theta_ < 170.0f ||
+            (move_dir_ & DOWN) == DOWN && (theta_ < 260.0f && theta_ > 90.0f) ||
+            (move_dir_ & RIGHT) == RIGHT && (theta_ > 180.0f && theta_ < 350.0f)) {
+      theta_speed_ = std::min(kThetaSpeed, theta_speed_ + kThetaAcceleration);
+   } else {
+      if (theta_speed_ > 0.0f)
+         theta_speed_ = std::max(0.0f, theta_speed_ - kThetaAcceleration);
+      else
+         theta_speed_ = std::min(0.0f, theta_speed_ + kThetaAcceleration);
+   }
+   theta_ += theta_speed_;
+   adjust_angle(theta_);
 
    UpdateMeshTransform();
 }
