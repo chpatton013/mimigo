@@ -27,7 +27,6 @@ void SDLGraphicsAdapter::Begin() {
    SetProjectionMatrix();
 
    glEnableClientState(GL_VERTEX_ARRAY);
-   glEnableClientState(GL_NORMAL_ARRAY);
    glEnableClientState(GL_INDEX_ARRAY);
 }
 
@@ -35,7 +34,6 @@ void SDLGraphicsAdapter::End() {
    glUseProgram(0);
    SDL_GL_SwapBuffers();
    glDisableClientState(GL_VERTEX_ARRAY);
-   glDisableClientState(GL_NORMAL_ARRAY);
    glDisableClientState(GL_INDEX_ARRAY);
 }
 

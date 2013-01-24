@@ -7,6 +7,7 @@
 #include "planet_rotater.h"
 #include "core/timer.h"
 
+enum Dir { UP=1, DOWN=1<<1, LEFT=1<<2, RIGHT=1<<3 };
 class SmallPlanetMover : public Timer::Delegate {
   public:
    SmallPlanetMover(Planet* planet);
@@ -21,22 +22,25 @@ class SmallPlanetMover : public Timer::Delegate {
 
    void MoveUp();
    void MoveDown();
-   void MoveLeft(const glm::vec3& camera_pos);
-   void MoveRight(const glm::vec3& camera_pos);
+   void MoveLeft();
+   void MoveRight();
+
+   void StopMoveUp();
+   void StopMoveDown();
+   void StopMoveLeft();
+   void StopMoveRight();
 
    bool is_attached_to(Planet* planet) const { return planet_ == planet; }
    bool is_jumping() const { return is_jumping_; }
+   bool is_moving() const { return move_dir_ != 0; }
 
    const glm::vec3 position() const;
 
    virtual void OnExpiration(const std::string& event);
 
   private:
-   enum RotateType { ROTATE_CW, ROTATE_CCW, ROTATE_NONE };
    void RotateBottomTowardPlanet();
    void UpdateMeshTransform() const;
-   void MoveCounterClockwiseAroundPlanet();
-   void MoveClockwiseAroundPlanet();
 
    Planet* planet_;
    Rotation xy_rotation_;
@@ -44,9 +48,9 @@ class SmallPlanetMover : public Timer::Delegate {
 
    float radius_;
    float jump_speed_;
-   RotateType rotate_type_;
    float theta_;
    float theta_speed_;
+   unsigned short move_dir_;
 
    bool is_jumping_;
    bool is_falling_;

@@ -24,15 +24,20 @@ class Player {
   public:
    Player(Planet* planet);
 
-   void OnUpButtonDown(const glm::vec3& camera_pos);
-   void OnDownButtonDown(const glm::vec3& camera_pos);
-   void OnLeftButtonDown(const glm::vec3& camera_pos);
-   void OnRightButtonDown(const glm::vec3& camera_pos);
-   void StopMoving();
+   void OnUpButtonDown();
+   void OnDownButtonDown();
+   void OnLeftButtonDown();
+   void OnRightButtonDown();
+
+   void OnUpButtonUp();
+   void OnDownButtonUp();
+   void OnLeftButtonUp();
+   void OnRightButtonUp();
 
    void TurnLeft();
    void TurnRight();
    void MoveForward();
+   void MoveBackward();
 
    bool EntersGravityFieldOf(Planet* planet);
    void TransitionTo(Planet* planet);
@@ -45,7 +50,12 @@ class Player {
    const glm::vec3 position() const {
       return game_play_type_ == GAME_PLAY_SMALL ?
              small_planet_mover_.position() :
-             large_planet_mover_.position(); }
+             large_planet_mover_.position();
+   }
+
+   glm::mat4 local_rotation() const {
+      return large_planet_mover_.local_rotation();
+   }
 
   private:
    bool is_attached_to(Planet* planet) const {

@@ -84,8 +84,8 @@ void Universe::CheckPlayerChangesGravityFields() {
 }
 
 void Universe::Update() {
+   camera_->Update(player_->position(), player_->local_rotation());
    player_->Update();
-   camera_->Update(player_->position());
 
    CheckPlayerChangesGravityFields();
 }
@@ -102,7 +102,7 @@ void Universe::OnCameraUpDown() { camera_->move(glm::vec3(0.0f, 1.0f, 0.0f)); }
 
 void Universe::OnLeftButtonDown() {
    if (is_small_planet_gameplay())
-      player_->OnLeftButtonDown(camera_->position());
+      player_->OnLeftButtonDown();
    else {
       player_->TurnLeft();
    }
@@ -110,7 +110,7 @@ void Universe::OnLeftButtonDown() {
 
 void Universe::OnRightButtonDown() {
    if (is_small_planet_gameplay())
-      player_->OnRightButtonDown(camera_->position());
+      player_->OnRightButtonDown();
    else {
       player_->TurnRight();
    }
@@ -118,7 +118,7 @@ void Universe::OnRightButtonDown() {
 
 void Universe::OnUpButtonDown() {
    if (is_small_planet_gameplay())
-      player_->OnUpButtonDown(camera_->position());
+      player_->OnUpButtonDown();
    else {
       player_->MoveForward();
    }
@@ -126,22 +126,19 @@ void Universe::OnUpButtonDown() {
 
 void Universe::OnDownButtonDown() {
    if (is_small_planet_gameplay())
-      player_->OnDownButtonDown(camera_->position());
+      player_->OnDownButtonDown();
    else {
-      //player_->MoveBackward();
+      player_->MoveBackward();
    }
 }
 
-void Universe::OnLeftButtonUp()  { OnMovementButtonUp(); }
-void Universe::OnRightButtonUp() { OnMovementButtonUp(); }
-void Universe::OnUpButtonUp()    { OnMovementButtonUp(); }
-void Universe::OnDownButtonUp()  { OnMovementButtonUp(); }
-
-void Universe::OnMovementButtonUp() { player_->StopMoving(); }
+void Universe::OnLeftButtonUp()  { player_->OnLeftButtonUp(); }
+void Universe::OnRightButtonUp() { player_->OnRightButtonUp(); }
+void Universe::OnUpButtonUp()    { player_->OnUpButtonUp(); }
+void Universe::OnDownButtonUp()  { player_->OnDownButtonUp(); }
 
 void Universe::OnJumpButtonDown() {
-   if (!player_->is_jumping())
-      player_->Jump();
+   player_->Jump();
 }
 void Universe::OnJumpButtonUp() {
    player_->ReleaseJump();

@@ -3,10 +3,7 @@
 #include "../util/stl_util.h"
 
 namespace {
-
-const float kCameraDistance = 0.5f;
 float radians(float degrees) { return degrees/180.0*acos(-1.0); }
-
 }
 
 void Camera::TransitionToLargePlanetMode() {
@@ -28,11 +25,11 @@ void Camera::DebugPrint() {
    glm_util::Print(camera_up_);
 }
 
-void Camera::Update(const glm::vec3& position) {
-   angle_ += rotate_*1.8;
+void Camera::Update(const glm::vec3& position, const glm::mat4& local_axes) {
    if (large_planet_mode_) {
-      camera_pos_.y = position.y;
-      camera_focus_.y = position.y;
+      camera_focus_ = position;
+      camera_pos_ = position - glm::vec3(local_axes[0][2], local_axes[1][2], local_axes[2][2]);
+      camera_up_ = -glm::vec3(local_axes[0][1], local_axes[1][1], local_axes[2][1]);
    }
 }
 

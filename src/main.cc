@@ -11,6 +11,8 @@
 #include "game/universe.h"
 #include "scene_hierarchy/root_node.h"
 #include "scene_hierarchy/mesh_node.h"
+#include "scene_hierarchy/entity_component_node.h"
+#include "core/entity_component.h"
 
 void InitializeSDL() {
    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) {
@@ -62,18 +64,18 @@ void Initialize() {
 }
 
 void LoadResources() {
-   GLMesh* bunny = LoadMeshFromFile("meshes/bunny500.m");
-   MeshNode* mesh = new MeshNode("bunny", bunny);
+   EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/go_gopher_push.obj");
+   EntityComponentNode* mesh = new EntityComponentNode("bunny", go_gopher);
    mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.2f)));
 
-   GLMesh* sphere = LoadMeshesFromOBJFile("meshes/sphere.obj")[0];
+   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/go_gopher.obj");
 
    RootNode::Instance()->AddChild(mesh);
-   RootNode::Instance()->AddChild(new MeshNode("planet1", sphere));
-   RootNode::Instance()->AddChild(new MeshNode("planet2", sphere));
-   RootNode::Instance()->AddChild(new MeshNode("planet3", sphere));
-   RootNode::Instance()->AddChild(new MeshNode("planet4", sphere));
-   RootNode::Instance()->AddChild(new MeshNode("planet5", sphere));
+   RootNode::Instance()->AddChild(new EntityComponentNode("planet1", sphere));
+   RootNode::Instance()->AddChild(new EntityComponentNode("planet2", sphere));
+   RootNode::Instance()->AddChild(new EntityComponentNode("planet3", sphere));
+   RootNode::Instance()->AddChild(new EntityComponentNode("planet4", sphere));
+   RootNode::Instance()->AddChild(new EntityComponentNode("planet5", sphere));
 }
 
 void StartMainLoop(Universe* universe) {
