@@ -6,6 +6,7 @@ static float kJumpSlowdown = 0.08f;
 static float kJumpSpeed = 0.7f;
 
 static float kAngleDelta = 0.5f;
+static float kAngleAcceleration = 0.1f;
 static float kRotateDelta = 3.0f;
 
 static float radians(float degrees) { return degrees/180.0*acos(-1.0); }
@@ -15,7 +16,11 @@ LargePlanetMover::LargePlanetMover(Planet* planet) :
    angle_speed_(0.0f),
    rotate_speed_(0.0f),
    jump_speed_(0.0f),
-   is_jumping_(false)
+   is_jumping_(false),
+   move_backward_(false),
+   move_forward_(false),
+   turn_left_(false),
+   turn_right_(false)
 {}
 
 void LargePlanetMover::Jump() {
@@ -34,15 +39,16 @@ float current_radius(const glm::vec3& position, const glm::vec3& center) {
 
 void LargePlanetMover::Update() {
    UpdateMeshTransform();
-   if (move_forward_) {
-      angle_speed_ = std::min(kAngleDelta, angle_speed_ + 0.1f);
-   } else if (move_backward_) {
-      angle_speed_ = std::max(-kAngleDelta, angle_speed_ - 0.1f);
-   } else {
+
+   if (move_forward_)
+      angle_speed_ = std::min(kAngleDelta, angle_speed_ + kAngleAcceleration);
+   else if (move_backward_)
+      angle_speed_ = std::max(-kAngleDelta, angle_speed_ - kAngleAcceleration);
+   else {
       if (angle_speed_ < 0.0f)
-         angle_speed_ = std::min(0.0f, angle_speed_ + 0.1f);
+         angle_speed_ = std::min(0.0f, angle_speed_ + kAngleAcceleration);
       else
-         angle_speed_ = std::max(0.0f, angle_speed_ - 0.1f);
+         angle_speed_ = std::max(0.0f, angle_speed_ - kAngleAcceleration);
    }
 
    if (turn_left_) {
@@ -53,22 +59,14 @@ void LargePlanetMover::Update() {
       rotate_speed_ = 0.0f;
    }
 
-   if (rotate_speed_ > 0.0001 || rotate_speed_ < -0.0001) {
-      local_rotation_ = glm::rotate(local_rotation_, rotate_speed_, up());
-      transform_ = glm::rotate(transform_, -rotate_speed_,
-            glm::vec3(transform_[0][1], transform_[1][1], transform_[2][1]));
-   }
-   if (angle_speed_ > 0.0001 || angle_speed_ < -0.0001) {
-      local_rotation_ = glm::rotate(local_rotation_, angle_speed_, right());
-      transform_ = glm::rotate(transform_, -angle_speed_,
-            glm::vec3(transform_[0][2], transform_[1][2], transform_[2][2]));
-      position_ += forward() * (planet_->radius() * std::sin(radians(angle_speed_)) / std::sin(radians(90 - angle_speed_ / 2)));
-   }
+   local_rotation_ = glm::rotate(local_rotation_, rotate_speed_, up());
+   local_rotation_ = glm::rotate(local_rotation_, angle_speed_, right());
+   position_ += forward() * (planet_->radius() * std::sin(radians(angle_speed_)) / std::sin(radians(90 - angle_speed_ / 2)));
+
    if (is_jumping_) {
       position_ -= up() * jump_speed_;
       jump_speed_ -= kJumpSlowdown;
       if (current_radius(position_, planet_->center()) < planet_->radius()) {
-         // TODO: readjust position
          jump_speed_ = 0.0f;
          is_jumping_ = false;
       }
@@ -82,37 +80,14 @@ void LargePlanetMover::set_planet(Planet* planet) {
    transform_ = glm::rotate(transform_, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
-void LargePlanetMover::MoveForward() {
-   move_forward_ = true;
-}
-
-void LargePlanetMover::MoveBackward() {
-   move_backward_ = true;
-}
-
-void LargePlanetMover::TurnLeft() {
-   turn_left_ = true;
-}
-
-void LargePlanetMover::TurnRight() {
-   turn_right_ = true;
-}
-
-void LargePlanetMover::StopMoveForward() {
-   move_forward_ = false;
-}
-
-void LargePlanetMover::StopMoveBackward() {
-   move_backward_ = false;
-}
-
-void LargePlanetMover::StopTurnLeft() {
-   turn_left_ = false;
-}
-
-void LargePlanetMover::StopTurnRight() {
-   turn_right_ = false;
-}
+void LargePlanetMover::MoveForward() { move_forward_ = true; }
+void LargePlanetMover::MoveBackward() { move_backward_ = true; }
+void LargePlanetMover::TurnLeft() { turn_left_ = true; }
+void LargePlanetMover::TurnRight() { turn_right_ = true; }
+void LargePlanetMover::StopMoveForward() { move_forward_ = false; }
+void LargePlanetMover::StopMoveBackward() { move_backward_ = false; }
+void LargePlanetMover::StopTurnLeft() { turn_left_ = false; }
+void LargePlanetMover::StopTurnRight() { turn_right_ = false; }
 
 const glm::vec3 LargePlanetMover::position() const {
    return position_;
