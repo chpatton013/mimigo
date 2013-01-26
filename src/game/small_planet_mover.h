@@ -7,9 +7,11 @@
 #include "planet_rotater.h"
 #include "core/timer.h"
 
+class PlayerObserver;
+
 class SmallPlanetMover : public Timer::Delegate {
   public:
-   SmallPlanetMover(Planet* planet);
+   SmallPlanetMover(Planet* planet, PlayerObserver* observer);
 
    void StopMoving();
    void Jump();
@@ -59,6 +61,8 @@ class SmallPlanetMover : public Timer::Delegate {
    bool is_jumping_;
    bool is_falling_;
    bool jump_held_;
+
+   PlayerObserver* observer_;
 };
 
 #endif

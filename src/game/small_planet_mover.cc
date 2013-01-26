@@ -1,4 +1,5 @@
 #include "small_planet_mover.h"
+#include "player.h"
 #include <sstream>
 #include <fstream>
 
@@ -36,12 +37,13 @@ void LoadMetaDataFromFile(const std::string& filename) {
    }
 }
 
-SmallPlanetMover::SmallPlanetMover(Planet* planet) :
+SmallPlanetMover::SmallPlanetMover(Planet* planet, PlayerObserver* observer) :
    planet_(planet),
    jump_speed_(kJumpSpeed),
    theta_(0.0f),
    theta_speed_(0.0f),
-   is_jumping_(false)
+   is_jumping_(false),
+   observer_(observer)
 {
    xy_rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
    xz_rotation_.axis = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -49,30 +51,22 @@ SmallPlanetMover::SmallPlanetMover(Planet* planet) :
 }
 
 void SmallPlanetMover::MoveUp() {
-   if (theta_ > 90.0f && theta_ <= 270.0f)
-      move_dir_ = CW;
-   else
-      move_dir_ = CCW;
+   if (theta_ > 90.0f && theta_ <= 270.0f) move_dir_ = CW;
+   else move_dir_ = CCW;
 }
 
 void SmallPlanetMover::MoveDown() {
-   if (theta_ > 90.0f && theta_ <= 270.0f)
-      move_dir_ = CCW;
-   else
-      move_dir_ = CW;
+   if (theta_ > 90.0f && theta_ <= 270.0f) move_dir_ = CCW;
+   else move_dir_ = CW;
 }
 
 void SmallPlanetMover::MoveLeft() {
-   if (theta_ < 180.0f)
-      move_dir_ = CCW;
-   else
-      move_dir_ = CW;
+   if (theta_ < 180.0f) move_dir_ = CCW;
+   else move_dir_ = CW;
 }
 void SmallPlanetMover::MoveRight() {
-   if (theta_ < 180.0f)
-      move_dir_ = CW;
-   else
-      move_dir_ = CCW;
+   if (theta_ < 180.0f) move_dir_ = CW;
+   else move_dir_ = CCW;
 }
 
 void SmallPlanetMover::StopMoveUp() { move_dir_ = NONE;  }
@@ -204,6 +198,7 @@ void SmallPlanetMover::Update() {
    RotateBottomTowardPlanet();
 
    UpdateMeshTransform();
+   observer_->OnPlayerMove(position(), glm::vec3(), glm::vec3());
 }
 
 void SmallPlanetMover::StopMoving() {

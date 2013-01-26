@@ -11,7 +11,7 @@ class Player;
 enum GamePlayType { GAME_PLAY_SMALL, GAME_PLAY_LARGE };
 class Universe : public Game {
   public:
-   Universe(Camera* camera);
+   Universe();
 
    virtual void Update();
    virtual void Draw();

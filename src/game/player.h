@@ -22,7 +22,7 @@ class PlayerObserver {
 
 class Player {
   public:
-   Player(Planet* planet);
+   Player(Planet* planet, PlayerObserver* observer);
 
    void OnUpButtonDown();
    void OnDownButtonDown();

@@ -1,7 +1,7 @@
 #include "universe.h"
 #include "player.h"
 #include "scene_hierarchy/root_node.h"
-#include "core/camera.h"
+#include "small_planet_camera.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -42,12 +42,11 @@ void Universe::LoadInPlanets() {
    ParsePlanetFile("planets.lvl", &planets_);
 }
 
-Universe::Universe(Camera* camera) :
-   camera_(camera),
+Universe::Universe() :
    game_play_type_(GAME_PLAY_SMALL)
 {
    LoadInPlanets();
-   player_ = new Player(planets_[0]);
+   player_ = new Player(planets_[0], new SmallPlanetCamera());
    PlayerEntersGravityFieldOf(planets_[0]);
 }
 
@@ -56,7 +55,6 @@ bool Universe::PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet) {
 }
 
 void Universe::UseLargePlanetCamera() {
-   camera_->TransitionToLargePlanetMode();
 }
 
 void Universe::SwitchToLargePlanetGamePlay() {

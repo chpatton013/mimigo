@@ -85,12 +85,10 @@ void StartMainLoop(Universe* universe) {
 }
 
 int main(int , char** ) {
-   Camera* camera = new Camera();
-
    Initialize();
    LoadResources();
 
-   Universe* universe = new Universe(camera);
+   Universe* universe = new Universe();
    StartMainLoop(universe);
 
    return 0;
