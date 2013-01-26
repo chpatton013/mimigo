@@ -5,7 +5,6 @@
 #include "core/rotation.h"
 #include "gl/gl_mesh.h"
 #include "planet.h"
-#include "planet_rotater.h"
 #include "small_planet_mover.h"
 #include "large_planet_mover.h"
 #include "core/mover.h"
@@ -18,6 +17,7 @@ class PlayerObserver {
   public:
    virtual void OnPlayerMove(const glm::vec3& where, const glm::vec3& up,
                              const glm::vec3& facing) = 0;
+   virtual void OnPlayerSwitchPlanets(Planet* planet) = 0;
 };
 
 class Player {

@@ -127,6 +127,7 @@ void SmallPlanetMover::set_planet(Planet* planet) {
    is_falling_ = true;
    RotateBottomTowardPlanet();
    FallToPlanet();
+   observer_->OnPlayerSwitchPlanets(planet);
 }
 
 inline

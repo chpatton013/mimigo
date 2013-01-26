@@ -45,8 +45,9 @@ void Universe::LoadInPlanets() {
 Universe::Universe() :
    game_play_type_(GAME_PLAY_SMALL)
 {
+   camera_ = new SmallPlanetCamera();
    LoadInPlanets();
-   player_ = new Player(planets_[0], new SmallPlanetCamera());
+   player_ = new Player(planets_[0], camera_);
    PlayerEntersGravityFieldOf(planets_[0]);
 }
 
@@ -82,7 +83,7 @@ void Universe::CheckPlayerChangesGravityFields() {
 }
 
 void Universe::Update() {
-   camera_->Update(player_->position(), player_->local_rotation());
+   camera_->Update();
    player_->Update();
 
    CheckPlayerChangesGravityFields();
@@ -94,8 +95,8 @@ void Universe::Draw() {
 }
 
 //DEBUG METHODS
-void Universe::OnCameraDownDown() { camera_->move(glm::vec3(0.0f, -1.0f, 0.0f)); }
-void Universe::OnCameraUpDown() { camera_->move(glm::vec3(0.0f, 1.0f, 0.0f)); }
+void Universe::OnCameraDownDown() {}
+void Universe::OnCameraUpDown() {}
 //DEBUG METHODS
 
 void Universe::OnLeftButtonDown() {

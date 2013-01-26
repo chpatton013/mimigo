@@ -4,7 +4,6 @@
 #include <glm/glm.hpp>
 #include "core/rotation.h"
 #include "planet.h"
-#include "planet_rotater.h"
 
 class LargePlanetMover {
   public:

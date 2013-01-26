@@ -4,10 +4,9 @@
 #include "callback.h"
 #include <SDL/SDL.h>
 
-template <class T>
 class LinearValueAnimator {
   public:
-   LinearValueAnimator(T* value, T delta, float seconds, Callback& callback) :
+   LinearValueAnimator(float* value, float delta, float seconds, Callback& callback) :
       value_(value),
       delta_(delta),
       seconds_(seconds),
@@ -24,9 +23,9 @@ class LinearValueAnimator {
    bool time_expired(unsigned int current_ticks) const;
    float interval(unsigned int current_ticks) const;
 
-   T* value_;
-   T delta_;
-   T final_value_;
+   float* value_;
+   float delta_;
+   float final_value_;
    float seconds_;
    Callback callback_;
 
@@ -39,19 +38,16 @@ float seconds(int ticks) {
    return ticks / 1000.0f;
 }
 
-template <class T>
-bool LinearValueAnimator<T>::time_expired(unsigned int current_ticks) const {
+bool LinearValueAnimator::time_expired(unsigned int current_ticks) const {
    return seconds(current_ticks - start_ticks_) >= seconds_;
 }
 
-template <class T>
-float LinearValueAnimator<T>::interval(unsigned int current_ticks) const {
+float LinearValueAnimator::interval(unsigned int current_ticks) const {
    float ticks = std::min(current_ticks - last_ticks_, current_ticks - start_ticks_);
    return seconds(ticks) / seconds_;
 }
 
-template <class T>
-void LinearValueAnimator<T>::Update() {
+void LinearValueAnimator::Update() {
    unsigned int current_ticks = SDL_GetTicks();
    *value_ += delta_ * interval(current_ticks);
    if (time_expired(current_ticks)) {
