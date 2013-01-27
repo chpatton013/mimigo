@@ -182,9 +182,9 @@ void SmallPlanetMover::Update() {
          is_falling_ = true;
       }
       radius_ += jump_speed_;
-      if (radius_ <= planet_->radius()) {
+      if (radius_ <= planet_->radius() + 0.1f) {
          jump_speed_ = kJumpSpeed;
-         radius_ = planet_->radius();
+         radius_ = planet_->radius() + 0.1f;
          is_falling_ = false;
       }
    }

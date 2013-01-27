@@ -9,12 +9,7 @@ bool Planet::PositionWithinGravityField(const glm::vec3& position) {
 void Planet::Initialize(const std::string& id) {
    SceneNode* mesh = new SceneNode(id);
    mesh->set_transformation(glm::translate(center_));
-   float draw_radius;
-   if (is_large_planet())
-      draw_radius = radius_*1.98f;
-   else
-      draw_radius = radius_*1.5f;
-   mesh->apply_transformation(glm::scale(draw_radius, draw_radius, draw_radius));
+   mesh->apply_transformation(glm::scale(2.0f*radius_, 2.0f*radius_, 2.0f*radius_));
    RootNode::Instance()->AddChild(mesh);
    mesh->AddChild(SceneNode::Get("planet" + id));
 }
