@@ -4,6 +4,7 @@
 #include "../core/game.h"
 #include "planet.h"
 
+class Asteroid;
 class RootNode;
 class Camera;
 class Player;
@@ -54,6 +55,7 @@ class Universe : public Game {
    Camera* camera_;
    GamePlayType game_play_type_;
    std::vector<Planet*> planets_;
+   std::vector<Asteroid*> asteroids_;
    Player* player_;
 };
 

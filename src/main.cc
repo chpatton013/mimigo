@@ -76,6 +76,7 @@ void LoadResources() {
    RootNode::Instance()->AddChild(new EntityComponentNode("planet3", sphere));
    RootNode::Instance()->AddChild(new EntityComponentNode("planet4", sphere));
    RootNode::Instance()->AddChild(new EntityComponentNode("planet5", sphere));
+   RootNode::Instance()->AddChild(new EntityComponentNode("asteroid1", sphere));
 }
 
 void StartMainLoop(Universe* universe) {

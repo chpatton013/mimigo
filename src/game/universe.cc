@@ -1,4 +1,5 @@
 #include "universe.h"
+#include "asteroid.h"
 #include "player.h"
 #include "scene_hierarchy/root_node.h"
 #include "small_planet_camera.h"
@@ -48,6 +49,7 @@ Universe::Universe() :
    camera_ = new SmallPlanetCamera();
    LoadInPlanets();
    player_ = new Player(planets_[0], camera_);
+   asteroids_.push_back(new Asteroid(planets_[0], 0.0f, "1"));
    PlayerEntersGravityFieldOf(planets_[0]);
 }
 
@@ -85,6 +87,15 @@ void Universe::CheckPlayerChangesGravityFields() {
 void Universe::Update() {
    camera_->Update();
    player_->Update();
+
+   std::vector<Asteroid*> to_remove;
+   for (std::vector<Asteroid*>::iterator it = asteroids_.begin(); it != asteroids_.end(); ++it)
+      if (!(*it)->Update())
+         to_remove.push_back(*it);
+   for (std::vector<Asteroid*>::iterator it = to_remove.begin(); it != to_remove.end(); ++it) {
+      delete *it;
+   }
+   stl_util::RemoveAllOf(asteroids_, to_remove);
 
    CheckPlayerChangesGravityFields();
 }

@@ -16,8 +16,10 @@ class EntityComponentNode : public SceneNode {
     { assert(false); }
 
    virtual void Draw(MatrixStack* matrix_stack) {
+      matrix_stack->push();
       matrix_stack->multiply(transform());
       entity_->Draw(matrix_stack);
+      matrix_stack->pop();
    }
 
   private:
