@@ -7,11 +7,12 @@ float radians(float degrees) {
 }
 
 SwingAsteroid::SwingAsteroid(Planet *planet, float theta, const std::string& id) :
-   theta_(theta),
+   planetary_motion_(false),
    planet_(planet),
-   radius_(planet->radius() * 5.0f),
+   theta_(270.0f),
    mesh_(SceneNode::Get("swingasteroid" + id))
 {
+   position_ = planet->center() + glm::vec3(4.0f, -planet->radius() - .2, 0.0f);
    mesh_->set_visible(true);
    UpdateMeshPosition();
 }
@@ -21,15 +22,19 @@ SwingAsteroid::~SwingAsteroid() {
 }
 
 bool SwingAsteroid::Update() {
-   radius_ -= 0.17f;
-   if (radius_ <= planet_->radius() - 0.15f)
-      return false;
+   if (planetary_motion_) {
+      theta_ -= 10.0f;
+      position_ = planet_->center() +
+         glm::vec3(std::cos(radians(theta_)), std::sin(radians(theta_)), 0.0f) * (planet_->radius()+0.2f);
+   } else {
+      position_ -= glm::vec3(0.2f, 0.0f, 0.0f);
+      planetary_motion_ = position_.x < planet_->center().x;
+   }
    UpdateMeshPosition();
    return true;
 }
 
 void SwingAsteroid::UpdateMeshPosition() {
-   mesh_->set_transformation(glm::translate(planet_->center() +
-      glm::vec3(glm::cos(radians(theta_)), glm::sin(radians(theta_)), 0.0f)*radius_));
-   mesh_->apply_transformation(glm::scale(0.3f, 0.3f, 0.3f));
+   mesh_->set_transformation(glm::translate(position_));
+   mesh_->apply_transformation(glm::scale(0.2f, 0.2f, 0.2f));
 }

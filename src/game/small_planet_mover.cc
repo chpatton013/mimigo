@@ -127,7 +127,8 @@ void SmallPlanetMover::set_planet(Planet* planet) {
    is_falling_ = true;
    RotateBottomTowardPlanet();
    FallToPlanet();
-   observer_->OnPlayerSwitchPlanets(planet);
+   if (observer_)
+      observer_->OnPlayerSwitchPlanets(planet);
 }
 
 inline
@@ -199,7 +200,8 @@ void SmallPlanetMover::Update() {
    RotateBottomTowardPlanet();
 
    UpdateMeshTransform();
-   observer_->OnPlayerMove(position(), glm::vec3(), glm::vec3());
+   if (observer_)
+      observer_->OnPlayerMove(position(), glm::vec3(), glm::vec3());
 }
 
 void SmallPlanetMover::StopMoving() {

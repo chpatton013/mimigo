@@ -47,6 +47,8 @@ class Universe : public Game,
    void PlayerEntersGravityFieldOf(Planet* planet);
    bool PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet);
    void SwitchToLargePlanetGamePlay();
+   template <class T>
+   void UpdateAsteroids(std::vector<T>& asteroids);
 
    bool is_small_planet_gameplay() const
     { return game_play_type_ == GAME_PLAY_SMALL; }

@@ -101,18 +101,23 @@ void Universe::CheckPlayerChangesGravityFields() {
    }
 }
 
+template <class T>
+void Universe::UpdateAsteroids(std::vector<T>& asteroids) {
+   std::vector<T> to_remove;
+   for (typename std::vector<T>::iterator it = asteroids.begin(); it != asteroids.end(); ++it)
+      if (!(*it)->Update())
+         to_remove.push_back(*it);
+   for (typename std::vector<T>::iterator it = to_remove.begin(); it != to_remove.end(); ++it)
+      delete *it;
+   stl_util::RemoveAllOf(asteroids, to_remove);
+}
+
 void Universe::Update() {
    camera_->Update();
    player_->Update();
 
-   std::vector<Asteroid*> to_remove;
-   for (std::vector<Asteroid*>::iterator it = asteroids_.begin(); it != asteroids_.end(); ++it)
-      if (!(*it)->Update())
-         to_remove.push_back(*it);
-   for (std::vector<Asteroid*>::iterator it = to_remove.begin(); it != to_remove.end(); ++it) {
-      delete *it;
-   }
-   stl_util::RemoveAllOf(asteroids_, to_remove);
+   UpdateAsteroids(asteroids_);
+   UpdateAsteroids(swing_asteroids_);
 
    CheckPlayerChangesGravityFields();
 }

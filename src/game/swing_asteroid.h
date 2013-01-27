@@ -2,6 +2,8 @@
 #define SWING_ASTEROID_H_
 
 #include <string>
+#include <glm/glm.hpp>
+#include "small_planet_mover.h"
 
 class Planet;
 class SceneNode;
@@ -17,9 +19,10 @@ class SwingAsteroid {
 
    SceneNode *mesh_;
 
+   bool planetary_motion_;
    Planet* planet_;
+   glm::vec3 position_;
    float theta_;
-   float radius_;
 };
 
 #endif
