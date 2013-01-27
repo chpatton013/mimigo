@@ -12,7 +12,7 @@
 class SceneNode {
   public:
    SceneNode(const std::string& id) :
-      visible_(false),
+      visible_(true),
       parent_(NULL),
       id_(id)
    {

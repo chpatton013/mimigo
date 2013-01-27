@@ -2,6 +2,7 @@
 #define _UNIVERSE_H_
 
 #include "../core/game.h"
+#include "../core/timer.h"
 #include "planet.h"
 
 class Asteroid;
@@ -10,7 +11,8 @@ class Camera;
 class Player;
 
 enum GamePlayType { GAME_PLAY_SMALL, GAME_PLAY_LARGE };
-class Universe : public Game {
+class Universe : public Game,
+                 public Timer::Delegate {
   public:
    Universe();
 
@@ -36,6 +38,8 @@ class Universe : public Game {
    virtual void OnCameraUpDown();
    virtual void OnCameraDownDown();
    // Input handling //
+
+   virtual void OnExpiration(const std::string& event_name);
 
   private:
    void LoadInPlanets();

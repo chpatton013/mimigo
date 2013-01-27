@@ -1,4 +1,5 @@
 #include "universe.h"
+#include "sdl/sdl_event_loop.h"
 #include "asteroid.h"
 #include "player.h"
 #include "scene_hierarchy/root_node.h"
@@ -49,8 +50,20 @@ Universe::Universe() :
    camera_ = new SmallPlanetCamera();
    LoadInPlanets();
    player_ = new Player(planets_[0], camera_);
-   asteroids_.push_back(new Asteroid(planets_[0], 0.0f, "1"));
+   EventLoop::Instance()->StartNewTimer(this, "1", 0.5f);
+   EventLoop::Instance()->StartNewTimer(this, "2", 0.7f);
+   EventLoop::Instance()->StartNewTimer(this, "3", 0.9f);
+   EventLoop::Instance()->StartNewTimer(this, "4", 1.1f);
+   EventLoop::Instance()->StartNewTimer(this, "5", 1.3f);
+   EventLoop::Instance()->StartNewTimer(this, "6", 1.5f);
+   EventLoop::Instance()->StartNewTimer(this, "7", 1.7f);
    PlayerEntersGravityFieldOf(planets_[0]);
+}
+
+static int asteroid_num = 0;
+
+void Universe::OnExpiration(const std::string& event_name) {
+   asteroids_.push_back(new Asteroid(planets_[0], 35.0f*asteroid_num++, event_name));
 }
 
 bool Universe::PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet) {
