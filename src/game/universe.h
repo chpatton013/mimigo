@@ -6,6 +6,7 @@
 #include "planet.h"
 
 class Asteroid;
+class SwingAsteroid;
 class RootNode;
 class Camera;
 class Player;
@@ -60,6 +61,7 @@ class Universe : public Game,
    GamePlayType game_play_type_;
    std::vector<Planet*> planets_;
    std::vector<Asteroid*> asteroids_;
+   std::vector<SwingAsteroid*> swing_asteroids_;
    Player* player_;
 };
 

@@ -1,6 +1,7 @@
 #include "universe.h"
 #include "sdl/sdl_event_loop.h"
 #include "asteroid.h"
+#include "swing_asteroid.h"
 #include "player.h"
 #include "scene_hierarchy/root_node.h"
 #include "small_planet_camera.h"
@@ -63,6 +64,9 @@ Universe::Universe() :
 static int asteroid_num = 0;
 
 void Universe::OnExpiration(const std::string& event_name) {
+   if (event_name == "1") {
+      swing_asteroids_.push_back(new SwingAsteroid(planets_[0], 270.0f, "1"));
+   }
    asteroids_.push_back(new Asteroid(planets_[0], 35.0f*asteroid_num++, event_name));
 }
 

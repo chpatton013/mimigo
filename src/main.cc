@@ -90,6 +90,8 @@ void LoadResources() {
    SceneNode::Get("asteroid6")->set_visible(false);
    RootNode::Instance()->AddChild(new EntityComponentNode("asteroid7", sphere));
    SceneNode::Get("asteroid7")->set_visible(false);
+   RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid1", sphere));
+   SceneNode::Get("swingasteroid1")->set_visible(false);
 }
 
 void StartMainLoop(Universe* universe) {
