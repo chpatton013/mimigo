@@ -68,30 +68,7 @@ void LoadResources() {
    EntityComponentNode* mesh = new EntityComponentNode("bunny", go_gopher);
    mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.2f)));
 
-   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj");
-
    RootNode::Instance()->AddChild(mesh);
-   RootNode::Instance()->AddChild(new EntityComponentNode("planet1", sphere));
-   RootNode::Instance()->AddChild(new EntityComponentNode("planet2", sphere));
-   RootNode::Instance()->AddChild(new EntityComponentNode("planet3", sphere));
-   RootNode::Instance()->AddChild(new EntityComponentNode("planet4", sphere));
-   RootNode::Instance()->AddChild(new EntityComponentNode("planet5", sphere));
-   RootNode::Instance()->AddChild(new EntityComponentNode("asteroid1", sphere));
-   SceneNode::Get("asteroid1")->set_visible(false);
-   RootNode::Instance()->AddChild(new EntityComponentNode("asteroid2", sphere));
-   SceneNode::Get("asteroid2")->set_visible(false);
-   RootNode::Instance()->AddChild(new EntityComponentNode("asteroid3", sphere));
-   SceneNode::Get("asteroid3")->set_visible(false);
-   RootNode::Instance()->AddChild(new EntityComponentNode("asteroid4", sphere));
-   SceneNode::Get("asteroid4")->set_visible(false);
-   RootNode::Instance()->AddChild(new EntityComponentNode("asteroid5", sphere));
-   SceneNode::Get("asteroid5")->set_visible(false);
-   RootNode::Instance()->AddChild(new EntityComponentNode("asteroid6", sphere));
-   SceneNode::Get("asteroid6")->set_visible(false);
-   RootNode::Instance()->AddChild(new EntityComponentNode("asteroid7", sphere));
-   SceneNode::Get("asteroid7")->set_visible(false);
-   RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid1", sphere));
-   SceneNode::Get("swingasteroid1")->set_visible(false);
 }
 
 void StartMainLoop(Universe* universe) {

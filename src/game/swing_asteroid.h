@@ -10,7 +10,7 @@ class SceneNode;
 
 class SwingAsteroid {
   public:
-   SwingAsteroid(Planet *planet, float theta, const std::string& id);
+   SwingAsteroid(Planet *planet, float theta, const std::string& id, bool cw);
    ~SwingAsteroid();
    bool Update();
 
@@ -23,6 +23,7 @@ class SwingAsteroid {
    Planet* planet_;
    glm::vec3 position_;
    float theta_;
+   bool cw_;
 };
 
 #endif

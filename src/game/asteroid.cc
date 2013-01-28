@@ -21,7 +21,7 @@ Asteroid::~Asteroid() {
 }
 
 bool Asteroid::Update() {
-   radius_ -= 0.17f;
+   radius_ -= 0.2f;
    if (radius_ <= planet_->radius() - 0.15f)
       return false;
    UpdateMeshPosition();

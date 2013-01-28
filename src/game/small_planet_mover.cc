@@ -120,7 +120,7 @@ void SmallPlanetMover::set_planet(Planet* planet) {
    if (planet_)
       theta_ = angle_of(position() - planet->center());
    else
-      theta_ = 0.0f;
+      theta_ = 30.0f;
    planet_ = planet;
    is_jumping_ = false;
    jump_speed_ = 0.0f;

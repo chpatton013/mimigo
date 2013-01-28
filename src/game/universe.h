@@ -44,6 +44,7 @@ class Universe : public Game,
 
   private:
    void LoadInPlanets();
+   void ParseAsteroidFile();
    void PlayerEntersGravityFieldOf(Planet* planet);
    bool PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet);
    void SwitchToLargePlanetGamePlay();

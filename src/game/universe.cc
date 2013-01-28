@@ -4,19 +4,57 @@
 #include "swing_asteroid.h"
 #include "player.h"
 #include "scene_hierarchy/root_node.h"
+#include "scene_hierarchy/entity_component_node.h"
 #include "small_planet_camera.h"
 #include "large_planet_camera.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
+void Universe::ParseAsteroidFile() {
+   std::ifstream in("asteroids.lvl");
+   bool swing_asteroid = false;
+
+   std::string line;
+   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj");
+   while (getline(in, line)) {
+      std::istringstream stream(line);
+      if (line.empty() || line[0] == '#') {
+      }
+      else if (line[0] == 'A') {
+         swing_asteroid = false;
+      }
+      else if (line[0] == 'S') {
+         swing_asteroid = true;
+      }
+      else {
+         std::string id;
+         int planet_id;
+         float theta, delay, angle;
+         stream >> id;
+         stream >> delay;
+         stream >> planet_id;
+         --planet_id;
+         stream >> angle;
+         if (!swing_asteroid) {
+            RootNode::Instance()->AddChild(new EntityComponentNode("asteroid" + id, sphere));
+            SceneNode::Get("asteroid" + id)->set_visible(false);
+            EventLoop::Instance()->StartNewTimer(this, id, delay);
+         } else {
+            RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid" + id, sphere));
+            SceneNode::Get("swingasteroid" + id)->set_visible(false);
+         }
+      }
+   }
+}
+
 void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets) {
-   std::ifstream in;
-   in.open(filename.c_str());
+   std::ifstream in(filename.c_str());
 
    PlanetType planet_type = PLANET_TYPE_SMALL;
 
    std::string line;
+   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj");
    while (getline(in, line)) {
       std::istringstream stream(line);
       if (line.empty() || line[0] == '#') {
@@ -37,6 +75,7 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
          stream >> position.z;
          stream >> radius;
          stream >> gravity_radius;
+         RootNode::Instance()->AddChild(new EntityComponentNode("planet" + id, sphere));
          planets->push_back(new Planet(planet_type, id, position, radius, gravity_radius));
       }
    }
@@ -51,14 +90,8 @@ Universe::Universe() :
 {
    camera_ = new SmallPlanetCamera();
    LoadInPlanets();
+   ParseAsteroidFile();
    player_ = new Player(planets_[0], camera_);
-   EventLoop::Instance()->StartNewTimer(this, "1", 0.5f);
-   EventLoop::Instance()->StartNewTimer(this, "2", 0.7f);
-   EventLoop::Instance()->StartNewTimer(this, "3", 0.9f);
-   EventLoop::Instance()->StartNewTimer(this, "4", 1.1f);
-   EventLoop::Instance()->StartNewTimer(this, "5", 1.3f);
-   EventLoop::Instance()->StartNewTimer(this, "6", 1.5f);
-   EventLoop::Instance()->StartNewTimer(this, "7", 1.7f);
    PlayerEntersGravityFieldOf(planets_[0]);
 }
 
@@ -66,7 +99,9 @@ static int asteroid_num = 0;
 
 void Universe::OnExpiration(const std::string& event_name) {
    if (event_name == "1") {
-      swing_asteroids_.push_back(new SwingAsteroid(planets_[0], 270.0f, "1"));
+      swing_asteroids_.push_back(new SwingAsteroid(planets_[1], 270.0f, "1", false));
+   } else if (event_name == "2") {
+      swing_asteroids_.push_back(new SwingAsteroid(planets_[2], 90.0f, "2", true));
    }
    asteroids_.push_back(new Asteroid(planets_[0], 35.0f*asteroid_num++, event_name));
 }
