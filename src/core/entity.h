@@ -31,7 +31,7 @@ class Entity : public EntityComponent {
    void set_texture(const std::string& texture) { texture_ = texture; }
    std::string texture() const { return texture_; }
 
-   void move_model(const glm::vec3& relative, float time=0.0) {
+   void move_model(const glm::vec3& relative) {
       for (size_t i = 0; i < meshes_.size(); ++i)
          meshes_[i]->move(relative);
    }

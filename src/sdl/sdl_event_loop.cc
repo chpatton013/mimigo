@@ -54,12 +54,12 @@ void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
             }
          }
 
-         std::vector<int> expired_timers;
-         for (int i = 0; i < timers_.size(); ++i)
+         std::vector<unsigned int> expired_timers;
+         for (unsigned int i = 0; i < timers_.size(); ++i)
             if (timers_[i].Update())
                expired_timers.push_back(i);
 
-         for (int i = 0; i < expired_timers.size(); ++i)
+         for (unsigned int i = 0; i < expired_timers.size(); ++i)
             ExpireTimer(i);
 
          last_update_time = SDL_GetTicks();

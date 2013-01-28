@@ -17,13 +17,13 @@ class SwingAsteroid {
   private:
    void UpdateMeshPosition();
 
-   SceneNode *mesh_;
-
    bool planetary_motion_;
    Planet* planet_;
    glm::vec3 position_;
    float theta_;
    bool cw_;
+
+   SceneNode *mesh_;
 };
 
 #endif
