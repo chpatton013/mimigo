@@ -30,7 +30,6 @@ void LargePlanetMover::Jump() {
 
    is_jumping_ = true;
    jump_speed_ = kJumpSpeed;
-   std::cout << "start jumping" << std::endl;
 }
 
 inline
@@ -70,7 +69,6 @@ void LargePlanetMover::Update() {
       if (current_radius(position_, planet_->center()) <= planet_->radius()+0.15f) {
          jump_speed_ = 0.0f;
          is_jumping_ = false;
-         std::cout << (current_radius(position_, planet_->center()) - planet_->radius()+0.15f) << std::endl;
          position_ += up() * (current_radius(position_, planet_->center()) - (planet_->radius()+0.15f));
       }
    }
