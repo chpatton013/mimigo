@@ -7,8 +7,8 @@ float radians(float degrees) {
 }
 
 Asteroid::Asteroid(Planet *planet, float theta, const std::string& id) :
-   theta_(theta),
    planet_(planet),
+   theta_(theta),
    radius_(planet->radius() * 5.0f),
    mesh_(SceneNode::Get("asteroid" + id))
 {

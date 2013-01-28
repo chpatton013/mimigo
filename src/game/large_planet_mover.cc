@@ -15,12 +15,12 @@ LargePlanetMover::LargePlanetMover(Planet* planet) :
    planet_(planet),
    angle_speed_(0.0f),
    rotate_speed_(0.0f),
-   jump_speed_(0.0f),
-   is_jumping_(false),
-   move_backward_(false),
    move_forward_(false),
+   move_backward_(false),
    turn_left_(false),
-   turn_right_(false)
+   turn_right_(false),
+   jump_speed_(0.0f),
+   is_jumping_(false)
 {}
 
 void LargePlanetMover::Jump() {

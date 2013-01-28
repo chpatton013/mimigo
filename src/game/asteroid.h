@@ -15,11 +15,11 @@ class Asteroid {
   private:
    void UpdateMeshPosition();
 
-   SceneNode *mesh_;
-
    Planet* planet_;
    float theta_;
    float radius_;
+
+   SceneNode *mesh_;
 };
 
 #endif
