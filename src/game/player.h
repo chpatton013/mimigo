@@ -45,6 +45,10 @@ class Player {
    void Jump();
    void ReleaseJump();
 
+   void set_large_planet_observer(PlayerObserver* observer) {
+      large_planet_mover_.set_observer(observer);
+   }
+
    void Update();
    bool is_jumping() const { return small_planet_mover_.is_jumping(); }
    const glm::vec3 position() const {

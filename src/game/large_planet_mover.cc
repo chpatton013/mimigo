@@ -1,9 +1,10 @@
 #include "large_planet_mover.h"
+#include "player.h"
 #include "util/glm_util.h"
 
-static float kJumpSlowdownHeld = 0.04f;
-static float kJumpSlowdown = 0.08f;
-static float kJumpSpeed = 0.7f;
+static float kJumpSlowdownHeld = 0.01f;
+static float kJumpSlowdown = 0.017f;
+static float kJumpSpeed = 0.2f;
 
 static float kAngleDelta = 0.5f;
 static float kAngleAcceleration = 0.1f;
@@ -61,21 +62,25 @@ void LargePlanetMover::Update() {
 
    local_rotation_ = glm::rotate(local_rotation_, rotate_speed_, up());
    local_rotation_ = glm::rotate(local_rotation_, angle_speed_, right());
-   position_ += forward() * (planet_->radius() * std::sin(radians(angle_speed_)) / std::sin(radians(90 - angle_speed_ / 2)));
+   position_ += forward() * ((planet_->radius()+0.15f) * std::sin(radians(angle_speed_)) / std::sin(radians(90 - angle_speed_ / 2)));
 
    if (is_jumping_) {
       position_ -= up() * jump_speed_;
       jump_speed_ -= kJumpSlowdown;
-      if (current_radius(position_, planet_->center()) < planet_->radius()) {
+      if (current_radius(position_, planet_->center()) <= planet_->radius()+0.15f) {
          jump_speed_ = 0.0f;
          is_jumping_ = false;
+         std::cout << (current_radius(position_, planet_->center()) - planet_->radius()+0.15f) << std::endl;
+         position_ += up() * (current_radius(position_, planet_->center()) - (planet_->radius()+0.15f));
       }
    }
+   if (observer_)
+      observer_->OnPlayerMove(position_, -up(), forward());
 }
 
 void LargePlanetMover::set_planet(Planet* planet) {
    planet_ = planet;
-   position_ = planet_->center() + glm::vec3(0.0f, -planet_->radius(), 0.0f);
+   position_ = planet_->center() + glm::vec3(0.0f, -planet_->radius()-0.15f, 0.0f);
    transform_ = glm::rotate(transform_, 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
    transform_ = glm::rotate(transform_, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 }

@@ -5,6 +5,7 @@
 #include "player.h"
 #include "scene_hierarchy/root_node.h"
 #include "small_planet_camera.h"
+#include "large_planet_camera.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -75,6 +76,9 @@ bool Universe::PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet) {
 }
 
 void Universe::UseLargePlanetCamera() {
+   delete camera_;
+   camera_ = new LargePlanetCamera();
+   player_->set_large_planet_observer(camera_);
 }
 
 void Universe::SwitchToLargePlanetGamePlay() {
