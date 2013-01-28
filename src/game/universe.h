@@ -2,16 +2,20 @@
 #define _UNIVERSE_H_
 
 #include "../core/game.h"
+#include "../core/timer.h"
 #include "planet.h"
 
+class Asteroid;
+class SwingAsteroid;
 class RootNode;
 class Camera;
 class Player;
 
 enum GamePlayType { GAME_PLAY_SMALL, GAME_PLAY_LARGE };
-class Universe : public Game {
+class Universe : public Game,
+                 public Timer::Delegate {
   public:
-   Universe(Camera* camera);
+   Universe();
 
    virtual void Update();
    virtual void Draw();
@@ -36,11 +40,16 @@ class Universe : public Game {
    virtual void OnCameraDownDown();
    // Input handling //
 
+   virtual void OnExpiration(const std::string& event_name);
+
   private:
    void LoadInPlanets();
+   void ParseAsteroidFile();
    void PlayerEntersGravityFieldOf(Planet* planet);
    bool PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet);
    void SwitchToLargePlanetGamePlay();
+   template <class T>
+   void UpdateAsteroids(std::vector<T>& asteroids);
 
    bool is_small_planet_gameplay() const
     { return game_play_type_ == GAME_PLAY_SMALL; }
@@ -54,6 +63,8 @@ class Universe : public Game {
    Camera* camera_;
    GamePlayType game_play_type_;
    std::vector<Planet*> planets_;
+   std::vector<Asteroid*> asteroids_;
+   std::vector<SwingAsteroid*> swing_asteroids_;
    Player* player_;
 };
 

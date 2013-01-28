@@ -1,7 +1,7 @@
 #include "player.h"
 
-Player::Player(Planet* planet) :
-   small_planet_mover_(NULL),
+Player::Player(Planet* planet, PlayerObserver* observer) :
+   small_planet_mover_(NULL, observer),
    large_planet_mover_(NULL)
 {
    new SceneNode("player");

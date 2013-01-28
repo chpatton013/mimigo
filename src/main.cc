@@ -68,14 +68,7 @@ void LoadResources() {
    EntityComponentNode* mesh = new EntityComponentNode("bunny", go_gopher);
    mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.2f)));
 
-   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/go_gopher.obj");
-
    RootNode::Instance()->AddChild(mesh);
-   RootNode::Instance()->AddChild(new EntityComponentNode("planet1", sphere));
-   RootNode::Instance()->AddChild(new EntityComponentNode("planet2", sphere));
-   RootNode::Instance()->AddChild(new EntityComponentNode("planet3", sphere));
-   RootNode::Instance()->AddChild(new EntityComponentNode("planet4", sphere));
-   RootNode::Instance()->AddChild(new EntityComponentNode("planet5", sphere));
 }
 
 void StartMainLoop(Universe* universe) {
@@ -85,12 +78,10 @@ void StartMainLoop(Universe* universe) {
 }
 
 int main(int , char** ) {
-   Camera* camera = new Camera();
-
    Initialize();
    LoadResources();
 
-   Universe* universe = new Universe(camera);
+   Universe* universe = new Universe();
    StartMainLoop(universe);
 
    return 0;

@@ -16,6 +16,15 @@ inline unsigned int milli(double seconds) {
    return seconds * 1000.0;
 }
 
+void SDLTimer::Start(double seconds) {
+   seconds_ = seconds;
+   start_tick_ = SDL_GetTicks();
+}
+
+bool SDLTimer::Update() {
+   return SDL_GetTicks() - start_tick_ > milli(seconds_);
+}
+
 void SDLEventLoop::Quit() { exit(0); }
 
 void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
@@ -44,10 +53,31 @@ void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
                   break;
             }
          }
+
+         std::vector<unsigned int> expired_timers;
+         for (unsigned int i = 0; i < timers_.size(); ++i)
+            if (timers_[i].Update())
+               expired_timers.push_back(i);
+
+         for (unsigned int i = 0; i < expired_timers.size(); ++i)
+            ExpireTimer(i);
+
          last_update_time = SDL_GetTicks();
          graphics_->Draw();
       }
    }
+}
+
+void SDLEventLoop::StartNewTimer(Timer::Delegate* delegate,
+                                 const std::string& event_name,
+                                 double seconds) {
+   timers_.push_back(SDLTimer(delegate, event_name));
+   timers_.back().Start(seconds);
+}
+
+void SDLEventLoop::ExpireTimer(int index) {
+   timers_[index].OnExpiration();
+   timers_.erase(timers_.begin() + index);
 }
 
 void SDLEventLoop::OnKeyUp(SDL_Event &event) {

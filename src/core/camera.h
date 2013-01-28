@@ -13,38 +13,21 @@
 class Camera : public PlayerObserver {
   public:
    Camera() :
-      large_planet_mode_(false),
-      rotate_(0.0f),
       camera_up_(0.0f, 1.0f, 0.0f),
       camera_pos_(0.0f, 0.0f, 2.5f)
    {
    }
 
    void SetView();
-   void DebugPrint();
 
    virtual void OnPlayerMove(const glm::vec3& position, const glm::vec3& up,
                              const glm::vec3& facing);
 
-   void move(const glm::vec3& p) {
-      camera_pos_ += p;
-      camera_focus_ += p;
-   }
-
    glm::vec3 position() const { return camera_pos_; }
 
-   void stop_rotate() { rotate_ = 0.0f; }
-   void rotate_left() { rotate_ = 1.0f; }
-   void rotate_right() { rotate_ = -1.0f; }
-   void TransitionToLargePlanetMode();
+   virtual void Update();
 
-   void Update(const glm::vec3& position, const glm::mat4& local_axes);
-
-  private:
-   bool large_planet_mode_;
-
-   float rotate_;
-
+  protected:
    glm::vec3 camera_up_;
    glm::vec3 camera_pos_;
    glm::vec3 camera_focus_;

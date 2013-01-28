@@ -4,13 +4,13 @@
 #include <glm/glm.hpp>
 #include "core/rotation.h"
 #include "planet.h"
-#include "planet_rotater.h"
 #include "core/timer.h"
 
-enum Dir { UP=1, DOWN=1<<1, LEFT=1<<2, RIGHT=1<<3 };
+class PlayerObserver;
+
 class SmallPlanetMover : public Timer::Delegate {
   public:
-   SmallPlanetMover(Planet* planet);
+   SmallPlanetMover(Planet* planet, PlayerObserver* observer);
 
    void StopMoving();
    void Jump();
@@ -32,15 +32,21 @@ class SmallPlanetMover : public Timer::Delegate {
 
    bool is_attached_to(Planet* planet) const { return planet_ == planet; }
    bool is_jumping() const { return is_jumping_; }
-   bool is_moving() const { return move_dir_ != 0; }
 
    const glm::vec3 position() const;
 
    virtual void OnExpiration(const std::string& event);
 
   private:
+   enum MoveType { CW, CCW, NONE };
+   MoveType move_dir_;
    void RotateBottomTowardPlanet();
    void UpdateMeshTransform() const;
+   bool should_move_clockwise() const;
+   bool should_move_counterclockwise() const;
+   float max_theta_speed() const;
+   void DetermineMovement();
+   void set_theta(float theta);
 
    Planet* planet_;
    Rotation xy_rotation_;
@@ -50,11 +56,12 @@ class SmallPlanetMover : public Timer::Delegate {
    float jump_speed_;
    float theta_;
    float theta_speed_;
-   unsigned short move_dir_;
 
    bool is_jumping_;
    bool is_falling_;
    bool jump_held_;
+
+   PlayerObserver* observer_;
 };
 
 #endif

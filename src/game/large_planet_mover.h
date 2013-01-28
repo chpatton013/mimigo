@@ -4,7 +4,8 @@
 #include <glm/glm.hpp>
 #include "core/rotation.h"
 #include "planet.h"
-#include "planet_rotater.h"
+
+class PlayerObserver;
 
 class LargePlanetMover {
   public:
@@ -33,6 +34,8 @@ class LargePlanetMover {
 
    glm::mat4 local_rotation() const { return local_rotation_; }
 
+   void set_observer(PlayerObserver* observer) { observer_ = observer; }
+
   private:
    void UpdateMeshTransform() const;
    void RotateBottomTowardPlanet();
@@ -53,6 +56,7 @@ class LargePlanetMover {
    float jump_speed_;
    bool is_jumping_;
    bool jump_held_;
+   PlayerObserver* observer_;
 };
 
 #endif

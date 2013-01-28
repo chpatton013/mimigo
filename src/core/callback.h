@@ -3,6 +3,10 @@
 
 class Callback {
   public:
+   Callback() :
+      func_(NULL),
+      caller_(NULL)
+   {}
    Callback(void (*func)(void *), void *caller) :
       func_(func),
       caller_(caller)

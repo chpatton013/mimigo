@@ -8,9 +8,11 @@ std::map<std::string, SceneNode*> SceneNode::node_map_;
 void SceneNode::Draw(MatrixStack* transform) {
    transform->push();
    transform->multiply(transform_);
-   for (std::set<SceneNode*>::iterator it = children_.begin();
-         it != children_.end(); ++it) {
-      (*it)->Draw(transform);
+   if (visible_) {
+      for (std::set<SceneNode*>::iterator it = children_.begin();
+            it != children_.end(); ++it) {
+         (*it)->Draw(transform);
+      }
    }
    transform->pop();
 }
