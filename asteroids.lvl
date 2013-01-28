@@ -1,0 +1,23 @@
+ASTEROIDS
+#id delay planet_id angle
+1    0.5f  1  0.0f
+
+2    0.7f  1  35.0f
+
+3    0.9f  1  70.0f
+
+4    1.1f  1  105.0f
+
+5    1.3f  1  140.0f
+
+6    1.5f  1  175.0f
+
+7    1.7f  1  210.0f
+
+8    1.9f  1  245.0f
+
+SWING ASTEROIDS
+#id delay planet_id angle
+1    0.5f  2  270.0f
+
+2    0.7f  3  90.0f
