@@ -11,6 +11,13 @@
 #include <fstream>
 #include <sstream>
 
+std::string asteroid_event_name(const std::string &id, int planet_id, float angle) {
+   std::string event_name;
+   std::ostringstream stream(event_name);
+   stream << id << " " << planet_id << " " << angle;
+   return stream.str();
+}
+
 void Universe::ParseAsteroidFile() {
    std::ifstream in("asteroids.lvl");
    bool swing_asteroid = false;
@@ -39,10 +46,11 @@ void Universe::ParseAsteroidFile() {
          if (!swing_asteroid) {
             RootNode::Instance()->AddChild(new EntityComponentNode("asteroid" + id, sphere));
             SceneNode::Get("asteroid" + id)->set_visible(false);
-            EventLoop::Instance()->StartNewTimer(this, id, delay);
+            EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("asteroid" + id, planet_id, angle), delay);
          } else {
             RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid" + id, sphere));
             SceneNode::Get("swingasteroid" + id)->set_visible(false);
+            EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("swingasteroid" + id, planet_id, angle), delay);
          }
       }
    }
@@ -95,15 +103,29 @@ Universe::Universe() :
    PlayerEntersGravityFieldOf(planets_[0]);
 }
 
-static int asteroid_num = 0;
-
 void Universe::OnExpiration(const std::string& event_name) {
-   if (event_name == "1") {
-      swing_asteroids_.push_back(new SwingAsteroid(planets_[1], 270.0f, "1", false));
-   } else if (event_name == "2") {
-      swing_asteroids_.push_back(new SwingAsteroid(planets_[2], 90.0f, "2", true));
+   if (event_name.find("asteroid") == 0) {
+      std::istringstream stream(event_name);
+      std::string id;
+      float angle;
+      int planet_id;
+      stream >> id;
+      stream >> planet_id;
+      stream >> angle;
+      asteroids_.push_back(new Asteroid(planets_[planet_id], angle, id));
+   } else if (event_name.find("swingasteroid") == 0) {
+      std::istringstream stream(event_name);
+      std::string id;
+      float angle;
+      int planet_id;
+      int clockwise = 0;
+      stream >> id;
+      stream >> planet_id;
+      stream >> angle;
+      stream >> clockwise;
+      std::cout << clockwise << std::endl;
+      swing_asteroids_.push_back(new SwingAsteroid(planets_[planet_id], angle, id, clockwise != 0));
    }
-   asteroids_.push_back(new Asteroid(planets_[0], 35.0f*asteroid_num++, event_name));
 }
 
 bool Universe::PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet) {
