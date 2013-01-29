@@ -38,8 +38,6 @@ float current_radius(const glm::vec3& position, const glm::vec3& center) {
 }
 
 void LargePlanetMover::Update() {
-   UpdateMeshTransform();
-
    if (move_forward_)
       angle_speed_ = std::min(kAngleDelta, angle_speed_ + kAngleAcceleration);
    else if (move_backward_)
@@ -74,6 +72,7 @@ void LargePlanetMover::Update() {
    }
    if (observer_)
       observer_->OnPlayerMove(position_, -up(), forward());
+   UpdateMeshTransform();
 }
 
 void LargePlanetMover::set_planet(Planet* planet) {
@@ -111,6 +110,7 @@ const glm::vec3 LargePlanetMover::up() const {
 void LargePlanetMover::UpdateMeshTransform() const {
    glm::mat4 transform = glm::translate(position());
    transform *= transform_;
+   transform = glm::rotate(transform, 90.0f, -up());
    SceneNode::Get("player")->set_transformation(transform);
 }
 

@@ -11,7 +11,7 @@ SwingAsteroid::SwingAsteroid(Planet *planet, float theta, const std::string& id,
    planet_(planet),
    theta_(theta),
    cw_(cw),
-   mesh_(SceneNode::Get("swingasteroid" + id))
+   mesh_(SceneNode::Get(id))
 {
    if (theta_ == 270.0f)
       position_ = planet->center() + glm::vec3(4.0f, -planet->radius() - .2, 0.0f);

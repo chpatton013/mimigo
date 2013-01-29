@@ -32,7 +32,7 @@ class SDLEventLoop : public EventLoop {
    virtual void StartNewTimer(Timer::Delegate* delegate,
                               const std::string& event_name,
                               double seconds);
-   void ExpireTimer(int index);
+   void ExpireTimer(int index) {}
 
   private:
    void OnKeyDown(SDL_Event &e);
@@ -40,7 +40,7 @@ class SDLEventLoop : public EventLoop {
 
    SDLGraphicsAdapter* graphics_;
    Game* game_;
-   std::vector<SDLTimer> timers_;
+   std::vector<SDLTimer*> timers_;
 };
 
 #endif

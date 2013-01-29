@@ -56,6 +56,8 @@ class Player {
              small_planet_mover_.position() :
              large_planet_mover_.position();
    }
+   const glm::vec3 up() const { return large_planet_mover_.up(); }
+   const glm::vec3 facing() const { return large_planet_mover_.forward(); }
 
    glm::mat4 local_rotation() const {
       return large_planet_mover_.local_rotation();
@@ -67,9 +69,16 @@ class Player {
              large_planet_mover_.is_attached_to(planet);
    }
 
+   void UpdateTransition();
+   void UpdateMeshPosition();
+
    SmallPlanetMover small_planet_mover_;
    LargePlanetMover large_planet_mover_;
    GamePlayType game_play_type_;
+
+   glm::vec3 position_;
+   glm::vec3 velocity_;
+   int transition_frames_;
 };
 
 #endif
