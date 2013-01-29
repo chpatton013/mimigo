@@ -56,6 +56,8 @@ class Player {
              small_planet_mover_.position() :
              large_planet_mover_.position();
    }
+   const glm::vec3 up() const { return large_planet_mover_.up(); }
+   const glm::vec3 facing() const { return large_planet_mover_.forward(); }
 
    glm::mat4 local_rotation() const {
       return large_planet_mover_.local_rotation();

@@ -123,7 +123,6 @@ void Universe::OnExpiration(const std::string& event_name) {
       stream >> planet_id;
       stream >> angle;
       stream >> clockwise;
-      std::cout << clockwise << std::endl;
       swing_asteroids_.push_back(new SwingAsteroid(planets_[planet_id], angle, id, clockwise != 0));
    }
 }
@@ -133,7 +132,8 @@ bool Universe::PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet) {
 }
 
 void Universe::UseLargePlanetCamera() {
-   LargePlanetCamera* camera = new LargePlanetCamera(camera_->focus(), camera_->position());
+   LargePlanetCamera* camera = new LargePlanetCamera(camera_->focus(),
+         camera_->position(), player_->position(), player_->up(), player_->facing());
    delete camera_;
    camera_ = camera;
    player_->set_large_planet_observer(camera_);
