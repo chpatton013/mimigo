@@ -57,12 +57,12 @@ void LargePlanetMover::Update() {
       rotate_speed_ = 0.0f;
    }
 
-   local_rotation_ = glm::rotate(local_rotation_, rotate_speed_, up());
-   local_rotation_ = glm::rotate(local_rotation_, angle_speed_, right());
+   local_rotation_ = glm::rotate(local_rotation_, -rotate_speed_, up());
+   local_rotation_ = glm::rotate(local_rotation_, -angle_speed_, right());
    position_ += forward() * ((planet_->radius()+0.15f) * std::sin(radians(angle_speed_)) / std::sin(radians(90 - angle_speed_ / 2)));
 
    if (is_jumping_) {
-      position_ -= up() * jump_speed_;
+      position_ += up() * jump_speed_;
       jump_speed_ -= kJumpSlowdown;
       if (current_radius(position_, planet_->center()) <= planet_->radius()+0.15f) {
          jump_speed_ = 0.0f;
@@ -71,15 +71,14 @@ void LargePlanetMover::Update() {
       }
    }
    if (observer_)
-      observer_->OnPlayerMove(position_, -up(), forward());
+      observer_->OnPlayerMove(position_, up(), forward());
    UpdateMeshTransform();
 }
 
 void LargePlanetMover::set_planet(Planet* planet) {
    planet_ = planet;
    position_ = planet_->center() + glm::vec3(0.0f, -planet_->radius()-0.15f, 0.0f);
-   transform_ = glm::rotate(transform_, 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-   transform_ = glm::rotate(transform_, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+   local_rotation_ = glm::rotate(local_rotation_, 180.0f, forward());
 }
 
 void LargePlanetMover::MoveForward() { move_forward_ = true; }
@@ -95,22 +94,22 @@ const glm::vec3 LargePlanetMover::position() const {
    return position_;
 }
 
+// COLUMN-MAJOR Order, awesome
 const glm::vec3 LargePlanetMover::forward() const {
-   return glm::vec3(local_rotation_[0][2], local_rotation_[1][2], local_rotation_[2][2]);
+   return glm::vec3(local_rotation_[2][0], local_rotation_[2][1], local_rotation_[2][2]);
 }
 
 const glm::vec3 LargePlanetMover::right() const {
-   return glm::vec3(local_rotation_[0][0], local_rotation_[1][0], local_rotation_[2][0]);
+   return glm::vec3(local_rotation_[0][0], local_rotation_[0][1], local_rotation_[0][2]);
 }
 
 const glm::vec3 LargePlanetMover::up() const {
-   return glm::vec3(local_rotation_[0][1], local_rotation_[1][1], local_rotation_[2][1]);
+   return glm::vec3(local_rotation_[1][0], local_rotation_[1][1], local_rotation_[1][2]);
 }
 
 void LargePlanetMover::UpdateMeshTransform() const {
    glm::mat4 transform = glm::translate(position());
-   transform *= transform_;
-   transform = glm::rotate(transform, 90.0f, -up());
+   transform *= local_rotation_;
    SceneNode::Get("player")->set_transformation(transform);
 }
 

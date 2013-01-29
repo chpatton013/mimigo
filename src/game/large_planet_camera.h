@@ -17,6 +17,8 @@ class LargePlanetCamera : public Camera {
    virtual void Update();
 
   private:
+   void AnimateToNewCameraState(const glm::vec3& destination, const glm::vec3& destination_up,
+                                const glm::vec3& destination_facing, float time);
    std::vector<LinearValueAnimator*> animators_;
 };
 
