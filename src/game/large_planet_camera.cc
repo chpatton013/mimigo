@@ -1,8 +1,10 @@
 #include "large_planet_camera.h"
 
-LargePlanetCamera::LargePlanetCamera() :
+LargePlanetCamera::LargePlanetCamera(const glm::vec3& focus, const glm::vec3& position) :
    Camera()
 {
+   camera_focus_ = focus;
+   camera_pos_ = position;
 }
 
 void LargePlanetCamera::OnPlayerMove(const glm::vec3& position, const glm::vec3& up,

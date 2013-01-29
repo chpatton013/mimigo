@@ -133,14 +133,15 @@ bool Universe::PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet) {
 }
 
 void Universe::UseLargePlanetCamera() {
+   LargePlanetCamera* camera = new LargePlanetCamera(camera_->focus(), camera_->position());
    delete camera_;
-   camera_ = new LargePlanetCamera();
+   camera_ = camera;
    player_->set_large_planet_observer(camera_);
 }
 
 void Universe::SwitchToLargePlanetGamePlay() {
    UseLargePlanetCamera();
-   game_play_type_ = GAME_PLAY_LARGE;
+   game_play_type_ = GAME_PLAY_TRANSITION;
 }
 
 void Universe::PlayerEntersGravityFieldOf(Planet* planet) {

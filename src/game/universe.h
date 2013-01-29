@@ -11,7 +11,7 @@ class RootNode;
 class Camera;
 class Player;
 
-enum GamePlayType { GAME_PLAY_SMALL, GAME_PLAY_LARGE };
+enum GamePlayType { GAME_PLAY_SMALL, GAME_PLAY_LARGE, GAME_PLAY_TRANSITION };
 class Universe : public Game,
                  public Timer::Delegate {
   public:

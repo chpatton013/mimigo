@@ -5,7 +5,7 @@
 
 class LargePlanetCamera : public Camera {
   public:
-   LargePlanetCamera();
+   LargePlanetCamera(const glm::vec3& focus, const glm::vec3& position);
    virtual void OnPlayerMove(const glm::vec3& position, const glm::vec3& up,
                              const glm::vec3& facing);
    virtual void OnPlayerSwitchPlanets(Planet* planet) {}

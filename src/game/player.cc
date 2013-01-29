@@ -97,6 +97,22 @@ void Player::Update() {
       small_planet_mover_.Update();
    else if (game_play_type_ == GAME_PLAY_LARGE)
       large_planet_mover_.Update();
+   else if (game_play_type_ == GAME_PLAY_TRANSITION)
+      UpdateTransition();
+}
+
+void Player::UpdateTransition() {
+   if (--transition_frames_ > 0) {
+      position_ += velocity_;
+      game_play_type_ = GAME_PLAY_LARGE;
+   }
+   UpdateMeshPosition();
+}
+
+void Player::UpdateMeshPosition() {
+   glm::mat4 transform;
+   transform *= glm::translate(position_);
+   SceneNode::Get("player")->set_transformation(transform);
 }
 
 void Player::TransitionTo(Planet* planet) {
@@ -104,7 +120,10 @@ void Player::TransitionTo(Planet* planet) {
       small_planet_mover_.set_planet(planet);
       game_play_type_ = GAME_PLAY_SMALL;
    } else {
+      position_ = small_planet_mover_.position();
       large_planet_mover_.set_planet(planet);
-      game_play_type_ = GAME_PLAY_LARGE;
+      transition_frames_ = 5;
+      velocity_ = (large_planet_mover_.position() - position_) / float(transition_frames_);
+      game_play_type_ = GAME_PLAY_TRANSITION;
    }
 }

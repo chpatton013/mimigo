@@ -54,13 +54,16 @@ void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
             }
          }
 
-         std::vector<unsigned int> expired_timers;
+         std::vector<SDLTimer*> expired_timers;
          for (unsigned int i = 0; i < timers_.size(); ++i)
-            if (timers_[i].Update())
-               expired_timers.push_back(i);
+            if (timers_[i]->Update())
+               expired_timers.push_back(timers_[i]);
 
-         for (unsigned int i = 0; i < expired_timers.size(); ++i)
-            ExpireTimer(i);
+         for (unsigned int i = 0; i < expired_timers.size(); ++i) {
+            expired_timers[i]->OnExpiration();
+            timers_.erase(std::find(timers_.begin(), timers_.end(), expired_timers[i]));
+            delete expired_timers[i];
+         }
 
          last_update_time = SDL_GetTicks();
          graphics_->Draw();
@@ -71,13 +74,8 @@ void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
 void SDLEventLoop::StartNewTimer(Timer::Delegate* delegate,
                                  const std::string& event_name,
                                  double seconds) {
-   timers_.push_back(SDLTimer(delegate, event_name));
-   timers_.back().Start(seconds);
-}
-
-void SDLEventLoop::ExpireTimer(int index) {
-   timers_[index].OnExpiration();
-   timers_.erase(timers_.begin() + index);
+   timers_.push_back(new SDLTimer(delegate, event_name));
+   timers_.back()->Start(seconds);
 }
 
 void SDLEventLoop::OnKeyUp(SDL_Event &event) {
