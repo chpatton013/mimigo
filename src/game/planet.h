@@ -12,7 +12,8 @@ class Planet {
       planet_type_(planet_type),
       center_(center),
       radius_(radius),
-      gravity_radius_(gravity_radius)
+      gravity_radius_(gravity_radius),
+      id_(id)
    {
       Initialize(id);
    }
@@ -26,6 +27,7 @@ class Planet {
      { return planet_type_ == PLANET_TYPE_SMALL; }
    bool is_large_planet() const
      { return planet_type_ == PLANET_TYPE_LARGE; }
+   const std::string& id() const { return id_; }
 
   private:
    void Initialize(const std::string& id);
@@ -34,6 +36,7 @@ class Planet {
    glm::vec3 center_;
    float radius_;
    float gravity_radius_;
+   std::string id_;
 };
 
 #endif

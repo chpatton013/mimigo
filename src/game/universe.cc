@@ -131,6 +131,10 @@ bool Universe::PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet) {
    return planet->is_large_planet();
 }
 
+void Universe::OnEvent(const std::string& event) {
+   std::cout << "EVENT: " << event << std::endl;
+}
+
 void Universe::UseLargePlanetCamera() {
    LargePlanetCamera* camera = new LargePlanetCamera(camera_->focus(),
          camera_->position(), player_->position(), player_->up(), player_->facing());
@@ -145,6 +149,7 @@ void Universe::SwitchToLargePlanetGamePlay() {
 }
 
 void Universe::PlayerEntersGravityFieldOf(Planet* planet) {
+   EventLoop::Instance()->PostEvent("player transitions to " + planet->id());
    player_->TransitionTo(planet);
    if (PlayerTransitionsFromSmallPlanetToLargePlanet(planet)) {
       SwitchToLargePlanetGamePlay();

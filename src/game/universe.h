@@ -41,6 +41,7 @@ class Universe : public Game,
    // Input handling //
 
    virtual void OnExpiration(const std::string& event_name);
+   virtual void OnEvent(const std::string& event);
 
   private:
    void LoadInPlanets();
