@@ -16,7 +16,10 @@ void Print(const vec4& vec) {
 void Print(const mat4& mat) {
    for (size_t r = 0; r < 4; ++r) {
       for (size_t c = 0; c < 4; ++c) {
-         std::cout << mat[c][r] << ", ";
+         if (std::abs(mat[c][r]) < 1e-7)
+            std::cout << "0, ";
+         else
+            std::cout << mat[c][r] << ", ";
       }
       std::cout << std::endl;
    }
