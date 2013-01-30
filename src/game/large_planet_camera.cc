@@ -37,12 +37,13 @@ void LargePlanetCamera::AnimateToNewCameraState(const glm::vec3& destination, co
    animators_.push_back(new LinearValueAnimator(
             &camera_focus_.z, destination.z - camera_focus_.z, time, callback));
 
+   glm::vec3 up = destination_up / 3.0f;
    animators_.push_back(new LinearValueAnimator(
-            &camera_pos_.x, destination.x - camera_pos_.x - destination_facing.x, time, callback));
+            &camera_pos_.x, destination.x - camera_pos_.x - destination_facing.x + up.x, time, callback));
    animators_.push_back(new LinearValueAnimator(
-            &camera_pos_.y, destination.y - camera_pos_.y - destination_facing.y, time, callback));
+            &camera_pos_.y, destination.y - camera_pos_.y - destination_facing.y + up.y, time, callback));
    animators_.push_back(new LinearValueAnimator(
-            &camera_pos_.z, destination.z - camera_pos_.z - destination_facing.z, time, callback));
+            &camera_pos_.z, destination.z - camera_pos_.z - destination_facing.z + up.z, time, callback));
 }
 
 void LargePlanetCamera::Update() {

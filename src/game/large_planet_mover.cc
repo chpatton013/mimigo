@@ -59,6 +59,10 @@ void LargePlanetMover::Update() {
 
    local_rotation_ = glm::rotate(local_rotation_, -rotate_speed_, up());
    local_rotation_ = glm::rotate(local_rotation_, -angle_speed_, right());
+   std::cout << "up ";
+   glm_util::Print(up());
+   std::cout << "forward ";
+   glm_util::Print(forward());
    position_ += forward() * ((planet_->radius()+0.15f) * std::sin(radians(angle_speed_)) / std::sin(radians(90 - angle_speed_ / 2)));
 
    if (is_jumping_) {
@@ -96,15 +100,15 @@ const glm::vec3 LargePlanetMover::position() const {
 
 // COLUMN-MAJOR Order, awesome
 const glm::vec3 LargePlanetMover::forward() const {
-   return glm::vec3(local_rotation_[2][0], local_rotation_[2][1], local_rotation_[2][2]);
+   return glm::normalize(glm::vec3(local_rotation_[2][0], local_rotation_[2][1], local_rotation_[2][2]));
 }
 
 const glm::vec3 LargePlanetMover::right() const {
-   return glm::vec3(local_rotation_[0][0], local_rotation_[0][1], local_rotation_[0][2]);
+   return glm::normalize(glm::vec3(local_rotation_[0][0], local_rotation_[0][1], local_rotation_[0][2]));
 }
 
 const glm::vec3 LargePlanetMover::up() const {
-   return glm::vec3(local_rotation_[1][0], local_rotation_[1][1], local_rotation_[1][2]);
+   return glm::normalize(glm::vec3(local_rotation_[1][0], local_rotation_[1][1], local_rotation_[1][2]));
 }
 
 void LargePlanetMover::UpdateMeshTransform() const {
