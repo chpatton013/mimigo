@@ -4,12 +4,23 @@
 #include "../core/game.h"
 #include "../core/timer.h"
 #include "planet.h"
+#include <map>
+#include <vector>
 
 class Asteroid;
 class SwingAsteroid;
 class RootNode;
 class Camera;
 class Player;
+
+struct Event {
+   Event(std::string event_name, float delay) :
+      event_name(event_name),
+      delay(delay)
+   {}
+   std::string event_name;
+   float delay;
+};
 
 enum GamePlayType { GAME_PLAY_SMALL, GAME_PLAY_LARGE, GAME_PLAY_TRANSITION };
 class Universe : public Game,
@@ -60,6 +71,8 @@ class Universe : public Game,
    void CheckPlayerChangesGravityFields();
    void OnMovementButtonUp();
    void UseLargePlanetCamera();
+
+   std::map<std::string, std::vector<Event> > event_map_;
 
    Camera* camera_;
    GamePlayType game_play_type_;

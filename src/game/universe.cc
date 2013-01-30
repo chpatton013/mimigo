@@ -17,12 +17,27 @@ std::string asteroid_event_name(const std::string &id, int planet_id, float angl
    stream << id << " " << planet_id << " " << angle;
    return stream.str();
 }
+static inline std::string &ltrim(std::string &s) {
+   s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+   return s;
+}
+
+static inline std::string &rtrim(std::string &s) {
+   s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+   return s;
+}
+
+// trim from both ends
+static inline std::string &trim(std::string &s) {
+   return ltrim(rtrim(s));
+}
 
 void Universe::ParseAsteroidFile() {
    std::ifstream in("asteroids.lvl");
    bool swing_asteroid = false;
 
    std::string line;
+   std::string event;
    EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj");
    while (getline(in, line)) {
       std::istringstream stream(line);
@@ -33,6 +48,13 @@ void Universe::ParseAsteroidFile() {
       }
       else if (line[0] == 'S') {
          swing_asteroid = true;
+      }
+      else if (line[0] == 'E') {
+         // It's an asteroid event
+         stream >> event;
+         getline(stream, event);
+         trim(event);
+         std::cout << event << std::endl;
       }
       else {
          std::string id;
@@ -46,11 +68,17 @@ void Universe::ParseAsteroidFile() {
          if (!swing_asteroid) {
             RootNode::Instance()->AddChild(new EntityComponentNode("asteroid" + id, sphere));
             SceneNode::Get("asteroid" + id)->set_visible(false);
-            EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("asteroid" + id, planet_id, angle), delay);
+            if (event == "NULL")
+               EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("asteroid" + id, planet_id, angle), delay);
+            else
+               event_map_[event].push_back(Event(asteroid_event_name("asteroid" + id, planet_id, angle), delay));
          } else {
             RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid" + id, sphere));
             SceneNode::Get("swingasteroid" + id)->set_visible(false);
-            EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("swingasteroid" + id, planet_id, angle), delay);
+            if (event == "NULL")
+               EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("swingasteroid" + id, planet_id, angle), delay);
+            else
+               event_map_[event].push_back(Event(asteroid_event_name("asteroid" + id, planet_id, angle), delay));
          }
       }
    }
@@ -132,7 +160,10 @@ bool Universe::PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet) {
 }
 
 void Universe::OnEvent(const std::string& event) {
-   std::cout << "EVENT: " << event << std::endl;
+   while (!event_map_[event].empty()) {
+      EventLoop::Instance()->StartNewTimer(this, event_map_[event].back().event_name, event_map_[event].back().delay);
+      event_map_[event].pop_back();
+   }
 }
 
 void Universe::UseLargePlanetCamera() {
