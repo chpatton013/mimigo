@@ -9,7 +9,9 @@
 #include "large_planet_camera.h"
 #include <iostream>
 #include <fstream>
+#include <set>
 #include <sstream>
+#include <utility>
 
 std::string asteroid_event_name(const std::string &id, int planet_id, float angle) {
    std::string event_name;
@@ -177,6 +179,12 @@ void Universe::UpdateAsteroids(std::vector<T>& asteroids) {
 void Universe::Update() {
    camera_->Update();
    player_->Update();
+
+   RootNode::Instance()->CalculateCollisions();
+   const std::set<std::pair<CollisionNode*, CollisionNode*> >& colls = RootNode::Instance()->GetCollisions();
+   if (colls.size() > 0) {
+      std::cout << colls.size() << " collisions" << std::endl;
+   }
 
    UpdateAsteroids(asteroids_);
    UpdateAsteroids(swing_asteroids_);

@@ -24,9 +24,12 @@ class EntityComponentNode : public SceneNode {
       matrix_stack->pop();
    }
 
+   virtual BoundingRegion& GetBoundingRegion() {
+      return entity_->bounding_region();
+   }
+
   private:
    EntityComponent* entity_;
 };
-
 
 #endif

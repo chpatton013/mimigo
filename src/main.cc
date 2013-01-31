@@ -10,7 +10,6 @@
 #include "sdl/sdl_event_loop.h"
 #include "game/universe.h"
 #include "scene_hierarchy/root_node.h"
-#include "scene_hierarchy/mesh_node.h"
 #include "scene_hierarchy/entity_component_node.h"
 #include "core/entity_component.h"
 

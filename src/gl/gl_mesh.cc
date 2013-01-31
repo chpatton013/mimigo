@@ -1,6 +1,8 @@
 #include "gl_mesh.h"
 #include "GLSL_helper.h"
 #include <glm/gtc/type_ptr.hpp>
+#include "../scene_hierarchy/axis_aligned_bounding_region.h"
+#include "../scene_hierarchy/spherical_bounding_region.h"
 #include "../util/glm_util.h"
 #include "../util/stl_util.h"
 
@@ -179,4 +181,30 @@ void GLMesh::ScaleMesh() {
       verts_[i].position.y /= scale;
       verts_[i].position.z /= scale;
    }
+}
+
+// static
+BoundingRegion* GLMesh::GetBoundingRegion(const std::vector<GLMesh*>& meshes) {
+   if (meshes.size() == 0) {
+      return SphericalBoundingRegion::empty_;
+   }
+
+   glm::vec3 min(FLT_MAX), max(FLT_MIN);
+
+   for (std::vector<GLMesh*>::const_iterator it1 = meshes.begin();
+         it1 != meshes.end(); ++it1) {
+      std::vector<Vertex>& vertices = (*it1)->verts_;
+      for (std::vector<Vertex>::iterator it2 = vertices.begin();
+            it2 != vertices.end(); ++it2) {
+         min.x = fmin(min.x, (*it2).x());
+         min.y = fmin(min.y, (*it2).y());
+         min.z = fmin(min.z, (*it2).z());
+
+         max.x = fmax(max.x, (*it2).x());
+         max.y = fmax(max.y, (*it2).y());
+         max.z = fmax(max.z, (*it2).z());
+      }
+   }
+
+   return new AxisAlignedBoundingRegion(min, max);
 }

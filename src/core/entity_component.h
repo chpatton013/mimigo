@@ -4,6 +4,7 @@
 #include <string>
 #include "core/rotation.h"
 #include "core/mover.h"
+#include "scene_hierarchy/bounding_region.h"
 
 class EntityComposite;
 class MatrixStack;
@@ -11,7 +12,9 @@ class MatrixStack;
 class EntityComponent {
   public:
    EntityComponent(const glm::vec3 t, const Rotation& r,
-         const glm::vec3& s, const std::string& name);
+      const glm::vec3& s, const std::string& name);
+   EntityComponent(const glm::vec3 t, const Rotation& r,
+      const glm::vec3& s, const std::string& name, BoundingRegion* br);
 
    virtual void Draw(MatrixStack* transform);
    virtual void Update();
@@ -28,6 +31,8 @@ class EntityComponent {
 
    virtual void print(int level) const = 0;
 
+   BoundingRegion& bounding_region() { return *bounding_region_; }
+
   protected:
    bool draw_;
    glm::vec3 position_;
@@ -35,6 +40,7 @@ class EntityComponent {
    glm::vec3 scale_;
    std::string name_;
    EntityComposite* parent_;
+   BoundingRegion* bounding_region_;
 
    Mover mover_;
    Rotater rotater_;

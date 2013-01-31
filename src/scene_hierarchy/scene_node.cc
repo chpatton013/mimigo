@@ -1,6 +1,10 @@
 #include "scene_node.h"
 #include "root_node.h"
+#include "bounding_region.h"
+#include "axis_aligned_bounding_region.h"
 #include "../util/glm_util.h"
+
+#include <utility>
 
 //static
 std::map<std::string, SceneNode*> SceneNode::node_map_;
@@ -63,4 +67,40 @@ SceneNode::~SceneNode() {
       node_map_.erase((*it)->id());
       delete *it;
    }
+
+   if (bounding_region_ != NULL) {
+      delete bounding_region_;
+   }
+}
+
+BoundingRegion& SceneNode::GetBoundingRegion() {
+   if (children_.empty()) {
+      return *AxisAlignedBoundingRegion::empty_;
+   }
+
+   glm::vec3 min(FLT_MAX), max(FLT_MIN);
+
+   for (std::set<SceneNode*>::iterator it = children_.begin();
+         it != children_.end(); ++it
+   ) {
+      const glm::vec3& curr_min = (*it)->GetBoundingRegion().GetMin();
+      const glm::vec3& curr_max = (*it)->GetBoundingRegion().GetMax();
+
+      min.x = std::min(min.x, curr_min.x);
+      min.y = std::min(min.y, curr_min.y);
+      min.z = std::min(min.z, curr_min.z);
+
+      max.x = std::max(max.x, curr_max.x);
+      max.y = std::max(max.y, curr_max.y);
+      max.z = std::max(max.z, curr_max.z);
+   }
+
+   // It is expected that every time this function is called, the scene may have
+   // changed. Therefore, a new bounding region must be calculated.
+   if (bounding_region_ != NULL) {
+      delete bounding_region_;
+   }
+   bounding_region_ = new AxisAlignedBoundingRegion(min, max);
+
+   return *bounding_region_;
 }
