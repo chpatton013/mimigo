@@ -42,8 +42,23 @@ void SceneNode::RemoveChild(SceneNode* child) {
 }
 
 void SceneNode::DestroyChild(SceneNode* child) {
-   SceneNode::RemoveChild(child);
-   RootNode::Instance()->RemoveChild(child);
+   assert(child != NULL);
+
+   // this is my child
+   if (children_.find(child) != children_.end()) {
+      for (std::set<SceneNode*>::iterator it = children_.begin();
+            it != children_.end(); ++it) {
+         child->DestroyChild(*it);
+      }
+
+      children_.erase(child);
+      delete child;
+   } else {
+      for (std::set<SceneNode*>::iterator it = children_.begin();
+            it != children_.end(); ++it) {
+         (*it)->DestroyChild(child);
+      }
+   }
 }
 
 void SceneNode::PrintTree(int level) {
@@ -55,7 +70,7 @@ void SceneNode::PrintTree(int level) {
       (*it)->PrintTree(level + 1);
 }
 
-void  SceneNode::set_parent(SceneNode* parent) {
+void SceneNode::set_parent(SceneNode* parent) {
    if (parent_)
       parent_->children_.erase(this);
    parent_ = parent;

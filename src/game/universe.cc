@@ -46,11 +46,11 @@ void Universe::ParseAsteroidFile() {
          --planet_id;
          stream >> angle;
          if (!swing_asteroid) {
-            RootNode::Instance()->AddChild(new EntityComponentNode("asteroid" + id, sphere));
+            RootNode::Instance()->AddChild(new EntityComponentNode("asteroid" + id, sphere), true);
             SceneNode::Get("asteroid" + id)->set_visible(false);
             EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("asteroid" + id, planet_id, angle), delay);
          } else {
-            RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid" + id, sphere));
+            RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid" + id, sphere), true);
             SceneNode::Get("swingasteroid" + id)->set_visible(false);
             EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("swingasteroid" + id, planet_id, angle), delay);
          }
@@ -181,7 +181,8 @@ void Universe::Update() {
    player_->Update();
 
    RootNode::Instance()->CalculateCollisions();
-   const std::set<std::pair<CollisionNode*, CollisionNode*> >& colls = RootNode::Instance()->GetCollisions();
+   const std::set<std::pair<CollisionNode*, CollisionNode*> >& colls =
+    RootNode::Instance()->GetCollisions();
    if (colls.size() > 0) {
       std::cout << colls.size() << " collisions" << std::endl;
    }

@@ -57,6 +57,9 @@ class SceneNode {
 
    const glm::mat4& transform() const { return transform_; }
 
+   static bool Contains(const std::string& id) {
+      return stl_util::ContainsKey(node_map_, id);
+   }
    static SceneNode* Get(const std::string& id) {
       assert(stl_util::ContainsKey(node_map_, id));
       return node_map_[id];

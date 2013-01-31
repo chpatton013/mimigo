@@ -18,6 +18,8 @@ class RootNode : public SceneNode {
    virtual void Draw();
    virtual void Draw(MatrixStack*) { assert(0); }
 
+   virtual void AddChild(SceneNode* child, bool collision = false);
+
    virtual void RemoveChild(SceneNode* child);
    virtual void RemoveChild(const std::string& id)
     { this->RemoveChild(SceneNode::Get(id)); }

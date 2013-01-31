@@ -1,6 +1,6 @@
 #include "root_node.h"
 
-#include <typeinfo>
+#include <sstream>
 
 RootNode* RootNode::root_;
 
@@ -12,9 +12,28 @@ void RootNode::Draw() {
    }
 }
 
+void RootNode::AddChild(SceneNode* child, bool collision) {
+   if (collision) {
+      std::stringstream ss (std::stringstream::in | std::stringstream::out);
+      ss << child->id() << "_collision";
+
+      CollisionNode* wrapper = new CollisionNode(ss.str());
+      wrapper->AddChild(child);
+      SceneNode::AddChild(wrapper);
+   } else {
+      SceneNode::AddChild(child);
+   }
+}
+
 void RootNode::RemoveChild(SceneNode* child) {
-   children_.erase(child);
-   delete child;
+   assert(child != NULL);
+
+   std::string wrapper_id = child->id() + "_collision";
+   if (Contains(wrapper_id)) {
+      DestroyChild(Get(wrapper_id));
+   } else {
+      DestroyChild(child);
+   }
 }
 
 void RootNode::CalculateCollisions() {
@@ -28,8 +47,7 @@ void RootNode::CalculateCollisions() {
       for (++it2; it2 != children_.end(); ++it2) {
          CollisionNode* cn1 = dynamic_cast<CollisionNode*>(*it1);
          CollisionNode* cn2 = dynamic_cast<CollisionNode*>(*it2);
-         // NULL `cn1` or `cn2` indicates data integrity errors.
-         // Prevent runtime error or use its presence as debugging?
+
          if (cn1 != NULL && cn2 != NULL && cn1->TestCollision(*cn2)) {
             collisions_.insert(
                std::make_pair((CollisionNode*)*it1, (CollisionNode*)*it2)

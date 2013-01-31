@@ -191,19 +191,18 @@ BoundingRegion* GLMesh::GetBoundingRegion(const std::vector<GLMesh*>& meshes) {
 
    glm::vec3 min(FLT_MAX), max(FLT_MIN);
 
-   for (std::vector<GLMesh*>::const_iterator it1 = meshes.begin();
-         it1 != meshes.end(); ++it1) {
-      std::vector<Vertex>& vertices = (*it1)->verts_;
-      for (std::vector<Vertex>::iterator it2 = vertices.begin();
-            it2 != vertices.end(); ++it2) {
-         min.x = fmin(min.x, (*it2).x());
-         min.y = fmin(min.y, (*it2).y());
-         min.z = fmin(min.z, (*it2).z());
+   for (std::vector<GLMesh*>::const_iterator it = meshes.begin();
+         it != meshes.end(); ++it) {
+      glm::vec4 curr_min, curr_max;
+      (*it)->GetExtents(&curr_min, &curr_max);
 
-         max.x = fmax(max.x, (*it2).x());
-         max.y = fmax(max.y, (*it2).y());
-         max.z = fmax(max.z, (*it2).z());
-      }
+      min.x = std::min(min.x, curr_min.x);
+      min.y = std::min(min.y, curr_min.y);
+      min.z = std::min(min.z, curr_min.z);
+
+      max.x = std::max(max.x, curr_max.x);
+      max.y = std::max(max.y, curr_max.y);
+      max.z = std::max(max.z, curr_max.z);
    }
 
    return new AxisAlignedBoundingRegion(min, max);
