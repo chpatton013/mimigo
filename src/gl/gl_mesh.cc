@@ -1,7 +1,6 @@
 #include "gl_mesh.h"
 #include "GLSL_helper.h"
 #include <glm/gtc/type_ptr.hpp>
-#include "../scene_hierarchy/axis_aligned_bounding_region.h"
 #include "../scene_hierarchy/spherical_bounding_region.h"
 #include "../util/glm_util.h"
 #include "../util/stl_util.h"
@@ -190,7 +189,6 @@ BoundingRegion* GLMesh::GetBoundingRegion(const std::vector<GLMesh*>& meshes) {
    }
 
    glm::vec3 min(FLT_MAX), max(FLT_MIN);
-
    for (std::vector<GLMesh*>::const_iterator it = meshes.begin();
          it != meshes.end(); ++it) {
       glm::vec4 curr_min, curr_max;
@@ -204,6 +202,8 @@ BoundingRegion* GLMesh::GetBoundingRegion(const std::vector<GLMesh*>& meshes) {
       max.y = std::max(max.y, curr_max.y);
       max.z = std::max(max.z, curr_max.z);
    }
+   glm::vec3 diff = max - min;
+   float radius = std::max(std::max(diff.x, diff.y), diff.z) * 0.5;
 
-   return new AxisAlignedBoundingRegion(min, max);
+   return new SphericalBoundingRegion(glm::vec3(0.0f), radius);
 }

@@ -2,6 +2,7 @@
 #define _AXIS_ALIGNED_BOUNDING_REGION_H_
 
 #include <glm/glm.hpp>
+#include <stdio.h>
 #include <vector>
 #include "bounding_region.h"
 
@@ -20,6 +21,12 @@ class AxisAlignedBoundingRegion : public BoundingRegion {
    virtual void SetMax(const glm::vec3& max) { max_ = max; }
 
    virtual BoundingRegionType GetType() const { return AXIS_ALIGNED; }
+   virtual void print() {
+      printf(
+         "axis-aligned: min:[%.2f,%.2f,%.2f] max:[%.2f,%.2f,%.2f]\n",
+         min_.x, min_.y, min_.z, max_.x, max_.y, max_.z
+      );
+   }
 
    static BoundingRegion* GetEmpty() {
       return empty_ == NULL ?

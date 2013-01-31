@@ -28,6 +28,14 @@ bool Asteroid::Update() {
    return true;
 }
 
+glm::vec3 Asteroid::position() {
+   return planet_->center() + glm::vec3(
+      glm::cos(radians(theta_)),
+      glm::sin(radians(theta_)),
+      0.0f
+   ) * radius_;
+}
+
 void Asteroid::UpdateMeshPosition() {
    mesh_->set_transformation(glm::translate(planet_->center() +
       glm::vec3(glm::cos(radians(theta_)), glm::sin(radians(theta_)), 0.0f)*radius_));

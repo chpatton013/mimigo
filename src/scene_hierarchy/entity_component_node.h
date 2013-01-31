@@ -25,6 +25,11 @@ class EntityComponentNode : public SceneNode {
    }
 
    virtual BoundingRegion& GetBoundingRegion() {
+      glm::vec3 t = entity_->position();
+      Rotation r = entity_->rotation();
+      glm::vec3 s = entity_->scale();
+
+      entity_->bounding_region().set_instance(t, r, s);
       return entity_->bounding_region();
    }
 

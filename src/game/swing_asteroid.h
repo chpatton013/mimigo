@@ -13,6 +13,7 @@ class SwingAsteroid {
    SwingAsteroid(Planet *planet, float theta, const std::string& id, bool cw);
    ~SwingAsteroid();
    bool Update();
+   glm::vec3 position() { return position_; }
 
   private:
    void UpdateMeshPosition();

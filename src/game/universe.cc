@@ -180,17 +180,42 @@ void Universe::Update() {
    camera_->Update();
    player_->Update();
 
-   RootNode::Instance()->CalculateCollisions();
-   const std::set<std::pair<CollisionNode*, CollisionNode*> >& colls =
-    RootNode::Instance()->GetCollisions();
-   if (colls.size() > 0) {
-      std::cout << colls.size() << " collisions" << std::endl;
-   }
-
    UpdateAsteroids(asteroids_);
    UpdateAsteroids(swing_asteroids_);
 
    CheckPlayerChangesGravityFields();
+
+   for (std::vector<Asteroid*>::iterator it = asteroids_.begin();
+         it != asteroids_.end(); ++it) {
+      glm::vec3 diff = player_->position() - (*it)->position();
+      if (glm::dot(diff, diff) < 0.02) {
+         std::cout << "Game Over!" << std::endl;
+         exit(0);
+      }
+   }
+   for (std::vector<SwingAsteroid*>::iterator it = swing_asteroids_.begin();
+         it != swing_asteroids_.end(); ++it) {
+      glm::vec3 diff = player_->position() - (*it)->position();
+      if (glm::dot(diff, diff) < 0.02) {
+         std::cout << "Game Over!" << std::endl;
+         exit(0);
+      }
+   }
+
+   /*
+   RootNode::Instance()->PrintTree();
+   RootNode::Instance()->CalculateCollisions();
+   const std::set<std::pair<CollisionNode*, CollisionNode*> >& colls =
+    RootNode::Instance()->GetCollisions();
+   for (std::set<std::pair<CollisionNode*, CollisionNode*> >::iterator it = colls.begin();
+         it != colls.end(); ++it) {
+      if (false) {
+         // you lose
+         std::cout << "Game Over!" << std::endl;
+         exit(0);
+      }
+   }
+   */
 }
 
 void Universe::Draw() {

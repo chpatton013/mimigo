@@ -2,8 +2,6 @@
 #include "collision.h"
 
 bool CollisionNode::TestCollision(CollisionNode& other) {
-   return false;
-
    if (Collision::CheckCollision(
          this->GetBoundingRegion(),
          other.GetBoundingRegion()

@@ -1,5 +1,6 @@
 #include "root_node.h"
 
+#include <iostream>
 #include <sstream>
 
 RootNode* RootNode::root_;

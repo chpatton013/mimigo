@@ -1,7 +1,7 @@
 #include "scene_node.h"
 #include "root_node.h"
 #include "bounding_region.h"
-#include "axis_aligned_bounding_region.h"
+#include "spherical_bounding_region.h"
 #include "../util/glm_util.h"
 
 #include <utility>
@@ -90,11 +90,10 @@ SceneNode::~SceneNode() {
 
 BoundingRegion& SceneNode::GetBoundingRegion() {
    if (children_.empty()) {
-      return *AxisAlignedBoundingRegion::empty_;
+      return *SphericalBoundingRegion::empty_;
    }
 
    glm::vec3 min(FLT_MAX), max(FLT_MIN);
-
    for (std::set<SceneNode*>::iterator it = children_.begin();
          it != children_.end(); ++it
    ) {
@@ -109,13 +108,15 @@ BoundingRegion& SceneNode::GetBoundingRegion() {
       max.y = std::max(max.y, curr_max.y);
       max.z = std::max(max.z, curr_max.z);
    }
+   glm::vec3 diff = max - min;
+   float radius = std::max(std::max(diff.x, diff.y), diff.z) * 0.5;
 
    // It is expected that every time this function is called, the scene may have
    // changed. Therefore, a new bounding region must be calculated.
    if (bounding_region_ != NULL) {
       delete bounding_region_;
    }
-   bounding_region_ = new AxisAlignedBoundingRegion(min, max);
+   bounding_region_ = new SphericalBoundingRegion(glm::vec3(0.0f), radius);
 
    return *bounding_region_;
 }

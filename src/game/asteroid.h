@@ -2,6 +2,7 @@
 #define ASTEROID_H_
 
 #include <string>
+#include <glm/glm.hpp>
 
 class Planet;
 class SceneNode;
@@ -11,6 +12,7 @@ class Asteroid {
    Asteroid(Planet *planet, float theta, const std::string& id);
    ~Asteroid();
    bool Update();
+   glm::vec3 position();
 
   private:
    void UpdateMeshPosition();
