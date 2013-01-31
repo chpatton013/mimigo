@@ -37,7 +37,7 @@ void Universe::ParseAsteroidFile() {
    bool swing_asteroid = false;
 
    std::string line;
-   std::string event;
+   std::string event("NULL");
    EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj");
    while (getline(in, line)) {
       std::istringstream stream(line);
@@ -54,7 +54,6 @@ void Universe::ParseAsteroidFile() {
          stream >> event;
          getline(stream, event);
          trim(event);
-         std::cout << event << std::endl;
       }
       else {
          std::string id;
@@ -122,7 +121,8 @@ void Universe::LoadInPlanets() {
 }
 
 Universe::Universe() :
-   game_play_type_(GAME_PLAY_SMALL)
+   game_play_type_(GAME_PLAY_SMALL),
+   logic_puzzle_(10, 10)
 {
    camera_ = new SmallPlanetCamera();
    LoadInPlanets();

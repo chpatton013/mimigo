@@ -3,6 +3,7 @@
 
 #include "../core/game.h"
 #include "../core/timer.h"
+#include "logic_puzzle.h"
 #include "planet.h"
 #include <map>
 #include <vector>
@@ -80,6 +81,7 @@ class Universe : public Game,
    std::vector<Asteroid*> asteroids_;
    std::vector<SwingAsteroid*> swing_asteroids_;
    Player* player_;
+   LogicPuzzle logic_puzzle_;
 };
 
 #endif
