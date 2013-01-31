@@ -63,9 +63,9 @@ void Initialize() {
 }
 
 void LoadResources() {
-   EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/go_gopher_push.obj");
+   EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/edgar.obj");
    EntityComponentNode* mesh = new EntityComponentNode("bunny", go_gopher);
-   mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.2f)));
+   mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.3f)));
 
    RootNode::Instance()->AddChild(mesh);
 }
