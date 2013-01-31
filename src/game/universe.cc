@@ -38,7 +38,7 @@ void Universe::ParseAsteroidFile() {
 
    std::string line;
    std::string event("NULL");
-   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj");
+   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/asteroid.obj");
    while (getline(in, line)) {
       std::istringstream stream(line);
       if (line.empty() || line[0] == '#') {
