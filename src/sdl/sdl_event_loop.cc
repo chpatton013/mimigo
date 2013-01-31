@@ -54,6 +54,11 @@ void SDLEventLoop::RunGame(Game* game, GraphicsAdapter* graphics) {
             }
          }
 
+         while (!events_.empty()) {
+            game_->OnEvent(events_.front());
+            events_.pop_front();
+         }
+
          std::vector<SDLTimer*> expired_timers;
          for (unsigned int i = 0; i < timers_.size(); ++i)
             if (timers_[i]->Update())
@@ -76,6 +81,10 @@ void SDLEventLoop::StartNewTimer(Timer::Delegate* delegate,
                                  double seconds) {
    timers_.push_back(new SDLTimer(delegate, event_name));
    timers_.back()->Start(seconds);
+}
+
+void SDLEventLoop::PostEvent(const std::string& event) {
+   events_.push_back(event);
 }
 
 void SDLEventLoop::OnKeyUp(SDL_Event &event) {

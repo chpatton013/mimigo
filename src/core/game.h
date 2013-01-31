@@ -11,6 +11,7 @@ class Game : public EventObserver {
 
    virtual void Update() = 0;
    virtual void Draw() = 0;
+   virtual void OnEvent(const std::string& event) = 0;
 
    EventLoopRegistrar registrar_;
   private:

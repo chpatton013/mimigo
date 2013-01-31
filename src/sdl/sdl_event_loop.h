@@ -1,6 +1,7 @@
 #ifndef _SDL_EVENT_LOOP_H_
 #define _SDL_EVENT_LOOP_H_
 
+#include <list>
 #include <vector>
 #include "../core/event_loop.h"
 #include "../core/timer.h"
@@ -33,6 +34,7 @@ class SDLEventLoop : public EventLoop {
                               const std::string& event_name,
                               double seconds);
    void ExpireTimer(int index) {}
+   void PostEvent(const std::string& event);
 
   private:
    void OnKeyDown(SDL_Event &e);
@@ -41,6 +43,7 @@ class SDLEventLoop : public EventLoop {
    SDLGraphicsAdapter* graphics_;
    Game* game_;
    std::vector<SDLTimer*> timers_;
+   std::list<std::string> events_;
 };
 
 #endif

@@ -25,6 +25,7 @@ class EventLoop : public EventSubject {
    virtual void RunGame(Game* game, GraphicsAdapter* graphics) = 0;
    virtual void Quit() = 0;
    virtual StateType State() const { return state_; }
+   virtual void PostEvent(const std::string& event) = 0;
    virtual void ChangeState(StateType state)
       { state_ = state; }
 

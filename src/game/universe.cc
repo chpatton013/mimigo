@@ -19,13 +19,28 @@ std::string asteroid_event_name(const std::string &id, int planet_id, float angl
    stream << id << " " << planet_id << " " << angle;
    return stream.str();
 }
+static inline std::string &ltrim(std::string &s) {
+   s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+   return s;
+}
+
+static inline std::string &rtrim(std::string &s) {
+   s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+   return s;
+}
+
+// trim from both ends
+static inline std::string &trim(std::string &s) {
+   return ltrim(rtrim(s));
+}
 
 void Universe::ParseAsteroidFile() {
    std::ifstream in("asteroids.lvl");
    bool swing_asteroid = false;
 
    std::string line;
-   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj");
+   std::string event("NULL");
+   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/asteroid.obj");
    while (getline(in, line)) {
       std::istringstream stream(line);
       if (line.empty() || line[0] == '#') {
@@ -35,6 +50,12 @@ void Universe::ParseAsteroidFile() {
       }
       else if (line[0] == 'S') {
          swing_asteroid = true;
+      }
+      else if (line[0] == 'E') {
+         // It's an asteroid event
+         stream >> event;
+         getline(stream, event);
+         trim(event);
       }
       else {
          std::string id;
@@ -48,11 +69,17 @@ void Universe::ParseAsteroidFile() {
          if (!swing_asteroid) {
             RootNode::Instance()->AddChild(new EntityComponentNode("asteroid" + id, sphere), true);
             SceneNode::Get("asteroid" + id)->set_visible(false);
-            EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("asteroid" + id, planet_id, angle), delay);
+            if (event == "NULL")
+               EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("asteroid" + id, planet_id, angle), delay);
+            else
+               event_map_[event].push_back(Event(asteroid_event_name("asteroid" + id, planet_id, angle), delay));
          } else {
             RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid" + id, sphere), true);
             SceneNode::Get("swingasteroid" + id)->set_visible(false);
-            EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("swingasteroid" + id, planet_id, angle), delay);
+            if (event == "NULL")
+               EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("swingasteroid" + id, planet_id, angle), delay);
+            else
+               event_map_[event].push_back(Event(asteroid_event_name("asteroid" + id, planet_id, angle), delay));
          }
       }
    }
@@ -96,7 +123,8 @@ void Universe::LoadInPlanets() {
 }
 
 Universe::Universe() :
-   game_play_type_(GAME_PLAY_SMALL)
+   game_play_type_(GAME_PLAY_SMALL),
+   logic_puzzle_(10, 10)
 {
    camera_ = new SmallPlanetCamera();
    LoadInPlanets();
@@ -133,6 +161,13 @@ bool Universe::PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet) {
    return planet->is_large_planet();
 }
 
+void Universe::OnEvent(const std::string& event) {
+   while (!event_map_[event].empty()) {
+      EventLoop::Instance()->StartNewTimer(this, event_map_[event].back().event_name, event_map_[event].back().delay);
+      event_map_[event].pop_back();
+   }
+}
+
 void Universe::UseLargePlanetCamera() {
    LargePlanetCamera* camera = new LargePlanetCamera(camera_->focus(),
          camera_->position(), player_->position(), player_->up(), player_->facing());
@@ -147,6 +182,7 @@ void Universe::SwitchToLargePlanetGamePlay() {
 }
 
 void Universe::PlayerEntersGravityFieldOf(Planet* planet) {
+   EventLoop::Instance()->PostEvent("player transitions to " + planet->id());
    player_->TransitionTo(planet);
    if (PlayerTransitionsFromSmallPlanetToLargePlanet(planet)) {
       SwitchToLargePlanetGamePlay();
