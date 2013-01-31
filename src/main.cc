@@ -1,7 +1,8 @@
 #include <unistd.h>
-#include <SDL/SDL.h>
+#include "SDL/SDL.h"
 #include <GL/glew.h>
 
+#include "SDL/SDL_mixer.h"
 #include "core/mesh_load.h"
 #include "core/camera.h"
 #include "gl/gl_shader.h"
@@ -13,9 +14,10 @@
 #include "scene_hierarchy/mesh_node.h"
 #include "scene_hierarchy/entity_component_node.h"
 #include "core/entity_component.h"
+#include "audio/sound.h"
 
 void InitializeSDL() {
-   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) {
+   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO) < 0) {
       fprintf(stderr, "SDL_Init: %s\n", SDL_GetError());
       exit(EXIT_FAILURE);
    }
@@ -58,6 +60,7 @@ void InitializeGlew() {
 // All Initialization code Reference: http://content.gpwiki.org/index.php/OpenGL:Codes:Simple_GLSL_example
 void Initialize() {
    InitializeSDL();
+   initSound();
    InitializeGL();
    InitializeGlew();
    new GLShader("main", "src/shaders/wave.vert", "src/shaders/wave.frag");
@@ -82,6 +85,7 @@ int main(int , char** ) {
    LoadResources();
 
    Universe* universe = new Universe();
+   loopMusic(NODENS);
    StartMainLoop(universe);
 
    return 0;
