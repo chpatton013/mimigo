@@ -11,7 +11,6 @@
 #include "sdl/sdl_event_loop.h"
 #include "game/universe.h"
 #include "scene_hierarchy/root_node.h"
-#include "scene_hierarchy/mesh_node.h"
 #include "scene_hierarchy/entity_component_node.h"
 #include "core/entity_component.h"
 #include "audio/sound.h"
@@ -67,9 +66,9 @@ void Initialize() {
 }
 
 void LoadResources() {
-   EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/go_gopher_push.obj");
+   EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/edgar.obj");
    EntityComponentNode* mesh = new EntityComponentNode("bunny", go_gopher);
-   mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.2f)));
+   mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.3f)));
 
    RootNode::Instance()->AddChild(mesh);
 }

@@ -16,18 +16,19 @@ LD = g++
 LDFLAGS =
 
 
-.PHONY: all debug test release profile prepare clean remove
+.PHONY: all run debug release profile prepare clean remove
 
-all test: debug
-debug: CFLAGS += -g3 -DDEBUG
+all: debug
+run: all
+debug: CFLAGS += -g -DDEBUG
 release: CFLAGS += -Ofast -DNDEBUG
-profile: CFLAGS += -g3 -pg -Og -DNDEBUG
+profile: CFLAGS += -g -pg -Og -DNDEBUG
 profile: LDFLAGS += -pg
 
 
 debug release profile: $(EXEC)
 
-test: $(EXEC)
+run: $(EXEC)
 	./$(EXEC)
 
 prepare:

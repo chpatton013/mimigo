@@ -1,6 +1,7 @@
 #include "core/entity_component.h"
 #include "core/entity_composite.h"
 #include "global/handles.h"
+#include "scene_hierarchy/spherical_bounding_region.h"
 
 #include "glm/glm.hpp"
 
@@ -12,6 +13,17 @@ EntityComponent::EntityComponent(const glm::vec3 t, const Rotation& r,
       scale_(s),
       name_(name),
       parent_(NULL)
+{
+}
+EntityComponent::EntityComponent(const glm::vec3 t, const Rotation& r,
+   const glm::vec3& s, const std::string& name, BoundingRegion* br) :
+      draw_(true),
+      position_(t),
+      rotation_(r),
+      scale_(s),
+      name_(name),
+      parent_(NULL),
+      bounding_region_(br)
 {
 }
 

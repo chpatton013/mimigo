@@ -1,7 +1,11 @@
 #ifndef _ROOT_NODE_H_
 #define _ROOT_NODE_H_
 
+#include <set>
+#include <utility>
+
 #include "scene_node.h"
+#include "collision_node.h"
 
 class RootNode : public SceneNode {
   public:
@@ -14,9 +18,15 @@ class RootNode : public SceneNode {
    virtual void Draw();
    virtual void Draw(MatrixStack*) { assert(0); }
 
+   virtual void AddChild(SceneNode* child, bool collision = false);
+
    virtual void RemoveChild(SceneNode* child);
    virtual void RemoveChild(const std::string& id)
     { this->RemoveChild(SceneNode::Get(id)); }
+
+   virtual void CalculateCollisions();
+   virtual const std::set<std::pair<CollisionNode*, CollisionNode*> >&
+    GetCollisions() { return collisions_; }
 
    virtual void set_visible(bool) { assert(false); }
    virtual bool visible() { assert(false); }
@@ -29,6 +39,8 @@ class RootNode : public SceneNode {
       SceneNode(id)
    {}
    ~RootNode() {}
+
+   std::set<std::pair<CollisionNode*, CollisionNode*> > collisions_;
 };
 
 #endif

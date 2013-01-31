@@ -9,7 +9,9 @@
 #include "large_planet_camera.h"
 #include <iostream>
 #include <fstream>
+#include <set>
 #include <sstream>
+#include <utility>
 
 std::string asteroid_event_name(const std::string &id, int planet_id, float angle) {
    std::string event_name;
@@ -38,7 +40,7 @@ void Universe::ParseAsteroidFile() {
 
    std::string line;
    std::string event("NULL");
-   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj");
+   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/asteroid.obj");
    while (getline(in, line)) {
       std::istringstream stream(line);
       if (line.empty() || line[0] == '#') {
@@ -65,14 +67,14 @@ void Universe::ParseAsteroidFile() {
          --planet_id;
          stream >> angle;
          if (!swing_asteroid) {
-            RootNode::Instance()->AddChild(new EntityComponentNode("asteroid" + id, sphere));
+            RootNode::Instance()->AddChild(new EntityComponentNode("asteroid" + id, sphere), true);
             SceneNode::Get("asteroid" + id)->set_visible(false);
             if (event == "NULL")
                EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("asteroid" + id, planet_id, angle), delay);
             else
                event_map_[event].push_back(Event(asteroid_event_name("asteroid" + id, planet_id, angle), delay));
          } else {
-            RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid" + id, sphere));
+            RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid" + id, sphere), true);
             SceneNode::Get("swingasteroid" + id)->set_visible(false);
             if (event == "NULL")
                EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("swingasteroid" + id, planet_id, angle), delay);
@@ -218,6 +220,38 @@ void Universe::Update() {
    UpdateAsteroids(swing_asteroids_);
 
    CheckPlayerChangesGravityFields();
+
+   for (std::vector<Asteroid*>::iterator it = asteroids_.begin();
+         it != asteroids_.end(); ++it) {
+      glm::vec3 diff = player_->position() - (*it)->position();
+      if (glm::dot(diff, diff) < 0.02) {
+         std::cout << "Game Over!" << std::endl;
+         exit(0);
+      }
+   }
+   for (std::vector<SwingAsteroid*>::iterator it = swing_asteroids_.begin();
+         it != swing_asteroids_.end(); ++it) {
+      glm::vec3 diff = player_->position() - (*it)->position();
+      if (glm::dot(diff, diff) < 0.02) {
+         std::cout << "Game Over!" << std::endl;
+         exit(0);
+      }
+   }
+
+   /*
+   RootNode::Instance()->PrintTree();
+   RootNode::Instance()->CalculateCollisions();
+   const std::set<std::pair<CollisionNode*, CollisionNode*> >& colls =
+    RootNode::Instance()->GetCollisions();
+   for (std::set<std::pair<CollisionNode*, CollisionNode*> >::iterator it = colls.begin();
+         it != colls.end(); ++it) {
+      if (false) {
+         // you lose
+         std::cout << "Game Over!" << std::endl;
+         exit(0);
+      }
+   }
+   */
 }
 
 void Universe::Draw() {

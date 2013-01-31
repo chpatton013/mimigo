@@ -8,6 +8,7 @@
 #include "core/entity_component.h"
 #include "core/rotation.h"
 #include "core/mover.h"
+#include "scene_hierarchy/bounding_region.h"
 
 /**
  * An entity incorporates a collection of meshes and their texture.
@@ -19,8 +20,8 @@ class Entity : public EntityComponent {
   public:
    Entity(const std::vector<GLMesh*> meshes, const glm::vec3& t,
          const Rotation& r, const glm::vec3& s,
-         const std::string& name) :
-      EntityComponent(t, r, s, name),
+         const std::string& name, BoundingRegion* br) :
+      EntityComponent(t, r, s, name, br),
       meshes_(meshes)
    {}
 

@@ -8,6 +8,9 @@
 #include <map>
 #include <vector>
 
+#include <stdio.h>
+#include <glm/glm.hpp>
+
 class Asteroid;
 class SwingAsteroid;
 class RootNode;
@@ -27,6 +30,9 @@ enum GamePlayType { GAME_PLAY_SMALL, GAME_PLAY_LARGE, GAME_PLAY_TRANSITION };
 class Universe : public Game,
                  public Timer::Delegate {
   public:
+void print_vec(const glm::vec3& v) {
+   printf("[%.2f,%.2f,%.2f]\n", v.x, v.y, v.z);
+}
    Universe();
 
    virtual void Update();

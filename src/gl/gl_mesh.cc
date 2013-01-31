@@ -1,6 +1,7 @@
 #include "gl_mesh.h"
 #include "GLSL_helper.h"
 #include <glm/gtc/type_ptr.hpp>
+#include "../scene_hierarchy/spherical_bounding_region.h"
 #include "../util/glm_util.h"
 #include "../util/stl_util.h"
 
@@ -179,4 +180,30 @@ void GLMesh::ScaleMesh() {
       verts_[i].position.y /= scale;
       verts_[i].position.z /= scale;
    }
+}
+
+// static
+BoundingRegion* GLMesh::GetBoundingRegion(const std::vector<GLMesh*>& meshes) {
+   if (meshes.size() == 0) {
+      return SphericalBoundingRegion::empty_;
+   }
+
+   glm::vec3 min(FLT_MAX), max(FLT_MIN);
+   for (std::vector<GLMesh*>::const_iterator it = meshes.begin();
+         it != meshes.end(); ++it) {
+      glm::vec4 curr_min, curr_max;
+      (*it)->GetExtents(&curr_min, &curr_max);
+
+      min.x = std::min(min.x, curr_min.x);
+      min.y = std::min(min.y, curr_min.y);
+      min.z = std::min(min.z, curr_min.z);
+
+      max.x = std::max(max.x, curr_max.x);
+      max.y = std::max(max.y, curr_max.y);
+      max.z = std::max(max.z, curr_max.z);
+   }
+   glm::vec3 diff = max - min;
+   float radius = std::max(std::max(diff.x, diff.y), diff.z) * 0.5;
+
+   return new SphericalBoundingRegion(glm::vec3(0.0f), radius);
 }

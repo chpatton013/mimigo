@@ -9,7 +9,6 @@
 #include "large_planet_mover.h"
 #include "core/mover.h"
 #include "game/universe.h"
-#include "scene_hierarchy/mesh_node.h"
 #include "scene_hierarchy/root_node.h"
 #include "scene_hierarchy/scene_node.h"
 
