@@ -1,4 +1,5 @@
 #include "player.h"
+#include "audio/sound.h"
 
 Player::Player(Planet* planet, PlayerObserver* observer) :
    small_planet_mover_(NULL, observer),
@@ -74,6 +75,7 @@ void Player::OnRightButtonUp() {
 }
 
 void Player::Jump() {
+   playSampleWAV(JUMP);
    if (game_play_type_ == GAME_PLAY_SMALL)
       small_planet_mover_.Jump();
    else
