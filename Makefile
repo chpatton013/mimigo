@@ -35,6 +35,7 @@ prepare:
 
 clean:
 	rm -f $(OBJS)
+	rm -rf $(OBJ_SUB_DIRS)
 
 remove: clean
 	rm -f $(EXEC)
