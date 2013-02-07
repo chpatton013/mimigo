@@ -9,7 +9,6 @@
 #include <glm/glm.hpp>
 #include "../core/vertex.h"
 #include "../global/handles.h"
-#include "../scene_hierarchy/bounding_region.h"
 #include "../util/matrix_stack.h"
 
 /**
@@ -65,8 +64,6 @@ class GLMesh {
    void move(const glm::vec3& move) { trans_ = glm::translate(trans_, move); }
 
    static std::map<std::string, GLMesh*> meshes_;
-
-   static BoundingRegion* GetBoundingRegion(const std::vector<GLMesh*>& meshes);
 
   private:
    void GetExtents(glm::vec4* min, glm::vec4* max);

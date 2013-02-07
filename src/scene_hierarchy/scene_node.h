@@ -8,15 +8,13 @@
 #include <string>
 #include "../util/matrix_stack.h"
 #include "../util/stl_util.h"
-#include "bounding_region.h"
 
 class SceneNode {
   public:
    SceneNode(const std::string& id) :
       visible_(true),
       parent_(NULL),
-      id_(id),
-      bounding_region_(NULL)
+      id_(id)
    {
       assert(!stl_util::ContainsKey(node_map_, id_));
       node_map_[id_] = this;
@@ -65,16 +63,12 @@ class SceneNode {
       return node_map_[id];
    }
 
-   virtual BoundingRegion& GetBoundingRegion();
-
   protected:
    glm::mat4 transform_;
    bool visible_;
    SceneNode* parent_;
    std::set<SceneNode*> children_;
    const std::string id_;
-
-   BoundingRegion* bounding_region_;
 
    static std::map<std::string, SceneNode*> node_map_;
 };

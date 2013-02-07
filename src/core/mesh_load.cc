@@ -193,8 +193,7 @@ EntityComponent* LoadEntityComponentFromOBJ(const std::string& filename) {
 
    file.close();
    g_entities[filename] = new Entity(
-      meshes, glm::vec3(0.0), Rotation(), glm::vec3(1.0),
-      filename, GLMesh::GetBoundingRegion(meshes)
+      meshes, glm::vec3(0.0), Rotation(), glm::vec3(1.0), filename
    );
    return g_entities[filename];
 }
@@ -307,8 +306,7 @@ EntityComponent* MakeCube(const std::string& name, const std::string& texture) {
    meshes.back()->transform(trans);
 
    g_entities[name] = new Entity(
-      meshes, glm::vec3(0.0), Rotation(), glm::vec3(1.0),
-      name, GLMesh::GetBoundingRegion(meshes)
+      meshes, glm::vec3(0.0), Rotation(), glm::vec3(1.0), name
    );
    //g_entities[name]->set_texture(texture);
    assert(stl_util::ContainsKey(g_entities, name));

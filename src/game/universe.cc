@@ -67,14 +67,14 @@ void Universe::ParseAsteroidFile() {
          --planet_id;
          stream >> angle;
          if (!swing_asteroid) {
-            RootNode::Instance()->AddChild(new EntityComponentNode("asteroid" + id, sphere), true);
+            RootNode::Instance()->AddChild(new EntityComponentNode("asteroid" + id, sphere));
             SceneNode::Get("asteroid" + id)->set_visible(false);
             if (event == "NULL")
                EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("asteroid" + id, planet_id, angle), delay);
             else
                event_map_[event].push_back(Event(asteroid_event_name("asteroid" + id, planet_id, angle), delay));
          } else {
-            RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid" + id, sphere), true);
+            RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid" + id, sphere));
             SceneNode::Get("swingasteroid" + id)->set_visible(false);
             if (event == "NULL")
                EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("swingasteroid" + id, planet_id, angle), delay);
@@ -221,10 +221,11 @@ void Universe::Update() {
 
    CheckPlayerChangesGravityFields();
 
+   // I am ashamed of this, btw. I'll be fixing it soon.
    for (std::vector<Asteroid*>::iterator it = asteroids_.begin();
          it != asteroids_.end(); ++it) {
       glm::vec3 diff = player_->position() - (*it)->position();
-      if (glm::dot(diff, diff) < 0.02) {
+      if (glm::dot(diff, diff) < 0.04) {
          std::cout << "Game Over!" << std::endl;
          exit(0);
       }
@@ -232,26 +233,11 @@ void Universe::Update() {
    for (std::vector<SwingAsteroid*>::iterator it = swing_asteroids_.begin();
          it != swing_asteroids_.end(); ++it) {
       glm::vec3 diff = player_->position() - (*it)->position();
-      if (glm::dot(diff, diff) < 0.02) {
+      if (glm::dot(diff, diff) < 0.04) {
          std::cout << "Game Over!" << std::endl;
          exit(0);
       }
    }
-
-   /*
-   RootNode::Instance()->PrintTree();
-   RootNode::Instance()->CalculateCollisions();
-   const std::set<std::pair<CollisionNode*, CollisionNode*> >& colls =
-    RootNode::Instance()->GetCollisions();
-   for (std::set<std::pair<CollisionNode*, CollisionNode*> >::iterator it = colls.begin();
-         it != colls.end(); ++it) {
-      if (false) {
-         // you lose
-         std::cout << "Game Over!" << std::endl;
-         exit(0);
-      }
-   }
-   */
 }
 
 void Universe::Draw() {

@@ -6,7 +6,7 @@ Player::Player(Planet* planet, PlayerObserver* observer) :
    large_planet_mover_(NULL)
 {
    new SceneNode("player");
-   RootNode::Instance()->AddChild(SceneNode::Get("player"), true);
+   RootNode::Instance()->AddChild(SceneNode::Get("player"));
    SceneNode::Get("player")->AddChild(SceneNode::Get("bunny"));
 }
 
