@@ -230,6 +230,7 @@ void Universe::Update() {
 
    CheckPlayerChangesGravityFields();
    
+   int id;
    for(std::vector<Particles*>::iterator it = particles_.begin(); it != particles_.end(); it++){
       (*it)->Update(id);
       id++;
