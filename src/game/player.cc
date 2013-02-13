@@ -1,5 +1,6 @@
 #include "player.h"
 #include "audio/sound.h"
+#include "../spatial_hierarchy/spherical_bounding_region.h"
 
 Player::Player(Planet* planet, PlayerObserver* observer) :
    small_planet_mover_(NULL, observer),
@@ -8,6 +9,10 @@ Player::Player(Planet* planet, PlayerObserver* observer) :
    new SceneNode("player");
    RootNode::Instance()->AddChild(SceneNode::Get("player"));
    SceneNode::Get("player")->AddChild(SceneNode::Get("bunny"));
+
+   set_bounding_region(new SphericalBoundingRegion(
+      position(), SceneNode::Get("player")->GetWeightedAverageRadius() * 0.25f
+   ));
 }
 
 void Player::MoveForward() {
@@ -94,13 +99,17 @@ bool Player::EntersGravityFieldOf(Planet* planet) {
    return planet->PositionWithinGravityField(position());
 }
 
-void Player::Update() {
+bool Player::Update() {
    if (game_play_type_ == GAME_PLAY_SMALL)
       small_planet_mover_.Update();
    else if (game_play_type_ == GAME_PLAY_LARGE)
       large_planet_mover_.Update();
    else if (game_play_type_ == GAME_PLAY_TRANSITION)
       UpdateTransition();
+
+   bounding_region_->set_center(position());
+
+   return true;
 }
 
 void Player::UpdateTransition() {

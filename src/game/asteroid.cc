@@ -1,9 +1,11 @@
+#include <math.h>
 #include "asteroid.h"
 #include "planet.h"
+#include "../spatial_hierarchy/spherical_bounding_region.h"
 
 inline
 float radians(float degrees) {
-   return degrees * atan(1)*4.0f / 180.0f;
+   return degrees * M_PI / 180.0f;
 }
 
 Asteroid::Asteroid(Planet *planet, float theta, const std::string& id) :
@@ -14,6 +16,10 @@ Asteroid::Asteroid(Planet *planet, float theta, const std::string& id) :
 {
    mesh_->set_visible(true);
    UpdateMeshPosition();
+
+   set_bounding_region(new SphericalBoundingRegion(
+      position(), mesh_->GetAverageRadius() * 0.25f
+   ));
 }
 
 Asteroid::~Asteroid() {
@@ -25,6 +31,7 @@ bool Asteroid::Update() {
    if (radius_ <= planet_->radius() - 0.15f)
       return false;
    UpdateMeshPosition();
+   bounding_region_->set_center(position());
    return true;
 }
 
