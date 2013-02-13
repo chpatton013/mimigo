@@ -63,10 +63,17 @@ class GLMesh {
    void transform(const glm::mat4& trans) { trans_ = trans; }
    void move(const glm::vec3& move) { trans_ = glm::translate(trans_, move); }
 
+   void GetExtents(glm::vec4* min, glm::vec4* max);
+   void GetExtentAverages(glm::vec4& min, glm::vec4& max, glm::vec3* avg);
+   void GetExtentAverages(glm::vec3* avg);
+   float GetCircumscribingRadius();
+   float GetInscribingRadius();
+   float GetWeightedAverageRadius();
+   float GetAverageRadius();
+
    static std::map<std::string, GLMesh*> meshes_;
 
   private:
-   void GetExtents(glm::vec4* min, glm::vec4* max);
    void Initialize();
    void CenterMesh();
    void ScaleMesh();
