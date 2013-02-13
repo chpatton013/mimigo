@@ -87,7 +87,6 @@ void print_vec(const glm::vec3& v) {
    std::vector<Asteroid*> asteroids_;
    std::vector<SwingAsteroid*> swing_asteroids_;
    Player* player_;
-   LogicPuzzle logic_puzzle_;
 };
 
 #endif

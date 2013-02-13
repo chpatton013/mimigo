@@ -127,8 +127,7 @@ void Universe::LoadInPlanets() {
 }
 
 Universe::Universe() :
-   game_play_type_(GAME_PLAY_SMALL),
-   logic_puzzle_(10, 10)
+   game_play_type_(GAME_PLAY_SMALL)
 {
    camera_ = new SmallPlanetCamera();
    LoadInPlanets();
