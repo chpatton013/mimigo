@@ -15,7 +15,7 @@ void EntityComposite::Draw(MatrixStack* transform) {
    transform->pop();
 }
 
-void EntityComposite::Update() {
+bool EntityComposite::Update() {
    EntityComponent::Update();
 
    for (std::vector<EntityComponent*>::iterator it = entities_.begin();
@@ -23,6 +23,8 @@ void EntityComposite::Update() {
       if (*it)
          (*it)->Update();
    }
+
+   return true;
 }
 
 void EntityComposite::print(int level) const {
