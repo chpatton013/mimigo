@@ -5,6 +5,7 @@
 #include "../core/timer.h"
 #include "logic_puzzle.h"
 #include "planet.h"
+#include "particles.h"
 #include <map>
 #include <vector>
 
@@ -86,6 +87,7 @@ void print_vec(const glm::vec3& v) {
    std::vector<Planet*> planets_;
    std::vector<Asteroid*> asteroids_;
    std::vector<SwingAsteroid*> swing_asteroids_;
+   std::vector<Particles*> particles_;
    Player* player_;
    LogicPuzzle logic_puzzle_;
 };
