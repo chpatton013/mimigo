@@ -66,20 +66,24 @@ void Universe::ParseAsteroidFile() {
          stream >> planet_id;
          --planet_id;
          stream >> angle;
-         if (!swing_asteroid) {
-            RootNode::Instance()->AddChild(new EntityComponentNode("asteroid" + id, sphere));
-            SceneNode::Get("asteroid" + id)->set_visible(false);
-            if (event == "NULL")
-               EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("asteroid" + id, planet_id, angle), delay);
-            else
-               event_map_[event].push_back(Event(asteroid_event_name("asteroid" + id, planet_id, angle), delay));
+
+         std::string full_id = (swing_asteroid ? "swingasteroid" : "asteroid") + id;
+
+         RootNode::Instance()->AddChild(new
+          EntityComponentNode(full_id, sphere));
+         SceneNode::Get(full_id)->set_visible(false);
+
+         if (event == "NULL") {
+            EventLoop::Instance()->StartNewTimer(
+               this,
+               asteroid_event_name(full_id, planet_id, angle),
+               delay
+            );
          } else {
-            RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid" + id, sphere));
-            SceneNode::Get("swingasteroid" + id)->set_visible(false);
-            if (event == "NULL")
-               EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("swingasteroid" + id, planet_id, angle), delay);
-            else
-               event_map_[event].push_back(Event(asteroid_event_name("asteroid" + id, planet_id, angle), delay));
+            event_map_[event].push_back(Event(
+               asteroid_event_name(full_id, planet_id, angle),
+               delay
+            ));
          }
       }
    }
