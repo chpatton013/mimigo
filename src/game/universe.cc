@@ -145,7 +145,8 @@ void Universe::OnExpiration(const std::string& event_name) {
       stream >> id;
       stream >> planet_id;
       stream >> angle;
-      asteroids_.push_back(new Asteroid(planets_[planet_id], angle, id));
+      SpatialManager::Instance()->AddEntity(new
+       Asteroid(planets_[planet_id], angle, id));
    } else if (event_name.find("swingasteroid") == 0) {
       std::istringstream stream(event_name);
       std::string id;
@@ -156,7 +157,8 @@ void Universe::OnExpiration(const std::string& event_name) {
       stream >> planet_id;
       stream >> angle;
       stream >> clockwise;
-      swing_asteroids_.push_back(new SwingAsteroid(planets_[planet_id], angle, id, clockwise != 0));
+      SpatialManager::Instance()->AddEntity(new
+       SwingAsteroid(planets_[planet_id], angle, id, clockwise != 0));
    }
 }
 
@@ -208,43 +210,21 @@ void Universe::CheckPlayerChangesGravityFields() {
    }
 }
 
-template <class T>
-void Universe::UpdateAsteroids(std::vector<T>& asteroids) {
-   std::vector<T> to_remove;
-   for (typename std::vector<T>::iterator it = asteroids.begin(); it != asteroids.end(); ++it)
-      if (!(*it)->Update())
-         to_remove.push_back(*it);
-   for (typename std::vector<T>::iterator it = to_remove.begin(); it != to_remove.end(); ++it)
-      delete *it;
-   stl_util::RemoveAllOf(asteroids, to_remove);
-}
-
 void Universe::Update() {
    camera_->Update();
    player_->Update();
+   SpatialManager::Instance()->Update();
 
-   UpdateAsteroids(asteroids_);
-   UpdateAsteroids(swing_asteroids_);
+   const std::set<CollidableEntity*>& entities =
+    SpatialManager::Instance()->entities();
+   std::set<CollidableEntity*>::iterator start = entities.begin(),
+                                         stop = entities.end();
+   if (SpatialManager::Instance()->Collide(player_, start, stop) != stop) {
+      std::cout << "Game Over!" << std::endl;
+      exit(0);
+   }
 
    CheckPlayerChangesGravityFields();
-
-   // I am ashamed of this, btw. I'll be fixing it soon.
-   for (std::vector<Asteroid*>::iterator it = asteroids_.begin();
-         it != asteroids_.end(); ++it) {
-      glm::vec3 diff = player_->position() - (*it)->position();
-      if (glm::dot(diff, diff) < 0.04) {
-         std::cout << "Game Over!" << std::endl;
-         exit(0);
-      }
-   }
-   for (std::vector<SwingAsteroid*>::iterator it = swing_asteroids_.begin();
-         it != swing_asteroids_.end(); ++it) {
-      glm::vec3 diff = player_->position() - (*it)->position();
-      if (glm::dot(diff, diff) < 0.04) {
-         std::cout << "Game Over!" << std::endl;
-         exit(0);
-      }
-   }
 }
 
 void Universe::Draw() {

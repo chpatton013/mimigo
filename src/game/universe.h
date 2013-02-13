@@ -1,19 +1,22 @@
 #ifndef _UNIVERSE_H_
 #define _UNIVERSE_H_
 
-#include "../core/game.h"
-#include "../core/timer.h"
-#include "logic_puzzle.h"
-#include "planet.h"
 #include <map>
 #include <vector>
+#include "planet.h"
+#include "../core/entity.h"
+#include "../core/game.h"
+#include "../core/timer.h"
+#include "../scene_hierarchy/root_node.h"
+#include "../spatial_hierarchy/spatial_manager.h"
+#include "../spatial_hierarchy/collidable_entity.h"
 
 #include <stdio.h>
 #include <glm/glm.hpp>
 
 class Asteroid;
 class SwingAsteroid;
-class RootNode;
+class SpatialManager;
 class Camera;
 class Player;
 
@@ -67,8 +70,6 @@ void print_vec(const glm::vec3& v) {
    void PlayerEntersGravityFieldOf(Planet* planet);
    bool PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet);
    void SwitchToLargePlanetGamePlay();
-   template <class T>
-   void UpdateAsteroids(std::vector<T>& asteroids);
 
    bool is_small_planet_gameplay() const
     { return game_play_type_ == GAME_PLAY_SMALL; }
@@ -84,8 +85,7 @@ void print_vec(const glm::vec3& v) {
    Camera* camera_;
    GamePlayType game_play_type_;
    std::vector<Planet*> planets_;
-   std::vector<Asteroid*> asteroids_;
-   std::vector<SwingAsteroid*> swing_asteroids_;
+   std::set<Entity*> entities_;
    Player* player_;
 };
 
