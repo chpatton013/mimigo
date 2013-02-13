@@ -44,5 +44,5 @@ remove: clean
 $(EXEC): prepare $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $(OBJS) $(foreach l,$(LIBS),-l$l)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc $(DEPS)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc
 	$(CXX) $(CFLAGS) -c -o $@ $<
