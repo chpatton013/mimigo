@@ -166,7 +166,11 @@ bool Universe::PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet) {
 
 void Universe::OnEvent(const std::string& event) {
    while (!event_map_[event].empty()) {
-      EventLoop::Instance()->StartNewTimer(this, event_map_[event].back().event_name, event_map_[event].back().delay);
+      EventLoop::Instance()->StartNewTimer(
+         this,
+         event_map_[event].back().event_name,
+         event_map_[event].back().delay
+      );
       event_map_[event].pop_back();
    }
 }
