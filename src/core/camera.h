@@ -15,8 +15,8 @@ class Camera : public PlayerObserver {
    Camera() :
       camera_up_(0.0f, 1.0f, 0.0f),
       camera_pos_(0.0f, 0.0f, 2.5f)
-   {
-   }
+   {}
+   virtual ~Camera() {}
 
    void SetView();
 
