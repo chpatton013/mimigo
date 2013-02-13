@@ -81,3 +81,61 @@ SceneNode::~SceneNode() {
       delete *it;
    }
 }
+
+// GLMesh integration
+void SceneNode::GetExtents(glm::vec4* min, glm::vec4* max) {
+   glm::vec4 running_min(FLT_MAX), running_max(FLT_MIN);
+
+   for (std::set<SceneNode*>::iterator it = children_.begin();
+         it != children_.end(); ++it) {
+      glm::vec4 current_min, current_max;
+      (*it)->GetExtents(&current_min, &current_max);
+
+      running_min.x = std::min(running_min.x, current_min.x);
+      running_min.y = std::min(running_min.y, current_min.y);
+      running_min.z = std::min(running_min.z, current_min.z);
+
+      running_max.x = std::max(running_max.x, current_max.x);
+      running_max.y = std::max(running_max.y, current_max.y);
+      running_max.z = std::max(running_max.z, current_max.z);
+   }
+
+   *min = running_min;
+   *max = running_max;
+}
+void SceneNode::GetExtentAverages(glm::vec4& min, glm::vec4& max, glm::vec3* avg) {
+   avg->x = (max.x - min.x) * 0.5f;
+   avg->y = (max.y - min.y) * 0.5f;
+   avg->z = (max.z - min.z) * 0.5f;
+}
+void SceneNode::GetExtentAverages(glm::vec3* avg) {
+   glm::vec4 min, max;
+   GetExtents(&min, &max);
+   GetExtentAverages(min, max, avg);
+}
+float SceneNode::GetCircumscribingRadius() {
+   glm::vec3 avgs;
+   GetExtentAverages(&avgs);
+
+   return std::max(std::max(avgs.x, avgs.y), avgs.z);
+}
+float SceneNode::GetInscribingRadius() {
+   glm::vec3 avgs;
+   GetExtentAverages(&avgs);
+
+   return std::min(std::min(avgs.x, avgs.y), avgs.z);
+}
+float SceneNode::GetWeightedAverageRadius() {
+   glm::vec4 min, max;
+   glm::vec3 avgs;
+
+   GetExtents(&min, &max);
+   GetExtentAverages(min, max, &avgs);
+
+   return glm::dot(avgs, avgs) / (avgs.x + avgs.y + avgs.z);
+}
+float SceneNode::GetAverageRadius() {
+   float max = GetCircumscribingRadius(),
+         min = GetInscribingRadius();
+   return (max - min) * 0.5f + min;
+}
