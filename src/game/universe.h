@@ -6,10 +6,12 @@
 #include "logic_puzzle.h"
 #include "planet.h"
 #include "particles.h"
+#include "assets.h"
 #include <map>
 #include <vector>
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <glm/glm.hpp>
 
 class Asteroid;
@@ -88,6 +90,7 @@ void print_vec(const glm::vec3& v) {
    std::vector<Asteroid*> asteroids_;
    std::vector<SwingAsteroid*> swing_asteroids_;
    std::vector<Particles*> particles_;
+   std::vector<Assets*> assets_;
    Player* player_;
    LogicPuzzle logic_puzzle_;
 };

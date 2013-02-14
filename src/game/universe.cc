@@ -13,6 +13,7 @@
 #include <sstream>
 #include <utility>
 
+
 std::string asteroid_event_name(const std::string &id, int planet_id, float angle) {
    std::string event_name;
    std::ostringstream stream(event_name);
@@ -41,6 +42,7 @@ void Universe::ParseAsteroidFile() {
    std::string line;
    std::string event("NULL");
    EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/asteroid.obj");
+   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/pufferFish.obj");
    while (getline(in, line)) {
       std::istringstream stream(line);
       if (line.empty() || line[0] == '#') {
@@ -73,8 +75,14 @@ void Universe::ParseAsteroidFile() {
                EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("asteroid" + id, planet_id, angle), delay);
             else
                event_map_[event].push_back(Event(asteroid_event_name("asteroid" + id, planet_id, angle), delay));
-         } else {
+         } 
+         else {
+            if(id == "3"){ 
+               RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid" + id, fish));
+            }
+            else {
             RootNode::Instance()->AddChild(new EntityComponentNode("swingasteroid" + id, sphere));
+            }
             SceneNode::Get("swingasteroid" + id)->set_visible(false);
             if (event == "NULL")
                EventLoop::Instance()->StartNewTimer(this, asteroid_event_name("swingasteroid" + id, planet_id, angle), delay);
@@ -92,6 +100,10 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
 
    std::string line;
    EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj");
+   EntityComponent* tree = LoadEntityComponentFromOBJ("meshes/tree1.obj");
+  // EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower1.obj");
+  // EntityComponent* coral = LoadEntityComponentFromOBJ("meshes/coral.obj");
+
    while (getline(in, line)) {
       std::istringstream stream(line);
       if (line.empty() || line[0] == '#') {
@@ -112,10 +124,16 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
          stream >> position.z;
          stream >> radius;
          stream >> gravity_radius;
-         RootNode::Instance()->AddChild(new EntityComponentNode("planet" + id, sphere));
+         
+         RootNode::Instance()->AddChild(new EntityComponentNode("planet" + id, sphere));        
          planets->push_back(new Planet(planet_type, id, position, radius, gravity_radius));
       }
    }
+   RootNode::Instance()->AddChild(new EntityComponentNode("tree1", tree)); 
+   new Assets("tree", "1", glm::vec3(-10.0, 0.2, 0), glm::vec3(1.0, 1.0, 1.0));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("tree2", tree));
+   new Assets("tree", "2", glm::vec3(-4.5, -1.5, 0), glm::vec3(1.0, 1.0, 1.0));
 }
 
 void Universe::LoadInPlanets() {
