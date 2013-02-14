@@ -37,8 +37,11 @@ class EntityComposite : public EntityComponent {
    bool Update();
    virtual void print(int level) const;
 
+   virtual const std::vector<GLMesh*>& meshes();
+
   private:
    std::vector<EntityComponent*> entities_;
+   std::vector<GLMesh*> meshes_;
 };
 
 #endif

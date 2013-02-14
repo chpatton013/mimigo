@@ -36,3 +36,13 @@ void EntityComposite::print(int level) const {
       (*it)->print(level+1);
    }
 }
+
+const std::vector<GLMesh*>& EntityComposite::meshes() {
+   meshes_.clear();
+   for (std::vector<EntityComponent*>::const_iterator it = entities_.begin();
+         it != entities_.end(); ++it) {
+      const std::vector<GLMesh*>& curr_meshes = (*it)->meshes();
+      meshes_.insert(meshes_.end(), curr_meshes.begin(), curr_meshes.end());
+   }
+   return meshes_;
+}

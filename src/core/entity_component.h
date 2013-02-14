@@ -31,7 +31,7 @@ class EntityComponent {
 
    virtual void print(int level) const = 0;
 
-   virtual const std::vector<GLMesh*>& meshes() const = 0;
+   virtual const std::vector<GLMesh*>& meshes() = 0;
 
   protected:
    bool draw_;

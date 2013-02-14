@@ -40,7 +40,7 @@ class Entity : public EntityComponent {
    }
    virtual void print(int level) const;
 
-   virtual const std::vector<GLMesh*>& meshes() const { return meshes_; }
+   virtual const std::vector<GLMesh*>& meshes() { return meshes_; }
 
   private:
    const std::vector<GLMesh*> meshes_;
