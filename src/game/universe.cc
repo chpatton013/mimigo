@@ -137,6 +137,7 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
    EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj");
    EntityComponent* adobe = LoadEntityComponentFromOBJ("meshes/adobe.obj");
    EntityComponent* house = LoadEntityComponentFromOBJ("meshes/house.obj");
+   EntityComponent* cactus = LoadEntityComponentFromOBJ("meshes/cactus.obj");
    //EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower1.obj");
    //EntityComponent* coral = LoadEntityComponentFromOBJ("meshes/coral.obj");
 
@@ -176,6 +177,9 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
 
    RootNode::Instance()->AddChild(new EntityComponentNode("house4", house)); 
    new Assets("house", "4", glm::vec3(-10.8, -0.5, 0), glm::vec3(0.7), glm::vec3(0.0, 0.0, 1.0), 90.0);
+
+   RootNode::Instance()->AddChild(new EntityComponentNode("cactus5", cactus));
+   new Assets("cactus", "5", glm::vec3(-7.8,  1.45,  0.0), glm::vec3(0.7), glm::vec3(1.0, 1.0, 1.0), 0.0);
 }
 
 void Universe::LoadInPlanets() {
