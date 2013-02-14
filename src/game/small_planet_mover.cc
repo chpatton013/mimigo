@@ -61,12 +61,10 @@ void SmallPlanetMover::MoveDown() {
 }
 
 void SmallPlanetMover::MoveLeft() {
-   if (theta_ < 180.0f) move_dir_ = CCW;
-   else move_dir_ = CW;
+move_dir_ = CCW;
 }
 void SmallPlanetMover::MoveRight() {
-   if (theta_ < 180.0f) move_dir_ = CW;
-   else move_dir_ = CCW;
+move_dir_ = CW;
 }
 
 void SmallPlanetMover::StopMoveUp() { move_dir_ = NONE;  }
