@@ -4,17 +4,20 @@
 #include <string>
 #include "core/rotation.h"
 #include "core/mover.h"
+#include "../gl/gl_mesh.h"
 
 class EntityComposite;
 class MatrixStack;
 
 class EntityComponent {
   public:
+   EntityComponent() {}
    EntityComponent(const glm::vec3 t, const Rotation& r,
       const glm::vec3& s, const std::string& name);
+   virtual ~EntityComponent() {}
 
    virtual void Draw(MatrixStack* transform);
-   virtual void Update();
+   virtual bool Update();
 
    virtual glm::vec3 position() const { return position_; }
    virtual Rotation rotation() const { return rotation_; }
@@ -27,6 +30,8 @@ class EntityComponent {
    void set_parent(EntityComposite* p);
 
    virtual void print(int level) const = 0;
+
+   virtual const std::vector<GLMesh*>& meshes() const = 0;
 
   protected:
    bool draw_;

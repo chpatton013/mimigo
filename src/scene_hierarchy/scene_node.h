@@ -55,6 +55,16 @@ class SceneNode {
 
    const glm::mat4& transform() const { return transform_; }
 
+   // GLMesh integration
+   virtual void GetExtents(glm::vec4* min, glm::vec4* max);
+   virtual void GetExtentAverages(glm::vec4& min, glm::vec4& max, glm::vec3* avg);
+   virtual void GetExtentAverages(glm::vec3* avg);
+   virtual float GetCircumscribingRadius();
+   virtual float GetInscribingRadius();
+   virtual float GetWeightedAverageRadius();
+   virtual float GetAverageRadius();
+
+   // statics
    static bool Contains(const std::string& id) {
       return stl_util::ContainsKey(node_map_, id);
    }

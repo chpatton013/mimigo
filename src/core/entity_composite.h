@@ -1,6 +1,7 @@
 #ifndef ENTITY_COMPOSITE_H_
 #define ENTITY_COMPOSITE_H_
 
+#include <assert.h>
 #include "core/entity_component.h"
 #include "core/entity.h"
 #include "global/stl_util.h"
@@ -8,10 +9,12 @@
 // Composite pattern, cool!
 class EntityComposite : public EntityComponent {
   public:
+   EntityComposite() {}
    EntityComposite(const glm::vec3 t, const Rotation& r,
          const glm::vec3& s, const std::string& name) :
       EntityComponent(t, r, s, name)
    {}
+   virtual ~EntityComposite() {}
 
    virtual void Draw(MatrixStack* transform);
 
@@ -31,7 +34,7 @@ class EntityComposite : public EntityComponent {
     { assert(e); stl_util::Remove(entities_, e); }
    size_t size() const { return entities_.size(); }
 
-   void Update();
+   bool Update();
    virtual void print(int level) const;
 
   private:

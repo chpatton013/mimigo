@@ -149,6 +149,47 @@ void GLMesh::GetExtents(glm::vec4* min, glm::vec4* max) {
    }
 }
 
+void GLMesh::GetExtentAverages(glm::vec4& min, glm::vec4& max, glm::vec3* avg) {
+   avg->x = (max.x - min.x) * 0.5f;
+   avg->y = (max.y - min.y) * 0.5f;
+   avg->z = (max.z - min.z) * 0.5f;
+}
+void GLMesh::GetExtentAverages(glm::vec3* avg) {
+   glm::vec4 min, max;
+   GetExtents(&min, &max);
+   GetExtentAverages(min, max, avg);
+}
+
+float GLMesh::GetCircumscribingRadius() {
+   glm::vec3 avgs;
+   GetExtentAverages(&avgs);
+
+   return std::max(std::max(avgs.x, avgs.y), avgs.z);
+}
+
+float GLMesh::GetInscribingRadius() {
+   glm::vec3 avgs;
+   GetExtentAverages(&avgs);
+
+   return std::min(std::min(avgs.x, avgs.y), avgs.z);
+}
+
+float GLMesh::GetWeightedAverageRadius() {
+   glm::vec4 min, max;
+   glm::vec3 avgs;
+
+   GetExtents(&min, &max);
+   GetExtentAverages(min, max, &avgs);
+
+   return glm::dot(avgs, avgs) / (avgs.x + avgs.y + avgs.z);
+}
+
+float GLMesh::GetAverageRadius() {
+   float max = GetCircumscribingRadius(),
+         min = GetInscribingRadius();
+   return (max - min) * 0.5f + min;
+}
+
 void GLMesh::CenterMesh() {
    if (verts_.size() < 2u)
       return;

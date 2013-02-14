@@ -35,10 +35,12 @@ void EntityComponent::Draw(MatrixStack* transform) {
    transform->multiply(model_trans);
 }
 
-void EntityComponent::Update() {
+bool EntityComponent::Update() {
    mover_.Update(position_);
    rotater_.Update(rotation_.angle);
    scaler_.Update(scale_);
+
+   return true;
 }
 
 void EntityComponent::Spin(float seconds) {

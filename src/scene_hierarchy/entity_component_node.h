@@ -1,6 +1,7 @@
 #ifndef _ENTITY_COMPONENT_NODE_H_
 #define _ENTITY_COMPONENT_NODE_H_
 
+#include "scene_node.h"
 #include "core/entity_component.h"
 
 class EntityComponentNode : public SceneNode {
@@ -15,14 +16,9 @@ class EntityComponentNode : public SceneNode {
    virtual void set_children(const std::set<SceneNode*>&)
     { assert(false); }
 
-   virtual void Draw(MatrixStack* matrix_stack) {
-      matrix_stack->push();
-      matrix_stack->multiply(transform());
-      if (visible_) {
-         entity_->Draw(matrix_stack);
-      }
-      matrix_stack->pop();
-   }
+   virtual void Draw(MatrixStack* matrix_stack);
+
+   virtual void GetExtents(glm::vec4* min, glm::vec4* max);
 
   private:
    EntityComponent* entity_;

@@ -1,17 +1,20 @@
 #ifndef SWING_ASTEROID_H_
 #define SWING_ASTEROID_H_
 
+#include <assert.h>
 #include <string>
 #include <glm/glm.hpp>
 #include "small_planet_mover.h"
+#include "../spatial_hierarchy/collidable_entity.h"
 
 class Planet;
 class SceneNode;
 
-class SwingAsteroid {
+class SwingAsteroid : public CollidableEntity {
   public:
+   SwingAsteroid() {}
    SwingAsteroid(Planet *planet, float theta, const std::string& id, bool cw);
-   ~SwingAsteroid();
+   virtual ~SwingAsteroid();
    bool Update();
    glm::vec3 position() { return position_; }
 

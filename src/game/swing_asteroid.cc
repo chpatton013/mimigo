@@ -1,5 +1,6 @@
 #include "swing_asteroid.h"
 #include "planet.h"
+#include "../spatial_hierarchy/spherical_bounding_region.h"
 
 inline
 float radians(float degrees) {
@@ -19,6 +20,10 @@ SwingAsteroid::SwingAsteroid(Planet *planet, float theta, const std::string& id,
       position_ = planet->center() + glm::vec3(4.0f, planet->radius() + .2, 0.0f);
    mesh_->set_visible(true);
    UpdateMeshPosition();
+
+   set_bounding_region(new SphericalBoundingRegion(
+      position(), mesh_->GetAverageRadius() * 0.25f
+   ));
 }
 
 SwingAsteroid::~SwingAsteroid() {
@@ -38,6 +43,8 @@ bool SwingAsteroid::Update() {
       planetary_motion_ = position_.x < planet_->center().x;
    }
    UpdateMeshPosition();
+   bounding_region_->set_center(position());
+
    return true;
 }
 

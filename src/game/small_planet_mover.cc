@@ -108,7 +108,7 @@ const glm::vec3 SmallPlanetMover::position() const {
    return planet_->center() + glm::vec3(
          radius_ * std::cos(radians(theta_)),
          radius_ * std::sin(radians(theta_)),
-         0);
+         0.0f);
 }
 
 void SmallPlanetMover::FallToPlanet() {

@@ -1,6 +1,7 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include <assert.h>
 #include <iostream>
 #include <vector>
 #include "glm/glm.hpp"
@@ -17,12 +18,14 @@
  */
 class Entity : public EntityComponent {
   public:
+   Entity() {}
    Entity(const std::vector<GLMesh*> meshes, const glm::vec3& t,
          const Rotation& r, const glm::vec3& s,
          const std::string& name) :
       EntityComponent(t, r, s, name),
       meshes_(meshes)
    {}
+   virtual ~Entity() {}
 
    void Draw(MatrixStack* transform);
 
@@ -36,6 +39,8 @@ class Entity : public EntityComponent {
          meshes_[i]->move(relative);
    }
    virtual void print(int level) const;
+
+   virtual const std::vector<GLMesh*>& meshes() const { return meshes_; }
 
   private:
    const std::vector<GLMesh*> meshes_;
