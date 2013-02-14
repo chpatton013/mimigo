@@ -3,6 +3,7 @@
 
 #include <map>
 #include <vector>
+#include "particles.h"
 #include "planet.h"
 #include "../core/entity.h"
 #include "../core/game.h"
@@ -86,6 +87,7 @@ void print_vec(const glm::vec3& v) {
    GamePlayType game_play_type_;
    std::vector<Planet*> planets_;
    std::set<Entity*> entities_;
+   std::vector<Particles*> particles_;
    Player* player_;
 };
 

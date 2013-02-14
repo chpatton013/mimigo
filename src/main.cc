@@ -73,6 +73,13 @@ void LoadResources() {
    RootNode::Instance()->AddChild(mesh);
 }
 
+void LoadParticle(int id){
+   EntityComponent* particle_entity = LoadEntityComponentFromOBJ("meshes/sphere.obj");
+   EntityComponentNode* particle_mesh = new EntityComponentNode("bubbles" + id, particle_entity);
+   particle_mesh-> apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.1)));
+   RootNode::Instance()->AddChild(particle_mesh);
+}
+
 void StartMainLoop(Universe* universe) {
    GraphicsAdapter* graphics = new SDLGraphicsAdapter(kScreenWidth, kScreenHeight, universe);
    graphics->Initialize();
@@ -82,6 +89,11 @@ void StartMainLoop(Universe* universe) {
 int main(int , char** ) {
    Initialize();
    LoadResources();
+   
+   for(int i = 0; i < 15; i++){
+      LoadParticle(i);
+   }
+
 
    Universe* universe = new Universe();
    loopMusic(NODENS);
