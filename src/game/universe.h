@@ -1,7 +1,7 @@
 #ifndef _UNIVERSE_H_
 #define _UNIVERSE_H_
 
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 #include "../core/game.h"
 #include "../core/timer.h"
 #include "logic_puzzle.h"
@@ -10,6 +10,9 @@
 #include "assets.h"
 =======
 >>>>>>> 84ba2141e3c518655025bcf1f6bcc5808e0012da
+*/
+
+#include "assets.h"
 #include <map>
 #include <vector>
 #include "particles.h"

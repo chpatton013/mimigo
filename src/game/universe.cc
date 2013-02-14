@@ -68,7 +68,7 @@ void Universe::ParseAsteroidFile() {
          stream >> planet_id;
          --planet_id;
          stream >> angle;
-<<<<<<< HEAD
+/*<<<<<<< HEAD
          if (!swing_asteroid) {
             RootNode::Instance()->AddChild(new EntityComponentNode("asteroid" + id, sphere));
             SceneNode::Get("asteroid" + id)->set_visible(false);
@@ -90,6 +90,7 @@ void Universe::ParseAsteroidFile() {
             else
                event_map_[event].push_back(Event(asteroid_event_name("asteroid" + id, planet_id, angle), delay));
 =======
+*/
 
          std::string full_id = (swing_asteroid ? "swingasteroid" : "asteroid") + id;
 
@@ -108,7 +109,7 @@ void Universe::ParseAsteroidFile() {
                asteroid_event_name(full_id, planet_id, angle),
                delay
             ));
->>>>>>> 84ba2141e3c518655025bcf1f6bcc5808e0012da
+//>>>>>>> 84ba2141e3c518655025bcf1f6bcc5808e0012da
          }
       }
    }
