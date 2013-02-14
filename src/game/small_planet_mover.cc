@@ -43,7 +43,9 @@ SmallPlanetMover::SmallPlanetMover(Planet* planet, PlayerObserver* observer) :
    theta_(0.0f),
    theta_speed_(0.0f),
    is_jumping_(false),
-   observer_(observer)
+   observer_(observer),
+   move_dir_(NONE),
+   dir_facing_(CW)
 {
    xy_rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
    xz_rotation_.axis = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -61,12 +63,12 @@ void SmallPlanetMover::MoveDown() {
 }
 
 void SmallPlanetMover::MoveLeft() {
-   if (theta_ < 180.0f) move_dir_ = CCW;
-   else move_dir_ = CW;
+dir_facing_ = CCW;
+move_dir_ = CCW;
 }
 void SmallPlanetMover::MoveRight() {
-   if (theta_ < 180.0f) move_dir_ = CW;
-   else move_dir_ = CCW;
+dir_facing_ = CW;
+move_dir_ = CW;
 }
 
 void SmallPlanetMover::StopMoveUp() { move_dir_ = NONE;  }
@@ -97,6 +99,12 @@ void SmallPlanetMover::UpdateMeshTransform() const {
    transform *= glm::translate(position());
    transform *= glm::rotate(xy_rotation_.angle, xy_rotation_.axis);
    transform *= glm::rotate(xz_rotation_.angle, xz_rotation_.axis);
+   if(dir_facing_ == CCW){
+   transform *= glm::rotate(-90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+   }
+   else if(dir_facing_ == CW){
+   transform *= glm::rotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+   }
    SceneNode::Get("player")->set_transformation(transform);
 }
 

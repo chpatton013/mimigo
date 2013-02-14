@@ -1,6 +1,18 @@
 #ifndef _UNIVERSE_H_
 #define _UNIVERSE_H_
 
+/*<<<<<<< HEAD
+#include "../core/game.h"
+#include "../core/timer.h"
+#include "logic_puzzle.h"
+#include "planet.h"
+#include "particles.h"
+#include "assets.h"
+=======
+>>>>>>> 84ba2141e3c518655025bcf1f6bcc5808e0012da
+*/
+
+#include "assets.h"
 #include <map>
 #include <vector>
 #include "particles.h"
@@ -13,6 +25,7 @@
 #include "../spatial_hierarchy/collidable_entity.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <glm/glm.hpp>
 
 class Asteroid;
@@ -88,6 +101,7 @@ void print_vec(const glm::vec3& v) {
    std::vector<Planet*> planets_;
    std::set<Entity*> entities_;
    std::vector<Particles*> particles_;
+   std::vector<Assets*> assets_;
    Player* player_;
 };
 
