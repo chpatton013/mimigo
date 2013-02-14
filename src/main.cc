@@ -76,7 +76,7 @@ void LoadResources() {
 void LoadParticle(int id){
    EntityComponent* particle_entity = LoadEntityComponentFromOBJ("meshes/sphere.obj");
    EntityComponentNode* particle_mesh = new EntityComponentNode("bubbles" + id, particle_entity);
-   particle_mesh-> apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.1)));
+   particle_mesh-> apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.1f)));
    RootNode::Instance()->AddChild(particle_mesh);
 }
 

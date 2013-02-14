@@ -6,12 +6,14 @@
 
 class Assets{
    public:
-      Assets(const std::string& name, const std::string& id, glm::vec3 translate, glm::vec3 scale);
+      Assets(const std::string& name, const std::string& id, glm::vec3 translate, glm::vec3 scale, glm::vec3 rotate, float rotateAngle);
       ~Assets();
 
    private:
       std::string name;
       glm::vec3 scale;
       glm::vec3 translate;
+	glm::vec3 rotate;
+	float rotateAngle;
       void Initialize(const std::string& name, const std::string& id);
 };

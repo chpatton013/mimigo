@@ -94,8 +94,19 @@ void Universe::ParseAsteroidFile() {
 
          std::string full_id = (swing_asteroid ? "swingasteroid" : "asteroid") + id;
 
+
+	if(id == "3"){ 
+        	EntityComponentNode* meshy = new
+          EntityComponentNode(full_id, fish);
+	meshy->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.1)));
+
+         RootNode::Instance()->AddChild(meshy);
+	}
+	else{
          RootNode::Instance()->AddChild(new
           EntityComponentNode(full_id, sphere));
+	}
+
          SceneNode::Get(full_id)->set_visible(false);
 
          if (event == "NULL") {
@@ -123,8 +134,11 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
    std::string line;
    EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj");
    EntityComponent* tree = LoadEntityComponentFromOBJ("meshes/tree1.obj");
-  // EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower1.obj");
-  // EntityComponent* coral = LoadEntityComponentFromOBJ("meshes/coral.obj");
+   EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj");
+   EntityComponent* adobe = LoadEntityComponentFromOBJ("meshes/adobe.obj");
+   EntityComponent* house = LoadEntityComponentFromOBJ("meshes/house.obj");
+   //EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower1.obj");
+   //EntityComponent* coral = LoadEntityComponentFromOBJ("meshes/coral.obj");
 
    while (getline(in, line)) {
       std::istringstream stream(line);
@@ -152,10 +166,16 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
       }
    }
    RootNode::Instance()->AddChild(new EntityComponentNode("tree1", tree)); 
-   new Assets("tree", "1", glm::vec3(-10.0, 0.2, 0), glm::vec3(1.0, 1.0, 1.0));
+   new Assets("tree", "1", glm::vec3(-10.0, 0.4, 0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), 0.0);
    
-   RootNode::Instance()->AddChild(new EntityComponentNode("tree2", tree));
-   new Assets("tree", "2", glm::vec3(-4.5, -1.5, 0), glm::vec3(1.0, 1.0, 1.0));
+   RootNode::Instance()->AddChild(new EntityComponentNode("tree2", shark));
+   new Assets("tree", "2", glm::vec3(-4.5, -1.5, 0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), 0.0);
+
+  RootNode::Instance()->AddChild(new EntityComponentNode("adobe3", adobe));
+  new Assets("adobe", "3", glm::vec3(-7.8,  -0.15,  0.0), glm::vec3(0.7), glm::vec3(0.0, 0.0, 1.0), 180.0);
+
+   RootNode::Instance()->AddChild(new EntityComponentNode("house4", house)); 
+   new Assets("house", "4", glm::vec3(-10.8, -0.5, 0), glm::vec3(0.7), glm::vec3(0.0, 0.0, 1.0), 90.0);
 }
 
 void Universe::LoadInPlanets() {
