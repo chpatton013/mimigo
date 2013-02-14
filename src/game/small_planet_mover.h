@@ -39,6 +39,7 @@ class SmallPlanetMover : public Timer::Delegate {
 
   private:
    enum MoveType { CW, CCW, NONE };
+   MoveType dir_facing_;
    MoveType move_dir_;
    void RotateBottomTowardPlanet();
    void UpdateMeshTransform() const;
