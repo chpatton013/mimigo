@@ -42,7 +42,7 @@ void Universe::ParseAsteroidFile() {
    std::string line;
    std::string event("NULL");
    EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/asteroid.obj");
-   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/pufferFish.obj");
+   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer3.obj");
    while (getline(in, line)) {
       std::istringstream stream(line);
       if (line.empty() || line[0] == '#') {
@@ -133,11 +133,14 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
 
    std::string line;
    EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj");
-   EntityComponent* tree = LoadEntityComponentFromOBJ("meshes/tree1.obj");
+   EntityComponent* tree = LoadEntityComponentFromOBJ("meshes/tree3.obj");
    EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj");
    EntityComponent* adobe = LoadEntityComponentFromOBJ("meshes/adobe.obj");
    EntityComponent* house = LoadEntityComponentFromOBJ("meshes/house.obj");
    EntityComponent* cactus = LoadEntityComponentFromOBJ("meshes/cactus.obj");
+   EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower3.obj");
+   EntityComponent* coral = LoadEntityComponentFromOBJ("meshes/coral.obj");
+   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj");
    //EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower1.obj");
    //EntityComponent* coral = LoadEntityComponentFromOBJ("meshes/coral.obj");
 
@@ -169,7 +172,7 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
    RootNode::Instance()->AddChild(new EntityComponentNode("tree1", tree)); 
    new Assets("tree", "1", glm::vec3(-10.0, 0.4, 0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), 0.0);
    
-   RootNode::Instance()->AddChild(new EntityComponentNode("tree2", shark));
+   RootNode::Instance()->AddChild(new EntityComponentNode("tree2", coral));
    new Assets("tree", "2", glm::vec3(-4.5, -1.5, 0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), 0.0);
 
   RootNode::Instance()->AddChild(new EntityComponentNode("adobe3", adobe));
@@ -180,6 +183,18 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
 
    RootNode::Instance()->AddChild(new EntityComponentNode("cactus5", cactus));
    new Assets("cactus", "5", glm::vec3(-7.8,  1.45,  0.0), glm::vec3(0.7), glm::vec3(1.0, 1.0, 1.0), 0.0);
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("tree6", flag));
+   new Assets("tree", "6", glm::vec3(-0.3, 2.4, 0), glm::vec3(0.5), glm::vec3(1.0, 1.0, 1.0), 0.0);
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("flower7", flower));
+   new Assets("flower", "7", glm::vec3(-6.0, .2, 0), glm::vec3(0.25), glm::vec3(1.0, 1.0, 1.0), 0.0);
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("flower8", flower));
+   new Assets("flower", "8", glm::vec3(-5.5, 0, 0), glm::vec3(0.25), glm::vec3(1.0, 1.0, 1.0), 0.0);
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("flower9", flower));
+   new Assets("flower", "9", glm::vec3(-6.5, -.1, 0), glm::vec3(0.25), glm::vec3(1.0, 1.0, 1.0), 0.0);
 }
 
 void Universe::LoadInPlanets() {
