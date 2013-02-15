@@ -19,7 +19,7 @@ class EntityComposite : public EntityComponent {
    virtual void Draw(MatrixStack* transform);
 
    virtual void set_texture(const std::string& texture) {
-      std::cout << "set_texture() not implemented for EntityComposite" << std::endl;
+      std::cout << "set_texture(" << texture << ") not implemented for EntityComposite" << std::endl;
       assert(false);
    }
 
