@@ -33,7 +33,7 @@ class SDLEventLoop : public EventLoop {
    virtual void StartNewTimer(Timer::Delegate* delegate,
                               const std::string& event_name,
                               double seconds);
-   void ExpireTimer(int index) {}
+   void ExpireTimer(int index) { index = index; }
    void PostEvent(const std::string& event);
 
   private:
