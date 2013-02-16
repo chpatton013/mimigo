@@ -217,14 +217,8 @@ Universe::Universe() :
    LoadInPlanets();
    ParseAsteroidFile();
    player_ = new Player(planets_[0], camera_);
-      
-   for(int i = 0; i < 15; i++){      
-      float x = -4.8 + (float)rand() / ((float)RAND_MAX/(-4.2 - (-4.8)));
-      float y = -1.3 + (float)rand() / ((float)RAND_MAX/(-1.7 - (-1.3)));
-      particles_.push_back(new Particles(glm::vec3(x, y, 0), i));
-
-   }
-
+   
+   ps = new ParticleSystem(15);
    
    PlayerEntersGravityFieldOf(planets_[0]);
 }
@@ -318,13 +312,8 @@ void Universe::Update() {
    }
 
    CheckPlayerChangesGravityFields();
-
-   int id = 0;
-   for(std::vector<Particles*>::iterator it = particles_.begin();
-         it != particles_.end(); ++it){
-      (*it)->Update(id);
-      ++id;
-   }
+   
+   ps->update();
 }
 
 void Universe::Draw() {
