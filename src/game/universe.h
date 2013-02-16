@@ -15,7 +15,6 @@
 #include "assets.h"
 #include <map>
 #include <vector>
-#include "particles.h"
 #include "particleSys.h"
 #include "planet.h"
 #include "../core/entity.h"

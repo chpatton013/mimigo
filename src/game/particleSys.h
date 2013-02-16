@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "particles.h"
 #include "scene_hierarchy/root_node.h"
 #include "scene_hierarchy/entity_component_node.h"
 #include <vector>

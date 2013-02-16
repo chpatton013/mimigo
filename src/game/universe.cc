@@ -314,6 +314,7 @@ void Universe::Update() {
    CheckPlayerChangesGravityFields();
    
    ps->update();
+
 }
 
 void Universe::Draw() {
