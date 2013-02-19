@@ -24,9 +24,12 @@ Particles::Particles(glm::vec3 start, int id) :
    gravity(glm::vec3(0.0f, 0.0f, 0.0f))
    //gravity(glm::vec3(0.0f, -0.8f, 0.0f))
    {
+      std::ostringstream oss;
+      oss << "bubbles" << id;
+      
       new SceneNode("particle_container" +id);
       RootNode::Instance()->AddChild(SceneNode::Get("particle_container" + id));
-      SceneNode::Get("particle_container" + id)->AddChild(SceneNode::Get("bubbles" + id));
+      SceneNode::Get("particle_container" + id)->AddChild(SceneNode::Get(oss.str()));
 
    }
 
