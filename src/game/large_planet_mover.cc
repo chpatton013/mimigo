@@ -2,7 +2,6 @@
 #include "player.h"
 #include "util/glm_util.h"
 
-static float kJumpSlowdownHeld = 0.01f;
 static float kJumpSlowdown = 0.017f;
 static float kJumpSpeed = 0.2f;
 

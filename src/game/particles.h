@@ -4,7 +4,7 @@
 #include "planet.h"
 
 
-class Planet; 
+class Planet;
 class SceneNode;
 
 class Particles {
@@ -14,12 +14,12 @@ class Particles {
       void Update(int id);
       float r, g, b;
       glm::vec3 center;
-      
+
    private:
-      bool active;    
+      bool active;
       float life;
-      float fade;  
-      
+      float fade;
+
       glm::vec3 direction;
       glm::vec3 gravity;
      // float xi, yi, zi;

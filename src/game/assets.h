@@ -11,9 +11,10 @@ class Assets{
 
    private:
       std::string name;
-      glm::vec3 scale;
       glm::vec3 translate;
-	glm::vec3 rotate;
-	float rotateAngle;
+      glm::vec3 scale;
+      glm::vec3 rotate;
+      float rotateAngle;
+
       void Initialize(const std::string& name, const std::string& id);
 };

@@ -308,7 +308,7 @@ EntityComponent* MakeCube(const std::string& name, const std::string& texture) {
    g_entities[name] = new Entity(
       meshes, glm::vec3(0.0), Rotation(), glm::vec3(1.0), name
    );
-   //g_entities[name]->set_texture(texture);
+   g_entities[name]->set_texture(texture);
    assert(stl_util::ContainsKey(g_entities, name));
    //g_scene->Add(g_entities[name]);
    return g_entities[name];
