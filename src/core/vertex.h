@@ -8,9 +8,9 @@
 
 struct Vertex {
    Vertex(const glm::vec4 position=glm::vec4()) :
-      ambient(glm::vec3(1.0, 1.0, 1.0)),
-      diffuse(glm::vec3(1.0, 1.0, 1.0)),
-      specular(glm::vec3(1.0, 1.0, 1.0)),
+      ambient(glm::vec3(0.9, 0.9, 0.9)),
+      diffuse(glm::vec3(0.9, 0.9, 0.9)),
+      specular(glm::vec3(0.9, 0.9, 0.9)),
       position(position)
    {}
    glm::vec3 ambient;

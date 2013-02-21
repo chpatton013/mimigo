@@ -175,8 +175,8 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
    RootNode::Instance()->AddChild(new EntityComponentNode("tree2", coral));
    new Assets("tree", "2", glm::vec3(-4.5, -1.5, 0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), 0.0);
 
-  RootNode::Instance()->AddChild(new EntityComponentNode("adobe3", adobe));
-  new Assets("adobe", "3", glm::vec3(-7.8,  -0.15,  0.0), glm::vec3(0.7), glm::vec3(0.0, 0.0, 1.0), 180.0);
+   RootNode::Instance()->AddChild(new EntityComponentNode("adobe3", adobe));
+   new Assets("adobe", "3", glm::vec3(-7.8,  -0.15,  0.0), glm::vec3(0.7), glm::vec3(0.0, 0.0, 1.0), 180.0);
 
    RootNode::Instance()->AddChild(new EntityComponentNode("house4", house)); 
    new Assets("house", "4", glm::vec3(-10.8, -0.5, 0), glm::vec3(0.7), glm::vec3(0.0, 0.0, 1.0), 90.0);
@@ -196,13 +196,13 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
    RootNode::Instance()->AddChild(new EntityComponentNode("flower9", flower));
    new Assets("flower", "9", glm::vec3(-6.5, -.1, 0), glm::vec3(0.25), glm::vec3(1.0, 1.0, 1.0), 0.0);
 
-RootNode::Instance()->AddChild(new EntityComponentNode("cactus10", cactus));
+   RootNode::Instance()->AddChild(new EntityComponentNode("cactus10", cactus));
    new Assets("cactus", "10", glm::vec3(-8.15,  0.8,  0.55), glm::vec3(0.3), glm::vec3(0.5, 0.5, 0.5), 45.0);
 
-RootNode::Instance()->AddChild(new EntityComponentNode("rock11", asteroid));
+   RootNode::Instance()->AddChild(new EntityComponentNode("rock11", asteroid));
    new Assets("rock", "11", glm::vec3(-7.5,  0.5,  0.45), glm::vec3(0.3), glm::vec3(0.5, 0.5, 0.0), 45.0);
 
-RootNode::Instance()->AddChild(new EntityComponentNode("shark12", shark));
+   RootNode::Instance()->AddChild(new EntityComponentNode("shark12", shark));
    new Assets("shark", "12", glm::vec3(-2.7,  -0.75,  0.0), glm::vec3(1.0), glm::vec3(0.5, 0.5, 0.0), 45.0);
 }
 
@@ -217,6 +217,9 @@ Universe::Universe() :
    LoadInPlanets();
    ParseAsteroidFile();
    player_ = new Player(planets_[0], camera_);
+   light_  = new DirectionLight(glm::vec3(0.6,0.9,0.3),
+                                glm::vec4(0.0,0.0,0.0,0.0),
+                                glm::vec4(0.0,0.0,1.0,0.0));
    
    ps = new ParticleSystem(15);
    
@@ -319,6 +322,7 @@ void Universe::Update() {
 
 void Universe::Draw() {
    camera_->SetView();
+   light_->Draw();
    RootNode::Instance()->Draw();
 }
 

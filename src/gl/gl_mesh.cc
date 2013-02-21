@@ -25,9 +25,9 @@ void GLMesh::SetupDraw() {
    GL_BIND_ARRAY(vertex_buffer_object_, "aPosition", 3);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_object_);
    GL_BIND_ARRAY(normal_buffer_object_, "aNormal", 3);
-   //GL_BIND_ARRAY(diffuse_buffer_object_, "aDiffuse", 3);
-   //GL_BIND_ARRAY(ambient_buffer_object_, "aAmbient", 3);
-   //GL_BIND_ARRAY(specular_buffer_object_, "aSpecular", 3);
+   GL_BIND_ARRAY(diffuse_buffer_object_, "aDiffuse", 3);
+   GL_BIND_ARRAY(ambient_buffer_object_, "aAmbient", 3);
+   GL_BIND_ARRAY(specular_buffer_object_, "aSpecular", 3);
    //GL_BIND_ARRAY(texture_buffer_object_, "aTexture", 2);
 }
 

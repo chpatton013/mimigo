@@ -62,6 +62,7 @@ void Initialize() {
    initSound();
    InitializeGL();
    InitializeGlew();
+   //new GLShader("main", "src/shaders/vert_shader.glsl", "src/shaders/frag_shader.glsl");
    new GLShader("main", "src/shaders/wave.vert", "src/shaders/wave.frag");
 }
 

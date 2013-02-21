@@ -19,6 +19,8 @@
 #include "planet.h"
 #include "../core/entity.h"
 #include "../core/game.h"
+#include "../core/direction_light.h"
+#include "../core/light.h"
 #include "../core/timer.h"
 #include "../scene_hierarchy/root_node.h"
 #include "../spatial_hierarchy/spatial_manager.h"
@@ -102,6 +104,7 @@ void print_vec(const glm::vec3& v) {
    std::set<Entity*> entities_;
    //std::vector<Particles*> particles_;
    std::vector<Assets*> assets_;
+   Light* light_;
    Player* player_;
    ParticleSystem* ps;
 };

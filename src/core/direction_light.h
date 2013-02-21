@@ -5,11 +5,11 @@
 
 class DirectionLight : public Light {
   public:
-   virtual int type() const { return (int)kDirectionLight; }
    DirectionLight(const glm::vec3& color, const glm::vec4& position,
          const glm::vec4& direction) :
       Light(color, position, direction)
    {}
+   virtual int type() const{ return kDirectionLight;}
 };
 
 #endif
