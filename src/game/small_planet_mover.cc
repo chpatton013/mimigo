@@ -38,14 +38,14 @@ void LoadMetaDataFromFile(const std::string& filename) {
 }
 
 SmallPlanetMover::SmallPlanetMover(Planet* planet, PlayerObserver* observer) :
+   dir_facing_(CW),
+   move_dir_(NONE),
    planet_(planet),
    jump_speed_(kJumpSpeed),
    theta_(0.0f),
    theta_speed_(0.0f),
    is_jumping_(false),
-   observer_(observer),
-   move_dir_(NONE),
-   dir_facing_(CW)
+   observer_(observer)
 {
    xy_rotation_.axis = glm::vec3(0.0f, 0.0f, 1.0f);
    xz_rotation_.axis = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -228,4 +228,5 @@ void SmallPlanetMover::ReleaseJump() {
 }
 
 void SmallPlanetMover::OnExpiration(const std::string& event) {
+   assert(true || event.size());
 }

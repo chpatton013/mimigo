@@ -6,13 +6,12 @@
 #include <sstream>
 
 class ParticleSystem {
-   public: 
-      ParticleSystem(int amt);
-      ~ParticleSystem();
-      void update();
-      
-  
-   private:
-      int amt;
-      std::vector<Particles*> _particles;
+  public:
+   ParticleSystem(int amt);
+   ~ParticleSystem();
+   void update();
+
+  private:
+   int amt;
+   std::vector<Particles*> _particles;
 };
