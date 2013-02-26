@@ -11,3 +11,7 @@ std::map<std::string, Material> g_materials;
 std::map<std::string, unsigned int> g_textures;
 std::map<std::string, Animation*> g_animations;
 std::map<std::string, int> g_shaders;
+
+glm::mat4 projection;
+std::vector<glm::vec4> p_planes(6);
+int meshesDrawn;

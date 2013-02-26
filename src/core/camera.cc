@@ -1,6 +1,7 @@
 #include "../core/camera.h"
 #include "../global/handles.h"
 #include "../util/stl_util.h"
+#include "../core/view_frustum_cull.h"
 
 namespace {
 float radians(float degrees) { return degrees/180.0*acos(-1.0); }
@@ -20,5 +21,8 @@ void Camera::SetView() {
          glm::vec3(camera_pos_),
          glm::vec3(camera_focus_),
          camera_up_);
+	glm::mat4 comboMatrix = projection * camera;
+	ExtractPlanesGL(comboMatrix, false);
+
    safe_glUniformMatrix4fv(g_handles["uViewMatrix"], glm::value_ptr(camera));
 }

@@ -13,7 +13,7 @@ void SDLGraphicsAdapter::SetProjectionMatrix() {
    const float field_of_view_y = 80.0f;
    const float z_near = 0.1f;
    const float z_far = 1000.0f;
-   glm::mat4 projection = glm::perspective(field_of_view_y, aspect_ratio(), z_near, z_far);
+   projection = glm::perspective(field_of_view_y, aspect_ratio(), z_near, z_far);
    safe_glUniformMatrix4fv(g_handles["uProjMatrix"], glm::value_ptr(projection));
 }
 

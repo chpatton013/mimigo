@@ -25,7 +25,6 @@ struct Vertex {
       ambient = material.kAmbient;
       specular = material.kSpecular;
    }
-
    operator glm::vec4& () { return position; }
    float x() { return position.x; }
    float y() { return position.y; }

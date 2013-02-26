@@ -3,6 +3,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "../util/glm_util.h"
 #include "../util/stl_util.h"
+#include "../core/view_frustum_cull.h"
 
 #define MAKE_GL_BUFFER(handle, buffer) \
    glGenBuffers(1, &(handle)); \
@@ -35,6 +36,10 @@ void GLMesh::Draw(MatrixStack* transform) {
    SetupDraw();
    transform->push();
    transform->multiply(trans_);
+
+   if(InPlane(verts_, transform)){
+
+
    safe_glUniformMatrix4fv(
       g_handles["uModelMatrix"],
       glm::value_ptr(transform->top()));
@@ -46,9 +51,11 @@ void GLMesh::Draw(MatrixStack* transform) {
    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
    //glLineWidth(1.0);
    glDrawElements(GL_TRIANGLES, ibo_length, GL_UNSIGNED_SHORT, 0);
+   //meshesDrawn++;
+  }
    transform->pop();
 }
-
+ 
 void GLMesh::CalculateNormals() {
    vert_normals_ = std::vector<glm::vec3>(verts_.size(),
          glm::vec3(0, 0, 0));

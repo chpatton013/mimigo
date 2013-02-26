@@ -71,6 +71,7 @@ class GLMesh {
    float GetWeightedAverageRadius();
    float GetAverageRadius();
 
+
    static std::map<std::string, GLMesh*> meshes_;
 
   private:
