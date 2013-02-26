@@ -3,7 +3,7 @@
 #include "../util/stl_util.h"
 
 namespace {
-float radians(float degrees) { return degrees/180.0*acos(-1.0); }
+float radians(float degrees) { return degrees * M_PI / 180.0; }
 }
 
 void Camera::OnPlayerMove(
