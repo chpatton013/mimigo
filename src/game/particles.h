@@ -2,6 +2,7 @@
 #include "scene_hierarchy/root_node.h"
 #include "scene_hierarchy/scene_node.h"
 #include "planet.h"
+#include <sstream>
 
 
 class Planet;

@@ -4,7 +4,7 @@
 
 inline
 float radians(float degrees) {
-   return degrees * atan(1)*4.0f / 180.0f;
+   return degrees * M_PI / 180.0f;
 }
 
 SwingAsteroid::SwingAsteroid(Planet *planet, float theta, const std::string& id, bool cw) :
