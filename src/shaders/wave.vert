@@ -15,7 +15,7 @@ uniform mat4 uProjMatrix;
 uniform mat4 uNormalMatrix;
 uniform vec4 uLights[3];
 uniform int uLightTypes;
-uniform vec3 uEyePosition;
+uniform vec3 uCameraPosition;
 
 attribute vec3 aPosition;
 attribute vec3 aNormal;

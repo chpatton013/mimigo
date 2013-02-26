@@ -2,7 +2,7 @@
 
 uniform vec4 uLights[3];
 uniform int uLightTypes;
-uniform vec3 uEyePosition;
+uniform vec3 uCameraPosition;
 
 varying vec4 vPosition;
 varying vec4 vNormal;
@@ -23,11 +23,11 @@ void main()
    vec3 amb = /*vAmbient;*/vec3(0.5,0.2,0.5);
    vec3 dif = /*vDiffuse;*/vec3(0.4, 0.3, 0.5);
    vec3 spec = /*vSpecular;*/vec3(0.3, 0.1, 0.4);
-   vec3 color = /*uLights[0].xyz;*/vec3(0.5, 0.5, 0.5);
+   vec3 color = uLights[0].xyz;//vec3(0.5, 0.5, 0.5);
 
    vec3 l;
    if(uLightTypes == 0)
-      l = uLights[2].xyz - uEyePosition;
+      l = uLights[2].xyz - uCameraPosition;
    else if(uLightTypes == 1 || uLightTypes == 2)
       l = uLights[1].xyz;
    l = normalize(l);
@@ -38,7 +38,7 @@ void main()
    if(nDotL < 0.0f) {
       facing = 0;
    }
-   vec3 v = normalize(uEyePosition-vPosition.xyz);
+   vec3 v = normalize(uCameraPosition-vPosition.xyz);
    
    vec3 ambient = clamp(amb * color,0.0f,1.0f);
    vec3 diffuse = clamp(dif * color * nDotL,0.0f,1.0f);
