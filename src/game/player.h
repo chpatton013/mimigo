@@ -65,6 +65,11 @@ class Player : public CollidableEntity {
       return large_planet_mover_.local_rotation();
    }
 
+  int type(){return 0;}
+  int planet(){return 0;}
+
+   SmallPlanetMover getSmallPlanetMover(){return small_planet_mover_;}
+
   private:
    bool is_attached_to(Planet* planet) const {
       return small_planet_mover_.is_attached_to(planet) ||

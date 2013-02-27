@@ -18,6 +18,9 @@ class CollidableEntity : public Entity {
       }
    }
 
+  virtual int type() = 0;
+ virtual int planet() = 0;
+
    BoundingRegion* bounding_region() { return bounding_region_; }
    BoundingRegion* set_bounding_region(BoundingRegion* br) {
       BoundingRegion* old_br = bounding_region_;

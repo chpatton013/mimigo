@@ -36,6 +36,7 @@ class SmallPlanetMover : public Timer::Delegate {
    const glm::vec3 position() const;
 
    virtual void OnExpiration(const std::string& event);
+   void set_theta(float theta);
 
   private:
    enum MoveType { CW, CCW, NONE };
@@ -47,7 +48,6 @@ class SmallPlanetMover : public Timer::Delegate {
    bool should_move_counterclockwise() const;
    float max_theta_speed() const;
    void DetermineMovement();
-   void set_theta(float theta);
 
    Planet* planet_;
    Rotation xy_rotation_;

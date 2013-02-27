@@ -1,5 +1,5 @@
-#ifndef ASTEROID_H_
-#define ASTEROID_H_
+#ifndef CHECKPOINT_H_
+#define CHECKPOINT_H_
 
 #include <assert.h>
 #include <string>
@@ -9,21 +9,23 @@
 class Planet;
 class SceneNode;
 
-class Asteroid : public CollidableEntity {
+class CheckPoint : public CollidableEntity {
   public:
-   Asteroid() {}
-   Asteroid(Planet *planet, float theta, const std::string& id);
-   virtual ~Asteroid();
+   CheckPoint() {}
+   CheckPoint(Planet *planet, int planet_id, float theta, const std::string& id);
+   virtual ~CheckPoint();
    bool Update();
    glm::vec3 position();
 
-  int type(){return 0;}
-  int planet(){return 0;}
+  int type(){return 1;}
+  int planet(){return planet_id_;}
+  int getTheta(){return theta_;}
 
   private:
    void UpdateMeshPosition();
 
    Planet* planet_;
+   int planet_id_;
    float theta_;
    float radius_;
 

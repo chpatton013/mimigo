@@ -92,6 +92,8 @@ void print_vec(const glm::vec3& v) {
    std::vector<Assets*> assets_;
    Player* player_;
    ParticleSystem* ps;
+   int currentCheckPoint;
+   float spawnAngle;
 };
 
 #endif

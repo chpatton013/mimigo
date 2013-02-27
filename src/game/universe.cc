@@ -1,6 +1,7 @@
 #include "universe.h"
 #include "sdl/sdl_event_loop.h"
 #include "asteroid.h"
+#include "checkpoint.h"
 #include "swing_asteroid.h"
 #include "player.h"
 #include "scene_hierarchy/root_node.h"
@@ -114,7 +115,6 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
    EntityComponent* cactus = LoadEntityComponentFromOBJ("meshes/cactus.obj");
    EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower3.obj");
    EntityComponent* coral = LoadEntityComponentFromOBJ("meshes/coral.obj");
-   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj");
    EntityComponent* asteroid = LoadEntityComponentFromOBJ("meshes/asteroid.obj");
 
    while (getline(in, line)) {
@@ -157,9 +157,6 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
    RootNode::Instance()->AddChild(new EntityComponentNode("cactus5", cactus));
    new Assets("cactus", "5", glm::vec3(-7.8,  1.45,  0.0), glm::vec3(0.7), glm::vec3(1.0, 1.0, 1.0), 0.0);
 
-   RootNode::Instance()->AddChild(new EntityComponentNode("tree6", flag));
-   new Assets("tree", "6", glm::vec3(-0.3, 2.4, 0), glm::vec3(0.5), glm::vec3(1.0, 1.0, 1.0), 0.0);
-
    RootNode::Instance()->AddChild(new EntityComponentNode("flower7", flower));
    new Assets("flower", "7", glm::vec3(-6.0, .2, 0), glm::vec3(0.25), glm::vec3(1.0, 1.0, 1.0), 0.0);
 
@@ -179,6 +176,42 @@ RootNode::Instance()->AddChild(new EntityComponentNode("shark12", shark));
    new Assets("shark", "12", glm::vec3(-2.7,  -0.75,  0.0), glm::vec3(1.0), glm::vec3(0.5, 0.5, 0.0), 45.0);
 }
 
+void ParseCheckPointsFile(std::vector<Planet*> planets) {
+   std::ifstream in("checkpoints.lvl");
+
+	std::string id;
+         int planet_id;
+         float angle;
+std::string full_id;
+
+
+   std::string line;
+   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj");
+   while (getline(in, line)) {
+      std::istringstream stream(line);
+      if (line.empty() || line[0] == '#') {
+      }
+      else {
+         stream >> id;
+         stream >> planet_id;
+         --planet_id;
+         stream >> angle;
+
+         full_id = "checkpoint" + id;
+
+	std::cout << full_id;
+
+            RootNode::Instance()->AddChild(new
+             EntityComponentNode(full_id, flag));
+
+        SceneNode::Get(full_id)->set_visible(true);
+      }
+   }
+
+SpatialManager::Instance()->AddEntity(new CheckPoint(planets[planet_id], planet_id,  angle, full_id));
+}
+
+
 void Universe::LoadInPlanets() {
    ParsePlanetFile("planets.lvl", &planets_);
 }
@@ -189,11 +222,13 @@ Universe::Universe() :
    camera_ = new SmallPlanetCamera();
    LoadInPlanets();
    ParseAsteroidFile();
+   ParseCheckPointsFile(planets_);
    player_ = new Player(planets_[0], camera_);
 
    ps = new ParticleSystem(15);
-
    PlayerEntersGravityFieldOf(planets_[0]);
+   currentCheckPoint = 0;
+   spawnAngle = -45.0f;
 }
 
 void Universe::OnExpiration(const std::string& event_name) {
@@ -280,10 +315,17 @@ void Universe::Update() {
    std::set<CollidableEntity*>::iterator start = entities.begin(),
                                          stop = entities.end();
    if (SpatialManager::Instance()->Collide(player_, start, stop) != stop) {
-      std::cout << "Game Over!" << std::endl;
-      exit(0);
-   }
+	if((*start)->type() == 0){
+		player_->getSmallPlanetMover().set_theta(0.0);
+   		PlayerEntersGravityFieldOf(planets_[currentCheckPoint]);
 
+	}
+	else{
+		currentCheckPoint = dynamic_cast<CheckPoint*>(*start)->planet();
+		spawnAngle = dynamic_cast<CheckPoint*>(*start)->getTheta();
+	}
+   }
+   
    CheckPlayerChangesGravityFields();
    
    ps->update();

@@ -18,6 +18,9 @@ class SwingAsteroid : public CollidableEntity {
    bool Update();
    glm::vec3 position() { return position_; }
 
+  int type(){return 0;}
+  int planet(){return 0;}
+
   private:
    void UpdateMeshPosition();
 
