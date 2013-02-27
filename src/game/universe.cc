@@ -292,6 +292,9 @@ void Universe::Update() {
    CheckPlayerChangesGravityFields();
 
    ps->update();
+   
+   planets_[4]->Pogo();
+   planets_[5]->Gopo();
 
 }
 

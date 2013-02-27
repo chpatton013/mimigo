@@ -32,6 +32,9 @@ class Planet : public CollidableEntity {
    bool is_large_planet() const
      { return planet_type_ == PLANET_TYPE_LARGE; }
    const std::string& id() const { return id_; }
+   
+   void Pogo();
+   void Gopo();
 
   private:
    void Initialize(const std::string& id);
@@ -41,6 +44,11 @@ class Planet : public CollidableEntity {
    float radius_;
    float gravity_radius_;
    std::string id_;
+   
+   bool turn;
+   bool turn2;
+   SceneNode *mesh;
+   
 };
 
 #endif
