@@ -8,7 +8,7 @@
 #include "../util/matrix_stack.h"
 #include "../core/vertex.h"
 
-void ExtractPlanesGL(glm::mat4 &comboMatrix, bool normalize);
-bool InPlane(std::vector<Vertex> vertices, MatrixStack* transform);
+void ExtractPlanesGL(const glm::mat4& comboMatrix, bool normalize);
+bool InPlane(const std::vector<Vertex>& vertices, MatrixStack* transform);
 
 #endif

@@ -1,6 +1,6 @@
 #include "view_frustum_cull.h"
 
-void ExtractPlanesGL(glm::mat4 & comboMatrix, bool normalize){
+void ExtractPlanesGL(const glm::mat4& comboMatrix, bool normalize) {
 
 	//left clipping space
 	p_planes[0][0] = comboMatrix[0][3] + comboMatrix[0][0];
@@ -45,10 +45,10 @@ void ExtractPlanesGL(glm::mat4 & comboMatrix, bool normalize){
 	}
 }
 
-bool InPlane(std::vector<Vertex> vertices, MatrixStack  *matrixStack){
+bool InPlane(const std::vector<Vertex>& vertices, MatrixStack *matrixStack){
 		for(size_t i = 0; i < vertices.size(); ++i){
+      glm::vec4 vertify = matrixStack->top() * vertices[i].position;
 
-			glm::vec4 vertify = matrixStack->top() * vertices[i];
 
 			if(0 <= (p_planes[0][0] * vertify[0] + p_planes[0][1] * vertify[1] + 
 				p_planes[0][2] * vertify[2] + p_planes[0][3])){

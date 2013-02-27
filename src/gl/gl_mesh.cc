@@ -59,9 +59,9 @@ void GLMesh::CalculateNormals() {
    vert_normals_ = std::vector<glm::vec3>(verts_.size(),
          glm::vec3(0, 0, 0));
    for (size_t i = 0; i < faces_.size(); ++i) {
-      glm::vec4 a = verts_[faces_[i].v1];
-      glm::vec4 b = verts_[faces_[i].v2];
-      glm::vec4 c = verts_[faces_[i].v3];
+      glm::vec4 a = verts_[faces_[i].v1].position;
+      glm::vec4 b = verts_[faces_[i].v2].position;
+      glm::vec4 c = verts_[faces_[i].v3].position;
       glm::vec3 ab(b.x - a.x, b.y - a.y, b.z - a.z);
       glm::vec3 ac(c.x - a.x, c.y - a.y, c.z - a.z);
       glm::vec3 normal = glm::cross(ab, ac);
@@ -142,8 +142,8 @@ void GLMesh::Initialize() {
 }
 
 void GLMesh::GetExtents(glm::vec4* min, glm::vec4* max) {
-   *min = verts_.front();
-   *max = verts_.front();
+   *min = verts_.front().position;
+   *max = verts_.front().position;
    for (size_t i = 1; i < verts_.size(); ++i) {
       min->x = std::min(verts_[i].x(), min->x);
       min->y = std::min(verts_[i].y(), min->y);
