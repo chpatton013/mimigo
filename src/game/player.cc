@@ -11,6 +11,7 @@ Player::Player(Planet* planet, PlayerObserver* observer) :
    new SceneNode("player");
    RootNode::Instance()->AddChild(SceneNode::Get("player"));
    SceneNode::Get("player")->AddChild(SceneNode::Get("bunny"));
+   TransitionTo(planet);
 
    set_bounding_region(new SphericalBoundingRegion(
       position(), SceneNode::Get("player")->GetWeightedAverageRadius() * 0.25f
