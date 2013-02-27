@@ -282,6 +282,8 @@ void Universe::Update() {
    if (SpatialManager::Instance()->Collide(player_, start, stop) != stop) {
       std::cout << "Game Over!" << std::endl;
       exit(0);
+      // Precursor for game state. TODO: reset events
+      // PlayerEntersGravityFieldOf(planets_[0]);
    }
 
    CheckPlayerChangesGravityFields();

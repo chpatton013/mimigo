@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 #include "../core/material.h"
 
 class Entity;
@@ -25,6 +26,10 @@ extern std::map<std::string, unsigned int> g_textures;
 extern std::map<std::string, Animation*> g_animations;
 
 extern std::map<std::string, int> g_shaders;
+
+extern glm::mat4 projection;
+extern std::vector<glm::vec4> p_planes;
+extern int meshesDrawn;
 
 #define GET_ATTRIB(program, attr) \
 g_handles[std::string(attr)] = safe_glGetAttribLocation(program, attr);
