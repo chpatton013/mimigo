@@ -102,7 +102,7 @@ GLMesh::Face ParseOBJFace(const std::string& line,
 
 void ParseMaterials(const std::string& fname) {
    std::ifstream file;
-   file.open(fname.c_str());
+   file.open((std::string("meshes/") + std::string(fname.c_str())).c_str());
    Material m;
    const std::string kNewHeader("newmtl");
 
