@@ -45,30 +45,43 @@ void ExtractPlanesGL(const glm::mat4& comboMatrix, bool normalize) {
 }
 
 bool InPlane(const std::vector<Vertex>& vertices, MatrixStack *matrixStack){
-		for(size_t i = 0; i < vertices.size(); ++i){
+   for (size_t i = 0; i < vertices.size(); ++i) {
       glm::vec4 vertify = matrixStack->top() * vertices[i].position;
 
+      if (
+         (
+            p_planes[0][0] * vertify[0] + p_planes[0][1] * vertify[1] +
+            p_planes[0][2] * vertify[2] + p_planes[0][3]
+         ) >= 0
+         &&
+         (
+            p_planes[1][0] * vertify[0] + p_planes[1][1] * vertify[1] +
+            p_planes[1][2] * vertify[2] + p_planes[1][3]
+         ) >= 0
+         &&
+         (
+            p_planes[2][0] * vertify[0] + p_planes[2][1] * vertify[1] +
+            p_planes[2][2] * vertify[2] + p_planes[2][3]
+         ) >= 0
+         &&
+         (
+            p_planes[3][0] * vertify[0] + p_planes[3][1] * vertify[1] +
+            p_planes[3][2] * vertify[2] + p_planes[3][3]
+         ) >= 0
+         &&
+         (
+            p_planes[4][0] * vertify[0] + p_planes[4][1] * vertify[1] +
+            p_planes[4][2] * vertify[2] + p_planes[4][3]
+         ) >= 0
+         &&
+         (
+            p_planes[5][0] * vertify[0] + p_planes[5][1] * vertify[1] +
+            p_planes[5][2] * vertify[2] + p_planes[5][3]
+         ) >= 0
+      ) {
+         return true;
+      }
+   }
 
-			if(0 <= (p_planes[0][0] * vertify[0] + p_planes[0][1] * vertify[1] + 
-				p_planes[0][2] * vertify[2] + p_planes[0][3])){
-				if(0 <= (p_planes[1][0] * vertify[0] + p_planes[1][1] * vertify[1] + 
-					p_planes[1][2] * vertify[2] + p_planes[1][3])){
-					if(0 <= (p_planes[2][0] * vertify[0] + p_planes[2][1] * vertify[1] + 
-					p_planes[2][2] * vertify[2] + p_planes[2][3])){
-						if(0 <= (p_planes[3][0] * vertify[0] + p_planes[3][1] * vertify[1] + 
-						p_planes[3][2] * vertify[2] + p_planes[3][3])){
-							if(0 <= (p_planes[4][0] * vertify[0] + p_planes[4][1] * vertify[1] + 
-								p_planes[4][2] * vertify[2] + p_planes[4][3])){
-								if(0 <= (p_planes[5][0] * vertify[0] + p_planes[5][1] * vertify[1] + 
-									p_planes[5][2] * vertify[2] + p_planes[5][3])){
-										return true;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	return false;
+   return false;
 }
-
