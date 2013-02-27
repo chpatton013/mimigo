@@ -183,6 +183,7 @@ void Universe::LoadInPlanets() {
    EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj");
    EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer3.obj");
    EntityComponent* gopher = LoadEntityComponentFromOBJ("meshes/go_gopher.obj");
+   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj");
    
 
    ParsePlanetFile("planets.lvl", &planets_);
@@ -201,6 +202,9 @@ void Universe::LoadInPlanets() {
    
    RootNode::Instance()->AddChild(new EntityComponentNode("gopher5", gopher));
    assets_.push_back(new Assets("gopher", "5", glm::vec3(-.1, -0.5, 0), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3]));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("flag6", flag));
+   assets_.push_back(new Assets("flag", "6", glm::vec3(0, 0.7, 0), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[10]));
 }
 
 Universe::Universe() :
