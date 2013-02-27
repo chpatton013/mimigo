@@ -18,11 +18,12 @@ void Camera::Update() {
 
 void Camera::SetView() {
    glm::mat4 camera = glm::lookAt(
-         glm::vec3(camera_pos_),
-         glm::vec3(camera_focus_),
-         camera_up_);
-	glm::mat4 comboMatrix = projection * camera;
-	ExtractPlanesGL(comboMatrix, false);
+      glm::vec3(camera_pos_),
+      glm::vec3(camera_focus_),
+      camera_up_
+   );
+   glm::mat4 comboMatrix = projection * camera;
+   ExtractPlanesGL(comboMatrix, false);
 
    safe_glUniformMatrix4fv(g_handles["uViewMatrix"], glm::value_ptr(camera));
 }

@@ -16,7 +16,6 @@ class SmallPlanetCamera : public Camera {
   private:
    LinearValueAnimator* pos_x_animator_;
    LinearValueAnimator* pos_y_animator_;
-
 };
 
 #endif

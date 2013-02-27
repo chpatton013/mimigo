@@ -37,25 +37,24 @@ void GLMesh::Draw(MatrixStack* transform) {
    transform->push();
    transform->multiply(trans_);
 
-   if(InPlane(verts_, transform)){
+   if (InPlane(verts_, transform)){
+      safe_glUniformMatrix4fv(
+         g_handles["uModelMatrix"], glm::value_ptr(transform->top())
+      );
+      safe_glUniformMatrix4fv(
+         g_handles["uNormalMatrix"],
+         glm::value_ptr(glm::transpose(glm::inverse(transform->top())))
+      );
 
+      const int ibo_length = faces_.size() * 3;
+      //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+      //glLineWidth(1.0);
+      glDrawElements(GL_TRIANGLES, ibo_length, GL_UNSIGNED_SHORT, 0);
+   }
 
-   safe_glUniformMatrix4fv(
-      g_handles["uModelMatrix"],
-      glm::value_ptr(transform->top()));
-   safe_glUniformMatrix4fv(
-      g_handles["uNormalMatrix"],
-      glm::value_ptr(glm::transpose(glm::inverse(transform->top()))));
-
-   const int ibo_length = faces_.size() * 3;
-   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-   //glLineWidth(1.0);
-   glDrawElements(GL_TRIANGLES, ibo_length, GL_UNSIGNED_SHORT, 0);
-   //meshesDrawn++;
-  }
    transform->pop();
 }
- 
+
 void GLMesh::CalculateNormals() {
    vert_normals_ = std::vector<glm::vec3>(verts_.size(),
          glm::vec3(0, 0, 0));

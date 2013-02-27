@@ -313,7 +313,10 @@ void Universe::Update() {
    std::set<CollidableEntity*>::iterator start = entities.begin(),
                                          stop = entities.end();
    if (SpatialManager::Instance()->Collide(player_, start, stop) != stop) {
-	PlayerEntersGravityFieldOf(planets_[0]);
+      std::cout << "Game Over!" << std::endl;
+      exit(0);
+      // Precursor for game state. TODO: reset events
+      // PlayerEntersGravityFieldOf(planets_[0]);
    }
 
    CheckPlayerChangesGravityFields();
@@ -327,11 +330,8 @@ void Universe::Update() {
 }
 
 void Universe::Draw() {
-   //meshesDrawn = 0;
    camera_->SetView();
    RootNode::Instance()->Draw();
-   //std::cout << "Meshes drawn: "<< meshesDrawn << std::endl;
-   
 }
 
 //DEBUG METHODS
