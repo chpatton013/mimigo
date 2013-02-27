@@ -14,37 +14,22 @@ varying vec4 vPosition;
 varying vec2 vTexture;
 
 void main() {
-   /*vec4 lightDirection = normalize(uLights[2]);*/
-   /*vec4 normal = normalize(vNormal);*/
+   vec4 lightDirection = vec4(-1.0, 0.0, 0.0, 0.0);
+   vec4 normal = vec4(normalize(vNormal.xyz), 1.0);
 
-   /*if (uCelShaderUnit == 1) {*/
-      /*gl_FragColor = vec4(0, 0, 0, 1.0);*/
-   /*}*/
-   /*else {*/
-      /*[> Toon shading <]*/
-      /*vec3 intensity;*/
-      /*float intensity_float = max(0.0, dot(lightDirection, normal));*/
-      /*if (intensity_float > 14.0/32.0)*/
-         /*intensity = vec3(1.0);*/
-      /*else if (intensity_float > 4.0/32.0)*/
-         /*intensity = vec3(0.5);*/
-      /*else*/
-         /*intensity = vec3(0.2);*/
+   vec3 intensity;
+   float intensity_float = max(0.0, dot(lightDirection, normal));
+   if (intensity_float > 14.0/32.0)
+      intensity = vec3(1.0);
+   else if (intensity_float > 4.0/32.0)
+      intensity = vec3(0.5);
+   else
+      intensity = vec3(0.2);
 
-      /*vec3 light = vDiffuse + vAmbient;*/
+   vec3 light = vDiffuse + vAmbient;
 
-      /*vec4 color;*/
-      /*if (uUseTexture == 0) {*/
-         /*color = vec4(light.r, light.g, light.b, 1.0);*/
-      /*} else {*/
-         /*color = texture2D(uTextureUnit, vTexture);*/
-         /*if (color.r == 1.0 && color.g == 0.0 && color.b == 1.0)*/
-            /*discard;*/
-         /*color = vec4(color.r + vAmbient.r/10.0,*/
-                      /*color.g + vAmbient.g/10.0,*/
-                      /*color.b + vAmbient.b/10.0, 1.0);*/
-      /*}*/
-      /*color = vec4(color.r * intensity.r, color.g*intensity.g, color.b*intensity.b, 1.0);*/
-      /*gl_FragColor = color;*/
-   /*}*/
+   vec4 color = vec4(normal.x, normal.y, normal.z, 1.0);
+   //color = vec4(light.r, light.g, light.b, 1.0);
+   //color = vec4(color.r * intensity.r, color.g*intensity.g, color.b*intensity.b, 1.0);
+   gl_FragColor = color;
 }
