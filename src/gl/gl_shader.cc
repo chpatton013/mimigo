@@ -65,9 +65,9 @@ bool GLShader::Install(const std::string& shader_name,
 
    /* get handles to attribute data */
    GET_ATTRIB(program_handle, "aPosition");
-   //GET_ATTRIB(program_handle, "aAmbient");
-   //GET_ATTRIB(program_handle, "aDiffuse");
-   //GET_ATTRIB(program_handle, "aSpecular");
+   GET_ATTRIB(program_handle, "aAmbient");
+   GET_ATTRIB(program_handle, "aDiffuse");
+   GET_ATTRIB(program_handle, "aSpecular");
    GET_ATTRIB(program_handle, "aNormal");
    //GET_ATTRIB(program_handle, "aTexture");
 

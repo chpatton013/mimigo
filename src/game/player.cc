@@ -6,9 +6,12 @@ Player::Player(Planet* planet, PlayerObserver* observer) :
    small_planet_mover_(NULL, observer),
    large_planet_mover_(NULL)
 {
+   assert(planet && observer);
+
    new SceneNode("player");
    RootNode::Instance()->AddChild(SceneNode::Get("player"));
    SceneNode::Get("player")->AddChild(SceneNode::Get("bunny"));
+   TransitionTo(planet);
 
    set_bounding_region(new SphericalBoundingRegion(
       position(), SceneNode::Get("player")->GetWeightedAverageRadius() * 0.25f

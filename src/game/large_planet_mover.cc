@@ -2,7 +2,6 @@
 #include "player.h"
 #include "util/glm_util.h"
 
-static float kJumpSlowdownHeld = 0.01f;
 static float kJumpSlowdown = 0.017f;
 static float kJumpSpeed = 0.2f;
 
@@ -10,7 +9,7 @@ static float kAngleDelta = 0.5f;
 static float kAngleAcceleration = 0.1f;
 static float kRotateDelta = 3.0f;
 
-static float radians(float degrees) { return degrees/180.0*acos(-1.0); }
+static float radians(float degrees) { return degrees * M_PI / 180.0; }
 
 LargePlanetMover::LargePlanetMover(Planet* planet) :
    planet_(planet),

@@ -11,9 +11,10 @@ class LargePlanetCamera : public Camera {
    LargePlanetCamera(const glm::vec3& focus, const glm::vec3& position,
                      const glm::vec3& destination, const glm::vec3& destination_up,
                      const glm::vec3& destination_facing);
-   virtual void OnPlayerMove(const glm::vec3& position, const glm::vec3& up,
-                             const glm::vec3& facing);
-   virtual void OnPlayerSwitchPlanets(Planet* planet) {}
+   virtual void OnPlayerMove(
+      const glm::vec3& position, const glm::vec3& up, const glm::vec3& facing
+   );
+   virtual void OnPlayerSwitchPlanets(Planet* planet) { assert(planet); }
    virtual void Update();
 
   private:

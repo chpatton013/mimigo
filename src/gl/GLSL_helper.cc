@@ -36,6 +36,7 @@ int printOglError (const char *file, int line) {
    {
       retCode = 1;
       glErr = glGetError ();
+      std::cerr << "Error in file '" << file << "' at line '" << line << "': " << glErr << std::endl;
    }
    return retCode;
 }

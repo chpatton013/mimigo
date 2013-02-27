@@ -62,7 +62,7 @@ void Initialize() {
    initSound();
    InitializeGL();
    InitializeGlew();
-   new GLShader("main", "src/shaders/wave.vert", "src/shaders/wave.frag");
+   new GLShader("main", "src/shaders/vert_shader.glsl", "src/shaders/frag_shader.glsl");
 }
 
 void LoadResources() {
@@ -71,13 +71,6 @@ void LoadResources() {
    mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.3f)));
 
    RootNode::Instance()->AddChild(mesh);
-}
-
-void LoadParticle(int id){
-   EntityComponent* particle_entity = LoadEntityComponentFromOBJ("meshes/sphere.obj");
-   EntityComponentNode* particle_mesh = new EntityComponentNode("bubbles" + id, particle_entity);
-   particle_mesh-> apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.1f)));
-   RootNode::Instance()->AddChild(particle_mesh);
 }
 
 void StartMainLoop(Universe* universe) {
@@ -89,11 +82,6 @@ void StartMainLoop(Universe* universe) {
 int main(int , char** ) {
    Initialize();
    LoadResources();
-   
-   for(int i = 0; i < 15; i++){
-      LoadParticle(i);
-   }
-
 
    Universe* universe = new Universe();
    loopMusic(NODENS);

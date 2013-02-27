@@ -18,11 +18,11 @@ varying vec4 vNormal;
 varying vec2 vTexture;
 
 void main() {
-  /* First model transforms */
-  vPosition = uModelMatrix * vec4(aPosition.x, aPosition.y, aPosition.z, 1);
-  vPosition = uViewMatrix * vPosition;
-  vPosition = uProjMatrix * vPosition;
-  gl_Position = vec4(vPosition.x, aPosition.y, aPosition.z, 1.0f);
+   vPosition = vec4(aPosition.x, aPosition.y, aPosition.z, 1.0);
+   gl_Position = uProjMatrix * uViewMatrix * uModelMatrix * vPosition;
 
-  /*vNormal = normalize(uNormalMatrix * vec4(aNormal.x, aNormal.y, aNormal.z, 0.0));*/
+   vNormal = uNormalMatrix * vec4(aNormal.x, aNormal.y, aNormal.z, 0.0);
+
+   vDiffuse = aDiffuse;
+   vAmbient = aAmbient;
 }

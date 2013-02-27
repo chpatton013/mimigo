@@ -19,6 +19,11 @@ class EntityComponent {
    virtual void Draw(MatrixStack* transform);
    virtual bool Update();
 
+   virtual void set_texture(const std::string& texture) {
+      std::cout << "set_texture(" << texture << ") not implemented for EntityComponent" << std::endl;
+      assert(false);
+   }
+
    virtual glm::vec3 position() const { return position_; }
    virtual Rotation rotation() const { return rotation_; }
    virtual glm::vec3 scale() const { return scale_; }

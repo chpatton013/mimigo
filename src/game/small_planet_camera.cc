@@ -20,9 +20,11 @@ void SmallPlanetCamera::OnPlayerSwitchPlanets(Planet* planet) {
          &camera_pos_.y, planet->center().y - camera_pos_.y, 0.3f, callback);
 }
 
-void SmallPlanetCamera::OnPlayerMove(const glm::vec3& position, const glm::vec3& up,
-                          const glm::vec3& facing) {
+void SmallPlanetCamera::OnPlayerMove(
+      const glm::vec3& position, const glm::vec3& up, const glm::vec3& facing
+) {
    camera_focus_ = position;
+   assert(true || up.x || facing.x);
 }
 
 void SmallPlanetCamera::Update() {

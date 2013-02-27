@@ -2,9 +2,10 @@
 #include "scene_hierarchy/root_node.h"
 #include "scene_hierarchy/scene_node.h"
 #include "planet.h"
+#include <sstream>
 
 
-class Planet; 
+class Planet;
 class SceneNode;
 
 class Particles {
@@ -14,12 +15,12 @@ class Particles {
       void Update(int id);
       float r, g, b;
       glm::vec3 center;
-      
+
    private:
-      bool active;    
+      bool active;
       float life;
-      float fade;  
-      
+      float fade;
+
       glm::vec3 direction;
       glm::vec3 gravity;
      // float xi, yi, zi;

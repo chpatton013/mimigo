@@ -102,7 +102,7 @@ GLMesh::Face ParseOBJFace(const std::string& line,
 
 void ParseMaterials(const std::string& fname) {
    std::ifstream file;
-   file.open(fname.c_str());
+   file.open((std::string("meshes/") + std::string(fname.c_str())).c_str());
    Material m;
    const std::string kNewHeader("newmtl");
 
@@ -308,7 +308,7 @@ EntityComponent* MakeCube(const std::string& name, const std::string& texture) {
    g_entities[name] = new Entity(
       meshes, glm::vec3(0.0), Rotation(), glm::vec3(1.0), name
    );
-   //g_entities[name]->set_texture(texture);
+   g_entities[name]->set_texture(texture);
    assert(stl_util::ContainsKey(g_entities, name));
    //g_scene->Add(g_entities[name]);
    return g_entities[name];

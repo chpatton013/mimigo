@@ -20,8 +20,9 @@ class Camera : public PlayerObserver {
 
    void SetView();
 
-   virtual void OnPlayerMove(const glm::vec3& position, const glm::vec3& up,
-                             const glm::vec3& facing);
+   virtual void OnPlayerMove(
+      const glm::vec3& position, const glm::vec3& up, const glm::vec3& facing
+   );
 
    glm::vec3 position() const { return camera_pos_; }
    glm::vec3 focus() const { return camera_focus_; }

@@ -13,7 +13,7 @@ varying vec4 vNormal;
 
 void main(void)
 {
-   vPosition = vec4(aPosition.x, aPosition.y, aPosition.z, 1.0f);
+   vPosition = vec4(aPosition.x, aPosition.y, aPosition.z, 1.0);
    gl_Position = uProjMatrix * uViewMatrix * uModelMatrix * vPosition;
    vNormal = uNormalMatrix * vec4(aNormal.x, aNormal.y, aNormal.z, 0.0f);
 }

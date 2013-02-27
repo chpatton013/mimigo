@@ -1,21 +1,10 @@
 #ifndef _UNIVERSE_H_
 #define _UNIVERSE_H_
 
-/*<<<<<<< HEAD
-#include "../core/game.h"
-#include "../core/timer.h"
-#include "logic_puzzle.h"
-#include "planet.h"
-#include "particles.h"
-#include "assets.h"
-=======
->>>>>>> 84ba2141e3c518655025bcf1f6bcc5808e0012da
-*/
-
 #include "assets.h"
 #include <map>
 #include <vector>
-#include "particles.h"
+#include "particleSys.h"
 #include "planet.h"
 #include "../core/entity.h"
 #include "../core/game.h"
@@ -100,9 +89,9 @@ void print_vec(const glm::vec3& v) {
    GamePlayType game_play_type_;
    std::vector<Planet*> planets_;
    std::set<Entity*> entities_;
-   std::vector<Particles*> particles_;
    std::vector<Assets*> assets_;
    Player* player_;
+   ParticleSystem* ps;
 };
 
 #endif
