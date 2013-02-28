@@ -254,7 +254,7 @@ Universe::Universe() :
    SpatialManager::Instance()->Establish(min, max);
 
    ps = new ParticleSystem(15);
-   light_ = new DirectionLight(glm::vec3(0.6f, 0.3f, 0.1f),
+   light_ = new DirectionLight(glm::vec3(0.4f, 0.4f, 0.4f),
                                glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
                                glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
 
