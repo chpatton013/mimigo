@@ -7,11 +7,13 @@
 #include "scene_hierarchy/entity_component_node.h"
 #include "small_planet_camera.h"
 #include "large_planet_camera.h"
+#include "checkpoint.h"
 #include <iostream>
 #include <fstream>
 #include <set>
 #include <sstream>
 #include <utility>
+#include <iterator>
 
 
 std::string asteroid_event_name(const std::string &id, int planet_id, float angle) {
@@ -100,6 +102,41 @@ void Universe::ParseAsteroidFile() {
    }
 }
 
+void ParseCheckPointsFile(std::vector<Planet*> planets) {
+   std::ifstream in("checkpoints.lvl");
+
+	std::string id;
+         int planet_id;
+         float angle;
+std::string full_id;
+
+
+   std::string line;
+   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj");
+   while (getline(in, line)) {
+      std::istringstream stream(line);
+      if (line.empty() || line[0] == '#') {
+      }
+      else {
+         stream >> id;
+         stream >> planet_id;
+         --planet_id;
+         stream >> angle;
+
+         full_id = "checkpoint" + id;
+
+	std::cout << full_id;
+
+            RootNode::Instance()->AddChild(new
+             EntityComponentNode(full_id, flag));
+
+        SceneNode::Get(full_id)->set_visible(true);
+
+SpatialManager::Instance()->AddEntity(new CheckPoint(planets[planet_id], planet_id,  angle, full_id));
+      }
+   }
+}
+
 void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets) {
    std::ifstream in(filename.c_str());
 
@@ -114,7 +151,6 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
    EntityComponent* cactus = LoadEntityComponentFromOBJ("meshes/cactus.obj");
    EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower3.obj");
    EntityComponent* coral = LoadEntityComponentFromOBJ("meshes/coral.obj");
-   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj");
    EntityComponent* asteroid = LoadEntityComponentFromOBJ("meshes/asteroid.obj");
 
    while (getline(in, line)) {
@@ -142,7 +178,7 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
          planets->push_back(new Planet(planet_type, id, position, radius, gravity_radius));
       }
    }
-   RootNode::Instance()->AddChild(new EntityComponentNode("tree1", tree));
+  /* RootNode::Instance()->AddChild(new EntityComponentNode("tree1", tree));
    new Assets("tree", "1", glm::vec3(-10.0, 0.4, 0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), 0.0);
 
    RootNode::Instance()->AddChild(new EntityComponentNode("tree2", coral));
@@ -156,9 +192,6 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
 
    RootNode::Instance()->AddChild(new EntityComponentNode("cactus5", cactus));
    new Assets("cactus", "5", glm::vec3(-7.8,  1.45,  0.0), glm::vec3(0.7), glm::vec3(1.0, 1.0, 1.0), 0.0);
-
-   RootNode::Instance()->AddChild(new EntityComponentNode("tree6", flag));
-   new Assets("tree", "6", glm::vec3(-0.3, 2.4, 0), glm::vec3(0.5), glm::vec3(1.0, 1.0, 1.0), 0.0);
 
    RootNode::Instance()->AddChild(new EntityComponentNode("flower7", flower));
    new Assets("flower", "7", glm::vec3(-6.0, .2, 0), glm::vec3(0.25), glm::vec3(1.0, 1.0, 1.0), 0.0);
@@ -176,11 +209,35 @@ RootNode::Instance()->AddChild(new EntityComponentNode("rock11", asteroid));
    new Assets("rock", "11", glm::vec3(-7.5,  0.5,  0.45), glm::vec3(0.3), glm::vec3(0.5, 0.5, 0.0), 45.0);
 
 RootNode::Instance()->AddChild(new EntityComponentNode("shark12", shark));
-   new Assets("shark", "12", glm::vec3(-2.7,  -0.75,  0.0), glm::vec3(1.0), glm::vec3(0.5, 0.5, 0.0), 45.0);
+   new Assets("shark", "12", glm::vec3(-2.7,  -0.75,  0.0), glm::vec3(1.0), glm::vec3(0.5, 0.5, 0.0), 45.0);*/
 }
 
 void Universe::LoadInPlanets() {
+   EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj");
+   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer3.obj");
+   EntityComponent* gopher = LoadEntityComponentFromOBJ("meshes/go_gopher.obj");
+   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj");
+   
+
    ParsePlanetFile("planets.lvl", &planets_);
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("shark1", shark));
+   assets_.push_back(new Assets("shark", "1", glm::vec3(0, 0.8, 0), glm::vec3(5.0, 5.0, 5.0), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("fish2", fish));
+   assets_.push_back(new Assets("fish", "2", glm::vec3(0, 0.8, 0), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("fish3", fish));
+   assets_.push_back(new Assets("fish", "3", glm::vec3(-0.8, 0, 0), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("gopher4", gopher));
+   assets_.push_back(new Assets("gopher", "4", glm::vec3(.1, 0.5, 0), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3]));   
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("gopher5", gopher));
+   assets_.push_back(new Assets("gopher", "5", glm::vec3(-.1, -0.5, 0), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3]));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("flag6", flag));
+   assets_.push_back(new Assets("flag", "6", glm::vec3(0, 0.7, 0), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[10]));
 }
 
 Universe::Universe() :
@@ -189,13 +246,19 @@ Universe::Universe() :
    camera_ = new SmallPlanetCamera();
    LoadInPlanets();
    ParseAsteroidFile();
+   ParseCheckPointsFile(planets_);
    player_ = new Player(planets_[0], camera_);
+
+   glm::vec3 min, max;
+   GetBounds(&min, &max);
+   SpatialManager::Instance()->Establish(min, max);
 
    ps = new ParticleSystem(15);
    light_ = new DirectionLight(glm::vec3(0.6f, 0.3f, 0.1f),
                                glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
                                glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
 
+   currentCheckpoint = 0;
    PlayerEntersGravityFieldOf(planets_[0]);
 }
 
@@ -278,16 +341,33 @@ void Universe::Update() {
    player_->Update();
    SpatialManager::Instance()->Update();
 
-   if (!SpatialManager::Instance()->Collide(player_).empty()) {
-      std::cout << "Game Over!" << std::endl;
-      exit(0);
-      // Precursor for game state. TODO: reset events
-      // PlayerEntersGravityFieldOf(planets_[0]);
+	std::set<CollidableEntity*> collidedEntities = SpatialManager::Instance()->Collide(player_);
+
+   if (!collidedEntities.empty()) {
+	for (std::set<CollidableEntity*>::iterator it = collidedEntities.begin(); it != collidedEntities.end(); ++it) {
+		if((*it)->type() == 0){
+  			PlayerEntersGravityFieldOf(planets_[currentCheckpoint]);
+			break;
+		}
+		else if((*it)->type() == 1){
+  			currentCheckpoint = dynamic_cast<CheckPoint*>(*it)->planet();
+			break;
+		}
+	}
+	
    }
 
    CheckPlayerChangesGravityFields();
 
    ps->update();
+   assets_[0]->Bounce();
+   assets_[1]->BackAndForth(0, 90, 5.0);
+   assets_[2]->BackAndForth(200, 270, 5.0);
+   assets_[3]->UpAndDown(.5, 0.0, .1, .05);
+   assets_[4]->UpAndDown(.5, 0.0, .1, .05);
+   
+   planets_[4]->Pogo();
+   planets_[5]->Gopo();
 
 }
 
@@ -344,4 +424,25 @@ void Universe::OnJumpButtonDown() {
 }
 void Universe::OnJumpButtonUp() {
    player_->ReleaseJump();
+}
+
+void Universe::GetBounds(glm::vec3* min, glm::vec3* max) {
+   glm::vec3 running_min(FLT_MAX), running_max(FLT_MIN);
+
+   for (std::vector<Planet*>::iterator itr = planets_.begin();
+         itr != planets_.end(); ++itr) {
+      glm::vec3 current_min = (*itr)->bounding_region()->min();
+      glm::vec3 current_max = (*itr)->bounding_region()->max();
+
+      running_min.x = std::min(running_min.x, current_min.x);
+      running_min.y = std::min(running_min.y, current_min.y);
+      running_min.z = std::min(running_min.z, current_min.z);
+
+      running_max.x = std::max(running_max.x, current_max.x);
+      running_max.y = std::max(running_max.y, current_max.y);
+      running_max.z = std::max(running_max.z, current_max.z);
+   }
+
+   *min = running_min;
+   *max = running_max;
 }

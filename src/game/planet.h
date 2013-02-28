@@ -3,9 +3,11 @@
 
 #include "scene_hierarchy/scene_node.h"
 #include "scene_hierarchy/root_node.h"
+#include "../spatial_hierarchy/collidable_entity.h"
+#include "../spatial_hierarchy/spherical_bounding_region.h"
 
 enum PlanetType { PLANET_TYPE_SMALL, PLANET_TYPE_LARGE };
-class Planet {
+class Planet : public CollidableEntity {
   public:
    Planet(PlanetType planet_type, const std::string& id,
           const glm::vec3& center, float radius, float gravity_radius) :
@@ -16,6 +18,8 @@ class Planet {
       id_(id)
    {
       Initialize(id);
+
+      set_bounding_region(new SphericalBoundingRegion(center, radius));
    }
 
    bool PositionWithinGravityField(const glm::vec3& position);
@@ -28,6 +32,10 @@ class Planet {
    bool is_large_planet() const
      { return planet_type_ == PLANET_TYPE_LARGE; }
    const std::string& id() const { return id_; }
+   int type(){ return 2;}
+   
+   void Pogo();
+   void Gopo();
 
   private:
    void Initialize(const std::string& id);
@@ -37,6 +45,11 @@ class Planet {
    float radius_;
    float gravity_radius_;
    std::string id_;
+   
+   bool turn;
+   bool turn2;
+   SceneNode *mesh;
+   
 };
 
 #endif

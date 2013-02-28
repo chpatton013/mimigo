@@ -24,6 +24,8 @@ void SmallPlanetCamera::OnPlayerMove(
       const glm::vec3& position, const glm::vec3& up, const glm::vec3& facing
 ) {
    camera_focus_ = position;
+	camera_pos_ = position;
+	camera_pos_.z += 3.0;
    assert(true || up.x || facing.x);
 }
 

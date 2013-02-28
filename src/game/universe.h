@@ -85,6 +85,8 @@ void print_vec(const glm::vec3& v) {
    void OnMovementButtonUp();
    void UseLargePlanetCamera();
 
+   void GetBounds(glm::vec3* min, glm::vec3* max);
+
    std::map<std::string, std::vector<Event> > event_map_;
 
    Camera* camera_;
@@ -95,6 +97,7 @@ void print_vec(const glm::vec3& v) {
    Player* player_;
    ParticleSystem* ps;
    Light* light_;
+   int currentCheckpoint;
 };
 
 #endif

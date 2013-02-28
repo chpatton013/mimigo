@@ -4,6 +4,7 @@
 #include <set>
 #include "bounding_region.h"
 #include "collidable_entity.h"
+#include "octree.h"
 
 class SpatialManager {
   public:
@@ -26,18 +27,26 @@ class SpatialManager {
    virtual void AddEntity(CollidableEntity* entity);
    virtual void RemoveEntity(CollidableEntity* entity);
 
+   virtual void Establish(
+      const glm::vec3& min_bound, const glm::vec3& max_bound
+   );
+
    virtual const std::set<CollidableEntity*>& entities() const {
       return entities_;
    }
 
   private:
    static SpatialManager* space_mgr_;
-   SpatialManager() {}
+   SpatialManager() : octree_(NULL) {}
    virtual ~SpatialManager() {}
 
    std::set<CollidableEntity*> CollideComplete(CollidableEntity* subject);
+   std::set<CollidableEntity*> CollideOctree(CollidableEntity* subject);
+
+   void GetBounds(glm::vec3* min, glm::vec3* max);
 
    std::set<CollidableEntity*> entities_;
+   Octree* octree_;
 };
 
 #endif
