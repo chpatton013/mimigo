@@ -178,7 +178,7 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
          planets->push_back(new Planet(planet_type, id, position, radius, gravity_radius));
       }
    }
-   RootNode::Instance()->AddChild(new EntityComponentNode("tree1", tree));
+  /* RootNode::Instance()->AddChild(new EntityComponentNode("tree1", tree));
    new Assets("tree", "1", glm::vec3(-10.0, 0.4, 0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), 0.0);
 
    RootNode::Instance()->AddChild(new EntityComponentNode("tree2", coral));
@@ -209,11 +209,35 @@ RootNode::Instance()->AddChild(new EntityComponentNode("rock11", asteroid));
    new Assets("rock", "11", glm::vec3(-7.5,  0.5,  0.45), glm::vec3(0.3), glm::vec3(0.5, 0.5, 0.0), 45.0);
 
 RootNode::Instance()->AddChild(new EntityComponentNode("shark12", shark));
-   new Assets("shark", "12", glm::vec3(-2.7,  -0.75,  0.0), glm::vec3(1.0), glm::vec3(0.5, 0.5, 0.0), 45.0);
+   new Assets("shark", "12", glm::vec3(-2.7,  -0.75,  0.0), glm::vec3(1.0), glm::vec3(0.5, 0.5, 0.0), 45.0);*/
 }
 
 void Universe::LoadInPlanets() {
+   EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj");
+   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer3.obj");
+   EntityComponent* gopher = LoadEntityComponentFromOBJ("meshes/go_gopher.obj");
+   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj");
+   
+
    ParsePlanetFile("planets.lvl", &planets_);
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("shark1", shark));
+   assets_.push_back(new Assets("shark", "1", glm::vec3(0, 0.8, 0), glm::vec3(5.0, 5.0, 5.0), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("fish2", fish));
+   assets_.push_back(new Assets("fish", "2", glm::vec3(0, 0.8, 0), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("fish3", fish));
+   assets_.push_back(new Assets("fish", "3", glm::vec3(-0.8, 0, 0), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("gopher4", gopher));
+   assets_.push_back(new Assets("gopher", "4", glm::vec3(.1, 0.5, 0), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3]));   
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("gopher5", gopher));
+   assets_.push_back(new Assets("gopher", "5", glm::vec3(-.1, -0.5, 0), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3]));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("flag6", flag));
+   assets_.push_back(new Assets("flag", "6", glm::vec3(0, 0.7, 0), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[10]));
 }
 
 Universe::Universe() :
@@ -336,6 +360,14 @@ void Universe::Update() {
    CheckPlayerChangesGravityFields();
 
    ps->update();
+   assets_[0]->Bounce();
+   assets_[1]->BackAndForth(0, 90, 5.0);
+   assets_[2]->BackAndForth(200, 270, 5.0);
+   assets_[3]->UpAndDown(.5, 0.0, .1, .05);
+   assets_[4]->UpAndDown(.5, 0.0, .1, .05);
+   
+   planets_[4]->Pogo();
+   planets_[5]->Gopo();
 
 }
 
