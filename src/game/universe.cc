@@ -43,7 +43,7 @@ void Universe::ParseAsteroidFile() {
 
    std::string line;
    std::string event("NULL");
-   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/asteroid.obj", "textures/earth1.bmp");
+   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/asteroid.obj", "textures/purple.bmp");
    EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer3.obj", "textures/earth1.bmp");
    while (getline(in, line)) {
       std::istringstream stream(line);
@@ -213,9 +213,9 @@ RootNode::Instance()->AddChild(new EntityComponentNode("shark12", shark));
 }
 
 void Universe::LoadInPlanets() {
-   EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj", "textures/earth1.bmp");
-   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer3.obj", "textures/earth1.bmp");
-   EntityComponent* gopher = LoadEntityComponentFromOBJ("meshes/go_gopher.obj", "textures/earth1.bmp");
+   EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj", "textures/dots.bmp");
+   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer3.obj", "textures/sand.bmp");
+   EntityComponent* gopher = LoadEntityComponentFromOBJ("meshes/go_gopher.obj", "textures/edgar.bmp");
    EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj", "textures/earth1.bmp");
    
 
@@ -235,9 +235,6 @@ void Universe::LoadInPlanets() {
    
    RootNode::Instance()->AddChild(new EntityComponentNode("gopher5", gopher));
    assets_.push_back(new Assets("gopher", "5", glm::vec3(-.1, -0.5, 0), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3]));
-   
-   RootNode::Instance()->AddChild(new EntityComponentNode("flag6", flag));
-   assets_.push_back(new Assets("flag", "6", glm::vec3(0, 0.7, 0), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[10]));
 }
 
 Universe::Universe() :
