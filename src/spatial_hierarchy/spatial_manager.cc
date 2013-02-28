@@ -54,9 +54,12 @@ std::set<CollidableEntity*>::iterator SpatialManager::Collide(
 ) {
    for (
       BoundingRegion* subject_br = subject->bounding_region();
-      (start != stop) && (Collision::CheckCollision(
-         subject_br, (*start)->bounding_region()
-      ) == Collision::SEPARATE);
+      (start != stop) && (
+         *start != subject &&
+         Collision::CheckCollision(
+            subject_br, (*start)->bounding_region()
+         ) == Collision::SEPARATE
+      );
       ++start
    ) { /* I am a beautiful strong for-loop who don't need no body! */ }
 
