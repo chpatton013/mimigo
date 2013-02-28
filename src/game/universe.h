@@ -97,6 +97,7 @@ void print_vec(const glm::vec3& v) {
    Player* player_;
    ParticleSystem* ps;
    Light* light_;
+   int currentCheckpoint;
 };
 
 #endif

@@ -32,6 +32,7 @@ class Planet : public CollidableEntity {
    bool is_large_planet() const
      { return planet_type_ == PLANET_TYPE_LARGE; }
    const std::string& id() const { return id_; }
+   int type(){ return 2;}
 
   private:
    void Initialize(const std::string& id);

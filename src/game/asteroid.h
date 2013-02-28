@@ -16,6 +16,7 @@ class Asteroid : public CollidableEntity {
    virtual ~Asteroid();
    bool Update();
    glm::vec3 position();
+   int type(){ return 0;}
 
   private:
    void UpdateMeshPosition();

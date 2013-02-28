@@ -17,6 +17,8 @@ class CollidableEntity : public Entity {
          delete bounding_region_;
       }
    }
+   
+   virtual int type() = 0;
 
    BoundingRegion* bounding_region() { return bounding_region_; }
    BoundingRegion* set_bounding_region(BoundingRegion* br) {

@@ -7,11 +7,13 @@
 #include "scene_hierarchy/entity_component_node.h"
 #include "small_planet_camera.h"
 #include "large_planet_camera.h"
+#include "checkpoint.h"
 #include <iostream>
 #include <fstream>
 #include <set>
 #include <sstream>
 #include <utility>
+#include <iterator>
 
 
 std::string asteroid_event_name(const std::string &id, int planet_id, float angle) {
@@ -100,6 +102,41 @@ void Universe::ParseAsteroidFile() {
    }
 }
 
+void ParseCheckPointsFile(std::vector<Planet*> planets) {
+   std::ifstream in("checkpoints.lvl");
+
+	std::string id;
+         int planet_id;
+         float angle;
+std::string full_id;
+
+
+   std::string line;
+   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj");
+   while (getline(in, line)) {
+      std::istringstream stream(line);
+      if (line.empty() || line[0] == '#') {
+      }
+      else {
+         stream >> id;
+         stream >> planet_id;
+         --planet_id;
+         stream >> angle;
+
+         full_id = "checkpoint" + id;
+
+	std::cout << full_id;
+
+            RootNode::Instance()->AddChild(new
+             EntityComponentNode(full_id, flag));
+
+        SceneNode::Get(full_id)->set_visible(true);
+
+SpatialManager::Instance()->AddEntity(new CheckPoint(planets[planet_id], planet_id,  angle, full_id));
+      }
+   }
+}
+
 void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets) {
    std::ifstream in(filename.c_str());
 
@@ -114,7 +151,6 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
    EntityComponent* cactus = LoadEntityComponentFromOBJ("meshes/cactus.obj");
    EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower3.obj");
    EntityComponent* coral = LoadEntityComponentFromOBJ("meshes/coral.obj");
-   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj");
    EntityComponent* asteroid = LoadEntityComponentFromOBJ("meshes/asteroid.obj");
 
    while (getline(in, line)) {
@@ -157,9 +193,6 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
    RootNode::Instance()->AddChild(new EntityComponentNode("cactus5", cactus));
    new Assets("cactus", "5", glm::vec3(-7.8,  1.45,  0.0), glm::vec3(0.7), glm::vec3(1.0, 1.0, 1.0), 0.0);
 
-   RootNode::Instance()->AddChild(new EntityComponentNode("tree6", flag));
-   new Assets("tree", "6", glm::vec3(-0.3, 2.4, 0), glm::vec3(0.5), glm::vec3(1.0, 1.0, 1.0), 0.0);
-
    RootNode::Instance()->AddChild(new EntityComponentNode("flower7", flower));
    new Assets("flower", "7", glm::vec3(-6.0, .2, 0), glm::vec3(0.25), glm::vec3(1.0, 1.0, 1.0), 0.0);
 
@@ -189,6 +222,7 @@ Universe::Universe() :
    camera_ = new SmallPlanetCamera();
    LoadInPlanets();
    ParseAsteroidFile();
+   ParseCheckPointsFile(planets_);
    player_ = new Player(planets_[0], camera_);
 
    glm::vec3 min, max;
@@ -200,6 +234,7 @@ Universe::Universe() :
                                glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
                                glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
 
+   currentCheckpoint = 0;
    PlayerEntersGravityFieldOf(planets_[0]);
 }
 
@@ -282,11 +317,20 @@ void Universe::Update() {
    player_->Update();
    SpatialManager::Instance()->Update();
 
-   if (!SpatialManager::Instance()->Collide(player_).empty()) {
-      std::cout << "Game Over!" << std::endl;
-      exit(0);
-      // Precursor for game state. TODO: reset events
-      // PlayerEntersGravityFieldOf(planets_[0]);
+	std::set<CollidableEntity*> collidedEntities = SpatialManager::Instance()->Collide(player_);
+
+   if (!collidedEntities.empty()) {
+	for (std::set<CollidableEntity*>::iterator it = collidedEntities.begin(); it != collidedEntities.end(); ++it) {
+		if((*it)->type() == 0){
+  			PlayerEntersGravityFieldOf(planets_[currentCheckpoint]);
+			break;
+		}
+		else if((*it)->type() == 1){
+  			currentCheckpoint = dynamic_cast<CheckPoint*>(*it)->planet();
+			break;
+		}
+	}
+	
    }
 
    CheckPlayerChangesGravityFields();
