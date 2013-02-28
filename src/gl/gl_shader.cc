@@ -69,7 +69,7 @@ bool GLShader::Install(const std::string& shader_name,
    GET_ATTRIB(program_handle, "aDiffuse");
    GET_ATTRIB(program_handle, "aSpecular");
    GET_ATTRIB(program_handle, "aNormal");
-   //GET_ATTRIB(program_handle, "aTexture");
+   GET_ATTRIB(program_handle, "aTexture");
 
    GET_UNIFORM(program_handle, "uProjMatrix");
    GET_UNIFORM(program_handle, "uViewMatrix");
