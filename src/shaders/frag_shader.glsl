@@ -25,9 +25,9 @@ void main() {
    if (intensity_float > 14.0/32.0)
       intensity = vec3(1.0);
    else if (intensity_float > 4.0/32.0)
-      intensity = vec3(0.8);
+      intensity = vec3(0.5);
    else
-      intensity = vec3(0.7);
+      intensity = vec3(0.4);
 
    vec3 light = vDiffuse + vAmbient;
 
@@ -38,7 +38,7 @@ void main() {
 
 
 gl_FragColor = vec4(vTexture.s, vTexture.t,0,1);
-gl_FragColor = vec4(texColor1[0] + color[0], texColor1[1] + color[1], texColor1[2] + color[2], 1);
+gl_FragColor = vec4(texColor1[0], texColor1[1], texColor1[2], 1);
 
 
 

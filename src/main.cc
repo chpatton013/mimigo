@@ -67,7 +67,7 @@ void Initialize() {
 }
 
 void LoadResources() {
-   EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/edgar.obj", "textures/crate.bmp");
+   EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/edgar.obj", "textures/brown.bmp");
    EntityComponentNode* mesh = new EntityComponentNode("bunny", go_gopher);
    mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.3f)));
 
@@ -77,6 +77,11 @@ void LoadResources() {
    LoadTexture("textures/cloud5.bmp");
    LoadTexture("textures/crate.bmp");
    LoadTexture("textures/flowerTex.bmp");
+   LoadTexture("textures/brown.bmp");
+   LoadTexture("textures/dots.bmp");
+   LoadTexture("textures/grass.bmp");
+   LoadTexture("textures/sand.bmp");
+   LoadTexture("textures/purple.bmp");
 
 }
 

@@ -107,11 +107,11 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
    PlanetType planet_type = PLANET_TYPE_SMALL;
 
    std::string line;
-   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj", "textures/earth1.bmp");
-   EntityComponent* tree = LoadEntityComponentFromOBJ("meshes/tree3.obj", "textures/earth1.bmp");
-   EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj", "textures/crate.bmp");
+   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj", "textures/dots.bmp");
+   EntityComponent* tree = LoadEntityComponentFromOBJ("meshes/tree3.obj", "textures/grass.bmp");
+   EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj", "textures/purple.bmp");
    EntityComponent* adobe = LoadEntityComponentFromOBJ("meshes/adobe.obj", "textures/earth1.bmp");
-   EntityComponent* house = LoadEntityComponentFromOBJ("meshes/house.obj", "textures/earth1.bmp");
+   EntityComponent* house = LoadEntityComponentFromOBJ("meshes/house.obj", "textures/sand.bmp");
    EntityComponent* cactus = LoadEntityComponentFromOBJ("meshes/cactus.obj", "textures/earth1.bmp");
    EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower3.obj", "textures/flowerTex.bmp");
    EntityComponent* coral = LoadEntityComponentFromOBJ("meshes/coral.obj", "textures/cloud5.bmp");
