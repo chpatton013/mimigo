@@ -191,6 +191,10 @@ Universe::Universe() :
    ParseAsteroidFile();
    player_ = new Player(planets_[0], camera_);
 
+   glm::vec3 min, max;
+   GetBounds(&min, &max);
+   SpatialManager::Instance()->Establish(min, max);
+
    ps = new ParticleSystem(15);
    light_ = new DirectionLight(glm::vec3(0.6f, 0.3f, 0.1f),
                                glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
@@ -344,4 +348,25 @@ void Universe::OnJumpButtonDown() {
 }
 void Universe::OnJumpButtonUp() {
    player_->ReleaseJump();
+}
+
+void Universe::GetBounds(glm::vec3* min, glm::vec3* max) {
+   glm::vec3 running_min(FLT_MAX), running_max(FLT_MIN);
+
+   for (std::vector<Planet*>::iterator itr = planets_.begin();
+         itr != planets_.end(); ++itr) {
+      glm::vec3 current_min = (*itr)->bounding_region()->min();
+      glm::vec3 current_max = (*itr)->bounding_region()->max();
+
+      running_min.x = std::min(running_min.x, current_min.x);
+      running_min.y = std::min(running_min.y, current_min.y);
+      running_min.z = std::min(running_min.z, current_min.z);
+
+      running_max.x = std::max(running_max.x, current_max.x);
+      running_max.y = std::max(running_max.y, current_max.y);
+      running_max.z = std::max(running_max.z, current_max.z);
+   }
+
+   *min = running_min;
+   *max = running_max;
 }
