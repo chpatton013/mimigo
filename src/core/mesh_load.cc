@@ -131,7 +131,7 @@ void ParseMaterials(const std::string& fname) {
 
 // Parse functions //
 
-EntityComponent* LoadEntityComponentFromOBJ(const std::string& filename) {
+EntityComponent* LoadEntityComponentFromOBJ(const std::string& filename, const std::string& texture) {
    std::vector<GLMesh*> meshes;
    const std::string kCommentHeader("#");
    const std::string kTextureHeader("vt");
@@ -195,6 +195,8 @@ EntityComponent* LoadEntityComponentFromOBJ(const std::string& filename) {
    g_entities[filename] = new Entity(
       meshes, glm::vec3(0.0), Rotation(), glm::vec3(1.0), filename
    );
+g_entities[filename]->set_texture(texture);
+
    return g_entities[filename];
 }
 
