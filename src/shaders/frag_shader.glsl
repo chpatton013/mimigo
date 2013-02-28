@@ -21,11 +21,11 @@ vec4 texColor1 = texture2D(uTextureUnit, vTexture);
 
    vec3 intensity;
    float intensity_float = max(0.0, dot(lightDirection, normal));
-   if (intensity_float > 30.0/32.0)
+   if (intensity_float > 32.0/32.0)
       intensity = vec3(1.0);
-   else if (intensity_float > 25.0 / 32.0)
+   else if (intensity_float > 27.0 / 32.0)
       intensity = vec3(0.85);
-   else if (intensity_float > 17.0/32.0)
+   else if (intensity_float > 19.0/32.0)
       intensity = vec3(0.7);
    else if (intensity_float > 9.0/32.0)
       intensity = vec3(0.5);
