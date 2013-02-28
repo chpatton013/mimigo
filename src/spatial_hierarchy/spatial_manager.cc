@@ -19,15 +19,33 @@ void SpatialManager::Update() {
 }
 
 /**
- * Return an iterator to the firstCollidableEntity that `subject` collides with
+ * Return a set of CollidableEntities that `subject` collides with.
+ */
+std::set<CollidableEntity*> SpatialManager::Collide(CollidableEntity* subject) {
+   return CollideComplete(subject);
+}
+
+std::set<CollidableEntity*> SpatialManager::CollideComplete(
+   CollidableEntity* subject
+) {
+   std::set<CollidableEntity*>::iterator start = entities().begin(),
+                                         stop = entities().end();
+   std::set<CollidableEntity*> collisions;
+
+   while (Collide(subject, start, stop) != stop) {
+      collisions.insert(*(start++));
+   }
+
+   return collisions;
+}
+
+/**
+ * Return an iterator to the first CollidableEntity that `subject` collides with
  * in the range defined by `start` (inclusive) and `stop` (exclusive), or `stop`
  * if no intersection exists.
  *
  * Calling this iteratively until the return value equals `stop` will cover all
  * intersections in range, as `start` is incremented while assessing the range.
- *
- * WARNING: passing a subject that exists in the defined range results in a
- * self-collision.
  */
 std::set<CollidableEntity*>::iterator SpatialManager::Collide(
    CollidableEntity* subject,

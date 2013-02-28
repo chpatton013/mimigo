@@ -16,6 +16,7 @@ class SpatialManager {
 
    virtual void Update();
 
+   virtual std::set<CollidableEntity*> Collide(CollidableEntity* subject);
    virtual std::set<CollidableEntity*>::iterator Collide(
       CollidableEntity* subject,
       std::set<CollidableEntity*>::iterator& start,
@@ -33,6 +34,8 @@ class SpatialManager {
    static SpatialManager* space_mgr_;
    SpatialManager() {}
    virtual ~SpatialManager() {}
+
+   std::set<CollidableEntity*> CollideComplete(CollidableEntity* subject);
 
    std::set<CollidableEntity*> entities_;
 };

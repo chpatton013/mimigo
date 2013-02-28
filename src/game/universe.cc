@@ -278,11 +278,7 @@ void Universe::Update() {
    player_->Update();
    SpatialManager::Instance()->Update();
 
-   const std::set<CollidableEntity*>& entities =
-    SpatialManager::Instance()->entities();
-   std::set<CollidableEntity*>::iterator start = entities.begin(),
-                                         stop = entities.end();
-   if (SpatialManager::Instance()->Collide(player_, start, stop) != stop) {
+   if (!SpatialManager::Instance()->Collide(player_).empty()) {
       std::cout << "Game Over!" << std::endl;
       exit(0);
       // Precursor for game state. TODO: reset events
@@ -290,7 +286,7 @@ void Universe::Update() {
    }
 
    CheckPlayerChangesGravityFields();
-   
+
    ps->update();
 
 }
