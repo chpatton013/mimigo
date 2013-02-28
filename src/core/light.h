@@ -3,6 +3,7 @@
 
 #include "global/handles.h"
 #include "glm/glm.hpp"
+#include "gl/GLSL_helper.h"
 
 class Light {
   public:
@@ -18,10 +19,10 @@ class Light {
       float light[] = {
          color_.x, color_.y, color_.z, 0.0f,
          position_.x, position_.y, position_.z, 1.0f,
-         direction_.x, direction_.y, direction_.z, 0.0f,
+         direction_.x, direction_.y, direction_.z, 1.0f,
       };
-      glUniform4fv(g_handles["uLights"], sizeof(light), light);
-      glUniform1i(g_handles["uLightTypes"], type());
+      safe_glUniform4fv(g_handles["uLights"], 3, light);
+      safe_glUniform1i(g_handles["uLightTypes"], type());
    }
 
    virtual int type() const = 0;

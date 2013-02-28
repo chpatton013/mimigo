@@ -94,6 +94,11 @@ inline void safe_glUniform1f(const GLint handle, const GLfloat a) {
     glUniform1f(handle, a);
 }
 
+inline void safe_glUniform4fv(const GLint handle, GLint size, const GLfloat data[]) {
+   if(handle >= 0)
+      glUniform4fv(handle, size, data);
+}
+
 
 
 // Check if there has been an error inside OpenGL and if yes, print the error and

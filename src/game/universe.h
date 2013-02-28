@@ -6,7 +6,9 @@
 #include <vector>
 #include "particleSys.h"
 #include "planet.h"
+#include "../core/direction_light.h"
 #include "../core/entity.h"
+#include "../core/light.h"
 #include "../core/game.h"
 #include "../core/timer.h"
 #include "../scene_hierarchy/root_node.h"
@@ -92,6 +94,7 @@ void print_vec(const glm::vec3& v) {
    std::vector<Assets*> assets_;
    Player* player_;
    ParticleSystem* ps;
+   Light* light_;
 };
 
 #endif

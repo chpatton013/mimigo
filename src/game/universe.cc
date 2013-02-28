@@ -192,6 +192,9 @@ Universe::Universe() :
    player_ = new Player(planets_[0], camera_);
 
    ps = new ParticleSystem(15);
+   light_ = new DirectionLight(glm::vec3(0.6f, 0.3f, 0.1f),
+                               glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
+                               glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
 
    PlayerEntersGravityFieldOf(planets_[0]);
 }
@@ -294,6 +297,7 @@ void Universe::Update() {
 
 void Universe::Draw() {
    camera_->SetView();
+   light_->Draw();
    RootNode::Instance()->Draw();
 }
 

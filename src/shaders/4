@@ -5,7 +5,7 @@ uniform mat4 uNormalMatrix;
 
 attribute vec3 aAmbient;
 attribute vec3 aDiffuse;
-attribute vec3 aSpecular;
+/*attribute vec3 aSpecular;*/
 attribute vec3 aNormal;
 attribute vec3 aPosition;
 attribute vec2 aTexture;
@@ -25,5 +25,4 @@ void main() {
 
    vDiffuse = aDiffuse;
    vAmbient = aAmbient;
-   vSpecular = aSpecular;
 }
