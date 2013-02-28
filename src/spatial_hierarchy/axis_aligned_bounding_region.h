@@ -16,12 +16,7 @@ class AxisAlignedBoundingRegion : public BoundingRegion {
    virtual ~AxisAlignedBoundingRegion() {}
 
    virtual glm::vec3 center() {
-      glm::vec3 c(
-         (max_.x - min_.x) * 0.5f,
-         (max_.y - min_.y) * 0.5f,
-         (max_.z - min_.z) * 0.5f
-      );
-      return c;
+      return min_ + (max_ - min_) * 0.5f;
    }
    virtual glm::vec3 min() { return min_; }
    virtual glm::vec3 max() { return max_; }
