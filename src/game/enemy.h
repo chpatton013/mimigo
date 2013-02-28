@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <string.h>
 #include <glm/glm.hpp>
-#include "../spatial_heirarchy/collidable_entity.h"
+#include "../spatial_hierarchy/collidable_entity.h"
 
 class Planet;
 class SceneNode;
@@ -14,7 +14,7 @@ class Enemy : public CollidableEntity {
     Enemy() {}
     Enemy(Planet *planet, float theta, const std::string& id);
     virtual ~Enemy();
-    virtual bool Update();
+    virtual bool Update() {return false;}
     glm::vec3 position();
 
    private:
@@ -25,3 +25,5 @@ class Enemy : public CollidableEntity {
     float radius_;
     SceneNode *mesh_;
 };
+
+#endif
