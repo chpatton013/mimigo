@@ -4,7 +4,7 @@
 ParticleSystem::ParticleSystem(int num) :
    amt(num)
 {
-   EntityComponent* particle_entity = LoadEntityComponentFromOBJ("meshes/sphere.obj");
+   EntityComponent* particle_entity = LoadEntityComponentFromOBJ("meshes/sphere.obj", "textures/earth1.bmp");
 
    for (int i = 0; i < num; i++) {
       std::ostringstream oss;

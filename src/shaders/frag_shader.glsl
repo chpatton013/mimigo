@@ -14,6 +14,9 @@ varying vec4 vPosition;
 varying vec2 vTexture;
 
 void main() {
+
+	vec4 texColor1 = texture2D(uTextureUnit, vTexture);
+
    vec4 lightDirection = normalize(vec4(0.0, 1.0, 1.0, 0.0));
    vec4 normal = vec4(normalize(vNormal.xyz), 1.0);
 
@@ -32,4 +35,11 @@ void main() {
    color = vec4(light.r, light.g, light.b, 1.0);
    color = vec4(color.r * intensity.r, color.g*intensity.g, color.b*intensity.b, 1.0);
    gl_FragColor = color;
+
+
+gl_FragColor = vec4(vTexture.s, vTexture.t,0,1);
+gl_FragColor = vec4(texColor1[0] , texColor1[1], texColor1[2], 1);
+
+
+
 }

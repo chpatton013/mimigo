@@ -28,7 +28,7 @@ void GLMesh::SetupDraw() {
    GL_BIND_ARRAY(diffuse_buffer_object_, "aDiffuse", 3);
    GL_BIND_ARRAY(ambient_buffer_object_, "aAmbient", 3);
    GL_BIND_ARRAY(specular_buffer_object_, "aSpecular", 3);
-   //GL_BIND_ARRAY(texture_buffer_object_, "aTexture", 2);
+   GL_BIND_ARRAY(texture_buffer_object_, "aTexture", 2);
 }
 
 void GLMesh::Draw(MatrixStack* transform) {

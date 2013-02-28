@@ -42,8 +42,8 @@ void Universe::ParseAsteroidFile() {
 
    std::string line;
    std::string event("NULL");
-   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/asteroid.obj");
-   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer3.obj");
+   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/asteroid.obj", "textures/earth1.bmp");
+   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer3.obj", "textures/earth1.bmp");
    while (getline(in, line)) {
       std::istringstream stream(line);
       if (line.empty() || line[0] == '#') {
@@ -107,15 +107,15 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
    PlanetType planet_type = PLANET_TYPE_SMALL;
 
    std::string line;
-   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj");
-   EntityComponent* tree = LoadEntityComponentFromOBJ("meshes/tree3.obj");
-   EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj");
-   EntityComponent* adobe = LoadEntityComponentFromOBJ("meshes/adobe.obj");
-   EntityComponent* house = LoadEntityComponentFromOBJ("meshes/house.obj");
-   EntityComponent* cactus = LoadEntityComponentFromOBJ("meshes/cactus.obj");
-   EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower3.obj");
-   EntityComponent* coral = LoadEntityComponentFromOBJ("meshes/coral.obj");
-   EntityComponent* asteroid = LoadEntityComponentFromOBJ("meshes/asteroid.obj");
+   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj", "textures/earth1.bmp");
+   EntityComponent* tree = LoadEntityComponentFromOBJ("meshes/tree3.obj", "textures/earth1.bmp");
+   EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj", "textures/crate.bmp");
+   EntityComponent* adobe = LoadEntityComponentFromOBJ("meshes/adobe.obj", "textures/earth1.bmp");
+   EntityComponent* house = LoadEntityComponentFromOBJ("meshes/house.obj", "textures/earth1.bmp");
+   EntityComponent* cactus = LoadEntityComponentFromOBJ("meshes/cactus.obj", "textures/earth1.bmp");
+   EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower3.obj", "textures/flowerTex.bmp");
+   EntityComponent* coral = LoadEntityComponentFromOBJ("meshes/coral.obj", "textures/cloud5.bmp");
+   EntityComponent* asteroid = LoadEntityComponentFromOBJ("meshes/asteroid.obj", "textures/earth1.bmp");
 
    while (getline(in, line)) {
       std::istringstream stream(line);
@@ -186,7 +186,7 @@ std::string full_id;
 
 
    std::string line;
-   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj");
+   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj", "textures/earth1.bmp");
    while (getline(in, line)) {
       std::istringstream stream(line);
       if (line.empty() || line[0] == '#') {

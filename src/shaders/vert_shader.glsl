@@ -25,4 +25,5 @@ void main() {
 
    vDiffuse = aDiffuse;
    vAmbient = aAmbient;
+   vTexture = aTexture;
 }

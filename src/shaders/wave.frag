@@ -3,6 +3,8 @@
 varying vec4 vPosition;
 varying vec4 vNormal;
 
+varying vec2 vTexCoord;
+
 void main()
 {
    vec3 normal = normalize(vNormal.xyz);

@@ -10,7 +10,7 @@
 void Entity::Draw(MatrixStack* transform) {
    if (!draw_)
       return;
-
+	
    EntityComponent::Draw(transform);
 
    // Bind texture

@@ -14,6 +14,7 @@
 #include "scene_hierarchy/entity_component_node.h"
 #include "core/entity_component.h"
 #include "audio/sound.h"
+#include "core/texture.h"
 
 void InitializeSDL() {
    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO) < 0) {
@@ -66,11 +67,17 @@ void Initialize() {
 }
 
 void LoadResources() {
-   EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/edgar.obj");
+   EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/edgar.obj", "textures/crate.bmp");
    EntityComponentNode* mesh = new EntityComponentNode("bunny", go_gopher);
    mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.3f)));
 
    RootNode::Instance()->AddChild(mesh);
+
+   LoadTexture("textures/earth1.bmp");
+   LoadTexture("textures/cloud5.bmp");
+   LoadTexture("textures/crate.bmp");
+   LoadTexture("textures/flowerTex.bmp");
+
 }
 
 void StartMainLoop(Universe* universe) {
