@@ -1,4 +1,6 @@
 #include "assets.h"
+#include "planet.h"
+#include "../spatial_hierarchy/spherical_bounding_region.h"
 
 inline
 float radians(float degrees) {
@@ -20,13 +22,23 @@ Assets::Assets(const std::string&  name, const std::string& id, glm::vec3 transl
 
 void Assets::Initialize(const std::string& name, const std::string& id){
    mesh = new SceneNode("a" + id);
-  // set_bounding_region(new SphericalBoundingRegion(planet->center() + translate, mesh->GetAverageRadius() * 0.25f));
+   
    mesh->set_transformation(glm::translate(planet->center() + translate));
    mesh->apply_transformation(glm::scale(scale));
    mesh->apply_transformation(glm::rotate(rotateAngle, rotate));
    RootNode::Instance()->AddChild(mesh);
  
    mesh->AddChild(SceneNode::Get(name + id));
+   
+   set_bounding_region(new SphericalBoundingRegion(position(), mesh->GetAverageRadius() * .25f));
+}
+
+glm::vec3 Assets::position() {
+   return planet->center() + glm::vec3(
+      glm::cos(radians(theta_)),
+      glm::sin(radians(theta_)),
+      0.0f
+   ) * planet->radius();
 }
 
 bool Assets::BackAndForth(int begin, int end, float speed) {     
@@ -48,7 +60,7 @@ bool Assets::BackAndForth(int begin, int end, float speed) {
          glm::vec3(std::cos(radians(theta_)), std::sin(radians(theta_)), 0.0f) * (planet->radius()+0.2f);
 
    UpdateMeshPosition();
-   //bounding_region_->set_center(position_);
+   bounding_region_->set_center(position_);
 
    return true;
 }
@@ -75,7 +87,7 @@ bool Assets::UpAndDown(float max, float min, float speedup, float speedDown) {
          glm::vec3(std::cos(radians(theta_)), std::sin(radians(theta_)), 0.0f) * (planet->radius()+up);
 
    UpdateMeshPosition();
-   //bounding_region_->set_center(position());
+   bounding_region_->set_center(position());
 
    return true;
 }
@@ -105,7 +117,7 @@ bool Assets::Bounce() {
 
 
    UpdateMeshPosition();
-   //bounding_region_->set_center(position());
+   bounding_region_->set_center(position());
 
    return true;
 }

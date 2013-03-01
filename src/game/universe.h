@@ -2,6 +2,7 @@
 #define _UNIVERSE_H_
 
 #include "assets.h"
+#include "testobj.h"
 #include <map>
 #include <vector>
 #include "particleSys.h"
@@ -24,6 +25,7 @@ class SwingAsteroid;
 class SpatialManager;
 class Camera;
 class Player;
+class TestObj;
 
 struct Event {
    Event(std::string event_name, float delay) :
@@ -71,6 +73,7 @@ void print_vec(const glm::vec3& v) {
 
   private:
    void LoadInPlanets();
+   void LoadInAssets();
    void ParseAsteroidFile();
    void PlayerEntersGravityFieldOf(Planet* planet);
    bool PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet);
