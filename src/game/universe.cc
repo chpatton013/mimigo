@@ -106,7 +106,7 @@ void ParseCheckPointsFile(std::vector<Planet*> planets) {
    std::ifstream in("checkpoints.lvl");
 
 	std::string id;
-         int planet_id;
+         std::string planet_id;
          float angle;
 std::string full_id;
 
@@ -120,19 +120,19 @@ std::string full_id;
       else {
          stream >> id;
          stream >> planet_id;
-         --planet_id;
          stream >> angle;
 
          full_id = "checkpoint" + id;
 
-	std::cout << full_id;
-
-            RootNode::Instance()->AddChild(new
+            SceneNode::Get("planet" + planet_id)->AddChild(new
              EntityComponentNode(full_id, flag));
 
         SceneNode::Get(full_id)->set_visible(true);
 
-SpatialManager::Instance()->AddEntity(new CheckPoint(planets[planet_id], planet_id,  angle, full_id));
+	int planetID = atoi(planet_id.c_str());
+	planetID--;
+
+SpatialManager::Instance()->AddEntity(new CheckPoint(planets[planetID], planetID,  angle, full_id));
       }
    }
 }
@@ -154,8 +154,6 @@ void Universe::ParseEntityFile() {
 	stream >> name;
 	stream >> mesh_location;
 	stream >> texture_location;
-
-	std::cout << name << " " << mesh_location << " " << texture_location;
 
 	entity_data_[name] = LoadEntityComponentFromOBJ("meshes/" + mesh_location, "textures/" + texture_location);
       }
@@ -268,6 +266,7 @@ Universe::Universe() :
    camera_ = new SmallPlanetCamera();
    ParseEntityFile();
    LoadInPlanets();
+   ParseEntityFile();
    ParseAsteroidFile();
    ParseCheckPointsFile(planets_);
    player_ = new Player(planets_[0], camera_);
@@ -398,6 +397,7 @@ void Universe::Draw() {
    camera_->SetView();
    light_->Draw();
    RootNode::Instance()->Draw();
+   RootNode::Instance()->PrintTree();
 }
 
 //DEBUG METHODS
