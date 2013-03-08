@@ -1,0 +1,18 @@
+# Entity Load File
+#
+#	name		mesh_location	texture_location
+#	
+	edgar		edgar.obj	brown.bmp
+	shark		shark.obj	grass.bmp
+	puffer_fish	puffer_fish.obj	sand.bmp
+	gopher		go_gopher.obj	edgar.bmp
+	flag		flag.obj	earth.bmp
+	asteroid	asteroid.obj	purple.bmp
+	planet		sphere.obj	grass.bmp
+	tree		tree.obj	earth.bmp
+	adobe_house	adobe_house.obj	earth.bmp
+	tree_house	tree_house.obj	earth.bmp
+	cactus		cactus.obj	earth.bmp
+	flower		flower.obj	earth.bmp
+	coral		coral.obj	earth.bmp
+

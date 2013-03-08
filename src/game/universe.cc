@@ -44,7 +44,7 @@ void Universe::ParseAsteroidFile() {
    std::string line;
    std::string event("NULL");
    EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/asteroid.obj", "textures/purple.bmp");
-   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer3.obj", "textures/earth1.bmp");
+   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer_fish.obj", "textures/earth.bmp");
    while (getline(in, line)) {
       std::istringstream stream(line);
       if (line.empty() || line[0] == '#') {
@@ -112,7 +112,7 @@ std::string full_id;
 
 
    std::string line;
-   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj", "textures/edgar.bmp");
+   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag.obj", "textures/edgar.bmp");
    while (getline(in, line)) {
       std::istringstream stream(line);
       if (line.empty() || line[0] == '#') {
@@ -137,6 +137,29 @@ SpatialManager::Instance()->AddEntity(new CheckPoint(planets[planet_id], planet_
    }
 }
 
+void Universe::ParseEntityFile() {
+   std::ifstream in("entities.txt");
+
+	std::string name;
+	std::string mesh_location;
+	std::string texture_location;
+
+
+   std::string line;
+   while (getline(in, line)) {
+      std::istringstream stream(line);
+      if (line.empty() || line[0] == '#') {
+      }
+      else {
+	stream >> name;
+	stream >> mesh_location;
+	stream >> texture_location;
+
+	entity_data_[name] = LoadEntityComponentFromOBJ("meshes/" + mesh_location, "textures/" + texture_location);
+      }
+   }
+}
+
 void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets) {
    std::ifstream in(filename.c_str());
 
@@ -144,14 +167,14 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
 
    std::string line;
    EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj", "textures/grass.bmp");
-   EntityComponent* tree = LoadEntityComponentFromOBJ("meshes/tree3.obj", "textures/earth1.bmp");
+   EntityComponent* tree = LoadEntityComponentFromOBJ("meshes/tree.obj", "textures/earth.bmp");
    EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj", "textures/purple.bmp");
-   EntityComponent* adobe = LoadEntityComponentFromOBJ("meshes/adobe.obj", "textures/earth1.bmp");
-   EntityComponent* house = LoadEntityComponentFromOBJ("meshes/house.obj", "textures/earth1.bmp");
-   EntityComponent* cactus = LoadEntityComponentFromOBJ("meshes/cactus.obj", "textures/earth1.bmp");
-   EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower3.obj", "textures/earth1.bmp");
+   EntityComponent* adobe = LoadEntityComponentFromOBJ("meshes/adobe_house.obj", "textures/earth.bmp");
+   EntityComponent* house = LoadEntityComponentFromOBJ("meshes/tree_house.obj", "textures/earth.bmp");
+   EntityComponent* cactus = LoadEntityComponentFromOBJ("meshes/cactus.obj", "textures/earth.bmp");
+   EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower.obj", "textures/earth.bmp");
    EntityComponent* coral = LoadEntityComponentFromOBJ("meshes/coral.obj", "textures/earth1.bmp");
-   EntityComponent* asteroid = LoadEntityComponentFromOBJ("meshes/asteroid.obj", "textures/earth1.bmp");
+   EntityComponent* asteroid = LoadEntityComponentFromOBJ("meshes/asteroid.obj", "textures/earth.bmp");
 
    while (getline(in, line)) {
       std::istringstream stream(line);
@@ -214,9 +237,9 @@ RootNode::Instance()->AddChild(new EntityComponentNode("shark12", shark));
 
 void Universe::LoadInPlanets() {
    EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj", "textures/dots.bmp");
-   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer3.obj", "textures/sand.bmp");
+   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer_fish.obj", "textures/sand.bmp");
    EntityComponent* gopher = LoadEntityComponentFromOBJ("meshes/go_gopher.obj", "textures/edgar.bmp");
-   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj", "textures/earth1.bmp");
+   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag.obj", "textures/earth1.bmp");
    
 
    ParsePlanetFile("planets.lvl", &planets_);
@@ -241,6 +264,7 @@ Universe::Universe() :
    game_play_type_(GAME_PLAY_SMALL)
 {
    camera_ = new SmallPlanetCamera();
+   //ParseEntityFile();
    LoadInPlanets();
    ParseAsteroidFile();
    ParseCheckPointsFile(planets_);
