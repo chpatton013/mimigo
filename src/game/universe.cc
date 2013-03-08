@@ -155,6 +155,8 @@ void Universe::ParseEntityFile() {
 	stream >> mesh_location;
 	stream >> texture_location;
 
+	std::cout << name << " " << mesh_location << " " << texture_location;
+
 	entity_data_[name] = LoadEntityComponentFromOBJ("meshes/" + mesh_location, "textures/" + texture_location);
       }
    }
@@ -264,7 +266,7 @@ Universe::Universe() :
    game_play_type_(GAME_PLAY_SMALL)
 {
    camera_ = new SmallPlanetCamera();
-   //ParseEntityFile();
+   ParseEntityFile();
    LoadInPlanets();
    ParseAsteroidFile();
    ParseCheckPointsFile(planets_);

@@ -73,7 +73,7 @@ void LoadResources() {
 
    RootNode::Instance()->AddChild(mesh);
 
-   LoadTexture("textures/earth1.bmp");
+   LoadTexture("textures/earth.bmp");
    LoadTexture("textures/cloud5.bmp");
    LoadTexture("textures/crate.bmp");
    LoadTexture("textures/flowerTex.bmp");
