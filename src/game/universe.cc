@@ -137,37 +137,39 @@ SpatialManager::Instance()->AddEntity(new CheckPoint(planets[planetID], planetID
    }
 }
 
-void ParseAssetsFile(std::vector<Planet*> planets) {
+void Universe::ParseAssetsFile() {
    std::ifstream in("assets.txt");
 
-	std::string id;
+	std::string name;
          std::string planet_id;
-         float angle;
+         float xAngle;
+	float zAngle;
 std::string full_id;
 
 
    std::string line;
-   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag.obj", "textures/edgar.bmp");
+
    while (getline(in, line)) {
       std::istringstream stream(line);
       if (line.empty() || line[0] == '#') {
       }
       else {
-         stream >> id;
+         stream >> name;
          stream >> planet_id;
-         stream >> angle;
+         stream >> xAngle;
+	stream >> zAngle;
 
-         full_id = "checkpoint" + id;
+	int num = entity_num_.find(name)->second;
 
+std::ostringstream convert;
+convert << num;
+full_id = name + convert.str();
+
+entity_num_[name] = num + 1;
             SceneNode::Get("planet" + planet_id)->AddChild(new
-             EntityComponentNode(full_id, flag));
+             EntityComponentNode(full_id, entity_data_.find(name)->second));
 
         SceneNode::Get(full_id)->set_visible(true);
-
-	int planetID = atoi(planet_id.c_str());
-	planetID--;
-
-SpatialManager::Instance()->AddEntity(new CheckPoint(planets[planetID], planetID,  angle, full_id));
       }
    }
 }
@@ -191,6 +193,7 @@ void Universe::ParseEntityFile() {
 	stream >> texture_location;
 
 	entity_data_[name] = LoadEntityComponentFromOBJ("meshes/" + mesh_location, "textures/" + texture_location);
+	entity_num_[name] = 0;
       }
    }
 }
@@ -269,7 +272,7 @@ Universe::Universe() :
    camera_ = new SmallPlanetCamera();
    ParseEntityFile();
    LoadInPlanets();
-   ParseEntityFile();
+   ParseAssetsFile();
    ParseAsteroidFile();
    ParseCheckPointsFile(planets_);
    player_ = new Player(planets_[0], camera_);

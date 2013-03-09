@@ -5,3 +5,4 @@
 #	name	planet_id	xAngle	zAngle
 #
 	tree	1		0.0	0.0
+	tree	1		0.0	0.0
