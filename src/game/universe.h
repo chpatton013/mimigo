@@ -90,6 +90,7 @@ void print_vec(const glm::vec3& v) {
 
    std::map<std::string, std::vector<Event> > event_map_;
    std::map<std::string, EntityComponent*> entity_data_;
+   std::map<std::string, int> entity_num_;
 
    Camera* camera_;
    GamePlayType game_play_type_;

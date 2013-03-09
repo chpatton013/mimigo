@@ -1,0 +1,7 @@
+# Assets Load File
+#
+# Make sure the name has a companion name in entities.txt! (Otherwise things will break and be sad.)
+#
+#	name	planet_id	xAngle	zAngle
+#
+	tree	1		0.0	0.0
