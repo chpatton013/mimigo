@@ -2,7 +2,7 @@
 #
 #	name		mesh_location	texture_location
 #	
-	edgar		edgar.obj	brown.bmp
+	edgar		edgar.obj	edgarTex.bmp
 	shark		shark.obj	grass.bmp
 	puffer_fish	puffer_fish.obj	sand.bmp
 	gopher		go_gopher.obj	edgar.bmp

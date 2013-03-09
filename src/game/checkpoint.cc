@@ -44,6 +44,6 @@ glm::vec3 CheckPoint::position() {
 void CheckPoint::UpdateMeshPosition() {
    mesh_->set_transformation(glm::translate(
       glm::vec3(glm::cos(radians(theta_)), glm::sin(radians(theta_)), 0.0f)*radius_));
-   mesh_->apply_transformation(glm::scale(0.5f, 0.5f, 0.5f));
+   mesh_->apply_transformation(glm::scale(1.5f, 1.5f, 1.5f));
      mesh_->apply_transformation(glm::rotate(glm::mat4(), theta_ - 90.0f, glm::vec3(0.0f,  0.0f, 1.0f)));
 }

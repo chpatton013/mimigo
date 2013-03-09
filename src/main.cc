@@ -67,7 +67,7 @@ void Initialize() {
 }
 
 void LoadResources() {
-   EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/edgar.obj", "textures/brown.bmp");
+   EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/edgar.obj", "textures/edgar.bmp");
    EntityComponentNode* mesh = new EntityComponentNode("bunny", go_gopher);
    mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.3f)));
 

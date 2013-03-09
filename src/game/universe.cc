@@ -16,6 +16,11 @@
 #include <iterator>
 
 
+inline
+float radians(float degrees) {
+   return degrees * M_PI / 180.0f;
+}
+
 std::string asteroid_event_name(const std::string &id, int planet_id, float angle) {
    std::string event_name;
    std::ostringstream stream(event_name);
@@ -126,6 +131,7 @@ std::string full_id;
 
             SceneNode::Get("planet" + planet_id)->AddChild(new
              EntityComponentNode(full_id, flag));
+	//SceneNode::Get("planet1")->set_visible(false);
 
         SceneNode::Get(full_id)->set_visible(true);
 
@@ -142,8 +148,10 @@ void Universe::ParseAssetsFile() {
 
 	std::string name;
          std::string planet_id;
-         float xAngle;
+        float xAngle;
+	float yAngle;
 	float zAngle;
+	float scale;
 std::string full_id;
 
 
@@ -157,17 +165,32 @@ std::string full_id;
          stream >> name;
          stream >> planet_id;
          stream >> xAngle;
-	stream >> zAngle;
+         stream >> yAngle;
+	 stream >> zAngle;
+	 stream >> scale;
 
 	int num = entity_num_.find(name)->second;
 
-std::ostringstream convert;
-convert << num;
-full_id = name + convert.str();
+	std::ostringstream convert;
+	convert << num;
+	full_id = name + convert.str();
 
-entity_num_[name] = num + 1;
-            SceneNode::Get("planet" + planet_id)->AddChild(new
-             EntityComponentNode(full_id, entity_data_.find(name)->second));
+	entity_num_[name] = num + 1;
+
+	int planetID = atoi(planet_id.c_str());
+	planetID--;
+
+	SceneNode::Get("planet" + planet_id)->AddChild(new
+	EntityComponentNode(full_id, entity_data_.find(name)->second));
+//SceneNode::Get(full_id)->set_transformation(glm::rotate(glm::mat4(), xAngle - 90.0f, glm::vec3(1.0f,  0.0f, 0.0f)));
+//SceneNode::Get(full_id)->apply_transformation(glm::rotate(glm::mat4(), yAngle - 90.0f, glm::vec3(0.0f,  1.0f, 0.0f)));
+//SceneNode::Get(full_id)->apply_transformation(glm::rotate(glm::mat4(),-90.0f, glm::vec3(0.0f,  0.0f, 1.0f)));
+//SceneNode::Get(full_id)->apply_transformation(glm::translate(glm::vec3(glm::cos(radians(zAngle)), glm::sin(radians(zAngle)), 0.0f)*planets_[planetID]->radius()));
+std::cout << planets_[planetID]->radius() << std::endl;
+SceneNode::Get(full_id)->apply_transformation(glm::translate(glm::vec3(0.0f, (planets_[planetID]->radius() / 2.0f), 0.0)));
+
+		SceneNode::Get(full_id)->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.1f)));
+	
 
         SceneNode::Get(full_id)->set_visible(true);
       }
@@ -403,7 +426,7 @@ void Universe::Draw() {
    camera_->SetView();
    light_->Draw();
    RootNode::Instance()->Draw();
-   RootNode::Instance()->PrintTree();
+   //RootNode::Instance()->PrintTree();
 }
 
 //DEBUG METHODS

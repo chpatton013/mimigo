@@ -2,7 +2,7 @@
 #
 # Make sure the name has a companion name in entities.txt! (Otherwise things will break and be sad.)
 #
-#	name	planet_id	xAngle	zAngle
+#	name	planet_id	around_z yAngle	scale
 #
-	tree	1		0.0	0.0
-	tree	1		0.0	0.0
+	puffer_fish	1		0.0	0.0	0.0	1.0
+	flower	2		0.0	0.0	0.0	1.5
