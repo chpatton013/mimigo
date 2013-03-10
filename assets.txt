@@ -2,7 +2,6 @@
 #
 # Make sure the name has a companion name in entities.txt! (Otherwise things will break and be sad.)
 #
-#	name	planet_id	around_z yAngle	scale
+#	name	planet_id	around_x around_y I_dont_know	scale	offset_value_thing
 #
-	puffer_fish	1		0.0	0.0	0.0	1.0
-	flower	2		0.0	0.0	0.0	1.5
+	tree		1	45.0	 90.0	   0.0		0.5	0.0

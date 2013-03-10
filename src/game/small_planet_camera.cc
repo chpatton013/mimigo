@@ -25,7 +25,7 @@ void SmallPlanetCamera::OnPlayerMove(
 ) {
    camera_focus_ = position;
 	camera_pos_ = position;
-	camera_pos_.z += 3.0;
+	camera_pos_.z += 1.0;
    assert(true || up.x || facing.x);
 }
 

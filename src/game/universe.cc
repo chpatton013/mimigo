@@ -152,6 +152,7 @@ void Universe::ParseAssetsFile() {
 	float yAngle;
 	float zAngle;
 	float scale;
+	float offset_thing;
 std::string full_id;
 
 
@@ -168,6 +169,7 @@ std::string full_id;
          stream >> yAngle;
 	 stream >> zAngle;
 	 stream >> scale;
+	stream >> offset_thing;
 
 	int num = entity_num_.find(name)->second;
 
@@ -182,14 +184,11 @@ std::string full_id;
 
 	SceneNode::Get("planet" + planet_id)->AddChild(new
 	EntityComponentNode(full_id, entity_data_.find(name)->second));
-//SceneNode::Get(full_id)->set_transformation(glm::rotate(glm::mat4(), xAngle - 90.0f, glm::vec3(1.0f,  0.0f, 0.0f)));
-//SceneNode::Get(full_id)->apply_transformation(glm::rotate(glm::mat4(), yAngle - 90.0f, glm::vec3(0.0f,  1.0f, 0.0f)));
-//SceneNode::Get(full_id)->apply_transformation(glm::rotate(glm::mat4(),-90.0f, glm::vec3(0.0f,  0.0f, 1.0f)));
-//SceneNode::Get(full_id)->apply_transformation(glm::translate(glm::vec3(glm::cos(radians(zAngle)), glm::sin(radians(zAngle)), 0.0f)*planets_[planetID]->radius()));
-std::cout << planets_[planetID]->radius() << std::endl;
-SceneNode::Get(full_id)->apply_transformation(glm::translate(glm::vec3(0.0f, (planets_[planetID]->radius() / 2.0f), 0.0)));
-
-		SceneNode::Get(full_id)->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.1f)));
+SceneNode::Get(full_id)->set_transformation(glm::rotate(glm::mat4(), xAngle - 90.0f, glm::vec3(1.0f,  0.0f, 0.0f)));
+SceneNode::Get(full_id)->apply_transformation(glm::rotate(glm::mat4(), yAngle - 90.0f, glm::vec3(0.0f,  1.0f, 0.0f)));
+SceneNode::Get(full_id)->apply_transformation(glm::translate(glm::vec3(glm::cos(radians(zAngle)), glm::sin(radians(zAngle)), 0.0f)*(planets_[planetID]->radius() + offset_thing)/ 2.0f));
+SceneNode::Get(full_id)->apply_transformation(glm::rotate(glm::mat4(), zAngle - 90.0f, glm::vec3(0.0f,  0.0f, 1.0f)));
+		SceneNode::Get(full_id)->apply_transformation(glm::scale(glm::mat4(), glm::vec3(scale)));
 	
 
         SceneNode::Get(full_id)->set_visible(true);
