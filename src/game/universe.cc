@@ -271,7 +271,7 @@ void Universe::LoadInPlanets() {
    
 
    ParsePlanetFile("planets.lvl", &planets_);
-   
+   /*
    RootNode::Instance()->AddChild(new EntityComponentNode("shark1", shark));
    assets_.push_back(new Assets("shark", "1", glm::vec3(0, 0.8, 0), glm::vec3(5.0, 5.0, 5.0), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
    
@@ -286,6 +286,7 @@ void Universe::LoadInPlanets() {
    
    RootNode::Instance()->AddChild(new EntityComponentNode("gopher5", gopher));
    assets_.push_back(new Assets("gopher", "5", glm::vec3(-.1, -0.5, 0), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3]));
+*/
 }
 
 Universe::Universe() :
@@ -410,14 +411,14 @@ void Universe::Update() {
    CheckPlayerChangesGravityFields();
 
    ps->update();
-   assets_[0]->Bounce();
-   assets_[1]->BackAndForth(0, 90, 5.0);
-   assets_[2]->BackAndForth(200, 270, 5.0);
-   assets_[3]->UpAndDown(.5, 0.0, .1, .05);
-   assets_[4]->UpAndDown(.5, 0.0, .1, .05);
+   //assets_[0]->Bounce();
+   //assets_[1]->BackAndForth(0, 90, 5.0);
+   //assets_[2]->BackAndForth(200, 270, 5.0);
+  // assets_[3]->UpAndDown(.5, 0.0, .1, .05);
+  // assets_[4]->UpAndDown(.5, 0.0, .1, .05);
    
-   planets_[4]->Pogo();
-   planets_[5]->Gopo();
+   //planets_[4]->Pogo();
+   //planets_[5]->Gopo();
 
 }
 

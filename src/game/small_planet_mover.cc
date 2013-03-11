@@ -181,6 +181,7 @@ void SmallPlanetMover::set_theta(float theta) {
 }
 
 void SmallPlanetMover::Update() {
+
    if (is_jumping_ || is_falling_) {
       if (jump_held_ && jump_speed_ > 0.0f)
          jump_speed_ -= kJumpSlowdownHeld;
@@ -204,7 +205,8 @@ void SmallPlanetMover::Update() {
       theta_speed_ = accelerate_counterclockwise(max_theta_speed(), theta_speed_);
    else
       theta_speed_ = decelerate(theta_speed_);
-   set_theta(theta_ + theta_speed_);
+
+   set_theta(theta_ + (theta_speed_ / planet_->radius()));
    RotateBottomTowardPlanet();
 
    UpdateMeshTransform();
