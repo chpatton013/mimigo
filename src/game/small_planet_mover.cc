@@ -11,6 +11,9 @@ static float kRotateTime = 0.0f;
 static float kThetaAcceleration = 0.0f;
 static float kThetaSpeed = 0.0f;
 
+const int SmallPlanetMover::JUMP_THRESHOLD = 250;
+const int SmallPlanetMover::MAX_JUMP_LEVEL = 3;
+
 void LoadMetaDataFromFile(const std::string& filename) {
    std::ifstream in;
    in.open(filename.c_str());
@@ -44,6 +47,7 @@ SmallPlanetMover::SmallPlanetMover(Planet* planet, PlayerObserver* observer) :
    jump_speed_(kJumpSpeed),
    theta_(0.0f),
    theta_speed_(0.0f),
+   jump_level_(0),
    is_jumping_(false),
    observer_(observer)
 {
@@ -174,7 +178,11 @@ float jump_speed() {
 }
 
 float SmallPlanetMover::max_theta_speed() const {
-   return is_jumping_ || is_falling_ ? jump_speed() : kThetaSpeed;
+   if (is_jumping_ || is_falling_) {
+      return jump_speed() * jump_modifier();
+   } else {
+      return kThetaSpeed;
+   }
 }
 
 void SmallPlanetMover::set_theta(float theta) {
@@ -193,11 +201,13 @@ void SmallPlanetMover::Update() {
          is_jumping_ = false;
          is_falling_ = true;
       }
-      radius_ += jump_speed_;
+
+      radius_ += jump_speed_ * jump_modifier();
       if (radius_ <= planet_->radius() + 0.1f) {
          jump_speed_ = kJumpSpeed;
          radius_ = planet_->radius() + 0.1f;
          is_falling_ = false;
+         jump_clock_.start();
       }
    }
 
@@ -222,6 +232,9 @@ void SmallPlanetMover::Jump() {
    if (is_jumping_)
       return;
 
+   jump_clock_.stop();
+   calc_jump_level();
+
    is_jumping_ = true;
    jump_held_ = true;
 }
@@ -232,4 +245,23 @@ void SmallPlanetMover::ReleaseJump() {
 
 void SmallPlanetMover::OnExpiration(const std::string& event) {
    assert(true || event.size());
+}
+
+void SmallPlanetMover::calc_jump_level() {
+   int difference = jump_clock_.get_milli();
+   int delta = difference / JUMP_THRESHOLD;
+
+   // Increase jump level if you are jumping fast enough...
+   if (delta == 0 && jump_level_ < MAX_JUMP_LEVEL) {
+      ++jump_level_;
+   // or reduce jump level by the number of thresholds that have passed...
+   } else if (jump_level_ > delta) {
+      jump_level_ -= delta;
+   // or just reset jump level if you are really slow.
+   } else {
+      jump_level_ = 0;
+   }
+}
+float SmallPlanetMover::jump_modifier() const {
+   return jump_level_ * 2.0f + 1.0f;
 }
