@@ -2,7 +2,6 @@
 #define _UNIVERSE_H_
 
 #include "assets.h"
-#include "testobj.h"
 #include <map>
 #include <vector>
 #include "particleSys.h"
