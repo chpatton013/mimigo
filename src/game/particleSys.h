@@ -7,11 +7,12 @@
 
 class ParticleSystem {
   public:
-   ParticleSystem(int amt);
+   ParticleSystem(int amt, Planet *planet);
    ~ParticleSystem();
    void update();
 
   private:
    int amt;
+   Planet *planet;
    std::vector<Particles*> _particles;
 };
