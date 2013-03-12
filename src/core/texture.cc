@@ -1,16 +1,16 @@
-#include "core/texture.h"
+#include "texture.h"
 #include <stdio.h>
 #include <iostream>
 
-#include "global/handles.h"
+#include "../global/handles.h"
 
 using namespace std;
 
-static int ImageLoad(char *filename, Image *image);
+static int ImageLoad(const char *filename, Image *image);
 
 static int texture_id = 0;
 //routines to load in a bmp files - must be 2^nx2^m and a 24bit bmp
-static GLvoid LoadTexture(char* image_file, int texID) {
+static GLvoid LoadTexture(const char* image_file, int texID) {
 
    Image* texture_image = (Image *) malloc(sizeof(Image));
    if (texture_image == NULL) {
@@ -34,7 +34,7 @@ static GLvoid LoadTexture(char* image_file, int texID) {
 
 }
 
-int LoadTexture(char* image_file) {
+int LoadTexture(const char* image_file) {
    LoadTexture(image_file, texture_id);
    g_textures[std::string(image_file)] = texture_id;
    std::cout << "using texture id=" << texture_id << std::endl;
@@ -73,7 +73,7 @@ static unsigned int getshort(FILE *fp){
 
 /*  quick and dirty bitmap loader...for 24 bit bitmaps with 1 plane only.  */
 
-static int ImageLoad(char *filename, Image *image) {
+static int ImageLoad(const char *filename, Image *image) {
    FILE *file;
    unsigned long size;                 /*  size of the image in bytes. */
    unsigned long i;                    /*  standard counter. */

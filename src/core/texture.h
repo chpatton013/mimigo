@@ -17,6 +17,6 @@ struct RGB {
 };
 
 //forward declaration of image loading and texture set-up code
-GLint LoadTexture(char* image_file);
+GLint LoadTexture(const char* image_file);
 
 #endif
