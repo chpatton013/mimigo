@@ -55,7 +55,7 @@ bool Assets::Update() {
 	UpAndDown(.5, true, .1, .05);
          break;
       case 2:
-	 UpAndDown(.5, false, .1, .05);
+	 UpAndDown(.5, false, .05, .1);
          break;
    }
    

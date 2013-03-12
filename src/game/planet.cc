@@ -14,36 +14,42 @@ void Planet::Initialize(const std::string& id) {
    mesh->AddChild(SceneNode::Get("planet" + id));
 }
 
-//down
-void Planet::Pogo(){
-  //center_.y -= .005;
-   if(center_.y > 7.0 ){
-      turn = true;
+void Planet::sideways(float dist){
+   float acc = .1;
+   if(center_.x > move_center.x - (dist / 2) && center_.x < move_center.x + (dist / 2)){
+      acc = .2;
    }
-   if(center_.y < 4.0){
+   
+   if(center_.x > move_center.x + dist){
       turn = false;
    }
+   if(center_.x < move_center.x - dist){
+      turn = true;
+   }  
    if(turn){
-   	center_.y -= .1;
+   	center_.x += acc;
    }else{
-   	center_.y += .1;
+   	center_.x -= acc;
    }
    mesh->set_transformation(glm::translate(center_));
 }
 
-//up
-void Planet::Gopo(){
-  //center_.y -= .005;
-   if(center_.y < 7.0){
-      turn2 = true;
+void Planet::Pogo(float dist){
+   float acc = .1;
+   if(center_.x > move_center.x - (dist / 2) && center_.x < move_center.x + (dist / 2)){
+      acc = .2;
    }
-   if(center_.y > 10.0){
-      turn2 = false;
+   
+   if(center_.y > move_center.y + dist){
+      turn = false;
    }
-   if(turn2){
-   	center_.y += .1;
+   if(center_.y < move_center.y - dist){
+      turn = true;
+   }
+   if(turn){
+   	center_.y += acc;
    }else{
-   	center_.y -= .1;
+   	center_.y -= acc;
    }
    mesh->set_transformation(glm::translate(center_));
 }

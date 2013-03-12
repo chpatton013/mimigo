@@ -235,7 +235,7 @@ void Universe::LoadInAssets(){
    assets_.push_back(new Assets("gopher", "5", glm::vec3(0, -0.6, 0), glm::vec3(.25,.25,.25), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3], 2));
    
    for(std::vector<Assets*>::iterator it = assets_.begin(); it != assets_.end(); it++){
-      SpatialManager::Instance()->AddEntity(*it);
+    //  SpatialManager::Instance()->AddEntity(*it);
    }
 }
 
@@ -251,7 +251,7 @@ Universe::Universe() :
    LoadInAssets();
    ParseAsteroidFile();
    ParseCheckPointsFile(planets_);
-   player_ = new Player(planets_[0], camera_);
+   player_ = new Player(planets_[19], camera_);
 
    glm::vec3 min, max;
    GetBounds(&min, &max);
@@ -263,7 +263,7 @@ Universe::Universe() :
                                glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
 
    currentCheckpoint = 0;
-   PlayerEntersGravityFieldOf(planets_[0]);
+   PlayerEntersGravityFieldOf(planets_[19]);
 }
 
 void Universe::OnExpiration(const std::string& event_name) {
@@ -365,8 +365,11 @@ void Universe::Update() {
 
    ps->update();
    
-   planets_[4]->Pogo();
-   planets_[5]->Gopo();
+   planets_[12]->sideways(2.0);
+   planets_[16]->Pogo(1.5);
+   planets_[23]->Pogo(1.5);
+   planets_[27]->sideways(1.5);
+   //planets_[2]->Pogo(2.0);
 
 }
 
