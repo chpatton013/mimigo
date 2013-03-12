@@ -219,29 +219,23 @@ void Universe::LoadInAssets(){
    EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj", "textures/earth1.bmp");
    
     /*RootNode::Instance()->AddChild(new EntityComponentNode("shark1", shark));
-   assets_.push_back(new Assets("shark", "1", glm::vec3(0, 1.2, 0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[0]));
+   assets_.push_back(new Assets("shark", "1", glm::vec3(0, 1.2, 0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[0]));*/
+
    
-  // SpatialManager::Instance()->AddEntity(new Assets("shark", "1", glm::vec3(0, 0.8, 0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
-     SpatialManager::Instance()->AddEntity(assets_[0]);*/
-   
-   RootNode::Instance()->AddChild(new EntityComponentNode("fish2", fish));
-   
-   SceneNode::Get("fish2")->set_visible(true);
-   assets_.push_back(new Assets("fish", "2", glm::vec3(.8, 0,0), glm::vec3(.25, .25, .25), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
-   
-   
+   RootNode::Instance()->AddChild(new EntityComponentNode("fish2", fish));   
+   assets_.push_back(new Assets("fish", "2", glm::vec3(.8, 0,0), glm::vec3(.25, .25, .25), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2], 0));
    
    RootNode::Instance()->AddChild(new EntityComponentNode("fish3", fish));
-   assets_.push_back(new Assets("fish", "3", glm::vec3(-0.8, 0, 0), glm::vec3(.25,.25,.25), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
+   assets_.push_back(new Assets("fish", "3", glm::vec3(-0.8, 0, 0), glm::vec3(.25,.25,.25), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2], 0));
    
    RootNode::Instance()->AddChild(new EntityComponentNode("gopher4", gopher));
-   assets_.push_back(new Assets("gopher", "4", glm::vec3(.1, 0.5, 0), glm::vec3(.25,.25,.25), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3]));   
+   assets_.push_back(new Assets("gopher", "4", glm::vec3(0, 0.6, 0), glm::vec3(.25,.25,.25), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3], 1));   
    
    RootNode::Instance()->AddChild(new EntityComponentNode("gopher5", gopher));
-   assets_.push_back(new Assets("gopher", "5", glm::vec3(-.1, -0.5, 0), glm::vec3(.25,.25,.25), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3]));
+   assets_.push_back(new Assets("gopher", "5", glm::vec3(0, -0.6, 0), glm::vec3(.25,.25,.25), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3], 2));
    
    for(std::vector<Assets*>::iterator it = assets_.begin(); it != assets_.end(); it++){
-      SpatialManager::Instance()->AddEntity(*it);
+    //  SpatialManager::Instance()->AddEntity(*it);
    }
 }
 
@@ -257,7 +251,7 @@ Universe::Universe() :
    LoadInAssets();
    ParseAsteroidFile();
    ParseCheckPointsFile(planets_);
-   player_ = new Player(planets_[0], camera_);
+   player_ = new Player(planets_[19], camera_);
 
    glm::vec3 min, max;
    GetBounds(&min, &max);
@@ -269,7 +263,7 @@ Universe::Universe() :
                                glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
 
    currentCheckpoint = 0;
-   PlayerEntersGravityFieldOf(planets_[0]);
+   PlayerEntersGravityFieldOf(planets_[19]);
 }
 
 void Universe::OnExpiration(const std::string& event_name) {
@@ -370,14 +364,12 @@ void Universe::Update() {
    CheckPlayerChangesGravityFields();
 
    ps->update();
-  // assets_[0]->Bounce();
-   assets_[0]->BackAndForth(0, 90, 5.0);
-   assets_[1]->BackAndForth(200, 270, 5.0);
-   assets_[2]->UpAndDown(.5, 0.0, .1, .05);
-   assets_[3]->UpAndDown(.5, 0.0, .1, .05);
    
-   planets_[4]->Pogo();
-   planets_[5]->Gopo();
+   planets_[12]->sideways(2.0);
+   planets_[16]->Pogo(1.5);
+   planets_[23]->Pogo(1.5);
+   planets_[27]->sideways(1.5);
+   //planets_[2]->Pogo(2.0);
 
 }
 

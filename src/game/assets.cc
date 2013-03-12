@@ -7,17 +7,22 @@ float radians(float degrees) {
    return degrees * M_PI / 180.0f;
 }
 
-Assets::Assets(const std::string&  name, const std::string& id, glm::vec3 translate, glm::vec3 scale, glm::vec3 rotate, float rotateAngle, Planet *planet):
+Assets::Assets(const std::string&  name, const std::string& id, glm::vec3 translate, glm::vec3 scale, glm::vec3 rotate, float rotateAngle, Planet *planet, int move):
    translate(translate),
    planet(planet),
    scale(scale),
    rotate(rotate),
    theta_(5.0),
    up(0),
+   move(move),
    rotateAngle(rotateAngle)
    {
       Initialize(name, id);
-      flag = flag2 = true;
+      flag = true;
+      glm::vec3 start = glm::vec3(planet->center() + glm::vec3(planet->radius(), 0, 0));
+      glm::vec3 end = glm::vec3(planet->center() + translate);
+      angle = atan2(end.y - start.y, end.x - start.x);
+      angle = angle * (180.0f / M_PI);
    }
 
 void Assets::Initialize(const std::string& name, const std::string& id){
@@ -41,12 +46,29 @@ glm::vec3 Assets::position() {
    ) * planet->radius();
 }
 
-bool Assets::BackAndForth(int begin, int end, float speed) {     
-      if(theta_ == end){
-         flag = false;
-      }
-      if(theta_ == begin){
+bool Assets::Update() {
+   switch(move) {
+      case 0:
+         BackAndForth(45.0, 5.0);
+         break;
+      case 1:
+	UpAndDown(.5, true, .1, .05);
+         break;
+      case 2:
+	 UpAndDown(.5, false, .05, .1);
+         break;
+   }
+   
+   
+   return true;
+}
+
+void Assets::BackAndForth(float dist, float speed) { 
+      if(theta_ <= -dist + angle){
          flag = true;
+      }
+      if(theta_ >= dist + angle){
+         flag = false;
       }
 
       if(flag){
@@ -56,52 +78,56 @@ bool Assets::BackAndForth(int begin, int end, float speed) {
          theta_ -= speed;
       }
 
-      position_ = planet->center() +
-         glm::vec3(std::cos(radians(theta_)), std::sin(radians(theta_)), 0.0f) * (planet->radius()+0.2f);
+      position_ = planet->center() + glm::vec3(std::cos(radians(theta_)), std::sin(radians(theta_)), 0.0f) * (planet->radius()+0.2f);
 
    UpdateMeshPosition();
    bounding_region_->set_center(position_);
-
-   return true;
 }
 
-bool Assets::UpAndDown(float max, float min, float speedup, float speedDown) {
+void Assets::UpAndDown(float dist, bool upward, float speedup, float speedDown) {
       theta_ = 80;
-           
-      if(up > max){
-         flag2 = false;
+      
+      if(upward){ 
+         if(up > dist) {
+            flag = false;
+         }
+         else if(up <= 0){
+            flag = true;
+         }
       }
-      if(up < min){
-         flag2 = true;
+      else {
+         if(up < -dist){
+            flag = true;
+         }
+         else if(up >= 0){
+            flag = false;
+         }
       }
-
-      if(flag2){
+      
+      if(flag){
          up += speedup;
       }
       else{
          up -= speedDown;
       }
 
-
-      position_ = planet->center() +
-         glm::vec3(std::cos(radians(theta_)), std::sin(radians(theta_)), 0.0f) * (planet->radius()+up);
+      position_ = planet->center() + translate + 
+      glm::vec3(std::cos(radians(theta_)), std::sin(radians(theta_)), 0.0f) * (up);
 
    UpdateMeshPosition();
    bounding_region_->set_center(position());
-
-   return true;
 }
 
 bool Assets::Bounce() {
            
       if(up > .5){
-         flag2 = false;
+         flag = false;
       }
       if(up < 0.0){
-         flag2 = true;
+         flag = true;
       }
 
-      if(flag2){
+      if(flag){
          up += .1f;
          theta_ += 5.0f;
 
