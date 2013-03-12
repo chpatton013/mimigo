@@ -63,12 +63,12 @@ void SmallPlanetMover::MoveDown() {
 }
 
 void SmallPlanetMover::MoveLeft() {
-dir_facing_ = CCW;
-move_dir_ = CCW;
+   dir_facing_ = CCW;
+   move_dir_ = CCW;
 }
 void SmallPlanetMover::MoveRight() {
-dir_facing_ = CW;
-move_dir_ = CW;
+   dir_facing_ = CW;
+   move_dir_ = CW;
 }
 
 void SmallPlanetMover::StopMoveUp() { move_dir_ = NONE;  }
@@ -99,12 +99,13 @@ void SmallPlanetMover::UpdateMeshTransform() const {
    transform *= glm::translate(position());
    transform *= glm::rotate(xy_rotation_.angle, xy_rotation_.axis);
    transform *= glm::rotate(xz_rotation_.angle, xz_rotation_.axis);
-   if(dir_facing_ == CCW){
-   transform *= glm::rotate(-90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+
+   if (dir_facing_ == CCW){
+      transform *= glm::rotate(-90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+   } else if (dir_facing_ == CW){
+      transform *= glm::rotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
    }
-   else if(dir_facing_ == CW){
-   transform *= glm::rotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-   }
+
    SceneNode::Get("player")->set_transformation(transform);
 }
 
@@ -169,7 +170,7 @@ bool SmallPlanetMover::should_move_clockwise() const {
 
 inline
 float jump_speed() {
-   return kThetaSpeed / 2;
+   return kThetaSpeed * 0.5f;
 }
 
 float SmallPlanetMover::max_theta_speed() const {
@@ -182,10 +183,12 @@ void SmallPlanetMover::set_theta(float theta) {
 
 void SmallPlanetMover::Update() {
    if (is_jumping_ || is_falling_) {
-      if (jump_held_ && jump_speed_ > 0.0f)
+      if (jump_held_ && jump_speed_ > 0.0f) {
          jump_speed_ -= kJumpSlowdownHeld;
-      else
+      } else {
          jump_speed_ -= kJumpSlowdown;
+      }
+
       if (jump_speed_ <= 0.0f) {
          is_jumping_ = false;
          is_falling_ = true;
