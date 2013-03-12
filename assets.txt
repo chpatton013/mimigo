@@ -2,6 +2,7 @@
 #
 # Make sure the name has a companion name in entities.txt! (Otherwise things will break and be sad.)
 #
-#	name	planet_id	around_x around_y I_dont_know	scale	offset_value_thing
+#	name	planet_id	around_xy 	around_xz 	scale	offset_value_thing
 #
-	tree		1	45.0	 90.0	   0.0		0.5	0.0
+	tree		1	45.0	 	90.0		0.5	0.0
+	bunny		2	0.0	 	0.0    		2.0	2.0

@@ -74,6 +74,8 @@ void print_vec(const glm::vec3& v) {
    void ParseAsteroidFile();
    void	ParseEntityFile();
    void ParseAssetsFile();
+   void ParseCheckPointsFile();
+   void ParsePlanetFile();
    void PlayerEntersGravityFieldOf(Planet* planet);
    bool PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet);
    void SwitchToLargePlanetGamePlay();

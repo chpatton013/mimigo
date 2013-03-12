@@ -41,7 +41,8 @@ void InitializeGL() {
    glViewport(0, 0, kScreenWidth, kScreenHeight);
 
    // Start Of User Initialization
-   glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
+   glClearColor (90.0f/ 255.0f, 221.0f/255.0f, 1.0f, 1.0f);
+   //glClearColor (1.0f, 0.0f, 0.0f, 1.0f);
    // Black Background
    glClearDepth (1.0f);    // Depth Buffer Setup
    glDepthFunc (GL_LEQUAL);    // The Type Of Depth Testing
@@ -84,6 +85,7 @@ void LoadResources() {
    LoadTexture("textures/purple.bmp");
    LoadTexture("textures/edgarTex.bmp");
    LoadTexture("textures/edgar.bmp");
+   LoadTexture("textures/bunny.bmp");
 
 }
 

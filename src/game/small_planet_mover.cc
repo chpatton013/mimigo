@@ -90,6 +90,16 @@ float wrap_angle(float val) {
    return val;
 }
 
+inline
+float distance(const glm::vec3& point1, const glm::vec3& point2){
+	float xCalc = (point2.x - point1.x) * (point2.x - point1.x);
+	float yCalc = (point2.y - point1.y) * (point2.y - point1.y);
+	float zCalc = (point2.z - point1.z) * (point2.z - point1.z);
+	float toReturn = xCalc + yCalc + zCalc;
+	toReturn = sqrt(toReturn);
+	return toReturn;
+}
+
 void SmallPlanetMover::RotateBottomTowardPlanet() {
    xy_rotation_.angle = theta_ - 90.0f;
 }
@@ -135,6 +145,9 @@ void SmallPlanetMover::set_planet(Planet* planet) {
    is_falling_ = true;
    RotateBottomTowardPlanet();
    FallToPlanet();
+  // radius_ = distance(planet_->center(), position());
+	   radius_ = planet->gravity_radius() - planet->radius();
+
    if (observer_)
       observer_->OnPlayerSwitchPlanets(planet);
 }
@@ -191,6 +204,7 @@ void SmallPlanetMover::Update() {
          is_jumping_ = false;
          is_falling_ = true;
       }
+	
       radius_ += jump_speed_;
       if (radius_ <= planet_->radius() + 0.1f) {
          jump_speed_ = kJumpSpeed;

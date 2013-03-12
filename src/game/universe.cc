@@ -48,8 +48,6 @@ void Universe::ParseAsteroidFile() {
 
    std::string line;
    std::string event("NULL");
-   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/asteroid.obj", "textures/purple.bmp");
-   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer_fish.obj", "textures/earth.bmp");
    while (getline(in, line)) {
       std::istringstream stream(line);
       if (line.empty() || line[0] == '#') {
@@ -81,12 +79,12 @@ void Universe::ParseAsteroidFile() {
 
          if (id == "3") {
             EntityComponentNode* meshy = new
-             EntityComponentNode(full_id, fish);
+             EntityComponentNode(full_id, entity_data_.find("puffer_fish")->second);
             meshy->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.1)));
             RootNode::Instance()->AddChild(meshy);
          } else {
             RootNode::Instance()->AddChild(new
-             EntityComponentNode(full_id, sphere));
+             EntityComponentNode(full_id, entity_data_.find("asteroid")->second));
          }
 
          SceneNode::Get(full_id)->set_visible(false);
@@ -107,7 +105,7 @@ void Universe::ParseAsteroidFile() {
    }
 }
 
-void ParseCheckPointsFile(std::vector<Planet*> planets) {
+void Universe::ParseCheckPointsFile() {
    std::ifstream in("checkpoints.lvl");
 
 	std::string id;
@@ -117,7 +115,6 @@ std::string full_id;
 
 
    std::string line;
-   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag.obj", "textures/edgar.bmp");
    while (getline(in, line)) {
       std::istringstream stream(line);
       if (line.empty() || line[0] == '#') {
@@ -130,15 +127,14 @@ std::string full_id;
          full_id = "checkpoint" + id;
 
             SceneNode::Get("planet" + planet_id)->AddChild(new
-             EntityComponentNode(full_id, flag));
-	//SceneNode::Get("planet1")->set_visible(false);
+             EntityComponentNode(full_id, entity_data_.find("flag")->second));
 
         SceneNode::Get(full_id)->set_visible(true);
 
 	int planetID = atoi(planet_id.c_str());
 	planetID--;
 
-SpatialManager::Instance()->AddEntity(new CheckPoint(planets[planetID], planetID,  angle, full_id));
+SpatialManager::Instance()->AddEntity(new CheckPoint(planets_[planetID], planetID,  angle, full_id));
       }
    }
 }
@@ -148,9 +144,8 @@ void Universe::ParseAssetsFile() {
 
 	std::string name;
          std::string planet_id;
-        float xAngle;
-	float yAngle;
-	float zAngle;
+        float xyAngle;
+	float xzAngle;
 	float scale;
 	float offset_thing;
 std::string full_id;
@@ -165,9 +160,8 @@ std::string full_id;
       else {
          stream >> name;
          stream >> planet_id;
-         stream >> xAngle;
-         stream >> yAngle;
-	 stream >> zAngle;
+         stream >> xyAngle;
+         stream >> xzAngle;
 	 stream >> scale;
 	stream >> offset_thing;
 
@@ -184,10 +178,10 @@ std::string full_id;
 
 	SceneNode::Get("planet" + planet_id)->AddChild(new
 	EntityComponentNode(full_id, entity_data_.find(name)->second));
-SceneNode::Get(full_id)->set_transformation(glm::rotate(glm::mat4(), xAngle - 90.0f, glm::vec3(1.0f,  0.0f, 0.0f)));
-SceneNode::Get(full_id)->apply_transformation(glm::rotate(glm::mat4(), yAngle - 90.0f, glm::vec3(0.0f,  1.0f, 0.0f)));
-SceneNode::Get(full_id)->apply_transformation(glm::translate(glm::vec3(glm::cos(radians(zAngle)), glm::sin(radians(zAngle)), 0.0f)*(planets_[planetID]->radius() + offset_thing)/ 2.0f));
-SceneNode::Get(full_id)->apply_transformation(glm::rotate(glm::mat4(), zAngle - 90.0f, glm::vec3(0.0f,  0.0f, 1.0f)));
+SceneNode::Get(full_id)->set_transformation(glm::rotate(glm::mat4(), xyAngle - 90.0f, glm::vec3(0.0f,  0.0f, 1.0f)));
+SceneNode::Get(full_id)->apply_transformation(glm::rotate(glm::mat4(), xzAngle - 90.0f, glm::vec3(0.0f,  1.0f, 0.0f)));
+SceneNode::Get(full_id)->apply_transformation(glm::translate(glm::vec3(glm::cos(radians(0.0f)), glm::sin(radians(0.0f)), 0.0f)*(planets_[planetID]->radius() + offset_thing)/ 2.0f));
+SceneNode::Get(full_id)->apply_transformation(glm::rotate(glm::mat4(), -90.0f, glm::vec3(0.0f,  0.0f, 1.0f)));
 		SceneNode::Get(full_id)->apply_transformation(glm::scale(glm::mat4(), glm::vec3(scale)));
 	
 
@@ -220,21 +214,13 @@ void Universe::ParseEntityFile() {
    }
 }
 
-void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets) {
-   std::ifstream in(filename.c_str());
+void Universe::ParsePlanetFile() {
+   std::ifstream in("planets.lvl");
 
    PlanetType planet_type = PLANET_TYPE_SMALL;
 
    std::string line;
-   EntityComponent* sphere = LoadEntityComponentFromOBJ("meshes/sphere.obj", "textures/grass.bmp");
-   EntityComponent* tree = LoadEntityComponentFromOBJ("meshes/tree.obj", "textures/earth.bmp");
-   EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj", "textures/purple.bmp");
-   EntityComponent* adobe = LoadEntityComponentFromOBJ("meshes/adobe_house.obj", "textures/earth.bmp");
-   EntityComponent* house = LoadEntityComponentFromOBJ("meshes/tree_house.obj", "textures/earth.bmp");
-   EntityComponent* cactus = LoadEntityComponentFromOBJ("meshes/cactus.obj", "textures/earth.bmp");
-   EntityComponent* flower = LoadEntityComponentFromOBJ("meshes/flower.obj", "textures/earth.bmp");
-   EntityComponent* coral = LoadEntityComponentFromOBJ("meshes/coral.obj", "textures/earth1.bmp");
-   EntityComponent* asteroid = LoadEntityComponentFromOBJ("meshes/asteroid.obj", "textures/earth.bmp");
+
 
    while (getline(in, line)) {
       std::istringstream stream(line);
@@ -257,36 +243,24 @@ void ParsePlanetFile(const std::string& filename, std::vector<Planet*> *planets)
          stream >> radius;
          stream >> gravity_radius;
 
-         RootNode::Instance()->AddChild(new EntityComponentNode("planet" + id, sphere));
-         planets->push_back(new Planet(planet_type, id, position, radius, gravity_radius));
+         RootNode::Instance()->AddChild(new EntityComponentNode("planet" + id, entity_data_.find("planet")->second));
+         planets_.push_back(new Planet(planet_type, id, position, radius, gravity_radius));
+
+	
       }
    }
+/* Sky test thing stuff
+RootNode::Instance()->AddChild(new EntityComponentNode("sky", entity_data_.find("sky")->second));
+		SceneNode::Get("sky")->set_transformation(glm::scale(glm::mat4(), glm::vec3(1000.0f)));
+		SceneNode::Get("sky")->apply_transformation(glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, -0.5f)));
+//SceneNode::Get("sky")->set_transformation(glm::rotate(glm::mat4(), 90.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
+*/
+
+
 }
 
 void Universe::LoadInPlanets() {
-   EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj", "textures/dots.bmp");
-   EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer_fish.obj", "textures/sand.bmp");
-   EntityComponent* gopher = LoadEntityComponentFromOBJ("meshes/go_gopher.obj", "textures/edgar.bmp");
-   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag.obj", "textures/earth1.bmp");
-   
-
-   ParsePlanetFile("planets.lvl", &planets_);
-   /*
-   RootNode::Instance()->AddChild(new EntityComponentNode("shark1", shark));
-   assets_.push_back(new Assets("shark", "1", glm::vec3(0, 0.8, 0), glm::vec3(5.0, 5.0, 5.0), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
-   
-   RootNode::Instance()->AddChild(new EntityComponentNode("fish2", fish));
-   assets_.push_back(new Assets("fish", "2", glm::vec3(0, 0.8, 0), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
-   
-   RootNode::Instance()->AddChild(new EntityComponentNode("fish3", fish));
-   assets_.push_back(new Assets("fish", "3", glm::vec3(-0.8, 0, 0), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
-   
-   RootNode::Instance()->AddChild(new EntityComponentNode("gopher4", gopher));
-   assets_.push_back(new Assets("gopher", "4", glm::vec3(.1, 0.5, 0), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3]));   
-   
-   RootNode::Instance()->AddChild(new EntityComponentNode("gopher5", gopher));
-   assets_.push_back(new Assets("gopher", "5", glm::vec3(-.1, -0.5, 0), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3]));
-*/
+   ParsePlanetFile();
 }
 
 Universe::Universe() :
@@ -297,7 +271,7 @@ Universe::Universe() :
    LoadInPlanets();
    ParseAssetsFile();
    ParseAsteroidFile();
-   ParseCheckPointsFile(planets_);
+   ParseCheckPointsFile();
    player_ = new Player(planets_[0], camera_);
 
    glm::vec3 min, max;

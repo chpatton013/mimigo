@@ -14,4 +14,5 @@
 	cactus		cactus.obj	earth.bmp
 	flower		flower.obj	earth.bmp
 	coral		coral.obj	earth.bmp
-
+	sky		bg_sky.obj	earth.bmp
+	bunny		bunbun.obj	bunny.bmp

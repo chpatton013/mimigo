@@ -26,6 +26,7 @@ class Planet : public CollidableEntity {
 
    const glm::vec3 &center() const { return center_; }
    float radius() const { return radius_; }
+      float gravity_radius() const { return gravity_radius_; }
    virtual PlanetType get_type() const { return planet_type_; }
    bool is_small_planet() const
      { return planet_type_ == PLANET_TYPE_SMALL; }
