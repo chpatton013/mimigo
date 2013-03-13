@@ -15,8 +15,6 @@ ParticleSystem::ParticleSystem(int num, Planet *planet) :
       particle_mesh-> apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.1f)));
       RootNode::Instance()->AddChild(particle_mesh);
 
-      float x = -4.8 + (float)rand() / ((float)RAND_MAX/(-4.2 - (-4.8)));
-      float y = -1.3 + (float)rand() / ((float)RAND_MAX/(-1.7 - (-1.3)));
       _particles.push_back(new Particles(i, planet));
    }
 }
