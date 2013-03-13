@@ -1,0 +1,11 @@
+# Assets Load File
+#
+# Make sure the name has a companion name in entities.txt! (Otherwise things will break and be sad.)
+#
+#	name	planet_id	around_xy 	around_xz 	scale	planet_offset_value
+#
+	tree	1		45.0	 	90.0		0.5	0.0
+	tree	1		45.0		30.0		0.2	-0.25
+#	tree	1		90.0		-25.0		0.1	-0.25
+	tree	3		0.0		0.0		1.0	0.0
+	bunny	2		0.0	 	0.0    		2.0	2.0

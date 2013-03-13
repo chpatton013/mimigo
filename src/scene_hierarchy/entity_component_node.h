@@ -11,7 +11,7 @@ class EntityComponentNode : public SceneNode {
       entity_(entity)
    {}
 
-   virtual void AddChild(SceneNode*) { assert(false); }
+   virtual void AddChild(SceneNode* child);
    virtual void RemoveChild(SceneNode*) { assert(false); }
    virtual void set_children(const std::set<SceneNode*>&)
     { assert(false); }

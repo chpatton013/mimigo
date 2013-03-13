@@ -6,7 +6,15 @@ void EntityComponentNode::Draw(MatrixStack* matrix_stack) {
    if (visible_) {
       entity_->Draw(matrix_stack);
    }
+	for (std::set<SceneNode*>::iterator it = children_.begin();
+            it != children_.end(); ++it) {
+         (*it)->Draw(matrix_stack);
+      }
    matrix_stack->pop();
+}
+
+void EntityComponentNode::AddChild(SceneNode* child) {
+   SceneNode::AddChild(child);
 }
 
 void EntityComponentNode::GetExtents(glm::vec4* min, glm::vec4* max) {

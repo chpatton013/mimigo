@@ -74,6 +74,10 @@ void print_vec(const glm::vec3& v) {
    void LoadInPlanets();
    void LoadInAssets();
    void ParseAsteroidFile();
+   void ParseEntityFile();
+   void ParseAssetsFile();
+   void ParseCheckPointsFile();
+   void ParsePlanetFile();
    void PlayerEntersGravityFieldOf(Planet* planet);
    bool PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet);
    void SwitchToLargePlanetGamePlay();
@@ -90,6 +94,9 @@ void print_vec(const glm::vec3& v) {
    void GetBounds(glm::vec3* min, glm::vec3* max);
 
    std::map<std::string, std::vector<Event> > event_map_;
+   std::map<std::string, EntityComponent*> entity_data_;
+   std::map<std::string, int> entity_num_;
+   std::map<std::string, EntityComponentNode> world_elements_;
 
    Camera* camera_;
    GamePlayType game_play_type_;
