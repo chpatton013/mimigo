@@ -5,6 +5,7 @@
 #include "core/rotation.h"
 #include "planet.h"
 #include "core/timer.h"
+#include "../util/stop_watch.h"
 
 class PlayerObserver;
 
@@ -50,6 +51,9 @@ class SmallPlanetMover : public Timer::Delegate {
    float max_theta_speed() const;
    void DetermineMovement();
 
+   void calc_jump_level();
+   float jump_modifier() const;
+
    Planet* planet_;
    Rotation xy_rotation_;
    Rotation xz_rotation_;
@@ -58,6 +62,11 @@ class SmallPlanetMover : public Timer::Delegate {
    float jump_speed_;
    float theta_;
    float theta_speed_;
+
+   StopWatch jump_clock_;
+   int jump_level_;
+   static const int JUMP_THRESHOLD;
+   static const int MAX_JUMP_LEVEL;
 
    bool is_jumping_;
    bool is_falling_;
