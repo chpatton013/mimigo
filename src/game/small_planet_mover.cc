@@ -140,6 +140,7 @@ void SmallPlanetMover::set_planet(Planet* planet) {
    is_falling_ = true;
    RotateBottomTowardPlanet();
    FallToPlanet();
+   radius_ = planet->gravity_radius() - planet->radius();
    if (observer_)
       observer_->OnPlayerSwitchPlanets(planet);
 }
@@ -203,9 +204,9 @@ void SmallPlanetMover::Update() {
       }
 
       radius_ += jump_speed_ * jump_modifier();
-      if (radius_ <= planet_->radius() + 0.1f) {
+      if (radius_ <= planet_->radius() + 0.125f) {
          jump_speed_ = kJumpSpeed;
-         radius_ = planet_->radius() + 0.1f;
+         radius_ = planet_->radius() + 0.125f;
          is_falling_ = false;
          jump_clock_.start();
       }
@@ -217,7 +218,7 @@ void SmallPlanetMover::Update() {
       theta_speed_ = accelerate_counterclockwise(max_theta_speed(), theta_speed_);
    else
       theta_speed_ = decelerate(theta_speed_);
-   set_theta(theta_ + theta_speed_);
+   set_theta(theta_ + (theta_speed_ / planet_->radius()));
    RotateBottomTowardPlanet();
 
    UpdateMeshTransform();
