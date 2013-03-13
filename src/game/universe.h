@@ -107,6 +107,7 @@ void print_vec(const glm::vec3& v) {
    ParticleSystem* ps;
    Light* light_;
    int currentCheckpoint;
+   float checkpoint_angle;
 };
 
 #endif

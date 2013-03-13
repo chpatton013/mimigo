@@ -251,10 +251,8 @@ SceneNode::Get("sky")->apply_transformation(glm::translate(glm::mat4(), glm::vec
 }
 
 void Universe::LoadInAssets(){
-   EntityComponent* shark = LoadEntityComponentFromOBJ("meshes/shark.obj", "textures/dots.bmp");
    EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer_fish.obj", "textures/sand.bmp");
    EntityComponent* gopher = LoadEntityComponentFromOBJ("meshes/go_gopher.obj", "textures/edgar.bmp");
-   EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag.obj", "textures/earth.bmp");
    
     /*RootNode::Instance()->AddChild(new EntityComponentNode("shark1", shark));
    assets_.push_back(new Assets("shark", "1", glm::vec3(0, 1.2, 0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[0]));*/
@@ -390,11 +388,15 @@ void Universe::Update() {
    if (!collidedEntities.empty()) {
 	for (std::set<CollidableEntity*>::iterator it = collidedEntities.begin(); it != collidedEntities.end(); ++it) {
 		if((*it)->type() == 0){
-  			PlayerEntersGravityFieldOf(planets_[currentCheckpoint]);
+			PlayerEntersGravityFieldOf(planets_[currentCheckpoint]);
+			player_->setTheta(checkpoint_angle);
+
 			break;
 		}
 		else if((*it)->type() == 1){
   			currentCheckpoint = dynamic_cast<CheckPoint*>(*it)->planet();
+  			checkpoint_angle = dynamic_cast<CheckPoint*>(*it)->getTheta();
+
 			break;
 		}
 	}
@@ -405,10 +407,10 @@ void Universe::Update() {
 
    ps->update();
    
-  // planets_[12]->sideways(2.0);
-   //planets_[16]->Pogo(1.5);
-   //planets_[23]->Pogo(1.5);
-   //planets_[27]->sideways(1.5);
+   planets_[12]->sideways(2.0);
+   planets_[16]->Pogo(1.5);
+   planets_[23]->Pogo(1.5);
+   planets_[27]->sideways(1.5);
    //planets_[2]->Pogo(2.0);
 
 }

@@ -66,6 +66,7 @@ class Player : public CollidableEntity {
    }
 
    int type(){ return 1;}
+   void setTheta(float angle){small_planet_mover_.set_theta(angle);}
 
   private:
    bool is_attached_to(Planet* planet) const {
