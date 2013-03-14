@@ -16,7 +16,6 @@
 	coral		coral.obj	earth.bmp
 	sky		bg_sky.obj	background_sky.bmp
 	bunny		bunbun.obj	bunny.bmp
-<<<<<<< HEAD
 	beaver2		beaver2.obj	beaver.bmp
 	bird		bird.obj	bird.bmp
 	daisy_red	daisy.obj	daisy_red.bmp
@@ -27,7 +26,4 @@
 	rat		rat.obj		rat.bmp
 	turtle		turtle.obj	turtle.bmp
 	winflag		flag.obj	purple.bmp
-
-=======
 	beaver		beaver.obj	beaver.bmp
->>>>>>> ff2967246c6eefcaf639b21dc102fc9f11e7cf26
