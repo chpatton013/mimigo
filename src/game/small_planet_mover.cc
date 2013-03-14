@@ -179,11 +179,13 @@ float jump_speed() {
 }
 
 float SmallPlanetMover::max_theta_speed() const {
-   if (is_jumping_ || is_falling_) {
+  /* if (is_jumping_ || is_falling_) {
       return jump_speed() * jump_modifier();
    } else {
+     */
       return kThetaSpeed;
-   }
+      
+  // }
 }
 
 void SmallPlanetMover::set_theta(float theta) {

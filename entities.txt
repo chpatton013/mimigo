@@ -16,3 +16,4 @@
 	coral		coral.obj	earth.bmp
 	sky		bg_sky.obj	earth.bmp
 	bunny		bunbun.obj	bunny.bmp
+	beaver		beaver.obj	beaver.bmp

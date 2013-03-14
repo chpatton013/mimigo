@@ -15,30 +15,34 @@ void Planet::Initialize(const std::string& id) {
 }
 
 void Planet::sideways(float dist){
-   float acc = .1;
-   if(center_.x > move_center.x - (dist / 2) && center_.x < move_center.x + (dist / 2)){
+   float acc = 0.1f;
+   /*if(center_.x > move_center.x - (dist / 2) && center_.x < move_center.x + (dist / 2)){
       acc = .2;
    }
+   */
    
    if(center_.x > move_center.x + dist){
       turn = false;
    }
-   if(center_.x < move_center.x - dist){
+  if(center_.x < move_center.x - dist){
       turn = true;
    }  
-   if(turn){
-   	center_.x += acc;
-   }else{
-   	center_.x -= acc;
+   if(!turn){
+	 acc *= -1.0f;
    }
+   center_.x += acc; 
    mesh->set_transformation(glm::translate(center_));
+   mesh->apply_transformation(glm::scale(2.0f*radius_, 2.0f*radius_, 2.0f*radius_));
+
 }
 
 void Planet::Pogo(float dist){
-   float acc = .1;
+   float acc = 0.1f;
+   /*
    if(center_.x > move_center.x - (dist / 2) && center_.x < move_center.x + (dist / 2)){
       acc = .2;
    }
+   */
    
    if(center_.y > move_center.y + dist){
       turn = false;
@@ -46,10 +50,11 @@ void Planet::Pogo(float dist){
    if(center_.y < move_center.y - dist){
       turn = true;
    }
-   if(turn){
-   	center_.y += acc;
-   }else{
-   	center_.y -= acc;
+   if(!turn){
+     acc *= -1.0f;
    }
-   mesh->set_transformation(glm::translate(center_));
+    center_.y += acc; 
+
+  mesh->set_transformation(glm::translate(center_));
+   mesh->apply_transformation(glm::scale(2.0f*radius_, 2.0f*radius_, 2.0f*radius_));
 }
