@@ -26,4 +26,3 @@
 	rat		rat.obj		rat.bmp
 	turtle		turtle.obj	turtle.bmp
 	winflag		flag.obj	purple.bmp
-	beaver		beaver.obj	beaver.bmp
