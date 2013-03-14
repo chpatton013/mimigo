@@ -250,28 +250,96 @@ SceneNode::Get("sky")->apply_transformation(glm::translate(glm::mat4(), glm::vec
 */
 }
 
+//they are actually enemies!
 void Universe::LoadInAssets(){
+/*
    EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer_fish.obj", "textures/sand.bmp");
+   */
    EntityComponent* gopher = LoadEntityComponentFromOBJ("meshes/go_gopher.obj", "textures/edgar.bmp");
+   
+   EntityComponent* turtle = LoadEntityComponentFromOBJ("meshes/turtle.obj", "textures/turtle.bmp");
+   
+   EntityComponent* mouse = LoadEntityComponentFromOBJ("meshes/mouse.obj", "textures/mouse.bmp");
+   
+   EntityComponent* beaver = LoadEntityComponentFromOBJ("meshes/beaver2.obj", "textures/beaver.bmp");
+   
+   EntityComponent* rat = LoadEntityComponentFromOBJ("meshes/rat.obj", "textures/rat.bmp");
+   
+   EntityComponent* bird = LoadEntityComponentFromOBJ("meshes/bird.obj", "textures/bird.bmp");
+   
+   EntityComponent* bunny = LoadEntityComponentFromOBJ("meshes/bunbun.obj", "textures/bunny.bmp");
    
     /*RootNode::Instance()->AddChild(new EntityComponentNode("shark1", shark));
    assets_.push_back(new Assets("shark", "1", glm::vec3(0, 1.2, 0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[0]));*/
-
-   
+   /*
    RootNode::Instance()->AddChild(new EntityComponentNode("fish2", fish));   
    assets_.push_back(new Assets("fish", "2", glm::vec3(.8, 0,0), glm::vec3(.25, .25, .25), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2], 0));
    
    RootNode::Instance()->AddChild(new EntityComponentNode("fish3", fish));
    assets_.push_back(new Assets("fish", "3", glm::vec3(-0.8, 0, 0), glm::vec3(.25,.25,.25), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2], 0));
+   */
    
+   //translate, rotate, scale
    RootNode::Instance()->AddChild(new EntityComponentNode("gopher4", gopher));
-   assets_.push_back(new Assets("gopher", "4", glm::vec3(0, 0.6, 0), glm::vec3(.25,.25,.25), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3], 1));   
-   
+   assets_.push_back(new Assets("gopher", "4", glm::vec3(-0.4, 0.3, 0.5), glm::vec3(.3,.3,.3), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[13], 1));   
+
    RootNode::Instance()->AddChild(new EntityComponentNode("gopher5", gopher));
-   assets_.push_back(new Assets("gopher", "5", glm::vec3(0, -0.6, 0), glm::vec3(.25,.25,.25), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3], 2));
+   assets_.push_back(new Assets("gopher", "5", glm::vec3(0, 0.5, 0.5), glm::vec3(.35,.35,.35), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[13], 2));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("turtle6", turtle));
+   assets_.push_back(new Assets("turtle", "6", glm::vec3(0, 1.0, 1.0), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[11], 0));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("mouse7", mouse));
+   assets_.push_back(new Assets("mouse", "7", glm::vec3(0.0, 1.0, 1.0), glm::vec3(.25,.25,.25), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[17], 1));
+   
+    RootNode::Instance()->AddChild(new EntityComponentNode("mouse8", mouse));
+   assets_.push_back(new Assets("mouse", "8", glm::vec3(-0.3, 1.0, 0.7), glm::vec3(.35,.35,.35), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[17], 1));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("mouse9", mouse));
+   assets_.push_back(new Assets("mouse", "9", glm::vec3(0.3, 1.0, 0.6), glm::vec3(.35,.35,.35), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[17], 1));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("mouse10", mouse));
+   assets_.push_back(new Assets("mouse", "10", glm::vec3(0.5, 1.5, 0.1), glm::vec3(.4,.4,.4), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[17], 1));
+   
+    RootNode::Instance()->AddChild(new EntityComponentNode("mouse11", mouse));
+   assets_.push_back(new Assets("mouse", "11", glm::vec3(-0.4, 1.5, 0.2), glm::vec3(.35,.35,.35), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[17], 1));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("mouse12", mouse));
+   assets_.push_back(new Assets("mouse", "12", glm::vec3(0.0, 0.0, 0.2), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[19], 1));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("beaver13", beaver));
+   assets_.push_back(new Assets("beaver", "13", glm::vec3(0.5, -1.5, 0.2), glm::vec3(.75,.75,.75), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[20], 5));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("rat14", rat));
+   assets_.push_back(new Assets("rat", "14", glm::vec3(0.5, -1.5, 0.2), glm::vec3(.75,.75,.75), glm::vec3(1.0, 180.0, 1.0), 0.0, planets_[24], 6));
+   
+     RootNode::Instance()->AddChild(new EntityComponentNode("rat15", rat));
+   assets_.push_back(new Assets("rat", "15", glm::vec3(0.5, -2.0, 0.2), glm::vec3(.75,.75,.75), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[24], 0));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("bird16", bird));
+   assets_.push_back(new Assets("bird", "16", glm::vec3(0.5, 1.0, 0.2), glm::vec3(.75,.75,.75), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[28], 0));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("bird17", bird));
+   assets_.push_back(new Assets("bird", "17", glm::vec3(-0.6, 0.4, 0.2), glm::vec3(.3,.3,.3), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[29], 1));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("bird18", bird));
+   assets_.push_back(new Assets("bird", "18", glm::vec3(0.5, 1.5, 0.2), glm::vec3(.35,.35,.35), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[30], 3));
+   /*
+   RootNode::Instance()->AddChild(new EntityComponentNode("bird19", bird));
+   assets_.push_back(new Assets("bird", "19", glm::vec3(2.0, 2.5, 0.2), glm::vec3(.35,.35,.35), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[30], 1));
+   */
+   
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("bunny20", bunny));
+   assets_.push_back(new Assets("bunny", "20", glm::vec3(0.1, 0.2, 0.2), glm::vec3(.45,.45,.45), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[21], 1));
+   
+   RootNode::Instance()->AddChild(new EntityComponentNode("beaver21", beaver));
+   assets_.push_back(new Assets("beaver", "21", glm::vec3(0.1, 0.2, 0.2), glm::vec3(.6,.6,.6), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[26], 4));
+   
+   
    
    for(std::vector<Assets*>::iterator it = assets_.begin(); it != assets_.end(); it++){
-    //  SpatialManager::Instance()->AddEntity(*it);
+      SpatialManager::Instance()->AddEntity(*it);
    }
 }
 
@@ -289,19 +357,19 @@ Universe::Universe() :
    LoadInAssets();
    ParseAsteroidFile();
    ParseCheckPointsFile();
-   player_ = new Player(planets_[0], camera_);
+   player_ = new Player(planets_[0], camera_); //here!
 
    glm::vec3 min, max;
    GetBounds(&min, &max);
    SpatialManager::Instance()->Establish(min, max);
 
-   ps = new ParticleSystem(15, planets_[0]);
+   ps = new ParticleSystem(15, planets_[51]);
    light_ = new DirectionLight(glm::vec3(0.4f, 0.4f, 0.4f),
                                glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
                                glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
 
    currentCheckpoint = 0;
-   PlayerEntersGravityFieldOf(planets_[0]);
+   PlayerEntersGravityFieldOf(planets_[0]); //here!
 }
 
 void Universe::OnExpiration(const std::string& event_name) {
@@ -411,8 +479,7 @@ void Universe::Update() {
    planets_[16]->Pogo(1.5);
    planets_[23]->Pogo(1.5);
    planets_[27]->sideways(1.5);
-   //planets_[2]->Pogo(2.0);
-
+   planets_[31]->Pogo(4.2);
 }
 
 void Universe::Draw() {
