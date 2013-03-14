@@ -123,7 +123,7 @@ std::string full_id;
 
          full_id = "checkpoint" + id;
 
-            SceneNode::Get("planet" + planet_id)->AddChild(new
+            RootNode::Instance()->AddChild(new
              EntityComponentNode(full_id, entity_data_.find("flag")->second));
 
         SceneNode::Get(full_id)->set_visible(true);
@@ -242,12 +242,13 @@ void Universe::ParsePlanetFile() {
          planets_.push_back(new Planet(planet_type, id, position, radius, gravity_radius));
       }
    }
-/* Sky test thing stuff
+ //Sky test thing stuff
+ //SceneNode::Get("planet1")->AddChild(new EntityComponentNode("sky", entity_data_.find("sky")->second));
 RootNode::Instance()->AddChild(new EntityComponentNode("sky", entity_data_.find("sky")->second));
-SceneNode::Get("sky")->set_transformation(glm::scale(glm::mat4(), glm::vec3(1000.0f)));
-SceneNode::Get("sky")->apply_transformation(glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, -0.5f)));
+//SceneNode::Get("sky")->set_transformation(glm::scale(glm::mat4(), glm::vec3(1000.0f)));
+//SceneNode::Get("sky")->apply_transformation(glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, -0.5f)));
 //SceneNode::Get("sky")->set_transformation(glm::rotate(glm::mat4(), 90.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
-*/
+
 }
 
 //they are actually enemies!
@@ -363,7 +364,11 @@ Universe::Universe() :
    GetBounds(&min, &max);
    SpatialManager::Instance()->Establish(min, max);
 
+<<<<<<< HEAD
    ps = new ParticleSystem(15, planets_[51]);
+=======
+   ps = new ParticleSystem(15, planets_[0]); 
+>>>>>>> ff2967246c6eefcaf639b21dc102fc9f11e7cf26
    light_ = new DirectionLight(glm::vec3(0.4f, 0.4f, 0.4f),
                                glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
                                glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
@@ -448,6 +453,11 @@ void Universe::CheckPlayerChangesGravityFields() {
 
 void Universe::Update() {
    camera_->Update();
+      planets_[12]->sideways(1.0);
+      planets_[16]->Pogo(1.5);
+   planets_[23]->Pogo(1.5);
+   planets_[27]->sideways(1.5);
+
    player_->Update();
    SpatialManager::Instance()->Update();
 
@@ -475,11 +485,16 @@ void Universe::Update() {
 
    ps->update();
    
+<<<<<<< HEAD
    planets_[12]->sideways(2.0);
    planets_[16]->Pogo(1.5);
    planets_[23]->Pogo(1.5);
    planets_[27]->sideways(1.5);
    planets_[31]->Pogo(4.2);
+=======
+   //planets_[2]->Pogo(2.0);
+
+>>>>>>> ff2967246c6eefcaf639b21dc102fc9f11e7cf26
 }
 
 void Universe::Draw() {

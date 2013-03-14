@@ -4,6 +4,7 @@
 #
 #	name	planet_id	around_xy 	around_xz 	scale	planet_offset_value
 #
+<<<<<<< HEAD
 
 	bunny	  4		0.0	 	90.0    	1.0	0.7	
 	beaver2   5 		180.0		70.0		0.3	-0.3
@@ -83,3 +84,11 @@
 
 	
 
+=======
+	tree	1		45.0	 	90.0		0.5	0.0
+	tree	1		45.0		30.0		0.2	-0.25
+#	tree	1		90.0		-25.0		0.1	-0.25
+	tree	3		0.0		0.0		1.0	0.0
+	bunny	2		0.0	 	0.0    		2.0	2.0
+	beaver	1		0.0		0.0		0.5	0.0
+>>>>>>> ff2967246c6eefcaf639b21dc102fc9f11e7cf26
