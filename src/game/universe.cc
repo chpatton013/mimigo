@@ -123,7 +123,7 @@ std::string full_id;
 
          full_id = "checkpoint" + id;
 
-            SceneNode::Get("planet" + planet_id)->AddChild(new
+            RootNode::Instance()->AddChild(new
              EntityComponentNode(full_id, entity_data_.find("flag")->second));
 
         SceneNode::Get(full_id)->set_visible(true);
