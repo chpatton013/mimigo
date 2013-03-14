@@ -364,11 +364,9 @@ Universe::Universe() :
    GetBounds(&min, &max);
    SpatialManager::Instance()->Establish(min, max);
 
-<<<<<<< HEAD
+
    ps = new ParticleSystem(15, planets_[51]);
-=======
-   ps = new ParticleSystem(15, planets_[0]); 
->>>>>>> ff2967246c6eefcaf639b21dc102fc9f11e7cf26
+
    light_ = new DirectionLight(glm::vec3(0.4f, 0.4f, 0.4f),
                                glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
                                glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
@@ -485,16 +483,9 @@ void Universe::Update() {
 
    ps->update();
    
-<<<<<<< HEAD
-   planets_[12]->sideways(2.0);
-   planets_[16]->Pogo(1.5);
-   planets_[23]->Pogo(1.5);
-   planets_[27]->sideways(1.5);
-   planets_[31]->Pogo(4.2);
-=======
-   //planets_[2]->Pogo(2.0);
 
->>>>>>> ff2967246c6eefcaf639b21dc102fc9f11e7cf26
+   planets_[31]->Pogo(4.2);
+
 }
 
 void Universe::Draw() {
