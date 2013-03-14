@@ -14,5 +14,16 @@
 	cactus		cactus.obj	earth.bmp
 	flower		flower.obj	earth.bmp
 	coral		coral.obj	earth.bmp
-	sky		bg_sky.obj	earth.bmp
+	sky		bg_sky.obj	background_sky.bmp
 	bunny		bunbun.obj	bunny.bmp
+	beaver2		beaver2.obj	beaver.bmp
+	bird		bird.obj	bird.bmp
+	daisy_red	daisy.obj	daisy_red.bmp
+	daisy_purple	daisy.obj	daisy_purple.bmp
+	daisy_yellow	daisy.obj	daisy_yellow.bmp
+	mouse		mouse.obj	mouse.bmp
+	simpleTree	simpleTree.obj	simpleTree.bmp
+	rat		rat.obj		rat.bmp
+	turtle		turtle.obj	turtle.bmp
+	winflag		flag.obj	purple.bmp
+

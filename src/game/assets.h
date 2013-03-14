@@ -18,6 +18,8 @@ class Assets : public CollidableEntity {
       Assets(){}
       Assets(const std::string& name, const std::string& id, glm::vec3 translate, glm::vec3 scale, glm::vec3 rotate, float rotateAngle, Planet* planet, int move);
      void BackAndForth(float dist, float speed);
+     void CCW(float speed);
+     void CW(float speed);
      void UpAndDown(float dist, bool upward, float speedup, float speedDown);
      bool Bounce();
      bool Update();

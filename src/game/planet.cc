@@ -15,9 +15,9 @@ void Planet::Initialize(const std::string& id) {
 }
 
 void Planet::sideways(float dist){
-   float acc = .1;
+   float acc = .09;
    if(center_.x > move_center.x - (dist / 2) && center_.x < move_center.x + (dist / 2)){
-      acc = .2;
+      acc = .1;
    }
    
    if(center_.x > move_center.x + dist){
@@ -35,9 +35,9 @@ void Planet::sideways(float dist){
 }
 
 void Planet::Pogo(float dist){
-   float acc = .1;
+   float acc = .09;
    if(center_.x > move_center.x - (dist / 2) && center_.x < move_center.x + (dist / 2)){
-      acc = .2;
+      acc = .1;
    }
    
    if(center_.y > move_center.y + dist){

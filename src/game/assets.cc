@@ -36,6 +36,7 @@ void Assets::Initialize(const std::string& name, const std::string& id){
    mesh->AddChild(SceneNode::Get(name + id));
    
    set_bounding_region(new SphericalBoundingRegion(position(), mesh->GetAverageRadius() * .25f));
+   printf("radius %f", mesh->GetAverageRadius() );
 }
 
 glm::vec3 Assets::position() {
@@ -49,19 +50,52 @@ glm::vec3 Assets::position() {
 bool Assets::Update() {
    switch(move) {
       case 0:
-         BackAndForth(45.0, 5.0);
+         BackAndForth(45.0, 1.0);
+         break;
+      case 5:
+         BackAndForth(100.0, 1.0);
+         break;
+      case 6:
+         CCW(359.0);
+         break;
+      case 7:
+         CW(359.0);
          break;
       case 1:
-	UpAndDown(.5, true, .1, .05);
+	UpAndDown(.5, true, .05, .02);
          break;
       case 2:
-	 UpAndDown(.5, false, .05, .1);
+	UpAndDown(.5, true, .1, .06);
          break;
+      case 4:
+	UpAndDown(.5, true, .02, .03);
+         break;
+      case 3:
+	 UpAndDown(.5, false, .02, .05);
+         break;
+
    }
    
    
    return true;
 }
+
+void Assets::CCW(float speed) { 
+    theta_ += speed;
+      position_ = planet->center() + glm::vec3(std::cos(radians(theta_)), std::sin(radians(theta_)), 0.0f) * (planet->radius()+0.2f);
+
+   UpdateMeshPosition();
+   bounding_region_->set_center(position_);
+}
+
+void Assets::CW(float speed) { 
+    theta_ += speed;
+      position_ = planet->center() + glm::vec3(std::cos(radians(theta_)), std::sin(radians(theta_)), 0.0f) * (planet->radius()+0.2f);
+
+   UpdateMeshPosition();
+   bounding_region_->set_center(position_);
+}
+
 
 void Assets::BackAndForth(float dist, float speed) { 
       if(theta_ <= -dist + angle){
@@ -150,7 +184,7 @@ bool Assets::Bounce() {
 
 void Assets::UpdateMeshPosition() {
    mesh->set_transformation(glm::translate(position_));
-   mesh->apply_transformation(glm::scale(0.35f, 0.35f, 0.35f));
+   mesh->apply_transformation(glm::scale(scale));
 }
 
 

@@ -85,6 +85,17 @@ EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/edgar.obj", "tex
    LoadTexture("textures/edgarTex.bmp");
    LoadTexture("textures/edgar.bmp");
    LoadTexture("textures/bunny.bmp");
+   LoadTexture("textures/daisy_purple.bmp");
+   LoadTexture("textures/daisy_red.bmp");
+   LoadTexture("textures/daisy_yellow.bmp");
+   LoadTexture("textures/background_sky.bmp");
+   LoadTexture("textures/beaver.bmp");
+   LoadTexture("textures/bird.bmp");
+   LoadTexture("textures/cheese.bmp");
+   LoadTexture("textures/mouse.bmp");
+   LoadTexture("textures/rat.bmp");
+   LoadTexture("textures/simpleTree.bmp");
+   LoadTexture("textures/turtle.bmp");
 
 }
 
