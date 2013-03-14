@@ -455,6 +455,7 @@ void Universe::Update() {
       planets_[16]->Pogo(1.5);
    planets_[23]->Pogo(1.5);
    planets_[27]->sideways(1.5);
+   planets_[31]->Pogo(4.2);
 
    player_->Update();
    SpatialManager::Instance()->Update();
@@ -482,9 +483,7 @@ void Universe::Update() {
    CheckPlayerChangesGravityFields();
 
    ps->update();
-   
-
-   planets_[31]->Pogo(4.2);
+  
 
 }
 
