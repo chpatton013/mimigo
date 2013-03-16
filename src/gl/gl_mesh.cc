@@ -37,7 +37,7 @@ void GLMesh::Draw(MatrixStack* transform) {
    transform->push();
    transform->multiply(trans_);
 
-   if (InPlane(verts_, transform)){
+   //if (InPlane(verts_, transform)){
       safe_glUniformMatrix4fv(
          g_handles["uModelMatrix"], glm::value_ptr(transform->top())
       );
@@ -50,7 +50,7 @@ void GLMesh::Draw(MatrixStack* transform) {
       //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
       //glLineWidth(1.0);
       glDrawElements(GL_TRIANGLES, ibo_length, GL_UNSIGNED_SHORT, 0);
-   }
+  // }
 
    transform->pop();
 }

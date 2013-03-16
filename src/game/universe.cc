@@ -358,12 +358,11 @@ Universe::Universe() :
    LoadInAssets();
    ParseAsteroidFile();
    ParseCheckPointsFile();
-   player_ = new Player(planets_[14], camera_); //here!
+   player_ = new Player(planets_[0], camera_); //here!
 
    glm::vec3 min, max;
    GetBounds(&min, &max);
    SpatialManager::Instance()->Establish(min, max);
-
 
    ps = new ParticleSystem(15, planets_[51]);
 
@@ -372,7 +371,7 @@ Universe::Universe() :
                                glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
 
    currentCheckpoint = 0;
-   PlayerEntersGravityFieldOf(planets_[14]); //here!
+   PlayerEntersGravityFieldOf(planets_[0]); //here!
 }
 
 void Universe::OnExpiration(const std::string& event_name) {
@@ -451,8 +450,8 @@ void Universe::CheckPlayerChangesGravityFields() {
 
 void Universe::Update() {
    camera_->Update();
-      planets_[12]->sideways(1.5);
-      planets_[16]->Pogo(1.5);
+   planets_[12]->sideways(1.5);
+   planets_[16]->Pogo(1.5);
    planets_[23]->Pogo(1.5);
    planets_[27]->sideways(1.5);
    planets_[31]->Pogo(4.2);
@@ -483,7 +482,8 @@ void Universe::Update() {
    CheckPlayerChangesGravityFields();
 
    ps->update();
-  
+   
+   //planets_[2]->Pogo(2.0);
 
 }
 
