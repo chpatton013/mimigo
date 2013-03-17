@@ -7,12 +7,12 @@ float radians(float degrees) {
 
 Assets::Assets(const std::string&  name, const std::string& id, glm::vec3 translate, glm::vec3 scale, glm::vec3 rotate, float rotateAngle, Planet *planet):
    translate(translate),
-   planet(planet),
    scale(scale),
    rotate(rotate),
    theta_(5.0),
-   up(0),
-   rotateAngle(rotateAngle)
+   planet(planet),
+   rotateAngle(rotateAngle),
+   up(0)
    {
       Initialize(name, id);
       flag = flag2 = true;
