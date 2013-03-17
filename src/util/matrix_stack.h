@@ -7,9 +7,16 @@
 class MatrixStack {
   public:
    MatrixStack() { load_identity(); }
+   MatrixStack(const glm::mat4& mat) {
+      load_identity();
+      push();
+      multiply(mat);
+   }
 
-   void load_identity()
-   { stack.clear(); stack.push_back(glm::mat4(1.0f)); }
+   void load_identity() {
+      stack.clear();
+      stack.push_back(glm::mat4(1.0f));
+   }
 
    void push() { stack.push_back(stack.back()); }
    void pop() {
