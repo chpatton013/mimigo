@@ -32,12 +32,12 @@ void GLMesh::SetupDraw() {
    GL_BIND_ARRAY(texture_buffer_object_, "aTexture", 2);
 }
 
-void GLMesh::Draw(MatrixStack* transform) {
+void GLMesh::Draw(MatrixStack* transform, bool wireframe) {
    SetupDraw();
    transform->push();
    transform->multiply(trans_);
 
-   if (InPlane(verts_, transform)){
+   if (InPlane(verts_, transform)) {
       safe_glUniformMatrix4fv(
          g_handles["uModelMatrix"], glm::value_ptr(transform->top())
       );
@@ -47,9 +47,15 @@ void GLMesh::Draw(MatrixStack* transform) {
       );
 
       const int ibo_length = faces_.size() * 3;
-      //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-      //glLineWidth(1.0);
+
+      if (wireframe) {
+         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+         glLineWidth(1.0);
+      }
       glDrawElements(GL_TRIANGLES, ibo_length, GL_UNSIGNED_SHORT, 0);
+      if (wireframe) {
+         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+      }
    }
 
    transform->pop();

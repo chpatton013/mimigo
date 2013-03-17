@@ -59,7 +59,7 @@ class GLMesh {
    {Initialize();}
 
    void SetupDraw();
-   void Draw(MatrixStack* transform);
+   void Draw(MatrixStack* transform, bool wireframe = false);
    void transform(const glm::mat4& trans) { trans_ = trans; }
    void move(const glm::vec3& move) { trans_ = glm::translate(trans_, move); }
 
