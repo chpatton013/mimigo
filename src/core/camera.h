@@ -27,7 +27,10 @@ class Camera : public PlayerObserver {
    glm::vec3 position() const { return camera_pos_; }
    glm::vec3 focus() const { return camera_focus_; }
 
+   glm::mat4 lookAt() const;
+
    virtual void Update();
+   virtual void print();
 
   protected:
    glm::vec3 camera_up_;
