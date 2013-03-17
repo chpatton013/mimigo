@@ -327,3 +327,11 @@ EntityComponent* MakeCube(const std::string& name, const std::string& texture) {
    //g_scene->Add(g_entities[name]);
    return g_entities[name];
 }
+
+GLMesh* LoadCubeMesh() {
+   return LoadMeshFromFile("meshes/cube.obj");
+}
+
+GLMesh* LoadSphereMesh() {
+   return LoadMeshFromFile("meshes/sphere_low_res.obj");
+}
