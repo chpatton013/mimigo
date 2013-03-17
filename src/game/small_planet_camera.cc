@@ -34,4 +34,6 @@ void SmallPlanetCamera::Update() {
       pos_x_animator_->Update();
    if (pos_y_animator_)
       pos_y_animator_->Update();
+
+   Camera::Update();
 }

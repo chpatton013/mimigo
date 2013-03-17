@@ -51,4 +51,6 @@ void LargePlanetCamera::Update() {
          it != animators_.end(); ++it) {
       (*it)->Update();
    }
+
+   Camera::Update();
 }

@@ -16,6 +16,12 @@ void Camera::OnPlayerMove(
 }
 
 void Camera::Update() {
+   glm::vec3 pos = position();
+   glm::vec3 foc = focus();
+   float c_pos[3] = { pos.x, pos.y, pos.z };
+   float c_for[3] = { foc.x - pos.x, foc.y - pos.y, foc.z - pos.z };
+   safe_glUniform4fv(g_handles["uCameraPosition"], 3, c_pos);
+   safe_glUniform4fv(g_handles["uCameraForward"], 3, c_for);
 }
 
 void Camera::SetView() {
