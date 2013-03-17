@@ -22,7 +22,7 @@ void main() {
    vec3 light = vec3(1.0);
 
    vec3 intensity;
-   if (dot(vec3(normal), normalize(uCameraForward)) < 0.1) {
+   if (dot(vec3(normal), normalize(uCameraForward)) < 0.2) {
       intensity = vec3(0.0);
    } else {
       float intensity_float = max(0.0, dot(lightDirection, normal));

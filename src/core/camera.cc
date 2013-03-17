@@ -16,7 +16,7 @@ void Camera::OnPlayerMove(
 }
 
 void Camera::Update() {
-   glm::vec3 forward(focus() - position());
+   glm::vec3 forward(position() - focus());
    glUniform3f(g_handles["uCameraForward"], forward.x, forward.y, forward.z);
 }
 
