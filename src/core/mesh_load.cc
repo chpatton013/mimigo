@@ -9,9 +9,12 @@
 #include "util/glm_util.h"
 
 #include <iostream>
+#include <map>
 #include <stdlib.h>
 #include <sstream>
 #include <fstream>
+
+static std::map<std::string, GLMesh*> g_meshes;
 
 double average(double a, double b) {
    return (a + b) / 2.0;
@@ -195,12 +198,17 @@ EntityComponent* LoadEntityComponentFromOBJ(const std::string& filename, const s
    g_entities[filename] = new Entity(
       meshes, glm::vec3(0.0), Rotation(), glm::vec3(1.0), filename
    );
-g_entities[filename]->set_texture(texture);
+   g_entities[filename]->set_texture(texture);
 
    return g_entities[filename];
 }
 
 GLMesh* LoadMeshFromFile(const std::string& filename) {
+   std::map<std::string, GLMesh*>::iterator mesh_itr = g_meshes.find(filename);
+   if (mesh_itr != g_meshes.end()) {
+      return mesh_itr->second;
+   }
+
    const std::string kCommentHeader("#");
    const std::string kVertexHeader("Vertex");
    const std::string kFaceHeader("Face");
@@ -232,8 +240,11 @@ GLMesh* LoadMeshFromFile(const std::string& filename) {
    }
 
    file.close();
-   return new GLMesh(verts, faces,
-    std::vector<glm::vec3>(), std::vector<glm::vec2>());
+   GLMesh* mesh = new GLMesh(
+      verts, faces, std::vector<glm::vec3>(), std::vector<glm::vec2>()
+   );
+   g_meshes[filename] = mesh;
+   return mesh;
 }
 
 static GLMesh* square = NULL;
@@ -311,6 +322,7 @@ EntityComponent* MakeCube(const std::string& name, const std::string& texture) {
       meshes, glm::vec3(0.0), Rotation(), glm::vec3(1.0), name
    );
    g_entities[name]->set_texture(texture);
+
    assert(stl_util::ContainsKey(g_entities, name));
    //g_scene->Add(g_entities[name]);
    return g_entities[name];
