@@ -81,6 +81,7 @@ bool GLShader::Install(const std::string& shader_name,
    //GET_UNIFORM(program_handle, "uCelShaderUnit");
    //GET_UNIFORM(program_handle, "uUseTexture");
    //GET_UNIFORM(program_handle, "uCameraPosition");
+   GET_UNIFORM(program_handle, "uCameraForward");
 
    assert(program_handle > 0);
    g_shaders[shader_name] = program_handle;
