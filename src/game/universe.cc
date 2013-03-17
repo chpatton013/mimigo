@@ -15,7 +15,6 @@
 #include <utility>
 #include <iterator>
 
-
 std::string asteroid_event_name(const std::string &id, int planet_id, float angle) {
    std::string event_name;
    std::ostringstream stream(event_name);
@@ -217,22 +216,22 @@ void Universe::LoadInPlanets() {
    EntityComponent* fish = LoadEntityComponentFromOBJ("meshes/puffer3.obj", "textures/sand.bmp");
    EntityComponent* gopher = LoadEntityComponentFromOBJ("meshes/go_gopher.obj", "textures/edgar.bmp");
    EntityComponent* flag = LoadEntityComponentFromOBJ("meshes/flag3.obj", "textures/earth1.bmp");
-   
+
 
    ParsePlanetFile("planets.lvl", &planets_);
-   
+
    RootNode::Instance()->AddChild(new EntityComponentNode("shark1", shark));
    assets_.push_back(new Assets("shark", "1", glm::vec3(0, 0.8, 0), glm::vec3(5.0, 5.0, 5.0), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
-   
+
    RootNode::Instance()->AddChild(new EntityComponentNode("fish2", fish));
    assets_.push_back(new Assets("fish", "2", glm::vec3(0, 0.8, 0), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
-   
+
    RootNode::Instance()->AddChild(new EntityComponentNode("fish3", fish));
    assets_.push_back(new Assets("fish", "3", glm::vec3(-0.8, 0, 0), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[2]));
-   
+
    RootNode::Instance()->AddChild(new EntityComponentNode("gopher4", gopher));
-   assets_.push_back(new Assets("gopher", "4", glm::vec3(.1, 0.5, 0), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3]));   
-   
+   assets_.push_back(new Assets("gopher", "4", glm::vec3(.1, 0.5, 0), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3]));
+
    RootNode::Instance()->AddChild(new EntityComponentNode("gopher5", gopher));
    assets_.push_back(new Assets("gopher", "5", glm::vec3(-.1, -0.5, 0), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[3]));
 }
@@ -351,7 +350,7 @@ void Universe::Update() {
 			break;
 		}
 	}
-	
+
    }
 
    CheckPlayerChangesGravityFields();
@@ -362,7 +361,7 @@ void Universe::Update() {
    assets_[2]->BackAndForth(200, 270, 5.0);
    assets_[3]->UpAndDown(.5, 0.0, .1, .05);
    assets_[4]->UpAndDown(.5, 0.0, .1, .05);
-   
+
    planets_[4]->Pogo();
    planets_[5]->Gopo();
 
