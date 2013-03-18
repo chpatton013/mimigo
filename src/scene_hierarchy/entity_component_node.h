@@ -2,12 +2,14 @@
 #define _ENTITY_COMPONENT_NODE_H_
 
 #include "scene_node.h"
+#include <string>
 #include "core/entity_component.h"
 
 class EntityComponentNode : public SceneNode {
   public:
    EntityComponentNode(const std::string& id, EntityComponent* entity) :
       SceneNode(id),
+      id_(id),
       entity_(entity)
    {}
 
@@ -21,6 +23,7 @@ class EntityComponentNode : public SceneNode {
    virtual void GetExtents(glm::vec4* min, glm::vec4* max);
 
   private:
+   std::string id_;
    EntityComponent* entity_;
 };
 

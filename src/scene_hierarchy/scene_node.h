@@ -16,7 +16,7 @@ class SceneNode {
       parent_(NULL),
       id_(id)
    {
-      assert(!stl_util::ContainsKey(node_map_, id_));
+      /* assert(!stl_util::ContainsKey(node_map_, id_)); */
       node_map_[id_] = this;
    }
    virtual ~SceneNode();
