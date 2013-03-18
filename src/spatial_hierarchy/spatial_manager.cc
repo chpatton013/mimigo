@@ -3,6 +3,13 @@
 
 SpatialManager* SpatialManager::space_mgr_;
 
+SpatialManager* SpatialManager::Instance() {
+   if (!space_mgr_) {
+      space_mgr_ = new SpatialManager();
+   }
+   return space_mgr_;
+}
+
 void SpatialManager::Update() {
    std::vector<CollidableEntity*> to_remove;
    for (std::set<CollidableEntity*>::iterator it = entities_.begin();

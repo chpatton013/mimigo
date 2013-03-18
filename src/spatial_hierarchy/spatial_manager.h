@@ -8,12 +8,7 @@
 
 class SpatialManager {
   public:
-   static SpatialManager* Instance() {
-      if (!space_mgr_) {
-         space_mgr_ = new SpatialManager();
-      }
-      return space_mgr_;
-   }
+   static SpatialManager* Instance();
 
    virtual void Update();
 
