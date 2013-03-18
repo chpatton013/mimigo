@@ -28,4 +28,5 @@ void Camera::SetView() {
    ExtractPlanesGL(comboMatrix, false);
 
    safe_glUniformMatrix4fv(g_handles["uViewMatrix"], glm::value_ptr(camera));
+   safe_glUniformMatrix4fv(g_handles["uCameraPos"], glm::value_ptr(camera_pos_));
 }

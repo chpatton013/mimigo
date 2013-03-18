@@ -4,7 +4,7 @@ uniform int  uLightTypes[1];
 uniform sampler2D uTextureUnit;
 uniform int uUseTexture;
 uniform int uCelShaderUnit;
-/*uniform vec4 uCameraPosition;*/
+uniform vec3 uCameraPos;
 
 varying vec3 vAmbient;
 varying vec3 vDiffuse;
@@ -19,6 +19,9 @@ vec4 texColor1 = texture2D(uTextureUnit, vTexture);
    vec4 lightDirection = normalize(uLights[2]);
    vec4 normal = vec4(normalize(vNormal.xyz), 1.0);
 
+   // assuming the view vector is always orthagonal (0,0,-1);
+   //float outline = dot((vPosition.xyz - uCameraPos), vNormal.xyz);
+
    vec3 intensity;
    float intensity_float = max(0.0, dot(lightDirection, normal));
    if (intensity_float > 32.0/32.0)
@@ -31,6 +34,9 @@ vec4 texColor1 = texture2D(uTextureUnit, vTexture);
       intensity = vec3(0.5);
    else
       intensity = vec3(0.2);
+   
+   /*if(outline > 0.51f)
+      intensity = vec3(0.1);*/
 
    vec3 light = vec3(1.0);
 

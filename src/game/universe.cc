@@ -36,7 +36,7 @@ static inline std::string &rtrim(std::string &s) {
    return s;
 }
 
-// trim from both ends
+// trim from both ends/
 static inline std::string &trim(std::string &s) {
    return ltrim(rtrim(s));
 }
@@ -369,6 +369,8 @@ Universe::Universe() :
    light_ = new DirectionLight(glm::vec3(0.4f, 0.4f, 0.4f),
                                glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
                                glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
+   hud_ = new HUD();
+   hud_->initHud();
 
    currentCheckpoint = 0;
    PlayerEntersGravityFieldOf(planets_[0]); //here!
@@ -492,6 +494,7 @@ void Universe::Draw() {
    light_->Draw();
    RootNode::Instance()->Draw();
    //RootNode::Instance()->PrintTree();
+   hud_->drawHud();
 }
 
 //DEBUG METHODS

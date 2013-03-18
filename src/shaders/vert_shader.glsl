@@ -2,6 +2,7 @@ uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
 uniform mat4 uModelMatrix;
 uniform mat4 uNormalMatrix;
+uniform vec3 uCameraPos;
 
 attribute vec3 aAmbient;
 attribute vec3 aDiffuse;

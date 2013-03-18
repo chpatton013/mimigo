@@ -14,6 +14,7 @@
 #include "../scene_hierarchy/root_node.h"
 #include "../spatial_hierarchy/spatial_manager.h"
 #include "../spatial_hierarchy/collidable_entity.h"
+#include "../hud/hud.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -106,6 +107,7 @@ void print_vec(const glm::vec3& v) {
    Player* player_;
    ParticleSystem* ps;
    Light* light_;
+   HUD* hud_;
    int currentCheckpoint;
    float checkpoint_angle;
 };
