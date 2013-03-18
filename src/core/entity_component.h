@@ -28,6 +28,10 @@ class EntityComponent {
    virtual Rotation rotation() const { return rotation_; }
    virtual glm::vec3 scale() const { return scale_; }
 
+   virtual void set_position(const glm::vec3& p) { position_ = p; }
+   virtual void set_rotation(Rotation r) { rotation_ = r; }
+   virtual void set_scale(const glm::vec3& s) { scale_ = s; }
+
    virtual void set_should_draw(bool d) { draw_ = d; }
    void Spin(float seconds);
 
