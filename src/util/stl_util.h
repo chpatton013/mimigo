@@ -4,11 +4,20 @@
 #include <algorithm>
 #include <stdio.h>
 #include <map>
+#include <string>
 #include <cstdarg>
 #include <vector>
 #include <cmath>
 #include <limits>
 #include <iostream>
+#include <sstream>
+
+template<typename T>
+std::string toString(const T& value) {
+   std::ostringstream oss;
+   oss << value;
+   return oss.str();
+}
 
 class FString : public std::string {
 public:
