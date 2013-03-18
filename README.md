@@ -22,3 +22,5 @@ download the .tar.gz file, and run tar zxvf on the file.
 then run ./configure
 then make
 then sudo make install
+
+also get SDL 1.2.15 from http://www.libsdl.org/download-1.2.php and install it in the same manner
