@@ -16,3 +16,9 @@ sudo apt-get install libglm-dev
 sudo apt-get install libsdl1.2-dev
 sudo apt-get install libglew1.6-dev
 sudo apt-get install libsdl-mixer1.2-dev
+
+NOTE THAT NOW YOU NEED SDL_image from http://www.libsdl.org/projects/SDL_image
+download the .tar.gz file, and run tar zxvf on the file.
+then run ./configure
+then make
+then sudo make install
