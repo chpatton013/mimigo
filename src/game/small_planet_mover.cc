@@ -11,6 +11,9 @@ static float kRotateTime = 0.0f;
 static float kThetaAcceleration = 0.0f;
 static float kThetaSpeed = 0.0f;
 
+const int SmallPlanetMover::JUMP_THRESHOLD = 250;
+const int SmallPlanetMover::MAX_JUMP_LEVEL = 3;
+
 void LoadMetaDataFromFile(const std::string& filename) {
    std::ifstream in;
    in.open(filename.c_str());
@@ -44,6 +47,7 @@ SmallPlanetMover::SmallPlanetMover(Planet* planet, PlayerObserver* observer) :
    jump_speed_(kJumpSpeed),
    theta_(0.0f),
    theta_speed_(0.0f),
+   jump_level_(0),
    is_jumping_(false),
    observer_(observer)
 {
@@ -63,12 +67,12 @@ void SmallPlanetMover::MoveDown() {
 }
 
 void SmallPlanetMover::MoveLeft() {
-dir_facing_ = CCW;
-move_dir_ = CCW;
+   dir_facing_ = CCW;
+   move_dir_ = CCW;
 }
 void SmallPlanetMover::MoveRight() {
-dir_facing_ = CW;
-move_dir_ = CW;
+   dir_facing_ = CW;
+   move_dir_ = CW;
 }
 
 void SmallPlanetMover::StopMoveUp() { move_dir_ = NONE;  }
@@ -99,12 +103,13 @@ void SmallPlanetMover::UpdateMeshTransform() const {
    transform *= glm::translate(position());
    transform *= glm::rotate(xy_rotation_.angle, xy_rotation_.axis);
    transform *= glm::rotate(xz_rotation_.angle, xz_rotation_.axis);
-   if(dir_facing_ == CCW){
-   transform *= glm::rotate(-90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+
+   if (dir_facing_ == CCW){
+      transform *= glm::rotate(-90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+   } else if (dir_facing_ == CW){
+      transform *= glm::rotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
    }
-   else if(dir_facing_ == CW){
-   transform *= glm::rotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-   }
+
    SceneNode::Get("player")->set_transformation(transform);
 }
 
@@ -135,6 +140,7 @@ void SmallPlanetMover::set_planet(Planet* planet) {
    is_falling_ = true;
    RotateBottomTowardPlanet();
    FallToPlanet();
+   radius_ = planet->gravity_radius() - planet->radius();
    if (observer_)
       observer_->OnPlayerSwitchPlanets(planet);
 }
@@ -169,11 +175,17 @@ bool SmallPlanetMover::should_move_clockwise() const {
 
 inline
 float jump_speed() {
-   return kThetaSpeed / 2;
+   return kThetaSpeed * 0.5f;
 }
 
 float SmallPlanetMover::max_theta_speed() const {
-   return is_jumping_ || is_falling_ ? jump_speed() : kThetaSpeed;
+  /* if (is_jumping_ || is_falling_) {
+      return jump_speed() * jump_modifier();
+   } else {
+     */
+      return kThetaSpeed;
+      
+  // }
 }
 
 void SmallPlanetMover::set_theta(float theta) {
@@ -182,19 +194,23 @@ void SmallPlanetMover::set_theta(float theta) {
 
 void SmallPlanetMover::Update() {
    if (is_jumping_ || is_falling_) {
-      if (jump_held_ && jump_speed_ > 0.0f)
+      if (jump_held_ && jump_speed_ > 0.0f) {
          jump_speed_ -= kJumpSlowdownHeld;
-      else
+      } else {
          jump_speed_ -= kJumpSlowdown;
+      }
+
       if (jump_speed_ <= 0.0f) {
          is_jumping_ = false;
          is_falling_ = true;
       }
-      radius_ += jump_speed_;
-      if (radius_ <= planet_->radius() + 0.1f) {
+
+      radius_ += jump_speed_ * jump_modifier();
+      if (radius_ <= planet_->radius() + 0.125f) {
          jump_speed_ = kJumpSpeed;
-         radius_ = planet_->radius() + 0.1f;
+         radius_ = planet_->radius() + 0.125f;
          is_falling_ = false;
+         jump_clock_.start();
       }
    }
 
@@ -204,7 +220,7 @@ void SmallPlanetMover::Update() {
       theta_speed_ = accelerate_counterclockwise(max_theta_speed(), theta_speed_);
    else
       theta_speed_ = decelerate(theta_speed_);
-   set_theta(theta_ + theta_speed_);
+   set_theta(theta_ + (theta_speed_ / planet_->radius()));
    RotateBottomTowardPlanet();
 
    UpdateMeshTransform();
@@ -219,6 +235,9 @@ void SmallPlanetMover::Jump() {
    if (is_jumping_)
       return;
 
+   jump_clock_.stop();
+   calc_jump_level();
+
    is_jumping_ = true;
    jump_held_ = true;
 }
@@ -229,4 +248,23 @@ void SmallPlanetMover::ReleaseJump() {
 
 void SmallPlanetMover::OnExpiration(const std::string& event) {
    assert(true || event.size());
+}
+
+void SmallPlanetMover::calc_jump_level() {
+   int difference = jump_clock_.get_milli();
+   int delta = difference / JUMP_THRESHOLD;
+
+   // Increase jump level if you are jumping fast enough...
+   if (delta == 0 && jump_level_ < MAX_JUMP_LEVEL) {
+      ++jump_level_;
+   // or reduce jump level by the number of thresholds that have passed...
+   } else if (jump_level_ > delta) {
+      jump_level_ -= delta;
+   // or just reset jump level if you are really slow.
+   } else {
+      jump_level_ = 0;
+   }
+}
+float SmallPlanetMover::jump_modifier() const {
+   return jump_level_ * 2.0f + 1.0f;
 }

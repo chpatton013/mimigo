@@ -1,0 +1,80 @@
+# Assets Load File
+#
+# Make sure the name has a companion name in entities.txt! (Otherwise things will break and be sad. Oh no! Watch out for the beaver, its still glitchy, dont re-arrange this just yet...)
+#
+#	name	planet_id	around_xy 	around_xz 	scale	planet_offset_value
+#
+	bunny	  4		0.0	 	90.0    	1.0	0.7	
+	beaver2   5 		180.0		70.0		0.3	-0.3
+	mouse	  9		210.0		100.0		1.0	0.5
+	rat	  6		230.0		30.0		0.3	0.2
+	rat	  6		220.0		40.0		0.3	0.2
+	turtle	  2		260.0		20.0		1.0	0.4
+	
+	bird      1		210.0		80.0		0.2	0.5
+	daisy_red 1		210.0		50.0		0.1	-0.47
+	daisy_red 1		215.0		55.0		0.1	-0.47
+	daisy_red 1		210.0		57.0		0.1	-0.47
+	daisy_red 1		230.0		60.0		0.1	-0.47
+	daisy_red 1		210.0		70.0		0.1	-0.47
+	daisy_red 1		215.0		100.0		0.1	-0.47
+	daisy_red 1		215.0		50.0		0.1	-0.47
+	daisy_red 1		200.0		30.0		0.1	-0.47
+	simpleTree 1		220.0		70.0		0.4	-0.2
+	tree	  3		45.0	 	90.0		0.5	-0.25
+	tree	  3		80.0		90.0		0.5	-0.25
+	tree	  3		62.0		70.0		0.4	-0.25
+	tree	  3		0.0		300.0		0.5	 0.3
+	tree	  3		15.0		280.0		0.4	 0.3
+
+	tree	  3		0.0		30.0		0.6	0.5
+	
+	daisy_purple 7		215.0		55.0		1.0	 0.18
+	daisy_yellow 5		210.0		57.0		0.15	 -0.2
+	daisy_yellow 5		215.0		10.0		0.13	 -0.2
+	daisy_yellow 5		210.0		30.0		0.15	 -0.2
+	daisy_yellow 5		215.0		0.0		0.13	 -0.2
+	daisy_yellow 5		230.0		40.0		0.15	 -0.2
+	daisy_yellow 5		200.0		350.0		0.13	 -0.2
+	daisy_yellow 5		70.0		45.0		0.15	 -0.2
+	daisy_yellow 5		90.0		320.0		0.13	 -0.2
+	
+	daisy_red 10		230.0		40.0		0.15	 -0.95
+	daisy_red 10		70.0		45.0		0.1	 -0.92
+	daisy_red 10		90.0		320.0		0.15	 -0.93
+	
+	daisy_red 10		230.0		90.0		0.15	 -0.95
+	daisy_red 10		70.0		270.0		0.1	 -0.95
+	daisy_red 10		90.0		90.0		0.15	 -0.95
+	daisy_red 10		0.0		270.0		0.15	 -0.95
+	daisy_red 10		180.0		270.0		0.1	 -0.95
+	daisy_red 10		90.0		90.0		0.15	 -0.95
+	daisy_red 10		0.0		250.0		0.15	 -0.95
+	daisy_red 10		190.0		270.0		0.1	 -0.95
+	daisy_red 10		210.0		270.0		0.1	 -0.95
+	daisy_red 10		190.0		290.0		0.1	 -0.95
+	daisy_red 10		210.0		305.0		0.1	 -0.95
+	
+	daisy_yellow 52		210.0		57.0		0.15	 -0.5
+	daisy_yellow 52		215.0		10.0		0.13	 -0.5
+	daisy_yellow 52		210.0		30.0		0.15	 -0.5
+	daisy_yellow 52		215.0		0.0		0.13	 -0.5
+	daisy_yellow 52		230.0		40.0		0.15	 -0.5
+	daisy_yellow 52		200.0		350.0		0.13	 -0.5
+	daisy_yellow 52		70.0		45.0		0.15	 -0.5
+	daisy_yellow 52		90.0		320.0		0.13	 -0.5
+	daisy_yellow 52		180.0		270.0		0.1	 -0.5
+	daisy_yellow 52		90.0		90.0		0.15	 -0.5
+	daisy_yellow 52		0.0		250.0		0.15	 -0.5
+	daisy_yellow 52		190.0		270.0		0.1	 -0.5
+	daisy_yellow 52		210.0		270.0		0.1	 -0.5
+	daisy_yellow 52		190.0		290.0		0.1	 -0.5
+	daisy_yellow 52		210.0		305.0		0.1	 -0.5
+	bunny	     52		45.0	 	90.0    	0.7	 -0.5
+	mouse	     52		210.0		90.0		1.0	 -0.5	
+	rat	     52		330.0		90.0		1.0	 -0.5
+	turtle	     52		90.0		90.0		0.6	 -0.3
+	bird         52		135.0		80.0		0.4	 -0.2
+	winflag	     52		175.0		90.0		0.45	 -0.2
+
+

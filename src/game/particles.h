@@ -10,7 +10,7 @@ class SceneNode;
 
 class Particles {
    public:
-      Particles(glm::vec3 start, int id);
+      Particles(int id, Planet *planet);
       ~Particles();
       void Update(int id);
       float r, g, b;
@@ -20,6 +20,7 @@ class Particles {
       bool active;
       float life;
       float fade;
+      Planet *planet;
 
       glm::vec3 direction;
       glm::vec3 gravity;

@@ -14,10 +14,10 @@ static GLfloat colors[12][3]=  			// Rainbow Of Colors
 };
 */
 
-Particles::Particles(glm::vec3 start, int id) :
-   center(start),
+Particles::Particles(int id, Planet *planet) :
    active(true),
    life(1.0f),
+   planet(planet),
    fade(float(rand()%100)/1000+0.003f),
   // direction(glm::vec3(float((rand()%50)-26.0f)*10.0f, float((rand()%50)-25.0f)*10.0f,float((rand()%50)-25.0f)*10.0f)),
    direction(glm::vec3(0.001, 0.1, 0.0)),
@@ -26,6 +26,10 @@ Particles::Particles(glm::vec3 start, int id) :
    {
       std::ostringstream oss;
       oss << "bubbles" << id;
+      
+      float x = planet->center().x + float(.5 * rand()) / (RAND_MAX + 1.0);
+      float y = planet->center().y + float(.5 * rand()) / (RAND_MAX + 1.0);
+      center = glm::vec3(x, y, 0);
       
       new SceneNode("particle_container" +id);
       RootNode::Instance()->AddChild(SceneNode::Get("particle_container" + id));
@@ -43,9 +47,9 @@ void Particles::Update(int id){
       center.y += direction.y;
       center.z += direction.z;
 
-      if(center.x >= -3 || center.y >= 1){
-         center.x = -4.8 + (float)rand() / ((float)RAND_MAX/(-4.2 - (-4.8)));
-         center.y = -1.3 + (float)rand() / ((float)RAND_MAX/(-1.7 - (-1.3)));
+      if(center.x >= planet->center().x + .5 || center.y >= planet->center().y + planet->radius() + 3.0){
+         center.x = planet->center().x + float(.5 * rand()) / (RAND_MAX + 1.0);
+         center.y = planet->center().y + float(.5 * rand()) / (RAND_MAX + 1.0);
          // center.x = -4.2;
          // center.y = -1.7;
       }

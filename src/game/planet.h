@@ -13,6 +13,7 @@ class Planet : public CollidableEntity {
           const glm::vec3& center, float radius, float gravity_radius) :
       planet_type_(planet_type),
       center_(center),
+      move_center(center),
       radius_(radius),
       gravity_radius_(gravity_radius),
       id_(id)
@@ -26,6 +27,7 @@ class Planet : public CollidableEntity {
 
    const glm::vec3 &center() const { return center_; }
    float radius() const { return radius_; }
+   float gravity_radius() const { return gravity_radius_; }
    virtual PlanetType get_type() const { return planet_type_; }
    bool is_small_planet() const
      { return planet_type_ == PLANET_TYPE_SMALL; }
@@ -34,20 +36,21 @@ class Planet : public CollidableEntity {
    const std::string& id() const { return id_; }
    int type(){ return 2;}
    
-   void Pogo();
-   void Gopo();
+   void Pogo(float distance);
+   void sideways(float distance);
+   void Right();
 
   private:
    void Initialize(const std::string& id);
 
    PlanetType planet_type_;
    glm::vec3 center_;
+   glm::vec3 move_center;
    float radius_;
    float gravity_radius_;
    std::string id_;
    
    bool turn;
-   bool turn2;
    SceneNode *mesh;
    
 };

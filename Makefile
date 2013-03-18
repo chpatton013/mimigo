@@ -1,7 +1,7 @@
 SRC_DIR = src
 OBJ_DIR = obj
 
-LIBS = GL GLU GLEW SDL SDL_mixer
+LIBS = GL GLU GLEW SDL SDL_mixer rt
 INCS = $(SRC_DIR) third_party/glm
 DEFS = GL_GLEXT_PROTOTYPES
 WARN = all extra

@@ -41,7 +41,7 @@ void InitializeGL() {
    glViewport(0, 0, kScreenWidth, kScreenHeight);
 
    // Start Of User Initialization
-   glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
+   glClearColor (90.0f/ 255.0f, 221.0f/255.0f, 1.0f, 1.0f);
    // Black Background
    glClearDepth (1.0f);    // Depth Buffer Setup
    glDepthFunc (GL_LEQUAL);    // The Type Of Depth Testing
@@ -67,13 +67,13 @@ void Initialize() {
 }
 
 void LoadResources() {
-   EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/edgar.obj", "textures/brown.bmp");
+EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/edgar.obj", "textures/earth.bmp");
    EntityComponentNode* mesh = new EntityComponentNode("bunny", go_gopher);
    mesh->apply_transformation(glm::scale(glm::mat4(), glm::vec3(0.3f)));
 
    RootNode::Instance()->AddChild(mesh);
 
-   LoadTexture("textures/earth1.bmp");
+   LoadTexture("textures/earth.bmp");
    LoadTexture("textures/cloud5.bmp");
    LoadTexture("textures/crate.bmp");
    LoadTexture("textures/flowerTex.bmp");
@@ -84,7 +84,19 @@ void LoadResources() {
    LoadTexture("textures/purple.bmp");
    LoadTexture("textures/edgarTex.bmp");
    LoadTexture("textures/edgar.bmp");
-
+   LoadTexture("textures/bunny.bmp");
+   LoadTexture("textures/daisy_purple.bmp");
+   LoadTexture("textures/daisy_red.bmp");
+   LoadTexture("textures/daisy_yellow.bmp");
+   LoadTexture("textures/background_sky.bmp");
+   LoadTexture("textures/beaver.bmp");
+   LoadTexture("textures/bird.bmp");
+   LoadTexture("textures/cheese.bmp");
+   LoadTexture("textures/mouse.bmp");
+   LoadTexture("textures/rat.bmp");
+   LoadTexture("textures/simpleTree.bmp");
+   LoadTexture("textures/turtle.bmp");
+   LoadTexture("textures/beaver.bmp");
 }
 
 void StartMainLoop(Universe* universe) {
