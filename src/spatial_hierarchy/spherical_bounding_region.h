@@ -1,35 +1,25 @@
 #ifndef _SPHERICAL_BOUNDING_REGION_H_
 #define _SPHERICAL_BOUNDING_REGION_H_
 
-#include <stdio.h>
 #include <glm/glm.hpp>
 #include "bounding_region.h"
-#include "../gl/gl_mesh.h"
 
 class SphericalBoundingRegion : public BoundingRegion {
   public:
-   SphericalBoundingRegion(const glm::vec3& c, float r) :
-      center_(c),
-      radius_(r)
-   {}
-   virtual ~SphericalBoundingRegion() {}
+   SphericalBoundingRegion(const glm::vec3& c, float r);
+   virtual ~SphericalBoundingRegion();
 
-   virtual glm::vec3 center() { return center_; }
-   virtual float radius() { return radius_; }
-   virtual glm::vec3 min() { return center_ - glm::vec3(radius_); }
-   virtual glm::vec3 max() { return center_ + glm::vec3(radius_); }
+   virtual glm::vec3 center();
+   virtual float radius();
+   virtual glm::vec3 min();
+   virtual glm::vec3 max();
 
-   virtual void set_center(const glm::vec3& c) { center_ = c; }
-   virtual void set_radius(float r) { radius_ = r; }
+   virtual void set_center(const glm::vec3& c);
+   virtual void set_radius(float r);
 
-   virtual void print() {
-      printf(
-         "spherical: c:[%.2f,%.2f,%.2f] r:%.2f\n",
-         center_.x, center_.y, center_.z, radius()
-      );
-   }
+   virtual void print();
 
-  private:
+  protected:
    glm::vec3 center_;
    float radius_;
 };
