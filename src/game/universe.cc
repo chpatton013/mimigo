@@ -378,7 +378,7 @@ Universe::Universe() :
    LoadInAssets();
    ParseAsteroidFile();
    ParseCheckPointsFile();
-   player_ = new Player(planets_[51], camera_); //here!
+   player_ = new Player(planets_[0], camera_); //here!
 
    glm::vec3 min, max;
    GetBounds(&min, &max);
@@ -398,7 +398,7 @@ Universe::Universe() :
    hud_->initHud();
 
    currentCheckpoint = 0;
-   PlayerEntersGravityFieldOf(planets_[51]); //here!
+   PlayerEntersGravityFieldOf(planets_[0]); //here!
 }
 
 void Universe::OnExpiration(const std::string& event_name) {
