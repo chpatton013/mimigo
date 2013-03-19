@@ -458,13 +458,18 @@ void Universe::SwitchToLargePlanetGamePlay() {
 }
 
 void Universe::PlayerEntersGravityFieldOf(Planet* planet) {
-  if(planet->id() == "52"){
-    hud_->setTimeUpdate();
-  }
+
    EventLoop::Instance()->PostEvent("player transitions to " + planet->id());
    player_->TransitionTo(planet);
    if (PlayerTransitionsFromSmallPlanetToLargePlanet(planet)) {
       SwitchToLargePlanetGamePlay();
+   }
+   if (atoi(planet->id().c_str()) == 52) {
+      win_mode = true;
+          hud_->setTimeUpdate();
+	     ps_c.push_back(new ParticleSystem(10, planets_[51], 0, "winstars"));
+num++;
+
    }
 }
 
@@ -503,20 +508,19 @@ void Universe::Update() {
    player_->Update();
    SpatialManager::Instance()->Update();
 
-   if (!zoe_mode) {
-      std::set<CollidableEntity*> collidedEntities =
-       SpatialManager::Instance()->Collide(player_);
+   std::set<CollidableEntity*> collidedEntities =
+    SpatialManager::Instance()->Collide(player_);
 
-      if (!collidedEntities.empty()) {
-         for (std::set<CollidableEntity*>::iterator it = collidedEntities.begin();
-               it != collidedEntities.end(); ++it) {
-            if((*it)->type() == 0){
-               PlayerEntersGravityFieldOf(planets_[currentCheckpoint]);
-               player_->setTheta(checkpoint_angle);
+   if (!collidedEntities.empty()) {
+      for (std::set<CollidableEntity*>::iterator it = collidedEntities.begin();
+            it != collidedEntities.end(); ++it) {
+         if(!zoe_mode && (*it)->type() == 0){
+            PlayerEntersGravityFieldOf(planets_[currentCheckpoint]);
+            player_->setTheta(checkpoint_angle);
 
-               break;
-            }
-            else if((*it)->type() == 1){
+            break;
+         }
+         else if((*it)->type() == 1){
 
 if(currentCheckpoint != dynamic_cast<CheckPoint*>(*it)->planet()){
 
@@ -525,17 +529,16 @@ sprintf(str, "%d", num);
 std::string thing = str;
 
 std::cout << thing << std::endl;
-		ps_c.clear();
-	   ps_c.push_back(new ParticleSystem(5, planets_[dynamic_cast<CheckPoint*>(*it)->planet()], 0, "stars" + thing));
-	num++;
+   ps_c.clear();
+   ps_c.push_back(new ParticleSystem(5, planets_[dynamic_cast<CheckPoint*>(*it)->planet()], 0, "stars" + thing));
+num++;
 }
-               currentCheckpoint = dynamic_cast<CheckPoint*>(*it)->planet();
-               checkpoint_angle = dynamic_cast<CheckPoint*>(*it)->getTheta();
+            currentCheckpoint = dynamic_cast<CheckPoint*>(*it)->planet();
+            checkpoint_angle = dynamic_cast<CheckPoint*>(*it)->getTheta();
 
-	
 
-               break;
-            }
+
+            break;
          }
       }
    }
