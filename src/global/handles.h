@@ -14,6 +14,7 @@ class Animation;
 class GLShader;
 
 extern bool zoe_mode;
+extern bool win_mode;
 
 extern const int kScreenWidth;
 extern const int kScreenHeight;

@@ -3,6 +3,7 @@
 #include "text2D.h"
 #include "shader.h"
 #include <SDL/SDL.h>
+#include "../global/handles.h"
 
 extern float g_draw_rate;
 extern float g_update_rate;
@@ -13,7 +14,11 @@ void HUD::initHud() {
 
 void HUD::drawHud() {
    char text[2][256];
-   sprintf(text[0], "Run Edgar! Run!");
+   if (win_mode) {
+      sprintf(text[0], "You Win!");
+   } else {
+      sprintf(text[0], "Run Edgar! Run!");
+   }
    sprintf(
       text[1],
       "%.2f sec | %.2f fps | %.2f ups",

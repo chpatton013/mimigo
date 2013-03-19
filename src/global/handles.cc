@@ -1,6 +1,7 @@
 #include "handles.h"
 
 bool zoe_mode = false;
+bool win_mode = false;
 
 const int kScreenWidth = 800;
 const int kScreenHeight = 600;
