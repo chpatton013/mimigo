@@ -1,7 +1,6 @@
 SRC_DIR = src
 OBJ_DIR = obj
 
-LIBS = GL GLU GLEW SDL SDL_mixer rt
 LIBS = GL GLU GLEW SDL SDL_mixer SDL_image rt
 INCS = $(SRC_DIR) third_party/glm
 DEFS = GL_GLEXT_PROTOTYPES

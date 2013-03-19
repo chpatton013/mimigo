@@ -1,4 +1,4 @@
-#version 130
+#version 120
 
 /* comment here */
 //layout(location = 0) in vec2 vertexPosition_screenspace;
