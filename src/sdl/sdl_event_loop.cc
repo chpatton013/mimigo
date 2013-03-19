@@ -2,6 +2,7 @@
 #include "sdl_graphics_adapter.h"
 #include "SDL/SDL.h"
 #include <assert.h>
+#include "../global/handles.h"
 
 EventLoop* EventLoop::event_loop_ = NULL;
 
@@ -89,14 +90,15 @@ void SDLEventLoop::PostEvent(const std::string& event) {
 
 void SDLEventLoop::OnKeyUp(SDL_Event &event) {
    switch (event.key.keysym.sym) {
-      case SDLK_LEFT:  case SDLK_a: OnLeftButtonUp();   break;
-      case SDLK_RIGHT: case SDLK_d: OnRightButtonUp();  break;
-      case SDLK_UP:    case SDLK_w: OnUpButtonUp();     break;
-      case SDLK_DOWN:  case SDLK_s: OnDownButtonUp();   break;
-      case SDLK_SPACE:              OnJumpButtonUp();   break;
-      case SDLK_i:                  OnCameraUpUp();     break;
-      case SDLK_k:                  OnCameraDownUp();   break;
-      default:                                          break;
+      case SDLK_LEFT:  case SDLK_a: OnLeftButtonUp();       break;
+      case SDLK_RIGHT: case SDLK_d: OnRightButtonUp();      break;
+      case SDLK_UP:    case SDLK_w: OnUpButtonUp();         break;
+      case SDLK_DOWN:  case SDLK_s: OnDownButtonUp();       break;
+      case SDLK_SPACE:              OnJumpButtonUp();       break;
+      case SDLK_i:                  OnCameraUpUp();         break;
+      case SDLK_k:                  OnCameraDownUp();       break;
+      case SDLK_z:                  zoe_mode = !zoe_mode;   break;
+      default:                                              break;
    }
 }
 

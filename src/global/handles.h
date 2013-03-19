@@ -13,6 +13,8 @@ class OrthoEntity;
 class Animation;
 class GLShader;
 
+extern bool zoe_mode;
+
 extern const int kScreenWidth;
 extern const int kScreenHeight;
 
