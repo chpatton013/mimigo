@@ -363,8 +363,11 @@ Universe::Universe() :
    glm::vec3 min, max;
    GetBounds(&min, &max);
    SpatialManager::Instance()->Establish(min, max);
-
-   ps = new ParticleSystem(15, planets_[51]);
+   
+  
+   ps = new ParticleSystem(5, planets_[0], 0, "star");
+   ps = new ParticleSystem(7, planets_[0], 1, "bee");
+  // ps = new ParticleSystem(5, planets_[1], 1, "bee2");
 
    light_ = new DirectionLight(glm::vec3(0.4f, 0.4f, 0.4f),
                                glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),

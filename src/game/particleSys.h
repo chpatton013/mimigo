@@ -7,7 +7,7 @@
 
 class ParticleSystem {
   public:
-   ParticleSystem(int amt, Planet *planet);
+   ParticleSystem(int amt, Planet *planet, int move, std::string name);
    ~ParticleSystem();
    void update();
 
