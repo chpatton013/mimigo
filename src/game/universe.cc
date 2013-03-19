@@ -458,6 +458,9 @@ void Universe::SwitchToLargePlanetGamePlay() {
 }
 
 void Universe::PlayerEntersGravityFieldOf(Planet* planet) {
+  if(planet->id() == "52"){
+    hud_->setTimeUpdate();
+  }
    EventLoop::Instance()->PostEvent("player transitions to " + planet->id());
    player_->TransitionTo(planet);
    if (PlayerTransitionsFromSmallPlanetToLargePlanet(planet)) {

@@ -6,6 +6,10 @@ class HUD {
    public:
       void initHud();
       void drawHud();
+      void setTimeUpdate(){updateTime = false;}
+      
+      float time;
+      bool updateTime;
 
 };
 
