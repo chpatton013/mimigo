@@ -107,6 +107,8 @@ void print_vec(const glm::vec3& v) {
    std::vector<Assets*> assets_;
    Player* player_;
    std::vector<ParticleSystem*> ps_;
+   std::vector<ParticleSystem*> ps_c;
+	int num;
    
    Light* light_;
    HUD* hud_;

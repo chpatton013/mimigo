@@ -332,8 +332,8 @@ void Universe::LoadInAssets(){
     RootNode::Instance()->AddChild(new EntityComponentNode("mouse11", mouse));
    assets_.push_back(new Assets("mouse", "11", glm::vec3(-0.4, 1.5, 0.2), glm::vec3(.35,.35,.35), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[17], 1));
    
-   RootNode::Instance()->AddChild(new EntityComponentNode("mouse12", mouse));
-   assets_.push_back(new Assets("mouse", "12", glm::vec3(0.0, 0.0, 0.2), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[19], 1));
+  /* RootNode::Instance()->AddChild(new EntityComponentNode("mouse12", mouse));
+   assets_.push_back(new Assets("mouse", "12", glm::vec3(0.0, 0.0, 0.2), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[19], 1));*/
    
    RootNode::Instance()->AddChild(new EntityComponentNode("beaver13", beaver));
    assets_.push_back(new Assets("beaver", "13", glm::vec3(0.5, -1.5, 0.2), glm::vec3(.75,.75,.75), glm::vec3(0.0, 0.0, 1.0), 180.0, planets_[20], 5));
@@ -371,6 +371,7 @@ void Universe::LoadInPlanets() {
 Universe::Universe() :
    game_play_type_(GAME_PLAY_SMALL)
 {
+   num = 0;
    camera_ = new SmallPlanetCamera();
    ParseEntityFile();
    LoadInPlanets();
@@ -384,13 +385,14 @@ Universe::Universe() :
    GetBounds(&min, &max);
    SpatialManager::Instance()->Establish(min, max);
    
-   ps_.push_back(new ParticleSystem(5, planets_[4], 0, "star"));
-   ps_.push_back(new ParticleSystem(5, planets_[10], 2, "stars"));
-   ps_.push_back(new ParticleSystem(5, planets_[19], 2, "starss"));
-   ps_.push_back(new ParticleSystem(5, planets_[32], 0, "starsss"));
-   ps_.push_back(new ParticleSystem(10, planets_[51], 0, "starssss"));
+   //ps_.push_back(new ParticleSystem(5, planets_[4], 0, "star"));
+   //ps_.push_back(new ParticleSystem(5, planets_[10], 2, "stars"));
+   //ps_.push_back(new ParticleSystem(5, planets_[19], 2, "starss"));
+  // ps_.push_back(new ParticleSystem(5, planets_[32], 0, "starsss"));
+  // ps_.push_back(new ParticleSystem(10, planets_[51], 0, "starssss"));
    ps_.push_back(new ParticleSystem(10, planets_[0], 1, "bees"));
 
+   ps_.push_back(new ParticleSystem(10, planets_[0], 1, "bee2"));
    light_ = new DirectionLight(glm::vec3(0.4f, 0.4f, 0.4f),
                                glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
                                glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
@@ -512,8 +514,22 @@ void Universe::Update() {
                break;
             }
             else if((*it)->type() == 1){
+
+if(currentCheckpoint != dynamic_cast<CheckPoint*>(*it)->planet()){
+
+char str[15];
+sprintf(str, "%d", num);
+std::string thing = str;
+
+std::cout << thing << std::endl;
+		ps_c.clear();
+	   ps_c.push_back(new ParticleSystem(10, planets_[dynamic_cast<CheckPoint*>(*it)->planet()], 0, "stars" + thing));
+	num++;
+}
                currentCheckpoint = dynamic_cast<CheckPoint*>(*it)->planet();
                checkpoint_angle = dynamic_cast<CheckPoint*>(*it)->getTheta();
+
+	
 
                break;
             }
@@ -556,7 +572,9 @@ void Universe::Update() {
    for (std::vector<ParticleSystem*>::iterator itr = ps_.begin(); itr != ps_.end(); ++itr) {
       (*itr)->update();
    }
-   
+      for (std::vector<ParticleSystem*>::iterator itr = ps_c.begin(); itr != ps_c.end(); ++itr) {
+      (*itr)->update();
+   }
    //planets_[2]->Pogo(2.0);
 
 }

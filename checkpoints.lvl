@@ -1,6 +1,6 @@
 #CheckPoints
 #id planet_id angle
 0      5      90.0
-1     11      0.0
-2      20      0.0
+1     11      90.0
+2      20      90.0
 3     33      90.0
