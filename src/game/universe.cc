@@ -378,7 +378,7 @@ Universe::Universe() :
    LoadInAssets();
    ParseAsteroidFile();
    ParseCheckPointsFile();
-   player_ = new Player(planets_[0], camera_); //here!
+   player_ = new Player(planets_[51], camera_); //here!
 
    glm::vec3 min, max;
    GetBounds(&min, &max);
@@ -398,7 +398,7 @@ Universe::Universe() :
    hud_->initHud();
 
    currentCheckpoint = 0;
-   PlayerEntersGravityFieldOf(planets_[0]); //here!
+   PlayerEntersGravityFieldOf(planets_[51]); //here!
 }
 
 void Universe::OnExpiration(const std::string& event_name) {
@@ -546,7 +546,7 @@ void Universe::Update() {
    
    SceneNode::Get("lwing4")->Update(30.0, -.45);
    SceneNode::Get("rwing4")->Update(30.0, .45);
-  // SceneNode::Get("body4")->Fly(.5);
+   SceneNode::Get("body4")->Fly(.5);
   // SceneNode::Get("body0")->Fly(.5);
    
    //SceneNode::Get("lwing1")->Update(20.0, -.45);
