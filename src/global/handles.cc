@@ -1,7 +1,7 @@
 #include "handles.h"
 
-const int kScreenWidth = 1024;
-const int kScreenHeight = 768;
+const int kScreenWidth = 800;
+const int kScreenHeight = 600;
 
 std::map<std::string, int> g_handles;
 EntityComposite* g_scene;
