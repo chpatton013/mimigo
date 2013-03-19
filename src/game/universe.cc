@@ -498,24 +498,27 @@ void Universe::Update() {
    player_->Update();
    SpatialManager::Instance()->Update();
 
-	std::set<CollidableEntity*> collidedEntities = SpatialManager::Instance()->Collide(player_);
+   if (!zoe_mode) {
+      std::set<CollidableEntity*> collidedEntities =
+       SpatialManager::Instance()->Collide(player_);
 
-   if (!collidedEntities.empty()) {
-	for (std::set<CollidableEntity*>::iterator it = collidedEntities.begin(); it != collidedEntities.end(); ++it) {
-		if((*it)->type() == 0){
-			PlayerEntersGravityFieldOf(planets_[currentCheckpoint]);
-			player_->setTheta(checkpoint_angle);
+      if (!collidedEntities.empty()) {
+         for (std::set<CollidableEntity*>::iterator it = collidedEntities.begin();
+               it != collidedEntities.end(); ++it) {
+            if((*it)->type() == 0){
+               PlayerEntersGravityFieldOf(planets_[currentCheckpoint]);
+               player_->setTheta(checkpoint_angle);
 
-			break;
-		}
-		else if((*it)->type() == 1){
-  			currentCheckpoint = dynamic_cast<CheckPoint*>(*it)->planet();
-  			checkpoint_angle = dynamic_cast<CheckPoint*>(*it)->getTheta();
+               break;
+            }
+            else if((*it)->type() == 1){
+               currentCheckpoint = dynamic_cast<CheckPoint*>(*it)->planet();
+               checkpoint_angle = dynamic_cast<CheckPoint*>(*it)->getTheta();
 
-			break;
-		}
-	}
-	
+               break;
+            }
+         }
+      }
    }
 
    CheckPlayerChangesGravityFields();
