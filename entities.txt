@@ -32,3 +32,4 @@
 	rwing		rightWing.obj	bird.bmp
 	beaver3		beaver2.obj	beaver.bmp
 	clouds		clouds2.obj   clouds.bmp
+	hedgehog	hedgehog.obj	hedgehog_texture.bmp
