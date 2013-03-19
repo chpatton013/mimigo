@@ -30,6 +30,9 @@ Particles::Particles(int id, Planet *planet, int moves, std::string name) :
       if(move == 1){
          BeeSetup();
       }
+      if(move == 2){
+         SideSetup();
+      }
       new SceneNode(pc_);
       RootNode::Instance()->AddChild(SceneNode::Get(pc_));
       SceneNode::Get(pc_)->AddChild(SceneNode::Get(oss.str()));
@@ -39,11 +42,21 @@ Particles::Particles(int id, Planet *planet, int moves, std::string name) :
 void Particles::CircleSetup(){
    radius = (float)rand() / ((float)RAND_MAX / (0.3));
    float x = planet->center().x + radius * cos(angle);
-   float y = 1.5 + (float)rand() / ((float)RAND_MAX / (1.8 - 1.5));
+   float y = .3 + (float)rand() / ((float)RAND_MAX / (.3));
    float z = planet->center().z + radius * sin(angle);
    
       
    center = glm::vec3(x, planet->center().y + planet->radius() + y, z);
+}
+
+void Particles::SideSetup(){
+   radius = (float)rand() / ((float)RAND_MAX / (0.3));
+   float x = .3 + (float)rand() / ((float)RAND_MAX / (.3));
+   float y = planet->center().y + radius * cos(angle);   
+   float z = planet->center().z + radius * sin(angle);
+   
+      
+   center = glm::vec3(planet->center().x + planet->radius() + x, y, z);
 }
 
 void Particles::BeeSetup(){
@@ -70,6 +83,9 @@ void Particles::Update(int id){
       if(move == 1){
          BeeUpdate();
       }
+      if(move == 2){
+         SideUpdate();
+      }
       glm::mat4 transform;
       transform *= glm::translate(center);
       SceneNode::Get(pc_)->set_transformation(transform);
@@ -84,6 +100,16 @@ void Particles::CircleUpdate(){
    }
       
    center.x = planet->center().x + radius * cos(angle);
+   center.z = planet->center().z + radius * sin(angle);
+}
+
+void Particles::SideUpdate(){
+   angle++;
+   if(angle > 360){
+      angle = 0;
+   }
+      
+   center.y = planet->center().y + radius * cos(angle);
    center.z = planet->center().z + radius * sin(angle);
 }
 

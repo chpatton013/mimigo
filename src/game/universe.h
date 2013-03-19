@@ -82,6 +82,7 @@ void print_vec(const glm::vec3& v) {
    void PlayerEntersGravityFieldOf(Planet* planet);
    bool PlayerTransitionsFromSmallPlanetToLargePlanet(Planet* planet);
    void SwitchToLargePlanetGamePlay();
+   void Wings(std::string item, float xyAngle);
 
    bool is_small_planet_gameplay() const
     { return game_play_type_ == GAME_PLAY_SMALL; }
@@ -105,7 +106,12 @@ void print_vec(const glm::vec3& v) {
    std::set<Entity*> entities_;
    std::vector<Assets*> assets_;
    Player* player_;
+   //std::vector<ParticleSystem*> ps;
    ParticleSystem* ps;
+   ParticleSystem* ps1;
+   ParticleSystem* ps2;
+   ParticleSystem* ps3;
+   ParticleSystem* ps4;
    Light* light_;
    HUD* hud_;
    int currentCheckpoint;

@@ -37,6 +37,9 @@ class Particles {
       void BeeSetup();
       void BeeUpdate();
       
+      void SideSetup();
+      void SideUpdate();
+      
       std::string pc_;
 
       glm::vec3 direction;

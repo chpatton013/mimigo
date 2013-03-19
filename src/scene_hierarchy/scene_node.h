@@ -8,6 +8,8 @@
 #include <string>
 #include "../util/matrix_stack.h"
 #include "../util/stl_util.h"
+//#include <.../gtc/maxtrix_transform.hpp>
+//#include <glm/gtc/type_ptr.hpp>
 
 class SceneNode {
   public:
@@ -19,6 +21,14 @@ class SceneNode {
       assert(!stl_util::ContainsKey(node_map_, id_));
       node_map_[id_] = this;
    }
+   
+  /* static SceneNode* Instance() {
+      if(!node_map_){
+         node_map_ = new SceneNode();
+      }
+      return node_map_;
+    }*/
+        
    virtual ~SceneNode();
 
    virtual void Draw(MatrixStack* transform);
@@ -52,6 +62,23 @@ class SceneNode {
     { transform_ = transform; }
    void apply_transformation(const glm::mat4& transform)
     { transform_ *= transform; }
+   void set_angle(float angles) {
+      flag = true;
+      angle = angles - 90.0f;
+      dist = angle;
+   }
+   void set_center(glm::vec3 cent, float ang, float ang1, float scale){
+      center = cent;
+      ccenter = cent;
+      flag = true;
+      a1 = ang;
+      a2 = ang1;
+      s = scale;
+      printf("centtttttter %f %f %f\n", center.x, center.y, center.z);
+   }
+
+   void Update(float move, float trans);
+   void Fly(float move);
 
    const glm::mat4& transform() const { return transform_; }
 
@@ -78,7 +105,13 @@ class SceneNode {
    bool visible_;
    SceneNode* parent_;
    std::set<SceneNode*> children_;
+   std::set<SceneNode*> moving_;
+   glm::vec3 center;
+   glm::vec3 ccenter;
    const std::string id_;
+   bool flag;
+   float angle, dist;
+   float a1, a2, s;
 
    static std::map<std::string, SceneNode*> node_map_;
 };

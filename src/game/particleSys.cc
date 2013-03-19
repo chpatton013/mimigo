@@ -15,8 +15,7 @@ ParticleSystem::ParticleSystem(int num, Planet *planet, int move, std::string na
       std::ostringstream oss;
       oss << name << i;
 
-      if(move == 0){
-         printf("stars\n");
+      if(move == 0 || move == 2){
          if(i % 2 == 0){
             particle_mesh = new EntityComponentNode(oss.str(), particle_entity);
          }
@@ -25,7 +24,6 @@ ParticleSystem::ParticleSystem(int num, Planet *planet, int move, std::string na
          }
       }
       if(move == 1){
-         printf("beees\n");
          particle_mesh = new EntityComponentNode(oss.str(), particle_entity2);
       }
       

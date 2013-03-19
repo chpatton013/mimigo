@@ -177,14 +177,38 @@ SceneNode::Get("planet" + planet_id)->AddChild(new
 EntityComponentNode(full_id, entity_data_.find(name)->second));
 SceneNode::Get(full_id)->set_transformation(glm::rotate(glm::mat4(), xyAngle - 90.0f, glm::vec3(0.0f, 0.0f, 1.0f)));
 SceneNode::Get(full_id)->apply_transformation(glm::rotate(glm::mat4(), xzAngle - 90.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
-SceneNode::Get(full_id)->apply_transformation(glm::translate(glm::vec3(glm::cos(radians(0.0f)), glm::sin(radians(0.0f)), 0.0f)*(planets_[planetID]->radius() + offset_thing)/ 2.0f));
+glm::vec3 myCenter = glm::vec3(glm::cos(radians(0.0)), glm::sin(radians(0.0)), 0.0f)*(planets_[planetID]->radius() + offset_thing)/ 2.0f;
+SceneNode::Get(full_id)->apply_transformation(glm::translate(myCenter));
 SceneNode::Get(full_id)->apply_transformation(glm::rotate(glm::mat4(), -90.0f, glm::vec3(0.0f, 0.0f, 1.0f)));
 SceneNode::Get(full_id)->apply_transformation(glm::scale(glm::mat4(), glm::vec3(scale)));
 
+if(name == "body"){
+//SceneNode::Get(full_id)->set_center(myCenter, xyAngle, xzAngle, scale);
+//Wings(full_id, xyAngle);
+
+}
 
         SceneNode::Get(full_id)->set_visible(true);
       }
    }
+}
+
+void Universe::Wings(std::string item, float xyAngle){
+   std::string name = "rwing";
+   std::ostringstream con;
+   con << entity_num_[name];
+   std::string full_id2 = name + con.str();
+
+   SceneNode::Get(item)->AddChild(new EntityComponentNode(full_id2, entity_data_.find(name)->second));
+   SceneNode::Get(full_id2)->set_angle(xyAngle);
+   entity_num_[name] = entity_num_[name] + 1;
+
+   name = "lwing";
+   full_id2 = name + con.str();
+
+   SceneNode::Get(item)->AddChild(new EntityComponentNode(full_id2, entity_data_.find(name)->second));
+   SceneNode::Get(full_id2)->set_angle(xyAngle);
+   entity_num_[name] = entity_num_[name] + 1;
 }
 
 void Universe::ParseEntityFile() {
@@ -364,10 +388,17 @@ Universe::Universe() :
    GetBounds(&min, &max);
    SpatialManager::Instance()->Establish(min, max);
    
-  
-   ps = new ParticleSystem(5, planets_[0], 0, "star");
-   ps = new ParticleSystem(7, planets_[0], 1, "bee");
-  // ps = new ParticleSystem(5, planets_[1], 1, "bee2");
+     ps = new ParticleSystem(10, planets_[4], 0, "star");
+   //  ps1 = new ParticleSystem(10, planets_[0], 1, "bees");
+    // ps2 = new ParticleSystem(10, planets_[19], 2, "starss");
+    // ps3 = new ParticleSystem(10, planets_[32], 0, "starsss");
+    // ps4 = new ParticleSystem(10, planets_[0], 1, "bee");
+     
+  // ps.push_back(new ParticleSystem(10, planets_[4], 0, "star"));
+  // ps.push_back(new ParticleSystem(10, planets_[10], 2, "stars"));
+  // ps.push_back(new ParticleSystem(10, planets_[19], 2, "starss"));
+  // ps.push_back(new ParticleSystem(10, planets_[32], 0, "starsss"));
+  // ps.push_back(new ParticleSystem(10, planets_[0], 1, "bee"));
 
    light_ = new DirectionLight(glm::vec3(0.4f, 0.4f, 0.4f),
                                glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
@@ -485,8 +516,25 @@ void Universe::Update() {
    }
 
    CheckPlayerChangesGravityFields();
-
+   
    ps->update();
+   ps1->update();
+  // ps2->update();
+  // ps3->update();
+  // ps4->update();
+   
+   
+   //SceneNode::Get("lwing0")->Update(20.0, -.45);
+   //SceneNode::Get("rwing0")->Update(20.0, .45);
+   //SceneNode::Get("body0")->Fly(.5);
+   
+   //SceneNode::Get("lwing1")->Update(20.0, -.45);
+   //SceneNode::Get("rwing1")->Update(20.0, .45);
+   //SceneNode::Get("body1")->Fly(.5);
+   
+   /*for (std::vector<ParticleSystem*>::iterator itr = ps.begin(); itr != ps.end(); ++itr) {
+      (*itr)->update();
+   }*/
    
    //planets_[2]->Pogo(2.0);
 
