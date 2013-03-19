@@ -26,3 +26,6 @@
 	rat		rat.obj		rat.bmp
 	turtle		turtle.obj	turtle.bmp
 	winflag		flag.obj	purple.bmp
+	body            body.obj	bird.bmp
+	lwing		leftWing.obj	bird.bmp
+	rwing		rightWing.obj	bird.bmp

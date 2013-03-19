@@ -183,8 +183,10 @@ SceneNode::Get(full_id)->apply_transformation(glm::rotate(glm::mat4(), -90.0f, g
 SceneNode::Get(full_id)->apply_transformation(glm::scale(glm::mat4(), glm::vec3(scale)));
 
 if(name == "body"){
-//SceneNode::Get(full_id)->set_center(myCenter, xyAngle, xzAngle, scale);
-//Wings(full_id, xyAngle);
+   printf("bodyttt\n");
+   
+   SceneNode::Get(full_id)->set_center(myCenter, xyAngle, xzAngle, scale);
+   Wings(full_id, xyAngle);
 
 }
 
@@ -200,14 +202,14 @@ void Universe::Wings(std::string item, float xyAngle){
    std::string full_id2 = name + con.str();
 
    SceneNode::Get(item)->AddChild(new EntityComponentNode(full_id2, entity_data_.find(name)->second));
-   SceneNode::Get(full_id2)->set_angle(xyAngle);
+   SceneNode::Get(full_id2)->set_angle(xyAngle, 2);
    entity_num_[name] = entity_num_[name] + 1;
 
    name = "lwing";
    full_id2 = name + con.str();
 
    SceneNode::Get(item)->AddChild(new EntityComponentNode(full_id2, entity_data_.find(name)->second));
-   SceneNode::Get(full_id2)->set_angle(xyAngle);
+   SceneNode::Get(full_id2)->set_angle(xyAngle, 1);
    entity_num_[name] = entity_num_[name] + 1;
 }
 
@@ -341,14 +343,7 @@ void Universe::LoadInAssets(){
      RootNode::Instance()->AddChild(new EntityComponentNode("rat15", rat));
    assets_.push_back(new Assets("rat", "15", glm::vec3(0.5, -2.0, 0.2), glm::vec3(.75,.75,.75), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[24], 0));
    
-   RootNode::Instance()->AddChild(new EntityComponentNode("bird16", bird));
-   assets_.push_back(new Assets("bird", "16", glm::vec3(0.5, 1.0, 0.2), glm::vec3(.75,.75,.75), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[28], 0));
    
-   RootNode::Instance()->AddChild(new EntityComponentNode("bird17", bird));
-   assets_.push_back(new Assets("bird", "17", glm::vec3(-0.6, 0.4, 0.2), glm::vec3(.3,.3,.3), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[29], 1));
-   
-   RootNode::Instance()->AddChild(new EntityComponentNode("bird18", bird));
-   assets_.push_back(new Assets("bird", "18", glm::vec3(0.5, 1.5, 0.2), glm::vec3(.35,.35,.35), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[30], 3));
    /*
    RootNode::Instance()->AddChild(new EntityComponentNode("bird19", bird));
    assets_.push_back(new Assets("bird", "19", glm::vec3(2.0, 2.5, 0.2), glm::vec3(.35,.35,.35), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[30], 1));
@@ -388,7 +383,7 @@ Universe::Universe() :
    GetBounds(&min, &max);
    SpatialManager::Instance()->Establish(min, max);
    
-     ps = new ParticleSystem(10, planets_[4], 0, "star");
+     ps = new ParticleSystem(10, planets_[0], 1, "bees");
    //  ps1 = new ParticleSystem(10, planets_[0], 1, "bees");
     // ps2 = new ParticleSystem(10, planets_[19], 2, "starss");
     // ps3 = new ParticleSystem(10, planets_[32], 0, "starsss");
@@ -518,15 +513,39 @@ void Universe::Update() {
    CheckPlayerChangesGravityFields();
    
    ps->update();
-   ps1->update();
+  // ps1->update();
   // ps2->update();
   // ps3->update();
   // ps4->update();
+  
+
+  
+ /* std::ostringstream lwing;
+  lwing << "lwing" << val;
+  
+  std::ostringstream rwing << "rwing" << val;*/
    
    
-   //SceneNode::Get("lwing0")->Update(20.0, -.45);
-   //SceneNode::Get("rwing0")->Update(20.0, .45);
+   SceneNode::Get("lwing0")->Update(30.0, -.45);
+   SceneNode::Get("rwing0")->Update(30.0, .45);
    //SceneNode::Get("body0")->Fly(.5);
+   
+   SceneNode::Get("lwing1")->Update(30.0, -.45);
+   SceneNode::Get("rwing1")->Update(30.0, .45);
+   SceneNode::Get("body1")->Fly(.5);
+   
+   SceneNode::Get("lwing2")->Update(30.0, -.45);
+   SceneNode::Get("rwing2")->Update(30.0, .45);
+   SceneNode::Get("body2")->Fly(.5);
+   
+   SceneNode::Get("lwing3")->Update(30.0, -.45);
+   SceneNode::Get("rwing3")->Update(30.0, .45);
+   SceneNode::Get("body3")->Fly(.5);
+   
+   SceneNode::Get("lwing4")->Update(30.0, -.45);
+   SceneNode::Get("rwing4")->Update(30.0, .45);
+   SceneNode::Get("body4")->Fly(.5);
+  // SceneNode::Get("body0")->Fly(.5);
    
    //SceneNode::Get("lwing1")->Update(20.0, -.45);
    //SceneNode::Get("rwing1")->Update(20.0, .45);

@@ -62,10 +62,17 @@ class SceneNode {
     { transform_ = transform; }
    void apply_transformation(const glm::mat4& transform)
     { transform_ *= transform; }
-   void set_angle(float angles) {
-      flag = true;
-      angle = angles - 90.0f;
-      dist = angle;
+   void set_angle(float angles, int check) {
+      if(check == 1){
+         flag = true;
+      }
+      if(check == 2){
+         flag = false;
+      }
+      //angle = angles - 90.0f;
+     // dist = angle - 90;
+     //angle = 0.0f;
+     dist = 0.0f;
    }
    void set_center(glm::vec3 cent, float ang, float ang1, float scale){
       center = cent;

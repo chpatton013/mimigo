@@ -33,42 +33,48 @@ void SceneNode::Update(float move, float trans){
    /*for(std::set<SceneNode*>::iterator it = moving_.begin(); it!= moving_.end(); it++) {
       (*it)->Fly(10);
    }*/
-   if(dist <= angle - move){
+   if(dist <= -move){
          flag = true;
       }
-      if(dist >= angle + move){
+      if(dist >= move){
          flag = false;
       }
 
       if(flag){
-         dist += 5;
+         dist += 10;
       }
       else{
-         dist -= 5;
+         dist -= 10;
       } 
-   set_transformation(glm::translate(glm::vec3(trans, 0, 0)));     
+     
+   set_transformation(glm::translate(glm::vec3(trans, 0, 0)));
+   apply_transformation(glm::rotate(glm::mat4(), dist, glm::vec3(0.0f, 0.0f, 1.0f)));  
+   //apply_transformation(glm::rotate(glm::mat4(), -90.0f, glm::vec3(0.0f, 0.0f, 1.0f)));    
    apply_transformation(glm::scale(glm::vec3(0.3)));
-      apply_transformation(glm::rotate(glm::mat4(), dist, glm::vec3(0.0f, 0.0f, 1.0f)));
+      
 }
 
+
 void SceneNode::Fly(float move) {
-   if(ccenter.y <= center.y - move){
+   if(ccenter.x <= center.x - move){
          flag = true;
       }
-      if(ccenter.y >= center.y + move){
+      if(ccenter.x >= center.x + move){
          flag = false;
       }
 
       if(flag){
-         ccenter.y += .05;
+         ccenter.x += .05;
       }
       else{
-         ccenter.y -= .05;
+         ccenter.x -= .05;
       }
-  set_transformation(glm::rotate(glm::mat4(), a1 - 90.0f, glm::vec3(0.0f, 0.0f, 1.0f)));
-  apply_transformation(glm::rotate(glm::mat4(), a2 - 90.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
-  apply_transformation(glm::translate(ccenter));
-  apply_transformation(glm::scale(glm::mat4(), glm::vec3(s)));
+
+set_transformation(glm::rotate(glm::mat4(), a1 - 90.0f, glm::vec3(0.0f, 0.0f, 1.0f)));
+apply_transformation(glm::rotate(glm::mat4(), a2 - 90.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
+apply_transformation(glm::translate(ccenter));
+apply_transformation(glm::rotate(glm::mat4(), -90.0f, glm::vec3(0.0f, 0.0f, 1.0f)));
+apply_transformation(glm::scale(glm::mat4(), glm::vec3(s)));
 }
 
 void SceneNode::RemoveChild(SceneNode* child) {
