@@ -336,12 +336,12 @@ void Universe::LoadInAssets(){
    assets_.push_back(new Assets("mouse", "12", glm::vec3(0.0, 0.0, 0.2), glm::vec3(.5,.5,.5), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[19], 1));
    
    RootNode::Instance()->AddChild(new EntityComponentNode("beaver13", beaver));
-   assets_.push_back(new Assets("beaver", "13", glm::vec3(0.5, -1.5, 0.2), glm::vec3(.75,.75,.75), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[20], 5));
+   assets_.push_back(new Assets("beaver", "13", glm::vec3(0.5, -1.5, 0.2), glm::vec3(.75,.75,.75), glm::vec3(0.0, 0.0, 1.0), 180.0, planets_[20], 5));
    
    RootNode::Instance()->AddChild(new EntityComponentNode("rat14", rat));
    assets_.push_back(new Assets("rat", "14", glm::vec3(0.5, -1.5, 0.2), glm::vec3(.75,.75,.75), glm::vec3(1.0, 180.0, 1.0), 0.0, planets_[24], 6));
    
-     RootNode::Instance()->AddChild(new EntityComponentNode("rat15", rat));
+    RootNode::Instance()->AddChild(new EntityComponentNode("rat15", rat));
    assets_.push_back(new Assets("rat", "15", glm::vec3(0.5, -2.0, 0.2), glm::vec3(.75,.75,.75), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[24], 0));
    
    
@@ -378,17 +378,17 @@ Universe::Universe() :
    LoadInAssets();
    ParseAsteroidFile();
    ParseCheckPointsFile();
-   player_ = new Player(planets_[0], camera_); //here!
+   player_ = new Player(planets_[24], camera_); //here!
 
    glm::vec3 min, max;
    GetBounds(&min, &max);
    SpatialManager::Instance()->Establish(min, max);
    
      ps = new ParticleSystem(10, planets_[0], 1, "bees");
-     ps1 = new ParticleSystem(3, planets_[4], 0, "star");
-     ps2 = new ParticleSystem(3, planets_[19], 2, "starss");
-     ps3 = new ParticleSystem(3, planets_[32], 0, "starsss");
-     ps4 = new ParticleSystem(3, planets_[10], 2, "starssss");
+     ps1 = new ParticleSystem(5, planets_[4], 0, "star");
+     ps2 = new ParticleSystem(5, planets_[19], 2, "starss");
+     ps3 = new ParticleSystem(5, planets_[32], 0, "starsss");
+     ps4 = new ParticleSystem(5, planets_[10], 2, "starssss");
      
   // ps.push_back(new ParticleSystem(10, planets_[4], 0, "star"));
   // ps.push_back(new ParticleSystem(10, planets_[10], 2, "stars"));
@@ -403,7 +403,7 @@ Universe::Universe() :
    hud_->initHud();
 
    currentCheckpoint = 0;
-   PlayerEntersGravityFieldOf(planets_[0]); //here!
+   PlayerEntersGravityFieldOf(planets_[24]); //here!
 }
 
 void Universe::OnExpiration(const std::string& event_name) {

@@ -14,6 +14,7 @@ Assets::Assets(const std::string&  name, const std::string& id, glm::vec3 transl
    rotate(rotate),
    theta_(5.0),
    up(0),
+   rotateVal(rotateAngle),
    move(move),
    rotateAngle(rotateAngle)
    {
@@ -50,10 +51,10 @@ glm::vec3 Assets::position() {
 bool Assets::Update() {
    switch(move) {
       case 0:
-         BackAndForth(45.0, 1.0);
+         BackAndForth(45.0, 1.0, 1);
          break;
       case 5:
-         BackAndForth(100.0, 1.0);
+         BackAndForth(100.0, 1.0, 0);
          break;
       case 6:
          CCW(359.0);
@@ -97,19 +98,27 @@ void Assets::CW(float speed) {
 }
 
 
-void Assets::BackAndForth(float dist, float speed) { 
+void Assets::BackAndForth(float dist, float speed, int row) { 
       if(theta_ <= -dist + angle){
          flag = true;
       }
       if(theta_ >= dist + angle){
          flag = false;
       }
-
+      
       if(flag){
          theta_ += speed;
+         rotateVal -= 20;
+         if(row == 1){
+            rotateVal = theta_ * .1;
+         }
       }
       else{
          theta_ -= speed;
+         rotateVal += 20;
+         if(row == 1){
+            rotateVal = theta_ * .1;
+         }
       }
 
       position_ = planet->center() + glm::vec3(std::cos(radians(theta_)), std::sin(radians(theta_)), 0.0f) * (planet->radius()+0.2f);
@@ -185,6 +194,7 @@ bool Assets::Bounce() {
 void Assets::UpdateMeshPosition() {
    mesh->set_transformation(glm::translate(position_));
    mesh->apply_transformation(glm::scale(scale));
+   mesh->apply_transformation(glm::rotate(glm::mat4(), rotateVal, glm::vec3(0.0f, 0.0f, 1.0f)));
 }
 
 
