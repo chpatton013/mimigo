@@ -100,6 +100,8 @@ EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/edgar.obj", "tex
    LoadTexture("textures/star_gold.bmp");
    LoadTexture("textures/star_yellow.bmp");
    LoadTexture("textures/bee2.bmp");
+   LoadTexture("textures/shroom.bmp");
+   LoadTexture("textures/tree.bmp");
 }
 
 void StartMainLoop(Universe* universe) {

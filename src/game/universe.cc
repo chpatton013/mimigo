@@ -384,10 +384,10 @@ Universe::Universe() :
    SpatialManager::Instance()->Establish(min, max);
    
      ps = new ParticleSystem(10, planets_[0], 1, "bees");
-   //  ps1 = new ParticleSystem(10, planets_[0], 1, "bees");
-    // ps2 = new ParticleSystem(10, planets_[19], 2, "starss");
-    // ps3 = new ParticleSystem(10, planets_[32], 0, "starsss");
-    // ps4 = new ParticleSystem(10, planets_[0], 1, "bee");
+     ps1 = new ParticleSystem(3, planets_[4], 0, "star");
+     ps2 = new ParticleSystem(3, planets_[19], 2, "starss");
+     ps3 = new ParticleSystem(3, planets_[32], 0, "starsss");
+     ps4 = new ParticleSystem(3, planets_[10], 2, "starssss");
      
   // ps.push_back(new ParticleSystem(10, planets_[4], 0, "star"));
   // ps.push_back(new ParticleSystem(10, planets_[10], 2, "stars"));
@@ -513,10 +513,10 @@ void Universe::Update() {
    CheckPlayerChangesGravityFields();
    
    ps->update();
-  // ps1->update();
-  // ps2->update();
-  // ps3->update();
-  // ps4->update();
+   ps1->update();
+   ps2->update();
+   ps3->update();
+   ps4->update();
   
 
   
@@ -526,8 +526,8 @@ void Universe::Update() {
   std::ostringstream rwing << "rwing" << val;*/
    
    
-   SceneNode::Get("lwing0")->Update(30.0, -.45);
-   SceneNode::Get("rwing0")->Update(30.0, .45);
+   SceneNode::Get("lwing0")->Update(35.0, -.45);
+   SceneNode::Get("rwing0")->Update(35.0, .45);
    //SceneNode::Get("body0")->Fly(.5);
    
    SceneNode::Get("lwing1")->Update(30.0, -.45);
