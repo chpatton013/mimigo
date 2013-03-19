@@ -14,6 +14,7 @@
 #include <sstream>
 #include <utility>
 #include <iterator>
+#include "../util/stop_watch.h"
 
 inline
 float radians(float degrees) {
@@ -479,7 +480,19 @@ void Universe::CheckPlayerChangesGravityFields() {
    }
 }
 
+float getDuration(StopWatch& sw) {
+   sw.stop();
+   float duration = sw.get_milli() / 1000.0f;
+   sw.start();
+   return duration;
+}
+
+float g_update_rate = 0.0f;
 void Universe::Update() {
+   static StopWatch sw;
+   float duration = getDuration(sw);
+   g_update_rate = 1.0f / duration;
+
    camera_->Update();
    planets_[12]->sideways(1.5);
    planets_[16]->Pogo(1.5);
@@ -559,7 +572,12 @@ void Universe::Update() {
 
 }
 
+float g_draw_rate = 0.0f;
 void Universe::Draw() {
+   static StopWatch sw;
+   float duration = getDuration(sw);
+   g_draw_rate = 1.0f / duration;
+
    camera_->SetView();
    light_->Draw();
    RootNode::Instance()->Draw();

@@ -2,25 +2,24 @@
 #include <string.h>
 #include "text2D.h"
 #include "shader.h"
-
-#include "glm/glm.hpp"
-#include <GL/glew.h>
 #include <SDL/SDL.h>
 
-
-
-using namespace glm;
-
+extern float g_draw_rate;
+extern float g_update_rate;
 
 void HUD::initHud() {
 	initText2D( "src/hud/Holstein.tga" );
 }
 
 void HUD::drawHud() {
-   char text[256];
-   sprintf(text,"%.2f sec", (double)(SDL_GetTicks()) / 1000 );
-   char text2[256];
-   sprintf(text2, "Get to the last planet!");
-   printText2D(text, 10, 500, 60);
-   printText2D(text2, 10, 10, 30);
+   char text[2][256];
+   sprintf(text[0], "Run Edgar! Run!");
+   sprintf(
+      text[1],
+      "%.2f sec | %.2f fps | %.2f ups",
+      SDL_GetTicks() / 1000.0f, g_draw_rate, g_update_rate
+   );
+
+   printText2D(text[0], 30, 530, 48);
+   printText2D(text[1], 10, 10, 24);
 }
