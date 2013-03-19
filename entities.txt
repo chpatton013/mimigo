@@ -5,7 +5,7 @@
 	shark		shark.obj	grass.bmp
 	puffer_fish	puffer_fish.obj	sand.bmp
 	gopher		go_gopher.obj	edgar.bmp
-	flag		flag.obj	earth.bmp
+	flag		flag.obj	edgar.bmp
 	asteroid	asteroid.obj	purple.bmp
 	planet		sphere.obj	grass.bmp
 	tree		tree.obj	tree.bmp

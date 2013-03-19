@@ -523,7 +523,7 @@ std::string thing = str;
 
 std::cout << thing << std::endl;
 		ps_c.clear();
-	   ps_c.push_back(new ParticleSystem(10, planets_[dynamic_cast<CheckPoint*>(*it)->planet()], 0, "stars" + thing));
+	   ps_c.push_back(new ParticleSystem(5, planets_[dynamic_cast<CheckPoint*>(*it)->planet()], 0, "stars" + thing));
 	num++;
 }
                currentCheckpoint = dynamic_cast<CheckPoint*>(*it)->planet();
