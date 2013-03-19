@@ -562,7 +562,7 @@ std::cout << thing << std::endl;
    
    SceneNode::Get("lwing4")->Update(30.0, -.45);
    SceneNode::Get("rwing4")->Update(30.0, .45);
-  // SceneNode::Get("body4")->Fly(.5);
+   SceneNode::Get("body4")->Fly(.5);
   // SceneNode::Get("body0")->Fly(.5);
    
    //SceneNode::Get("lwing1")->Update(20.0, -.45);
