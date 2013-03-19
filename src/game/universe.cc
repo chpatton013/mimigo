@@ -271,7 +271,7 @@ void Universe::ParsePlanetFile() {
    }
  //Sky test thing stuff
  //SceneNode::Get("planet1")->AddChild(new EntityComponentNode("sky", entity_data_.find("sky")->second));
-RootNode::Instance()->AddChild(new EntityComponentNode("sky", entity_data_.find("sky")->second));
+//RootNode::Instance()->AddChild(new EntityComponentNode("clouds", entity_data_.find("clouds")->second));
 //SceneNode::Get("sky")->set_transformation(glm::scale(glm::mat4(), glm::vec3(1000.0f)));
 //SceneNode::Get("sky")->apply_transformation(glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, -0.5f)));
 //SceneNode::Get("sky")->set_transformation(glm::rotate(glm::mat4(), 90.0f, glm::vec3(0.0f, 1.0f, 0.0f)));

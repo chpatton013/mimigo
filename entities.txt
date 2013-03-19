@@ -31,3 +31,4 @@
 	lwing		leftWing.obj	bird.bmp
 	rwing		rightWing.obj	bird.bmp
 	beaver3		beaver2.obj	beaver.bmp
+	clouds		clouds2.obj   clouds.bmp

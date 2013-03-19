@@ -29,7 +29,7 @@ void InitializeSDL() {
    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
+   SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
    if (!SDL_SetVideoMode(kScreenWidth, kScreenHeight, 0, SDL_OPENGL)) {
       fprintf(stderr, "SDL_SetVideoMode: %s\n", SDL_GetError());
       exit(EXIT_FAILURE);
@@ -44,6 +44,7 @@ void InitializeGL() {
    glClearColor (90.0f/ 255.0f, 221.0f/255.0f, 1.0f, 1.0f);
    // Black Background
    glClearDepth (1.0f);    // Depth Buffer Setup
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
    glDepthFunc (GL_LEQUAL);    // The Type Of Depth Testing
    glEnable (GL_DEPTH_TEST);// Enable Depth Testing
    glVertexPointer(3, GL_FLOAT, 0, 0);
@@ -102,6 +103,7 @@ EntityComponent* go_gopher = LoadEntityComponentFromOBJ("meshes/edgar.obj", "tex
    LoadTexture("textures/bee2.bmp");
    LoadTexture("textures/shroom.bmp");
    LoadTexture("textures/tree.bmp");
+    LoadTexture("textures/clouds.bmp");
 }
 
 void StartMainLoop(Universe* universe) {
