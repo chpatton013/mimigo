@@ -87,7 +87,10 @@ class GLMesh {
    GLuint diffuse_buffer_object_;
    GLuint ambient_buffer_object_;
    GLuint specular_buffer_object_;
-
+   
+   GLuint FramebufferName; 
+   GLuint depthTexture;
+   
    VertexList verts_;
    FaceList faces_;
    std::vector<glm::vec3> vert_normals_;

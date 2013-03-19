@@ -36,7 +36,7 @@ void GLMesh::Draw(MatrixStack* transform) {
    SetupDraw();
    transform->push();
    transform->multiply(trans_);
-
+   		glBindFramebuffer(GL_FRAMEBUFFER, 0);
    //if (InPlane(verts_, transform)){
       safe_glUniformMatrix4fv(
          g_handles["uModelMatrix"], glm::value_ptr(transform->top())
@@ -46,6 +46,7 @@ void GLMesh::Draw(MatrixStack* transform) {
          glm::value_ptr(glm::transpose(glm::inverse(transform->top())))
       );
 
+      
       const int ibo_length = faces_.size() * 3;
       //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
       //glLineWidth(1.0);
@@ -76,7 +77,23 @@ void GLMesh::Initialize() {
    ScaleMesh();
    CalculateNormals();
    int ndx = 0;
+   //FramebufferName; 
+    glGenFramebuffers(1, &FramebufferName);
 
+    glGenTextures(1, &depthTexture);
+	glBindTexture(GL_TEXTURE_2D, depthTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT, 1024, 1024, 0,GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+	
+	    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, FramebufferName);
+		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
+	
+		glDrawBuffer(GL_NONE);
    //TODO: clean this up with macros once it is working.
    unsigned short index_buffer[faces_.size()*3];
    ndx = 0;
