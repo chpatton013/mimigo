@@ -106,12 +106,8 @@ void print_vec(const glm::vec3& v) {
    std::set<Entity*> entities_;
    std::vector<Assets*> assets_;
    Player* player_;
-   //std::vector<ParticleSystem*> ps;
-   ParticleSystem* ps;
-   ParticleSystem* ps1;
-   ParticleSystem* ps2;
-   ParticleSystem* ps3;
-   ParticleSystem* ps4;
+   std::vector<ParticleSystem*> ps_;
+   
    Light* light_;
    HUD* hud_;
    int currentCheckpoint;

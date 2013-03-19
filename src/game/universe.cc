@@ -338,11 +338,11 @@ void Universe::LoadInAssets(){
    RootNode::Instance()->AddChild(new EntityComponentNode("beaver13", beaver));
    assets_.push_back(new Assets("beaver", "13", glm::vec3(0.5, -1.5, 0.2), glm::vec3(.75,.75,.75), glm::vec3(0.0, 0.0, 1.0), 180.0, planets_[20], 5));
    
-   RootNode::Instance()->AddChild(new EntityComponentNode("rat14", rat));
-   assets_.push_back(new Assets("rat", "14", glm::vec3(0.5, -1.5, 0.2), glm::vec3(.75,.75,.75), glm::vec3(1.0, 180.0, 1.0), 0.0, planets_[24], 6));
+  /* RootNode::Instance()->AddChild(new EntityComponentNode("rat14", rat));
+   assets_.push_back(new Assets("rat", "14", glm::vec3(0.5, -1.5, 0.2), glm::vec3(.75,.75,.75), glm::vec3(1.0, 180.0, 1.0), 0.0, planets_[24], 6));*/
    
     RootNode::Instance()->AddChild(new EntityComponentNode("rat15", rat));
-   assets_.push_back(new Assets("rat", "15", glm::vec3(0.5, -2.0, 0.2), glm::vec3(.75,.75,.75), glm::vec3(1.0, 1.0, 1.0), 0.0, planets_[24], 0));
+   assets_.push_back(new Assets("rat", "15", glm::vec3(0.5, -2.0, 0.2), glm::vec3(.75,.75,.75), glm::vec3(0.0, 0.0, 1.0), 180.0, planets_[24], 0));
    
    
    /*
@@ -378,23 +378,18 @@ Universe::Universe() :
    LoadInAssets();
    ParseAsteroidFile();
    ParseCheckPointsFile();
-   player_ = new Player(planets_[24], camera_); //here!
+   player_ = new Player(planets_[0], camera_); //here!
 
    glm::vec3 min, max;
    GetBounds(&min, &max);
    SpatialManager::Instance()->Establish(min, max);
    
-     ps = new ParticleSystem(10, planets_[0], 1, "bees");
-     ps1 = new ParticleSystem(5, planets_[4], 0, "star");
-     ps2 = new ParticleSystem(5, planets_[19], 2, "starss");
-     ps3 = new ParticleSystem(5, planets_[32], 0, "starsss");
-     ps4 = new ParticleSystem(5, planets_[10], 2, "starssss");
-     
-  // ps.push_back(new ParticleSystem(10, planets_[4], 0, "star"));
-  // ps.push_back(new ParticleSystem(10, planets_[10], 2, "stars"));
-  // ps.push_back(new ParticleSystem(10, planets_[19], 2, "starss"));
-  // ps.push_back(new ParticleSystem(10, planets_[32], 0, "starsss"));
-  // ps.push_back(new ParticleSystem(10, planets_[0], 1, "bee"));
+   ps_.push_back(new ParticleSystem(5, planets_[4], 0, "star"));
+   ps_.push_back(new ParticleSystem(5, planets_[10], 2, "stars"));
+   ps_.push_back(new ParticleSystem(5, planets_[19], 2, "starss"));
+   ps_.push_back(new ParticleSystem(5, planets_[32], 0, "starsss"));
+   ps_.push_back(new ParticleSystem(10, planets_[51], 0, "starssss"));
+   ps_.push_back(new ParticleSystem(10, planets_[0], 1, "bees"));
 
    light_ = new DirectionLight(glm::vec3(0.4f, 0.4f, 0.4f),
                                glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
@@ -403,7 +398,7 @@ Universe::Universe() :
    hud_->initHud();
 
    currentCheckpoint = 0;
-   PlayerEntersGravityFieldOf(planets_[24]); //here!
+   PlayerEntersGravityFieldOf(planets_[0]); //here!
 }
 
 void Universe::OnExpiration(const std::string& event_name) {
@@ -524,15 +519,6 @@ void Universe::Update() {
    }
 
    CheckPlayerChangesGravityFields();
-   
-   ps->update();
-   ps1->update();
-   ps2->update();
-   ps3->update();
-   ps4->update();
-  
-
-  
  /* std::ostringstream lwing;
   lwing << "lwing" << val;
   
@@ -557,16 +543,16 @@ void Universe::Update() {
    
    SceneNode::Get("lwing4")->Update(30.0, -.45);
    SceneNode::Get("rwing4")->Update(30.0, .45);
-   SceneNode::Get("body4")->Fly(.5);
+  // SceneNode::Get("body4")->Fly(.5);
   // SceneNode::Get("body0")->Fly(.5);
    
    //SceneNode::Get("lwing1")->Update(20.0, -.45);
    //SceneNode::Get("rwing1")->Update(20.0, .45);
    //SceneNode::Get("body1")->Fly(.5);
    
-   /*for (std::vector<ParticleSystem*>::iterator itr = ps.begin(); itr != ps.end(); ++itr) {
+   for (std::vector<ParticleSystem*>::iterator itr = ps_.begin(); itr != ps_.end(); ++itr) {
       (*itr)->update();
-   }*/
+   }
    
    //planets_[2]->Pogo(2.0);
 
